@@ -4,9 +4,9 @@ import { PropsWithChildren } from "react";
 
 function ProviderLayout({ children }: PropsWithChildren) {
   return (
-    <AuthContextProvider>
-      <QueryProvider>{children}</QueryProvider>
-    </AuthContextProvider>
+    <QueryProvider>
+      <AuthContextProvider>{children}</AuthContextProvider>
+    </QueryProvider>
   );
 }
 
