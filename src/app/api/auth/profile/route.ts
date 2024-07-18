@@ -7,3 +7,7 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   return NextResponse.json("");
 }
+
+export async function PUT(request: NextRequest) {
+  return NextResponse.json("");
+}
