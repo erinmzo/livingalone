@@ -1,3 +1,4 @@
+import JoinMarketing from "@/components/main/common/JoinMarketing";
 import GroupSection from "@/components/main/group/GroupSection";
 import GroupVisual from "@/components/main/group/GroupVisual";
 import MustSection from "@/components/main/must/MustSection";
@@ -10,6 +11,7 @@ function HomePage() {
       <MustSection />
       <GroupVisual />
       <GroupSection />
+      <JoinMarketing />
     </>
   );
 }
