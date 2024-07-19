@@ -5,11 +5,9 @@ function Title() {
   return (
     <div>
       {/* 제목부분 */}
-      <div>
-        <Wish />
-        {/* <Image>북마크</Image> */}
-        {/* <h4>제목과 제목과 제목과 제목</h4> */}
-      </div>
+      <Wish />
+      <h2>나 이거 샀다 짱이자.. 이 물건을 봐.. 대박임</h2>
+      <div></div>
     </div>
   );
 }
