@@ -13,22 +13,27 @@ function Header() {
           </li>
         </ul>
       </div>
-      <div className="container mx-auto max-w-[1024px]">
+      <div className="container mx-auto max-w-[1024px] flex justify-between items-center">
         <h1>
           <Link href="/">하루살때</Link>
         </h1>
-        <div>
+        <div className="flex items-center">
           <ul>
-            <li></li>
+            <li>
+              <Link href="/mustpost">구해줘 자취템</Link>
+            </li>
+            <li>
+              <Link href="/grouppost">같이 사 공구템</Link>
+            </li>
           </ul>
           <div>
             <button>글쓰기</button>
-            <ul>
+            <ul className="">
               <li>
-                <Link href="">자취템 자랑하기</Link>
+                <Link href="/mustpost/write">자취템 자랑하기</Link>
               </li>
               <li>
-                <Link href="">공동구매 만들기</Link>
+                <Link href="/grouppost/write">공동구매 만들기</Link>
               </li>
             </ul>
           </div>
