@@ -1,14 +1,33 @@
 "use client";
 
+import { insertGroupPost } from "@/apis/grouppost";
 import { createClient } from "@/supabase/client";
+import { GroupPost } from "@/types/types";
 import React, { useState } from "react";
+import { v4 as uuidv4 } from "uuid";
+
+type TNewGroupPost = Pick<
+  GroupPost,
+  | "id"
+  | "user_id"
+  | "title"
+  | "price"
+  | "people_num"
+  | "is_finished"
+  | "img_url"
+  | "start_date"
+  | "end_date"
+  | "content"
+  | "item"
+  | "link"
+>;
 
 function GroupWriteForm() {
   const [title, setTitle] = useState<string>("");
   const [startDate, setStartDate] = useState<string>("");
   const [endDate, setEndDate] = useState<string>("");
-  const [peopleNum, setPeopleNum] = useState<number>();
-  const [price, setPrice] = useState<number>();
+  const [peopleNum, setPeopleNum] = useState<number>(0);
+  const [price, setPrice] = useState<number>(0);
   const [imgUrl, setImgUrl] = useState<string>("");
   const [content, setContent] = useState<string>("");
   const [item, setItem] = useState<string>("");
@@ -16,7 +35,6 @@ function GroupWriteForm() {
 
   const addGroupPostHandler = async () => {
     console.log(
-      // id,
       // user_id,
       title,
       startDate,
@@ -27,11 +45,13 @@ function GroupWriteForm() {
       item,
       link
     );
-    const newGroupPost = {
+    const newGroupPost: TNewGroupPost = {
+      id: uuidv4(),
+      user_id: "38341ad9-3080-4072-997e-2f53feca7bf0", // 임시로
       title,
       start_date: startDate,
       end_date: endDate,
-      people_num: peopleNum,
+      people_num: +peopleNum,
       price,
       content,
       item,
@@ -39,10 +59,11 @@ function GroupWriteForm() {
       img_url: imgUrl,
       is_finished: false,
     };
-    const supabase = createClient();
-    const { data, error } = await supabase
-      .from("group_posts")
-      .insert(newGroupPost);
+    await insertGroupPost(newGroupPost);
+    // const supabase = createClient();
+    // const { data, error } = await supabase
+    //   .from("group_posts")
+    //   .insert(newGroupPost);
   };
 
   return (

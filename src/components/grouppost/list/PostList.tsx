@@ -1,12 +1,8 @@
 "use client";
 
-import { getGroupPosts } from "@/apis/grouppost";
 import { useQuery } from "@tanstack/react-query";
 
 function PostList() {
-  const { data, isPending, isError } = getGroupPosts();
-
-  console.log(data);
   return (
     <div>
       <h5>같이 사 공구템</h5>

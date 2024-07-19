@@ -1,13 +1,17 @@
-import { useQuery } from "@tanstack/react-query";
+import { GroupPost, TNewGroupPost } from "@/types/types";
 
-export const getGroupPosts = () => {
-  const { data, isPending, isError } = useQuery({
-    queryKey: ["groupPosts"],
-    queryFn: async () => {
-      const response = await fetch(`/api/grouppost`);
-      const { data } = await response.json();
-      return data;
-    },
+export async function getGroupPostOnMain() {
+  const response = await fetch("/api/grouppost", { next: { revalidate: 60 } });
+  const data = await response.json();
+  return data;
+}
+
+export async function insertGroupPost(newGroupPost: TNewGroupPost) {
+  console.log(newGroupPost);
+  const response = await fetch("/api/grouppost", {
+    method: "POST",
+    body: JSON.stringify(newGroupPost),
   });
-  return { data, isPending, isError };
-};
+  const data = await response.json();
+  return data;
+}
