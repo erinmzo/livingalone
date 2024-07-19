@@ -7,7 +7,7 @@ export async function GET() {
     const supabase = createClient();
     const { data } = await supabase
       .from("must_posts")
-      .select("title, item, img_url")
+      .select("id, title, item, img_url")
       .order("created_at", { ascending: false })
       .range(0, 2);
     return NextResponse.json(data);

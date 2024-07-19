@@ -8,7 +8,6 @@ import TopList from "./TopList";
 function Read() {
   return (
     <InnerLayout>
-      <Wish />
       <ReadPost />
       <ReadTopBtn />
       <TopList />

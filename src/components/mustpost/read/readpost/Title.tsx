@@ -1,3 +1,4 @@
+import Wish from "@/components/common/Wish";
 import React from "react";
 
 function Title() {
@@ -5,7 +6,7 @@ function Title() {
     <div>
       {/* 제목부분 */}
       <div>
-        {/* 북마크-제목 */}
+        <Wish />
         {/* <Image>북마크</Image> */}
         {/* <h4>제목과 제목과 제목과 제목</h4> */}
       </div>

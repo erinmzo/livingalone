@@ -1,21 +1,32 @@
 import Wish from "@/components/common/Wish";
 import Image from "next/image";
-import Link from "next/link";
 
-function MustPostCard() {
+interface MustPostCardProps {
+  title: string;
+  item: string;
+  imgUrl: string;
+}
+
+function MustPostCard({ title, item, imgUrl }: MustPostCardProps) {
   return (
-    <li>
-      <Link href="/">
-        <div>
-          <Image src="/img/test.png" alt="test" width={100} height={100} />
-        </div>
-        <div>
-          <span>아이템명</span>
-          <h4>글제목</h4>
-        </div>
-      </Link>
+    <div className="relative">
+      <div className="overflow-hidden relative aspect-square rounded-lg">
+        <Image
+          src={imgUrl}
+          alt={item}
+          fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          className="object-cover"
+          loading="lazy"
+          quality={75}
+        />
+      </div>
+      <div className="ml-1 mt-3">
+        <span className="text-[14px] text-[#808080] truncate">{item}</span>
+        <h4 className="text-[20px] font-bold truncate">{title}</h4>
+      </div>
       <Wish />
-    </li>
+    </div>
   );
 }
 
