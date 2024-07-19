@@ -1,7 +1,13 @@
+import Image from "next/image";
+
 function GroupVisual() {
   return (
-    <div className="bg-[#d9d9d9] h-[480px] flex items-center justify-center">
-      <div className="container mx-auto max-w-[1024px]">혼자 살때! 라는 건 우리가 필요한 법!</div>
+    <div className="bg-[#d9d9d9] flex items-center justify-center">
+      <div className="container mx-auto max-w-[1024px]">
+        <div className="relative h-[480px]">
+          <Image src="/img/main-visual-group.png" alt="쉿 어쩌구 메인 비주얼이야" fill className="object-cover" />
+        </div>
+      </div>
     </div>
   );
 }
