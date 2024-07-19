@@ -1,5 +1,12 @@
+import Page from "@/components/common/Page/Page";
+import GroupWriteForm from "@/components/grouppost/write/GroupWriteForm";
+
 function GroupWritePage() {
-  return <div>공구템 글쓰기 페이지</div>;
+  return (
+    <Page>
+      <GroupWriteForm />
+    </Page>
+  );
 }
 
 export default GroupWritePage;
