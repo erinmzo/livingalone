@@ -1,0 +1,45 @@
+import Image from "next/image";
+
+interface GroupPostCardProps {
+  title: string;
+  price: number;
+  peopleNum: number;
+  isFinished: boolean;
+  imgUrl: string;
+  startDate: string;
+  endDate: string;
+}
+function GroupPostCard({ title, price, peopleNum, isFinished, imgUrl, startDate, endDate }: GroupPostCardProps) {
+  return (
+    <div>
+      <div className="relative aspect-video rounded-lg overflow-hidden">
+        <Image
+          src={imgUrl}
+          alt={title}
+          fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          className="object-cover"
+          loading="lazy"
+          quality={75}
+        />
+      </div>
+      <div className="ml-2">
+        <div className="flex items-center gap-3 mt-3">
+          <div className="py-1 px-3 rounded-full bg-black text-white text-[12px] font-bold">
+            {isFinished ? <span>진행중</span> : <span>종료</span>}
+          </div>
+          <div className="text-[14px] font-medium text-[#808080]">
+            <span>{startDate}</span> ~ <span>{endDate}</span>
+          </div>
+        </div>
+        <h4 className="text-[20px] font-bold truncate mt-[6px]">{title}</h4>
+        <div className="flex items-center gap-2 mt-[6px]">
+          <span className="text-red-600 text-[20px] font-bold">{peopleNum}명 남음!</span>
+          <span className="text-[24px] font-bold">{price}원</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default GroupPostCard;
