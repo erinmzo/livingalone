@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
-  //리스트
+  //리스트 전체
   return NextResponse.json("");
 }
 
