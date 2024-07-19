@@ -1,5 +1,7 @@
+import Page from "@/components/common/Page";
+
 function MustEditPage() {
-  return <div>필수템 글 수정 페이지</div>;
+  return <Page>필수템 글 수정 페이지</Page>;
 }
 
 export default MustEditPage;

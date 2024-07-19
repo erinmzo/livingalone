@@ -1,5 +1,7 @@
+import Page from "@/components/common/Page";
+
 function JoinPage() {
-  return <div>회원가입 페이지</div>;
+  return <Page>회원가입 페이지</Page>;
 }
 
 export default JoinPage;

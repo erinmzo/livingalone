@@ -1,5 +1,7 @@
+import Page from "@/components/common/Page";
+
 function MustListPage() {
-  return <div>필수템 리스트 페이지</div>;
+  return <Page>필수템 리스트 페이지</Page>;
 }
 
 export default MustListPage;
