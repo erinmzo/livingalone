@@ -13,6 +13,7 @@
     "@supabase/ssr": "^0.4.0",
     "@supabase/supabase-js": "^2.44.4",
     "@tanstack/react-query": "^5.51.5",
+    "@types/uuid": "^10.0.0",
     "class-variance-authority": "^0.7.0",
     "next": "14.2.5",
     "notiflix": "^3.2.7",

@@ -10,3 +10,19 @@ export type MustCategory = Tables<"must_categories">;
 export type GroupPost = Tables<"group_posts">;
 export type GroupLike = Tables<"group_likes">;
 export type GroupApplication = Tables<"group_applications">;
+
+export type TNewGroupPost = Pick<
+  GroupPost,
+  | "id"
+  | "user_id"
+  | "title"
+  | "price"
+  | "people_num"
+  | "is_finished"
+  | "img_url"
+  | "start_date"
+  | "end_date"
+  | "content"
+  | "item"
+  | "link"
+>;
