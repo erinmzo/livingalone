@@ -1,4 +1,4 @@
-import Page from "@/components/common/Page";
+import Page from "@/components/common/Page/Page";
 import MyPageNav from "@/components/mypage/MyPageNav";
 import { PropsWithChildren } from "react";
 
