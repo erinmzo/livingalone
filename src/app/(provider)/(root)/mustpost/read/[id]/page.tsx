@@ -1,7 +1,12 @@
-import Page from "@/components/common/Page";
+import Page from "@/components/common/Page/Page";
+import Read from "@/components/mustpost/read/Read";
 
 function MustReadPage() {
-  return <Page>필수템 글 읽기 페이지</Page>;
+  return (
+    <Page>
+      <Read />
+    </Page>
+  );
 }
 
 export default MustReadPage;
