@@ -2,27 +2,16 @@
 
 import { insertGroupPost } from "@/apis/grouppost";
 import { createClient } from "@/supabase/client";
-import { GroupPost } from "@/types/types";
+import { TNewGroupPost } from "@/types/types";
+import { useMutation } from "@tanstack/react-query";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
-type TNewGroupPost = Pick<
-  GroupPost,
-  | "id"
-  | "user_id"
-  | "title"
-  | "price"
-  | "people_num"
-  | "is_finished"
-  | "img_url"
-  | "start_date"
-  | "end_date"
-  | "content"
-  | "item"
-  | "link"
->;
-
 function GroupWriteForm() {
+  const router = useRouter();
+
   const [title, setTitle] = useState<string>("");
   const [startDate, setStartDate] = useState<string>("");
   const [endDate, setEndDate] = useState<string>("");
@@ -33,21 +22,53 @@ function GroupWriteForm() {
   const [item, setItem] = useState<string>("");
   const [link, setLink] = useState<string>("");
 
+  const addImageHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    // 당장은 여기서 직접 포스트 해주지만 나중에는 꼭 route handler 사용하기
+    if (e.target.files) {
+      const fileObj = e.target.files[0];
+      console.log(e.target.files);
+      const supabase = createClient();
+      const { data } = await supabase.storage
+        .from("groupposts")
+        .upload(`grouppost_${Date.now()}.png`, fileObj);
+      if (data) {
+        setImgUrl(
+          `https://nqqsefrllkqytkwxfshk.supabase.co/storage/v1/object/public/groupposts/${data.path}`
+        );
+      }
+    }
+  };
+
+  const addMutation = useMutation({
+    mutationFn: async (newGroupPost: TNewGroupPost) => {
+      await insertGroupPost(newGroupPost);
+    },
+    onSuccess: () => {
+      router.push("/grouppost");
+    },
+  });
+
   const addGroupPostHandler = async () => {
-    console.log(
-      // user_id,
-      title,
-      startDate,
-      endDate,
-      peopleNum,
-      price,
-      content,
-      item,
-      link
-    );
+    if (
+      !title.trim() ||
+      !startDate.trim() ||
+      !endDate.trim() ||
+      !imgUrl.trim() ||
+      !content.trim() ||
+      !item.trim()
+    ) {
+      alert("관련 링크를 제외한 모든 값을 입력해주세요.");
+      return;
+    }
+    if (peopleNum > 30) {
+      alert("최대 공구 인원은 30명까지입니다.");
+      return;
+    }
     const newGroupPost: TNewGroupPost = {
       id: uuidv4(),
-      user_id: "38341ad9-3080-4072-997e-2f53feca7bf0", // 임시로
+      // TODO 임시로 넣은 아이디, 나중에 로그인 기능 생기면 유저 정보 가져와서 넣어줘야 한다.
+      user_id: "38341ad9-3080-4072-997e-2f53feca7bf0",
       title,
       start_date: startDate,
       end_date: endDate,
@@ -59,11 +80,7 @@ function GroupWriteForm() {
       img_url: imgUrl,
       is_finished: false,
     };
-    await insertGroupPost(newGroupPost);
-    // const supabase = createClient();
-    // const { data, error } = await supabase
-    //   .from("group_posts")
-    //   .insert(newGroupPost);
+    addMutation.mutate(newGroupPost);
   };
 
   return (
@@ -128,8 +145,13 @@ function GroupWriteForm() {
       </div>
       <div>
         <label>이미지</label>
-        <input type="file" />
+        <input type="file" onChange={addImageHandler} />
       </div>
+      {/* <Image/> */}
+      {imgUrl && (
+        <Image src={imgUrl} alt="선택한 이미지" width={500} height={500} />
+      )}
+
       <textarea
         placeholder="* 여기에 글을 작성해주세요."
         value={content}
