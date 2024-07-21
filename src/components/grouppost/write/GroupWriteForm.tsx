@@ -1,7 +1,6 @@
 "use client";
 
-import { insertGroupPost } from "@/apis/grouppost";
-import { createClient } from "@/supabase/client";
+import { insertGroupImage, insertGroupPost } from "@/apis/grouppost";
 import { TNewGroupPost } from "@/types/types";
 import { useMutation } from "@tanstack/react-query";
 import Image from "next/image";
@@ -22,21 +21,22 @@ function GroupWriteForm() {
   const [item, setItem] = useState<string>("");
   const [link, setLink] = useState<string>("");
 
+  const addImageMutation = useMutation({
+    mutationFn: async (newGroupImage: any) => {
+      const formData = new FormData();
+      formData.append("file", newGroupImage);
+      const response = await insertGroupImage(formData);
+      setImgUrl(
+        `https://nqqsefrllkqytkwxfshk.supabase.co/storage/v1/object/public/groupposts/${response.path}`
+      );
+    },
+  });
+
   const addImageHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    // 당장은 여기서 직접 포스트 해주지만 나중에는 꼭 route handler 사용하기
     if (e.target.files) {
-      const fileObj = e.target.files[0];
-      console.log(e.target.files);
-      const supabase = createClient();
-      const { data } = await supabase.storage
-        .from("groupposts")
-        .upload(`grouppost_${Date.now()}.png`, fileObj);
-      if (data) {
-        setImgUrl(
-          `https://nqqsefrllkqytkwxfshk.supabase.co/storage/v1/object/public/groupposts/${data.path}`
-        );
-      }
+      const newGroupImage = e.target.files[0];
+      addImageMutation.mutate(newGroupImage);
     }
   };
 

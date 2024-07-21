@@ -1,14 +1,16 @@
 import { createClient } from "@/supabase/server";
 import { NextRequest, NextResponse } from "next/server";
 
+// TODO api 명세서에 이 부분 추가
 export async function POST(request: NextRequest) {
-  // 공구 신청
-  const newGroupApply = await request.json();
+  // 공구템 작성
+  const formData = await request.formData();
+  const newGroupImage: any = formData.get("file");
   try {
     const supabase = createClient();
-    const { data } = await supabase
-      .from("group_applications")
-      .insert(newGroupApply);
+    const { data } = await supabase.storage
+      .from("groupposts")
+      .upload(`grouppost_${Date.now()}.png`, newGroupImage);
     return NextResponse.json(data);
   } catch (error) {
     return NextResponse.json({ error: "데이터를 등록하는 데 실패했습니다." });
