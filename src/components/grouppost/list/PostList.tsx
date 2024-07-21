@@ -25,16 +25,10 @@ function PostList() {
     data: groupPosts,
     isPending,
     isError,
-    refetch,
   } = useQuery<TMainGroupPost[]>({
     queryKey: ["groupPost", isFinished],
     queryFn: () => getGroupPost(isFinished),
   });
-
-  const finishSort = () => {
-    SetIsFinished(true);
-    refetch();
-  };
 
   if (isPending)
     return <div className="flex justify-center items-center">로딩중...</div>;
@@ -47,17 +41,21 @@ function PostList() {
       <p>공동구매를 통해 자취에 필요한 물품을 저렴한 💰금액에 구매해보세요</p>
       <div>
         <button
+          className={`${
+            isFinished === false ? "bg-black text-white font-bold" : ""
+          }`}
           onClick={() => {
             SetIsFinished(false);
-            refetch();
           }}
         >
           진행중
         </button>
         <button
+          className={`${
+            isFinished === true ? "bg-black text-white font-bold" : ""
+          }`}
           onClick={() => {
             SetIsFinished(true);
-            refetch();
           }}
         >
           종료됨
