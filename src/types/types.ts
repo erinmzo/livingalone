@@ -11,18 +11,4 @@ export type GroupPost = Tables<"group_posts">;
 export type GroupLike = Tables<"group_likes">;
 export type GroupApplication = Tables<"group_applications">;
 
-export type TNewGroupPost = Pick<
-  GroupPost,
-  | "id"
-  | "user_id"
-  | "title"
-  | "price"
-  | "people_num"
-  | "is_finished"
-  | "img_url"
-  | "start_date"
-  | "end_date"
-  | "content"
-  | "item"
-  | "link"
->;
+export type TNewGroupPost = Omit<GroupPost, "created_at">;
