@@ -1,7 +1,6 @@
 import { createClient } from "@/supabase/server";
 import { NextRequest, NextResponse } from "next/server";
 
-// TODO api 명세서에 이 부분 추가
 export async function POST(request: NextRequest) {
   // 공구템 작성
   const formData = await request.formData();
