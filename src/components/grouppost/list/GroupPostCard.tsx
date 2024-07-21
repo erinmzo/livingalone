@@ -26,7 +26,7 @@ function GroupPostCard({ title, price, peopleNum, isFinished, imgUrl, startDate,
       <div className="ml-2">
         <div className="flex items-center gap-3 mt-3">
           <div className="py-1 px-3 rounded-full bg-black text-white text-[12px] font-bold">
-            {isFinished ? <span>진행중</span> : <span>종료</span>}
+            {isFinished ? <span>종료</span> : <span>진행중</span>}
           </div>
           <div className="text-[14px] font-medium text-[#808080]">
             <span>{startDate}</span> ~ <span>{endDate}</span>
