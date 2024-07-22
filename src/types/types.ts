@@ -12,3 +12,4 @@ export type GroupLike = Tables<"group_likes">;
 export type GroupApplication = Tables<"group_applications">;
 
 export type TNewGroupPost = Omit<GroupPost, "created_at">;
+export type TNewGroupApplication = Omit<GroupApplication, "created_at">;
