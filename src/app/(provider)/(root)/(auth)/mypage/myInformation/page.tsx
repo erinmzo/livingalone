@@ -2,6 +2,7 @@ import Page from "@/components/common/Page/Page";
 import React from "react";
 import Input from "../Input";
 import SideBar from "../sideBar/Sidebar";
+import Button from "../button/Button";
 
 function MyInformationPage() {
   return (
@@ -14,12 +15,17 @@ function MyInformationPage() {
             <span>나의 정보</span>
             <div>
               <span>닉네임</span>
-              <Input />
+              <Input variant="default" />
             </div>
             <div>
               <span>프로필 사진변경</span>
-              <Input type="file" placeholder="사진변경" />
+              <Input variant="default" type="file" placeholder="사진변경" />
             </div>
+            <div>
+              <Button variant="primary">주소변경</Button>
+              <Input variant="underline" />
+            </div>
+            <Button variant="secondary">개인정보 변경완료</Button>
           </div>
         </div>
       </div>
