@@ -33,7 +33,7 @@ function GroupSection() {
     queryKey: ["groupPost"],
     queryFn: getGroupPostOnMain,
   });
-
+  console.log(groupPosts);
   if (isPending)
     return <div className="flex justify-center items-center">로딩중...</div>;
 

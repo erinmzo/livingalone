@@ -8,7 +8,10 @@ import GroupPostCard from "./GroupPostCard";
 import { useState } from "react";
 
 // TODO
-type TGroupApplications = Pick<GroupApplication, "id">;
+// type TGroupApplications = Pick<GroupApplication, "id">;
+type TGroupApplications = {
+  group_applications: {}[];
+};
 
 type TMainGroupPost = Pick<
   GroupPost,
