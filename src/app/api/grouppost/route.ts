@@ -9,14 +9,8 @@ export async function GET(request: NextRequest) {
     const supabase = createClient();
     const { data } = await supabase
       .from("group_posts")
-<<<<<<< HEAD
       .select("id, title, is_finished, price, people_num , img_url, start_date, end_date")
-=======
-      .select(
-        "id, title, is_finished, price, people_num , img_url, start_date, end_date"
-      )
       .eq("is_finished", isFinished)
->>>>>>> 2265778875a368cebc22e6bdcf8c40b1c255a543
       .order("created_at", { ascending: false });
     return NextResponse.json(data);
   } catch (error) {
