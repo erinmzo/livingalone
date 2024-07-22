@@ -4,7 +4,6 @@ import Button from "../button/Button";
 function MyInformation() {
   return (
     <div className="flex-col w-auto grow">
-      <h1 className="text-3xl text-center font-bold mb-20">마이페이지</h1>
       <div className="flex justify-center items-center ">
         <div className="flex flex-col gap-6 ">
           <span>나의 정보</span>
