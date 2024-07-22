@@ -4,10 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 export async function GET(request: NextRequest) {
   //리스트
   const url = new URL(request.url);
-  console.log("---------------------------------yayaya");
-  console.log(url);
   const isFinished = url.searchParams.get("isFinished") === "true";
-  console.log(isFinished);
   try {
     const supabase = createClient();
     const { data } = await supabase

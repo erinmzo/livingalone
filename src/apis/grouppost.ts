@@ -7,7 +7,6 @@ export async function getGroupPostOnMain() {
 }
 
 export async function getGroupPost(isFinished: boolean) {
-  console.log(isFinished);
   const response = await fetch(`/api/grouppost?isFinished=${isFinished}`, {
     next: { revalidate: 60 },
   });
