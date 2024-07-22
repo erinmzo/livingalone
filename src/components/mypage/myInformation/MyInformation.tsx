@@ -1,12 +1,9 @@
-import Page from "@/components/common/Page/Page";
-import React from "react";
 import Input from "../Input";
-import SideBar from "../sideBar/Sidebar";
 import Button from "../button/Button";
 
 function MyInformation() {
   return (
-    <div className="flex-col">
+    <div className="flex-col w-auto grow">
       <h1 className="text-3xl text-center font-bold mb-20">마이페이지</h1>
       <div className="flex justify-center items-center ">
         <div className="flex flex-col gap-6 ">

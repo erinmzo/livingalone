@@ -1,7 +1,7 @@
-import { GroupPost, TNewGroupApplication, TNewGroupPost } from "@/types/types";
+import { TNewGroupApplication, TNewGroupPost } from "@/types/types";
 
 export async function getGroupPostOnMain() {
-  const response = await fetch("/api/grouppost", { next: { revalidate: 60 } });
+  const response = await fetch("/api/main/group", { next: { revalidate: 60 } });
   const data = await response.json();
   return data;
 }
