@@ -1,7 +1,16 @@
 import Page from "@/components/common/Page/Page";
+import GroupDetail from "@/components/grouppost/read/GroupDetail";
 
-function GroupReadPage() {
-  return <Page>공구템 글 읽기 페이지</Page>;
+type Props = {
+  params: { id: string };
+};
+
+function GroupReadPage({ params }: Props) {
+  return (
+    <Page>
+      <GroupDetail params={params} />
+    </Page>
+  );
 }
 
 export default GroupReadPage;
