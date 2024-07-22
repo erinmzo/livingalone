@@ -3,3 +3,9 @@ export async function getMustPostOnMain() {
   const data = await response.json();
   return data;
 }
+
+export async function getCategories() {
+  const response = await fetch("/api/category");
+  const data = await response.json();
+  return data;
+}
