@@ -1,6 +1,6 @@
 import React from "react";
 
-function ContentTitle() {
+function ItemInfo() {
   return (
     <div>
       {/* 포스팅 헤더(?) */}
@@ -19,4 +19,4 @@ function ContentTitle() {
   );
 }
 
-export default ContentTitle;
+export default ItemInfo;

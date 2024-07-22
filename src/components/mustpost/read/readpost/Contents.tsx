@@ -1,6 +1,6 @@
 import React from "react";
 
-function Comment() {
+function Contents() {
   return (
     <div>
       <p>
@@ -20,4 +20,4 @@ function Comment() {
   );
 }
 
-export default Comment;
+export default Contents;
