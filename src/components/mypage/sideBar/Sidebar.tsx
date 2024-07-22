@@ -6,19 +6,21 @@ function SideBar() {
       <div className="w-24 h-24 bg-gray-200 rounded-full mb-4"></div>
       <div className="text-lg font-semibold mb-4">나는공구왕</div>
       <div className="w-full flex-col justify-center items-center ">
-        <h2 className="text-md font-bold mb-2">나의 정보</h2>
         <ul className="text-gray-600 space-y-2">
+          <Link href={`/mypage/${1}`} className="text-md font-bold mb-2">
+            나의 정보
+          </Link>
           <li>
-            <Link href="/mypage/wishmust">찜한 자취템</Link>
+            <Link href={`/mypage/${1}/wishmust`}>찜한 자취템</Link>
           </li>
           <li>
-            <Link href="/my-items">나의 자취템</Link>
+            <Link href={`/mypage/${1}/mymust`}>나의 자취템</Link>
           </li>
           <li>
-            <Link href="/liked-tools">좋아요 공구</Link>
+            <Link href={`/mypage/${1}/likegroup`}>좋아요 공구</Link>
           </li>
           <li>
-            <Link href="/mypage/applygroup">신청받은 공구</Link>
+            <Link href={`/mypage/${1}/mygroup`}>신청받은 공구</Link>
           </li>
           <li>
             <Link href="/my">내가 쓴 공구</Link>
