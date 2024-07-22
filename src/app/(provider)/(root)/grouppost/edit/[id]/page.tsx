@@ -1,7 +1,12 @@
 import Page from "@/components/common/Page/Page";
+import GroupEditForm from "@/components/grouppost/edit/GroupEditForm";
 
-function GroupEditPage() {
-  return <Page>공구템 수정 페이지</Page>;
+function GroupEditPage({ params }: { params: { id: string } }) {
+  return (
+    <Page>
+      <GroupEditForm params={params} />
+    </Page>
+  );
 }
 
 export default GroupEditPage;

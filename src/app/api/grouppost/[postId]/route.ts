@@ -3,18 +3,41 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: { postId: string } }
 ) {
   // 게시글 상세 가져오기
-  return NextResponse.json("");
+  // try catch
+  const { postId } = params;
+  const supabase = createClient();
+  try {
+    const { data } = await supabase
+      .from("group_posts")
+      .select("*, profiles(nickname, profile_image_url)")
+      .eq("id", postId)
+      .single();
+    return NextResponse.json(data);
+  } catch (error) {
+    return NextResponse.json({ error: "포스트를 가져오는 데 실패했습니다." });
+  }
 }
 
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: { postId: string } }
 ) {
   // 게시글 수정
-  return NextResponse.json("");
+  const { postId } = params;
+  const newGroupPost = await request.json();
+  const supabase = createClient();
+  try {
+    const { data } = await supabase
+      .from("group_posts")
+      .update(newGroupPost)
+      .eq("id", postId);
+    return NextResponse.json(data);
+  } catch (error) {
+    return NextResponse.json({ error: "포스트를 수정하는 데 실패했습니다." });
+  }
 }
 
 export async function DELETE(

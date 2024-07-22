@@ -1,11 +1,15 @@
 "use client";
 
-import { getGroupPost, getGroupPostOnMain } from "@/apis/grouppost";
+import { getGroupPosts, getGroupPostOnMain } from "@/apis/grouppost";
 import { GroupPost } from "@/types/types";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import GroupPostCard from "./GroupPostCard";
 import { useState } from "react";
+
+type TGroupApplications = {
+  group_applications: {}[];
+};
 
 type TMainGroupPost = Pick<
   GroupPost,
@@ -17,7 +21,8 @@ type TMainGroupPost = Pick<
   | "img_url"
   | "start_date"
   | "end_date"
->;
+> &
+  TGroupApplications;
 
 function PostList() {
   const [isFinished, SetIsFinished] = useState<boolean>(false);
@@ -26,10 +31,9 @@ function PostList() {
     isPending,
     isError,
   } = useQuery<TMainGroupPost[]>({
-    queryKey: ["groupPost", isFinished],
-    queryFn: () => getGroupPost(isFinished),
+    queryKey: ["groupPosts", isFinished],
+    queryFn: () => getGroupPosts(isFinished),
   });
-
   if (isPending)
     return <div className="flex justify-center items-center">로딩중...</div>;
 
@@ -62,21 +66,24 @@ function PostList() {
         </button>
       </div>
       <ul className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {groupPosts.map((post) => (
-          <li key={post.id}>
-            <Link href={`/grouppost/read/${post.id}`}>
-              <GroupPostCard
-                title={post.title}
-                price={post.price}
-                peopleNum={post.people_num}
-                isFinished={post.is_finished}
-                imgUrl={post.img_url}
-                startDate={post.start_date}
-                endDate={post.end_date}
-              />
-            </Link>
-          </li>
-        ))}
+        {groupPosts.map((post) => {
+          return (
+            <li key={post.id}>
+              <Link href={`/grouppost/read/${post.id}`}>
+                <GroupPostCard
+                  application={post.group_applications}
+                  title={post.title}
+                  price={post.price}
+                  peopleNum={post.people_num}
+                  isFinished={post.is_finished}
+                  imgUrl={post.img_url}
+                  startDate={post.start_date}
+                  endDate={post.end_date}
+                />
+              </Link>
+            </li>
+          );
+        })}
       </ul>
     </div>
   );

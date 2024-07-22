@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
     const { data } = await supabase
       .from("group_posts")
       .select(
-        "id, title, is_finished, price, people_num , img_url, start_date, end_date"
+        "id, title, is_finished, price, people_num , img_url, start_date, end_date, group_applications(id)"
       )
       .eq("is_finished", isFinished)
       .order("created_at", { ascending: false });
