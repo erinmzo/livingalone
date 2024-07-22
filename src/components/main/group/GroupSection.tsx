@@ -2,13 +2,14 @@
 
 import { getGroupPostOnMain } from "@/apis/grouppost";
 import GroupPostCard from "@/components/grouppost/list/GroupPostCard";
-import { GroupPost } from "@/types/types";
+import { GroupApplication, GroupPost } from "@/types/types";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import MainSectionTitle from "../common/MainSectionTitle";
 
+type TGroupApplication = Pick<GroupApplication, "id">;
 type TGroupApplications = {
-  group_application: {}[];
+  group_applications: TGroupApplication[];
 };
 
 type TMainGroupPost = Pick<
@@ -33,7 +34,6 @@ function GroupSection() {
     queryKey: ["groupPost"],
     queryFn: getGroupPostOnMain,
   });
-  console.log(groupPosts);
   if (isPending)
     return <div className="flex justify-center items-center">로딩중...</div>;
 
@@ -48,22 +48,24 @@ function GroupSection() {
         link="/grouppost"
       />
       <ul className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {groupPosts.map((post) => (
-          <li key={post.id}>
-            <Link href={`/grouppost/read/${post.id}`}>
-              <GroupPostCard
-                application={post.group_application}
-                title={post.title}
-                price={post.price}
-                peopleNum={post.people_num}
-                isFinished={post.is_finished}
-                imgUrl={post.img_url}
-                startDate={post.start_date}
-                endDate={post.end_date}
-              />
-            </Link>
-          </li>
-        ))}
+        {groupPosts.map((post) => {
+          return (
+            <li key={post.id}>
+              <Link href={`/grouppost/read/${post.id}`}>
+                <GroupPostCard
+                  application={post.group_applications}
+                  title={post.title}
+                  price={post.price}
+                  peopleNum={post.people_num}
+                  isFinished={post.is_finished}
+                  imgUrl={post.img_url}
+                  startDate={post.start_date}
+                  endDate={post.end_date}
+                />
+              </Link>
+            </li>
+          );
+        })}
       </ul>
     </div>
   );

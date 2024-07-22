@@ -7,12 +7,10 @@ import Link from "next/link";
 import GroupPostCard from "./GroupPostCard";
 import { useState } from "react";
 
-// TODO
-// type TGroupApplications = Pick<GroupApplication, "id">;
+type TGroupApplication = Pick<GroupApplication, "id">;
 type TGroupApplications = {
-  group_applications: {}[];
+  group_applications: TGroupApplication[];
 };
-
 type TMainGroupPost = Pick<
   GroupPost,
   | "id"
