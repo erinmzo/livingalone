@@ -1,8 +1,10 @@
 import { createClient } from "@/supabase/server";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   //리스트
+  const url = new URL(request.url);
+  const isFinished = url.searchParams.get("isFinished") === "true";
   try {
     const supabase = createClient();
     const { data } = await supabase
@@ -10,6 +12,7 @@ export async function GET() {
       .select(
         "id, title, is_finished, price, people_num , img_url, start_date, end_date"
       )
+      .eq("is_finished", isFinished)
       .order("created_at", { ascending: false });
     return NextResponse.json(data);
   } catch (error) {

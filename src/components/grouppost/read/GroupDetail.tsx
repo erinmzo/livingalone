@@ -30,7 +30,6 @@ async function GroupDetail({ params }: Props) {
   if (!data) {
     return <div>로딩 중입니다.</div>;
   }
-  console.log(data);
   const {
     title,
     content,
@@ -82,7 +81,7 @@ async function GroupDetail({ params }: Props) {
         <h5>{title}</h5>
         <p>{price.toLocaleString()}원</p>
         {/* TODO 글 작성자는 수정삭제, 그 외엔 공구 신청 */}
-        <GroupApplyBtn />
+        <GroupApplyBtn id={id} />
         <div>
           <Link href={`/grouppost/edit/${id}`}>
             <button>글 수정</button>

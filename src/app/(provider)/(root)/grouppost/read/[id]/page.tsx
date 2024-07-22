@@ -6,7 +6,6 @@ type Props = {
 };
 
 function GroupReadPage({ params }: Props) {
-  console.log(params);
   return (
     <Page>
       <GroupDetail params={params} />

@@ -1,10 +1,11 @@
 "use client";
 
-import { getGroupPostOnMain } from "@/apis/grouppost";
+import { getGroupPost, getGroupPostOnMain } from "@/apis/grouppost";
 import { GroupPost } from "@/types/types";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import GroupPostCard from "./GroupPostCard";
+import { useState } from "react";
 
 type TMainGroupPost = Pick<
   GroupPost,
@@ -19,14 +20,16 @@ type TMainGroupPost = Pick<
 >;
 
 function PostList() {
+  const [isFinished, SetIsFinished] = useState<boolean>(false);
   const {
     data: groupPosts,
     isPending,
     isError,
   } = useQuery<TMainGroupPost[]>({
-    queryKey: ["groupPost"],
-    queryFn: getGroupPostOnMain,
+    queryKey: ["groupPost", isFinished],
+    queryFn: () => getGroupPost(isFinished),
   });
+
   if (isPending)
     return <div className="flex justify-center items-center">로딩중...</div>;
 
@@ -37,8 +40,26 @@ function PostList() {
       <h5>같이 사 공구템</h5>
       <p>공동구매를 통해 자취에 필요한 물품을 저렴한 💰금액에 구매해보세요</p>
       <div>
-        <button>진행중</button>
-        <button>종료됨</button>
+        <button
+          className={`${
+            isFinished === false ? "bg-black text-white font-bold" : ""
+          }`}
+          onClick={() => {
+            SetIsFinished(false);
+          }}
+        >
+          진행중
+        </button>
+        <button
+          className={`${
+            isFinished === true ? "bg-black text-white font-bold" : ""
+          }`}
+          onClick={() => {
+            SetIsFinished(true);
+          }}
+        >
+          종료됨
+        </button>
       </div>
       <ul className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {groupPosts.map((post) => (
