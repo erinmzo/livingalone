@@ -1,15 +1,14 @@
 "use client";
 
 import { getGroupPosts, getGroupPostOnMain } from "@/apis/grouppost";
-import { GroupPost } from "@/types/types";
+import { GroupApplication, GroupPost } from "@/types/types";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import GroupPostCard from "./GroupPostCard";
 import { useState } from "react";
 
-type TGroupApplications = {
-  group_applications: {}[];
-};
+// TODO
+type TGroupApplications = Pick<GroupApplication, "id">;
 
 type TMainGroupPost = Pick<
   GroupPost,

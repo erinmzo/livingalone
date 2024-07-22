@@ -7,10 +7,22 @@ import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import MainSectionTitle from "../common/MainSectionTitle";
 
+type TGroupApplications = {
+  group_application: {}[];
+};
+
 type TMainGroupPost = Pick<
   GroupPost,
-  "id" | "title" | "price" | "people_num" | "is_finished" | "img_url" | "start_date" | "end_date"
->;
+  | "id"
+  | "title"
+  | "price"
+  | "people_num"
+  | "is_finished"
+  | "img_url"
+  | "start_date"
+  | "end_date"
+> &
+  TGroupApplications;
 
 function GroupSection() {
   const {
@@ -22,9 +34,11 @@ function GroupSection() {
     queryFn: getGroupPostOnMain,
   });
 
-  if (isPending) return <div className="flex justify-center items-center">로딩중...</div>;
+  if (isPending)
+    return <div className="flex justify-center items-center">로딩중...</div>;
 
-  if (isError) return <div className="flex justify-center items-center">에러...</div>;
+  if (isError)
+    return <div className="flex justify-center items-center">에러...</div>;
 
   return (
     <div className="container mx-auto max-w-[1024px] pt-[58px] pb-[153px]">
@@ -38,6 +52,7 @@ function GroupSection() {
           <li key={post.id}>
             <Link href={`/grouppost/read/${post.id}`}>
               <GroupPostCard
+                application={post.group_application}
                 title={post.title}
                 price={post.price}
                 peopleNum={post.people_num}

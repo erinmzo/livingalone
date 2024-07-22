@@ -13,7 +13,6 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { test } from "./test";
 import { groupPostRevalidate } from "@/utils/revalidate";
 
 function GroupEditForm({ params }: { params: { id: string } }) {
