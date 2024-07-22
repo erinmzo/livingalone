@@ -2,15 +2,28 @@
 
 import { getGroupPostOnMain } from "@/apis/grouppost";
 import GroupPostCard from "@/components/grouppost/list/GroupPostCard";
-import { GroupPost } from "@/types/types";
+import { GroupApplication, GroupPost } from "@/types/types";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import MainSectionTitle from "../common/MainSectionTitle";
 
+type TGroupApplication = Pick<GroupApplication, "id">;
+type TGroupApplications = {
+  group_applications: TGroupApplication[];
+};
+
 type TMainGroupPost = Pick<
   GroupPost,
-  "id" | "title" | "price" | "people_num" | "is_finished" | "img_url" | "start_date" | "end_date"
->;
+  | "id"
+  | "title"
+  | "price"
+  | "people_num"
+  | "is_finished"
+  | "img_url"
+  | "start_date"
+  | "end_date"
+> &
+  TGroupApplications;
 
 function GroupSection() {
   const {
@@ -21,10 +34,11 @@ function GroupSection() {
     queryKey: ["groupPost"],
     queryFn: getGroupPostOnMain,
   });
+  if (isPending)
+    return <div className="flex justify-center items-center">로딩중...</div>;
 
-  if (isPending) return <div className="flex justify-center items-center">로딩중...</div>;
-
-  if (isError) return <div className="flex justify-center items-center">에러...</div>;
+  if (isError)
+    return <div className="flex justify-center items-center">에러...</div>;
 
   return (
     <div className="container mx-auto max-w-[1024px] pt-[58px] pb-[153px]">
@@ -34,21 +48,24 @@ function GroupSection() {
         link="/grouppost"
       />
       <ul className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {groupPosts.map((post) => (
-          <li key={post.id}>
-            <Link href={`/grouppost/read/${post.id}`}>
-              <GroupPostCard
-                title={post.title}
-                price={post.price}
-                peopleNum={post.people_num}
-                isFinished={post.is_finished}
-                imgUrl={post.img_url}
-                startDate={post.start_date}
-                endDate={post.end_date}
-              />
-            </Link>
-          </li>
-        ))}
+        {groupPosts.map((post) => {
+          return (
+            <li key={post.id}>
+              <Link href={`/grouppost/read/${post.id}`}>
+                <GroupPostCard
+                  application={post.group_applications}
+                  title={post.title}
+                  price={post.price}
+                  peopleNum={post.people_num}
+                  isFinished={post.is_finished}
+                  imgUrl={post.img_url}
+                  startDate={post.start_date}
+                  endDate={post.end_date}
+                />
+              </Link>
+            </li>
+          );
+        })}
       </ul>
     </div>
   );

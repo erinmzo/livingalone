@@ -4,7 +4,8 @@ import GroupDetail from "@/components/grouppost/read/GroupDetail";
 type Props = {
   params: { id: string };
 };
-
+// TODO 좋은 방법
+// export const revalidate = 0;
 function GroupReadPage({ params }: Props) {
   return (
     <Page>

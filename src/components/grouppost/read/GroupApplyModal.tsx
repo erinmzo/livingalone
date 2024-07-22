@@ -3,6 +3,7 @@
 import { insertGroupApply } from "@/apis/grouppost";
 import { TNewGroupApplication } from "@/types/types";
 import { useMutation } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import DaumPostcode from "react-daum-postcode";
 import { v4 as uuidv4 } from "uuid";
@@ -13,6 +14,8 @@ interface PropsType {
 }
 
 function GroupApplyModal({ id, onClose }: PropsType) {
+  const router = useRouter();
+
   const [name, setName] = useState<string>("");
   const [phone, setPhone] = useState<string>("");
   const [isPostModalOpen, setIsPostModalOpen] = useState<boolean>(false);
@@ -22,6 +25,10 @@ function GroupApplyModal({ id, onClose }: PropsType) {
   const addMutation = useMutation({
     mutationFn: async (newGroupApply: TNewGroupApplication) => {
       await insertGroupApply(newGroupApply);
+    },
+    onSuccess: () => {
+      onClose();
+      router.refresh();
     },
   });
 

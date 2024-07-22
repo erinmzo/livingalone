@@ -6,6 +6,8 @@ import Link from "next/link";
 import React from "react";
 import GroupDeleteBtn from "./GroupDeleteBtn";
 import GroupApplyBtn from "./GroupApplyBtn";
+import { getGroupDetail } from "@/apis/grouppost";
+// import { useRouter } from "next/navigation";
 
 type Props = {
   params: { id: string };
@@ -16,17 +18,12 @@ type TGroupPostDetail = {
     nickname: string;
     profile_image_url: string;
   };
+  group_applications: {}[];
 } & GroupPost;
 
 async function GroupDetail({ params }: Props) {
   const { id } = params;
-  const supabase = createClient();
-  const { data } = await supabase
-    .from("group_posts")
-    .select("*, profiles(nickname, profile_image_url)")
-    .eq("id", id)
-    .single();
-
+  const data = await getGroupDetail(id);
   if (!data) {
     return <div>로딩 중입니다.</div>;
   }
@@ -41,9 +38,9 @@ async function GroupDetail({ params }: Props) {
     link,
     is_finished,
     img_url,
+    group_applications,
     profiles: { nickname, profile_image_url },
   } = data as TGroupPostDetail;
-
   return (
     <InnerLayout>
       <div>
@@ -73,7 +70,7 @@ async function GroupDetail({ params }: Props) {
         <div className="flex">
           <p>달성률</p>
           {/* TODO 이걸 하려면 신청 받은 갯수도 가져와야한다... */}
-          <p>80%</p>
+          <p>{Math.round((group_applications.length / people_num) * 100)}%</p>
         </div>
       </div>
       <div>
