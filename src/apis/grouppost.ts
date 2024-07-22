@@ -1,15 +1,13 @@
 import { TNewGroupApplication, TNewGroupPost } from "@/types/types";
 
 export async function getGroupPostOnMain() {
-  const response = await fetch("/api/main/group", { next: { revalidate: 60 } });
+  const response = await fetch("/api/main/group");
   const data = await response.json();
   return data;
 }
 
 export async function getGroupPost(isFinished: boolean) {
-  const response = await fetch(`/api/grouppost?isFinished=${isFinished}`, {
-    next: { revalidate: 60 },
-  });
+  const response = await fetch(`/api/grouppost?isFinished=${isFinished}`);
   const data = await response.json();
   return data;
 }
