@@ -1,12 +1,25 @@
-import { ComponentProps, useId } from "react";
+import { ChangeEvent, ChangeEventHandler, ComponentProps, useId } from "react";
 
 type InPutProps = {
   label?: string;
   required?: boolean;
   variant?: "default" | "underline";
+  type?: string;
+  value?: string;
+  placeholder?: string;
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
 } & ComponentProps<"input">;
 
-function Input({ label, required, id, variant = "default" }: InPutProps) {
+function Input({
+  label,
+  required,
+  id,
+  variant = "default",
+  type = "text",
+  value,
+  placeholder,
+  onChange,
+}: InPutProps) {
   const inputUid = useId();
   const inputId = id || inputUid;
   const variantStyles = {
@@ -22,7 +35,22 @@ function Input({ label, required, id, variant = "default" }: InPutProps) {
         <span>{label}</span>
         {required && <span className="text-red-500">*</span>}
       </label>
-      <input id={inputId} className={`${variantStyles[variant]}`} />
+      {type === "file" ? (
+        <input
+          type="file"
+          className={`${variantStyles[variant]}`}
+          value={value}
+          placeholder={placeholder}
+        />
+      ) : (
+        <input
+          id={inputId}
+          className={`${variantStyles[variant]}`}
+          value={value}
+          placeholder={placeholder}
+          onChange={onChange}
+        />
+      )}
     </div>
   );
 }
