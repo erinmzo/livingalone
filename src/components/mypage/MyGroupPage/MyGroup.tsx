@@ -1,6 +1,5 @@
 "use client";
 
-import { table } from "console";
 import Image from "next/image";
 import { useState } from "react";
 
@@ -17,24 +16,12 @@ function MyGroup() {
         <div className="flex items-center">
           <div className="mr-4">
             {isOpen ? (
-              <Image
-                src="/img/chevron up.png"
-                alt="위"
-                width={20}
-                height={20}
-              />
+              <Image src="/img/icon-toggle-up.png" alt="위" width={20} height={20} />
             ) : (
-              <Image
-                src="/img/chevron down.png"
-                alt=""
-                width={20}
-                height={20}
-              />
+              <Image src="/img/icon-toggle-down.png" alt="" width={20} height={20} />
             )}
           </div>
-          <div className="text-xl font-bold">
-            두루마리 휴지 30개 공구합니다!
-          </div>
+          <div className="text-xl font-bold">두루마리 휴지 30개 공구합니다!</div>
         </div>
         <div className="text-lg">2024/07/21 - 2024/08/03</div>
         <div className="mr-2">10명/30명</div>

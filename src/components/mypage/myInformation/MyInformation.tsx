@@ -1,11 +1,10 @@
 "use client";
 
-import Button from "../button/Button";
-import searchWhite from "../../../../public/img/SearchWhite.png";
 import Image from "next/image";
-import DaumPostcode from "react-daum-postcode";
 import { useState } from "react";
+import DaumPostcode from "react-daum-postcode";
 import Input from "../Input/Input";
+import Button from "../button/Button";
 
 function MyInformation() {
   const [isPostModalOpen, setIsPostModalOpen] = useState<boolean>(false);
@@ -31,12 +30,8 @@ function MyInformation() {
             <Input variant="default" type="file" placeholder="사진변경" />
           </div>
           <div>
-            <Button
-              variant="primary"
-              className="flex items-center gap-3"
-              onClick={() => setIsPostModalOpen(true)}
-            >
-              <Image src={searchWhite} alt="이미지" width={20} height={20} />
+            <Button variant="primary" className="flex items-center gap-3" onClick={() => setIsPostModalOpen(true)}>
+              <Image src="/img/icon-search-white.png" alt="검색 아이콘" width={20} height={20} />
               <p>주소변경</p>
             </Button>
             {isPostModalOpen && (
