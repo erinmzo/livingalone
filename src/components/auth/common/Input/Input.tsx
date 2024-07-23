@@ -21,17 +21,25 @@ function Input({ label, variant = "default", type = "text", value, placeholder, 
 
   return (
     <div className="flex flex-col">
-      <label htmlFor={inputId} className="text-[16px] font-bold mb-[10px]">
-        {label}
-      </label>
-      {type === "file" ? (
-        <input type="file" className={`${variantStyles[variant]}`} value={value} placeholder={placeholder} />
-      ) : (
+      <label className="ml-1 mb-[10px] font-bold">{label}</label>
+      {type === "text" && (
         <input
-          id={inputId}
-          className={`${variantStyles[variant]}`}
-          value={value}
+          type="text"
           placeholder={placeholder}
+          className="py-[9px] px-4 rounded-lg border border-[#808080] text-xl font-medium placeholder-[#999999]"
+          value={value}
+          onChange={onChange}
+        />
+      )}
+      {type === "file" && (
+        <input type="file" className={`${variantStyles[variant]}`} value={value} placeholder={placeholder} />
+      )}
+      {type === "password" && (
+        <input
+          type="password"
+          placeholder={placeholder}
+          className="py-[9px] px-4 rounded-lg border border-[#808080] text-xl font-medium placeholder-[#999999]"
+          value={value}
           onChange={onChange}
         />
       )}

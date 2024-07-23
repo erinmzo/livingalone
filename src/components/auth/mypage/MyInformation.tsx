@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import DaumPostcode from "react-daum-postcode";
-import Input from "./common/Input/Input";
+import Input from "../common/Input/Input";
 
 function MyInformation() {
   const [isPostModalOpen, setIsPostModalOpen] = useState<boolean>(false);
