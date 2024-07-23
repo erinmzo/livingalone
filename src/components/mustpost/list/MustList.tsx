@@ -52,7 +52,7 @@ function MustList() {
           </li>
         ))}
       </ul>
-      <button className="mt-[64px] ">더보기</button>
+      <button className="mt-[64px]">더보기</button>
     </div>
   );
 }
