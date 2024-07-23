@@ -21,7 +21,7 @@ function MustPostCard({ title, item, imgUrl }: MustPostCardProps) {
           quality={75}
         />
       </div>
-      <div className="ml-2 mt-3">
+      <div className="px-2 mt-3">
         <span className="text-[14px] text-[#808080] truncate">{item}</span>
         <h4 className="text-[20px] font-bold truncate">{title}</h4>
       </div>

@@ -1,12 +1,10 @@
 "use client";
 import { getMustPostOnMain } from "@/apis/mustpost";
 import MustPostCard from "@/components/mustpost/list/MustPostCard";
-import { MustPost } from "@/types/types";
+import { TMainMustPost } from "@/types/types";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import MainSectionTitle from "../common/MainSectionTitle";
-
-type TMainMustPost = Pick<MustPost, "id" | "title" | "item" | "img_url">;
 
 function MustSection() {
   const {

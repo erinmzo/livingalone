@@ -33,7 +33,7 @@ function GroupPostCard({
           quality={75}
         />
       </div>
-      <div className="ml-2">
+      <div className="px-2">
         <div className="flex items-center gap-3 mt-3">
           <div className="py-1 px-3 rounded-full bg-black text-white text-[12px] font-bold">
             {isFinished ? <span>종료</span> : <span>진행중</span>}
@@ -44,12 +44,8 @@ function GroupPostCard({
         </div>
         <h4 className="text-[20px] font-bold truncate mt-[6px]">{title}</h4>
         <div className="flex items-center gap-2 mt-[6px]">
-          <span className="text-red-600 text-[20px] font-bold">
-            {peopleNum - application.length}명 남음!
-          </span>
-          <span className="text-[24px] font-bold">
-            {price.toLocaleString()}원
-          </span>
+          <span className="text-red-600 text-[20px] font-bold">{peopleNum - application.length}명 남음!</span>
+          <span className="text-[24px] font-bold">{price.toLocaleString()}원</span>
         </div>
       </div>
     </div>
