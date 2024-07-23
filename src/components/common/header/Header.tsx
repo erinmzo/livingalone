@@ -1,10 +1,27 @@
+"use client";
+import { useAuthStore } from "@/zustand/authStore";
+import { User } from "@supabase/supabase-js";
 import Link from "next/link";
+import { useEffect } from "react";
 import AuthHeader from "./AuthHeader";
 import GlobalNav from "./GlobalNav";
 import MobileNav from "./MobileNav";
 import WriteButton from "./WriteButton";
 
-function Header() {
+interface UserProps {
+  user: User | null;
+}
+function Header({ userSessionInfo }: { userSessionInfo: UserProps }) {
+  const saveUser = useAuthStore((state) => state.saveUser);
+
+  useEffect(() => {
+    if (userSessionInfo) {
+      saveUser(userSessionInfo.user);
+    } else {
+      saveUser(null);
+    }
+  }, []);
+
   return (
     <header>
       <AuthHeader />
