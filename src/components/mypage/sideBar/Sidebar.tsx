@@ -1,15 +1,15 @@
 import Link from "next/link";
 
-const links = [
-  { href: `/mypage/${1}`, label: "나의 정보" },
-  { href: `/mypage/${1}/wishmust`, label: "찜한 자취템" },
-  { href: `/mypage/${1}/mymust`, label: "나의 자취템" },
-  { href: `/mypage/${1}/likegroup`, label: "좋아요 공구" },
-  { href: `/mypage/${1}/mygroup`, label: "신청받은 공구" },
-  { href: "/my", label: "내가 쓴 공구" },
-];
-
 function SideBar() {
+  const links = [
+    { href: `/mypage/${1}`, label: "나의 정보" },
+    { href: `/mypage/${1}/wishmust`, label: "찜한 자취템" },
+    { href: `/mypage/${1}/mymust`, label: "나의 자취템" },
+    { href: `/mypage/${1}/likegroup`, label: "좋아요 공구" },
+    { href: `/mypage/${1}/applygroup`, label: "신청한 공구" },
+    { href: `/mypage/${1}/mygroup`, label: "내가 쓴 공구" },
+  ];
+
   return (
     <div className="flex flex-col w-[208px] h-[539px] items-center p-8 border border-gray-400 rounded-lg bg-white">
       <div className="flex-col text-center mb-10">

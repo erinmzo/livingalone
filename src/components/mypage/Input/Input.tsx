@@ -1,4 +1,4 @@
-import { ComponentProps, useId } from "react";
+import { ChangeEvent, ChangeEventHandler, ComponentProps, useId } from "react";
 
 type InPutProps = {
   label?: string;
@@ -7,6 +7,7 @@ type InPutProps = {
   type?: string;
   value?: string;
   placeholder?: string;
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
 } & ComponentProps<"input">;
 
 function Input({
@@ -17,6 +18,7 @@ function Input({
   type = "text",
   value,
   placeholder,
+  onChange,
 }: InPutProps) {
   const inputUid = useId();
   const inputId = id || inputUid;
@@ -46,6 +48,7 @@ function Input({
           className={`${variantStyles[variant]}`}
           value={value}
           placeholder={placeholder}
+          onChange={onChange}
         />
       )}
     </div>

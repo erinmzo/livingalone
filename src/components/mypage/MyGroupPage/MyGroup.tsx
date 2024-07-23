@@ -59,7 +59,7 @@ function MyGroup() {
                 <td className="p-2">전화번호</td>
                 <td className="p-2">주소</td>
                 <td className="p-2 text-right">
-                  <input type="checkbox" readOnly />
+                  <input type="checkbox" />
                 </td>
               </tr>
             </tbody>
