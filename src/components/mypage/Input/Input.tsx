@@ -5,6 +5,8 @@ type InPutProps = {
   required?: boolean;
   variant?: "default" | "underline";
   type?: string;
+  value?: string;
+  placeholder?: string;
 } & ComponentProps<"input">;
 
 function Input({
@@ -13,6 +15,8 @@ function Input({
   id,
   variant = "default",
   type = "text",
+  value,
+  placeholder,
 }: InPutProps) {
   const inputUid = useId();
   const inputId = id || inputUid;
@@ -29,11 +33,20 @@ function Input({
         <span>{label}</span>
         {required && <span className="text-red-500">*</span>}
       </label>
-      {/* <input id={inputId} className={`${variantStyles[variant]}`} /> */}
       {type === "file" ? (
-        <input type="file" className={`${variantStyles[variant]}`} />
+        <input
+          type="file"
+          className={`${variantStyles[variant]}`}
+          value={value}
+          placeholder={placeholder}
+        />
       ) : (
-        <input id={inputId} className={`${variantStyles[variant]}`} />
+        <input
+          id={inputId}
+          className={`${variantStyles[variant]}`}
+          value={value}
+          placeholder={placeholder}
+        />
       )}
     </div>
   );
