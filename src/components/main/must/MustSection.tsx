@@ -27,7 +27,7 @@ function MustSection() {
         content="자취에 필요한 다양한 아이템을 자랑하고 추천해보세요"
         link="/mustpost"
       />
-      <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 px-[16px] lg:px-0">
         {mustPosts.map((post) => (
           <li key={post.id}>
             <Link href={`/mustpost/read/${post.id}`}>
