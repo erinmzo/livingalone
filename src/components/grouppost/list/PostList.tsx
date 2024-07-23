@@ -93,9 +93,9 @@ function PostList() {
           종료됨
         </button>
       </div>
-      <ul className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {groupPosts &&
-          groupPosts.map((post) => {
+      {groupPosts && groupPosts.length ? (
+        <ul className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {groupPosts.map((post) => {
             return (
               <li key={post.id}>
                 <Link href={`/grouppost/read/${post.id}`}>
@@ -113,7 +113,16 @@ function PostList() {
               </li>
             );
           })}
-      </ul>
+        </ul>
+      ) : (
+        <div className="flex justify-center">
+          <p>
+            {isFinished
+              ? "종료된 공구템 게시물이 없습니다."
+              : "진행 중인 공구템 게시물이 없습니다."}
+          </p>
+        </div>
+      )}
       <div className="flex justify-center mt-[124px]">
         {hasNextPage && (
           <button

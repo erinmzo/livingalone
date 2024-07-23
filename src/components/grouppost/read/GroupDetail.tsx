@@ -44,7 +44,7 @@ async function GroupDetail({ params }: Props) {
   } = data as TGroupPostDetail;
   return (
     <InnerLayout>
-      <div>
+      <div className="relative overflow-hidden rounded-lg">
         <Image
           src={img_url}
           alt="공구템 이미지"
@@ -52,6 +52,14 @@ async function GroupDetail({ params }: Props) {
           height={500}
           className="border rounded-lg"
         />
+        {link && (
+          <Link href={link}>
+            <div className=" cursor-pointer flex justify-center items-center bg-black absolute w-full h-full top-0 left-0 opacity-0 hover:opacity-100 hover:bg-opacity-50">
+              <p className="z-10 opacity-100 text-white">공구템 보러가기</p>
+            </div>
+          </Link>
+        )}
+
         {/* <div>999(하트수)</div> */}
       </div>
       <div className="flex justify-between mt-[23px]">
