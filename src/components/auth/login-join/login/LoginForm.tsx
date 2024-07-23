@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Notify, Report } from "notiflix";
 import React, { useState } from "react";
+import Input from "../../common/Input/Input";
 
 const LoginForm = () => {
   const router = useRouter();
@@ -32,9 +33,9 @@ const LoginForm = () => {
     if (response.status !== 200) {
       return Report.failure("로그인에 실패했습니다.", "아이디와 비밀번호를 정확히 입력해 주세요.", "확인");
     }
+
     const data = await response.json();
     saveUser(data.user);
-
     Notify.success("로그인에 성공했습니다.");
     router.push("/");
   };
@@ -43,22 +44,20 @@ const LoginForm = () => {
     <div className="flex flex-col justify-center items-center">
       <form onSubmit={handleLoginSubmit} className="flex flex-col justify-center w-[500px] mb-6">
         <div className="flex flex-col mb-6">
-          <label className="ml-1 mb-[10px] font-bold">이메일</label>
-          <input
-            type="email"
-            placeholder="이메일 주소를 입력해주세요"
-            className="py-[9px] px-4 rounded-lg border border-[#808080] text-xl font-medium placeholder-[#999999]"
+          <Input
+            label="이메일"
+            type="text"
             value={email}
+            placeholder="이메일 주소를 입력해주세요"
             onChange={handleEmailChange}
           />
         </div>
         <div className="flex flex-col mb-14">
-          <label className="ml-1 mb-[10px] font-bold">비밀번호</label>
-          <input
+          <Input
+            label="비밀번호"
             type="password"
-            placeholder="비밀번호를 입력해주세요"
-            className="py-[9px] px-4 rounded-lg border border-[#808080] text-xl font-medium placeholder-[#999999]"
             value={password}
+            placeholder="비밀번호를 입력해주세요"
             onChange={handlePasswordChange}
           />
         </div>
