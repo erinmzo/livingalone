@@ -7,6 +7,7 @@ import React from "react";
 import GroupDeleteBtn from "./GroupDeleteBtn";
 import GroupApplyBtn from "./GroupApplyBtn";
 import { getGroupDetail } from "@/apis/grouppost";
+import GroupFinishBtn from "./GroupFinishBtn";
 // import { useRouter } from "next/navigation";
 
 type Props = {
@@ -49,45 +50,60 @@ async function GroupDetail({ params }: Props) {
           alt="공구템 이미지"
           width={680}
           height={500}
-          className="hover:"
+          className="border rounded-lg"
         />
-        <div>999(하트수)</div>
+        {/* <div>999(하트수)</div> */}
       </div>
-      <div className="flex justify-between">
-        <div className="flex">
+      <div className="flex justify-between mt-[23px]">
+        <div className="flex gap-2 items-center">
           <Image
             src={profile_image_url}
             alt="프로필 사진"
-            width={50}
-            height={50}
+            width={40}
+            height={40}
             className="rounded-full"
           />
           <div>
             <p>{nickname}</p>
-            <p>{start_date}</p>
+            <p className="text-[12px] text-[#757575]">{start_date}</p>
           </div>
         </div>
         <div className="flex">
-          <p>달성률</p>
-          {/* TODO 이걸 하려면 신청 받은 갯수도 가져와야한다... */}
-          <p>{Math.round((group_applications.length / people_num) * 100)}%</p>
+          <p className="font-bold text-[20px]">
+            달성률{" "}
+            <span className="text-[36px]">
+              {Math.round((group_applications.length / people_num) * 100)}%
+            </span>
+          </p>
         </div>
       </div>
-      <div>
+      <div className="mt-3">
         <p>마감일 {end_date}까지</p>
-        <h5>{title}</h5>
-        <p>{price.toLocaleString()}원</p>
+        <h5 className="font-bold text-[24px] mt-1">{title}</h5>
+        <p className="font-bold text-[24px] mt-3 mb-[35px]">
+          {price.toLocaleString()}원
+        </p>
         {/* TODO 글 작성자는 수정삭제, 그 외엔 공구 신청 */}
-        <GroupApplyBtn id={id} />
-        <div>
+
+        {is_finished ? (
+          <button>이미 종료된 공구입니다.</button>
+        ) : (
+          <>
+            <GroupApplyBtn id={id} />
+            <GroupFinishBtn id={id} />
+          </>
+        )}
+        {/* 보더 */}
+        <div className="mt-[56px] border-t border-black py-6 px-2">
+          <pre>{content}</pre>
+        </div>
+        <div className="flex justify-center gap-2 mt-[14px]">
           <Link href={`/grouppost/edit/${id}`}>
-            <button>글 수정</button>
+            <button className="w-[197px] h-[48px] font-bold bg-black text-white text-[20px] rounded-full">
+              글 수정
+            </button>
           </Link>
           <GroupDeleteBtn id={id} />
-        </div>
-        {/* 보더 */}
-        <div>
-          <p>{content}</p>
         </div>
       </div>
     </InnerLayout>

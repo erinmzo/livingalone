@@ -22,7 +22,7 @@ function GroupPostCard({
 }: GroupPostCardProps) {
   return (
     <div>
-      <div className="relative aspect-video rounded-lg overflow-hidden">
+      <div className="relative aspect-video rounded-lg overflow-hidden border">
         <Image
           src={imgUrl}
           alt={title}
@@ -44,8 +44,12 @@ function GroupPostCard({
         </div>
         <h4 className="text-[20px] font-bold truncate mt-[6px]">{title}</h4>
         <div className="flex items-center gap-2 mt-[6px]">
-          <span className="text-red-600 text-[20px] font-bold">{peopleNum - application.length}명 남음!</span>
-          <span className="text-[24px] font-bold">{price.toLocaleString()}원</span>
+          <span className="text-red-600 text-[20px] font-bold">
+            {peopleNum - application.length}명 남음!
+          </span>
+          <span className="text-[24px] font-bold">
+            {price.toLocaleString()}원
+          </span>
         </div>
       </div>
     </div>
