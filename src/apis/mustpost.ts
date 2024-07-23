@@ -1,3 +1,5 @@
+import { createClient } from "@/supabase/client";
+
 export async function getMustPostOnMain() {
   const response = await fetch("/api/main/must", {
     next: { revalidate: 60 },
@@ -21,5 +23,15 @@ export async function getCategories() {
 export async function getMustPostbyCategory(categoryId: string) {
   const response = await fetch(`/api/mustpost/category/${categoryId}`);
   const data = await response.json();
+  return data;
+}
+
+export async function getMustPostDetail(id: string) {
+  const supabase = createClient();
+  const { data } = await supabase
+    .from("must_posts")
+    .select("*, profiles(nickname, profile_image_url), must_categories(name)")
+    .eq("id", id)
+    .single();
   return data;
 }
