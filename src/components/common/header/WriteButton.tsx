@@ -9,7 +9,7 @@ function WriteButton() {
   };
 
   return (
-    <div className="relative ml-[34px]">
+    <div className="relative ml-[34px] hidden sm:block">
       <button
         className="rounded-full py-[10px] px-[22px] border border-black bg-black text-[20px] text-white font-bold hover:bg-white hover:text-black"
         onClick={handleIsOpen}
