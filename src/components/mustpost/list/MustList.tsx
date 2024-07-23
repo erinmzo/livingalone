@@ -18,12 +18,21 @@ function MustList() {
     isError,
   } = useQuery<TMustPostList[]>({
     queryKey: ["mustPosts", selectedCategory],
-    queryFn: selectedCategory === "ALL" ? getMustPostAll : () => getMustPostbyCategory(selectedCategory),
+    queryFn:
+      selectedCategory === "ALL"
+        ? getMustPostAll
+        : () => getMustPostbyCategory(selectedCategory),
   });
 
-  if (isPending) return <div className="flex justify-center items-center">로딩중...</div>;
+  if (isPending)
+    return <div className="flex justify-center items-center">로딩중...</div>;
 
-  if (isError) return <div className="flex justify-center items-center">데이터를 불러오는데 실패했습니다!</div>;
+  if (isError)
+    return (
+      <div className="flex justify-center items-center">
+        데이터를 불러오는데 실패했습니다!
+      </div>
+    );
 
   return (
     <div className="flex flex-col items-center justify-center">
@@ -40,7 +49,11 @@ function MustList() {
             {mustPosts.map((post) => (
               <li key={post.id} className="mb-[64px]">
                 <Link href={`/mustpost/read/${post.id}`}>
-                  <MustPostCard title={post.title} item={post.item} imgUrl={post.img_url} />
+                  <MustPostCard
+                    title={post.title}
+                    item={post.item}
+                    imgUrl={post.img_url}
+                  />
                 </Link>
               </li>
             ))}
@@ -52,7 +65,9 @@ function MustList() {
           </div>
         </div>
       ) : (
-        <div className="min-h-screen flex justify-center">해당 카테고리에 맞는 게시글이 없습니다.</div>
+        <div className="min-h-screen flex justify-center">
+          해당 카테고리에 맞는 게시글이 없습니다.
+        </div>
       )}
     </div>
   );

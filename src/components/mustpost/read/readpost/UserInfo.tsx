@@ -1,14 +1,25 @@
+import Image from "next/image";
 import React from "react";
-
-function UserInfo() {
+interface UserInfoProps {
+  profile_image_url: string;
+  nickname: string;
+  created_at: string;
+}
+function UserInfo({ profile_image_url, nickname, created_at }: UserInfoProps) {
   return (
-    <div>
+    <div className="flex flex-row items-center ml-2 mb-8">
       {/* 프로필부분 wrap */}
-      {/* <Image></Image> */}
-      <div>
+      <Image
+        src={profile_image_url}
+        alt="프로필 이미지"
+        width={40}
+        height={40}
+        className="rounded-full"
+      />
+      <div className="flex flex-col ml-2">
         {/* 닉네임-생성날짜 */}
-        <span>닉네임123</span>
-        <span>2024.11.22</span>
+        <span>{nickname}</span>
+        <span className="text-xs">2024.11.22</span>
       </div>
     </div>
   );
