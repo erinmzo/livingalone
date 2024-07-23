@@ -10,8 +10,7 @@ type InputProps = {
 };
 
 function Input({ label, variant = "default", type = "text", value, placeholder, onChange }: InputProps) {
-  const inputUid = useId();
-  const inputId = inputUid;
+  const inputId = useId();
   const variantStyles = {
     default:
       "border border-[#808080] rounded-lg px-[16px] py-[8px] text-[16px] focus:outline-none focus:border-gray-950 transition",
@@ -21,7 +20,9 @@ function Input({ label, variant = "default", type = "text", value, placeholder, 
 
   return (
     <div className="flex flex-col">
-      <label className="ml-1 mb-[10px] font-bold">{label}</label>
+      <label className="ml-1 mb-[10px] font-bold" htmlFor={inputId}>
+        {label}
+      </label>
       {type === "text" && (
         <input
           type="text"
@@ -29,10 +30,17 @@ function Input({ label, variant = "default", type = "text", value, placeholder, 
           className="py-[9px] px-4 rounded-lg border border-[#808080] text-xl font-medium placeholder-[#999999]"
           value={value}
           onChange={onChange}
+          id={inputId}
         />
       )}
       {type === "file" && (
-        <input type="file" className={`${variantStyles[variant]}`} value={value} placeholder={placeholder} />
+        <input
+          type="file"
+          className={`${variantStyles[variant]}`}
+          value={value}
+          placeholder={placeholder}
+          id={inputId}
+        />
       )}
       {type === "password" && (
         <input
@@ -41,6 +49,7 @@ function Input({ label, variant = "default", type = "text", value, placeholder, 
           className="py-[9px] px-4 rounded-lg border border-[#808080] text-xl font-medium placeholder-[#999999]"
           value={value}
           onChange={onChange}
+          id={inputId}
         />
       )}
     </div>
