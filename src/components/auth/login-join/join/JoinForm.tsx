@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { Notify, Report } from "notiflix";
 import React, { useState } from "react";
 import Input from "../../common/Input/Input";
 
@@ -33,20 +34,20 @@ const JoinForm = () => {
       },
       body: JSON.stringify(joinData),
     });
-    if (response.status === 200) {
-      alert("회원가입이 완료되었습니다.");
+
+    if (response.ok) {
+      Report.success("회원가입이 성공적으로 완료되었습니다.", "", "확인");
     } else {
-      alert("회원가입에 실패하였습니다");
+      const data = await response.json();
+      return Notify.failure(`회원가입에 실패하였습니다: ${data.message}`);
     }
+
     router.push("/login");
   };
 
   return (
     <div className="flex flex-col justify-center items-center">
-      <form
-        onSubmit={handleJoinSubmit}
-        className="flex flex-col justify-center gap-6 w-[500px] mb-6"
-      >
+      <form onSubmit={handleJoinSubmit} className="flex flex-col justify-center gap-6 w-[500px] mb-6">
         <Input
           label="닉네임"
           type="text"
@@ -69,10 +70,7 @@ const JoinForm = () => {
           onChange={handlePasswordChange}
         />
         <Link href="/login">
-          <button
-            type="submit"
-            className="w-[500px] mt-4 py-3 text-xl bg-black text-white rounded-lg"
-          >
+          <button type="submit" className="w-[500px] mt-4 py-3 text-xl bg-black text-white rounded-lg">
             가입하기
           </button>
         </Link>
