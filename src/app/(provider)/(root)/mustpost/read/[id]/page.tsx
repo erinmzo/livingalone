@@ -1,10 +1,12 @@
 import Page from "@/components/common/Page/Page";
 import Read from "@/components/mustpost/read/Read";
-
-function MustReadPage() {
+type Props = {
+  params: { id: string };
+};
+function MustReadPage({ params }: Props) {
   return (
     <Page>
-      <Read />
+      <Read params={params} />
     </Page>
   );
 }
