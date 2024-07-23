@@ -1,7 +1,6 @@
 "use client";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Notify, Report } from "notiflix";
+import { Notify } from "notiflix";
 import React, { useState } from "react";
 import Input from "../../common/Input/Input";
 
@@ -10,6 +9,29 @@ const JoinForm = () => {
   const [nickname, setNickname] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const joinData = { nickname, email, password };
+
+  const handleSubmitJoin = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const response = await fetch("/api/auth/join", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(joinData),
+    });
+
+    if (response.ok) {
+      Notify.success("회원가입이 성공적으로 완료되었습니다.");
+    } else {
+      const data = await response.json();
+      return Notify.failure(`회원가입에 실패하였습니다: ${data.message}`);
+    }
+
+    router.push("/login");
+  };
+
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   };
@@ -22,33 +44,10 @@ const JoinForm = () => {
     setNickname(e.target.value);
   };
 
-  const handleJoinSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    const joinData = { nickname, email, password };
-
-    const response = await fetch("/api/auth/join", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(joinData),
-    });
-
-    if (response.ok) {
-      Report.success("회원가입이 성공적으로 완료되었습니다.", "", "확인");
-    } else {
-      const data = await response.json();
-      return Notify.failure(`회원가입에 실패하였습니다: ${data.message}`);
-    }
-
-    router.push("/login");
-  };
-
   return (
     <div className="flex flex-col justify-center items-center">
       <form
-        onSubmit={handleJoinSubmit}
+        onSubmit={handleSubmitJoin}
         className="flex flex-col justify-center gap-6 w-[500px] mb-6"
       >
         <Input
