@@ -1,14 +1,12 @@
 "use client";
-
-import Router, { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 const JoinForm = () => {
+  const router = useRouter();
   const [nickname, setNickname] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const JoinData = { nickname, email, password };
-
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   };
@@ -24,59 +22,57 @@ const JoinForm = () => {
   const handleJoinSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    const joinData = { nickname, email, password };
+
     const response = await fetch("/api/auth/join", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(JoinData),
+      body: JSON.stringify(joinData),
     });
-
-    const data = await response.json();
     if (response.status === 200) {
       alert("회원가입이 완료되었습니다.");
     } else {
       alert("회원가입에 실패하였습니다");
     }
-    Router.push("/login");
+    router.push("/login");
   };
 
   return (
-    <div className="flex flex-col w-full mt-5 items-center justify-center">
+    <div className="">
       <form onSubmit={handleJoinSubmit}>
-        <label className="font-semibold mt-6">닉네임</label>
-        <br />
-        <input
-          type="text"
-          placeholder="커뮤니티에서 보여질 닉네임을 쓰세요"
-          className="w-[500px] h-[49px] rounded-md border-2 border-gray-300 mt-3"
-          value={nickname}
-          onChange={handleNicknameChange}
-        />
-        <br />
-        <label className="font-semibold mt-6">이메일</label>
-        <br />
-        <input
-          type="email"
-          placeholder="이메일 주소를 입력해주세요"
-          className="w-[500px] h-[49px] rounded-md border-2 border-gray-300 mt-3"
-          value={email}
-          onChange={handleEmailChange}
-        />
-        <br />
-        <label className="font-semibold mt-6">비밀번호</label>
-        <br />
-        <input
-          type="password"
-          placeholder="숫자와 영문조합 입력해주세요"
-          className="w-[500px] h-[49px] rounded-md border-2 border-gray-300 mt-3"
-          value={password}
-          onChange={handlePasswordChange}
-        />
-        <button
-          type="submit"
-          className="mt-4 w-[500px] h-[49px] rounded-lg border-2 bg-black text-white flex items-center justify-center"
-        >
+        <div>
+          <label className="">닉네임</label>
+          <input
+            type="text"
+            placeholder="커뮤니티에서 사용할 닉네임을 적어주세요"
+            className=""
+            value={nickname}
+            onChange={handleNicknameChange}
+          />
+        </div>
+        <div>
+          <label className="">이메일</label>
+          <input
+            type="email"
+            placeholder="이메일 주소를 입력해주세요"
+            className=""
+            value={email}
+            onChange={handleEmailChange}
+          />
+        </div>
+        <div>
+          <label className="">비밀번호</label>
+          <input
+            type="password"
+            placeholder="숫자와 영문조합 입력해주세요"
+            className=""
+            value={password}
+            onChange={handlePasswordChange}
+          />
+        </div>
+        <button type="submit" className="">
           가입하기
         </button>
       </form>

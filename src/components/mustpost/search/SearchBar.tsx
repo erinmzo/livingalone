@@ -12,7 +12,7 @@ function SearchBar() {
   };
   return (
     <form className="flex flex-row w-[420px] mb-5 py-[10px] px-2 border-b-2 border-black" onSubmit={handleSearch}>
-      <Image src="/img/search.png" alt="검색버튼" width={29} height={32} />
+      <Image src="/img/icon-search.png" alt="검색버튼" width={29} height={32} />
       <input
         type="text"
         placeholder="#여름필수템"
