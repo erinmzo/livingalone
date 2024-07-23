@@ -23,9 +23,10 @@ function SearchList() {
     queryFn: getMustPostAll,
   });
 
-  if (isPending) return <div className="flex justify-center items-center">로딩중...</div>;
+  if (isPending) return <div className="flex justify-center items-center min-h-[400px]">로딩중...</div>;
 
-  if (isError) return <div className="flex justify-center items-center">데이터를 불러오는데 실패했습니다!</div>;
+  if (isError)
+    return <div className="flex justify-center items-center min-h-[400px]">데이터를 불러오는데 실패했습니다!</div>;
 
   const searchedList = mustPosts.filter(
     (post) => post.item.includes(searchValue) || post.title.includes(searchValue) || post.content.includes(searchValue)
@@ -57,8 +58,8 @@ function SearchList() {
           </div>
         </div>
       ) : (
-        <div className="flex flex-col justify-center items-center mt-[64px]">
-          <div>해당 카테고리에 맞는 게시글이 없습니다.</div>
+        <div className="flex flex-col justify-center items-center mt-[64px] min-h-[400px]">
+          <div className="mb-[64px]">해당 카테고리에 맞는 게시글이 없습니다.</div>
           <ResetButton />
         </div>
       )}
