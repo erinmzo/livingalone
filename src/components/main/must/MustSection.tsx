@@ -16,9 +16,9 @@ function MustSection() {
     queryFn: getMustPostOnMain,
   });
 
-  if (isPending) return <div className="flex justify-center items-center"> 로딩중...</div>;
+  if (isPending) return <div className="flex justify-center items-center">로딩중...</div>;
 
-  if (isError) return <div className="flex justify-center items-center"> 에러...</div>;
+  if (isError) return <div className="flex justify-center items-center">에러...</div>;
 
   return (
     <div className="container mx-auto max-w-[1024px] pt-[58px] pb-[153px]">
@@ -27,7 +27,7 @@ function MustSection() {
         content="자취에 필요한 다양한 아이템을 자랑하고 추천해보세요"
         link="/mustpost"
       />
-      <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 px-[16px] lg:px-0">
         {mustPosts.map((post) => (
           <li key={post.id}>
             <Link href={`/mustpost/read/${post.id}`}>

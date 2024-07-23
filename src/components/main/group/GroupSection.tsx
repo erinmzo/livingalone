@@ -14,14 +14,7 @@ type TGroupApplications = {
 
 type TMainGroupPost = Pick<
   GroupPost,
-  | "id"
-  | "title"
-  | "price"
-  | "people_num"
-  | "is_finished"
-  | "img_url"
-  | "start_date"
-  | "end_date"
+  "id" | "title" | "price" | "people_num" | "is_finished" | "img_url" | "start_date" | "end_date"
 > &
   TGroupApplications;
 
@@ -34,11 +27,9 @@ function GroupSection() {
     queryKey: ["groupPost"],
     queryFn: getGroupPostOnMain,
   });
-  if (isPending)
-    return <div className="flex justify-center items-center">로딩중...</div>;
+  if (isPending) return <div className="flex justify-center items-center">로딩중...</div>;
 
-  if (isError)
-    return <div className="flex justify-center items-center">에러...</div>;
+  if (isError) return <div className="flex justify-center items-center">에러...</div>;
 
   return (
     <div className="container mx-auto max-w-[1024px] pt-[58px] pb-[153px]">
@@ -47,7 +38,7 @@ function GroupSection() {
         content="공동구매를 통해 자취에 필요한 물품을 저렴한 금액에 구매해보세요"
         link="/grouppost"
       />
-      <ul className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <ul className="grid grid-cols-1 sm:grid-cols-2 gap-8 px-[16px] lg:px-0">
         {groupPosts.map((post) => {
           return (
             <li key={post.id}>
