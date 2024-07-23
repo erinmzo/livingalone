@@ -3,16 +3,13 @@
 import {
   getGroupPost,
   insertGroupImage,
-  insertGroupPost,
   updateGroupPost,
 } from "@/apis/grouppost";
 import { GroupPost, TNewGroupPost } from "@/types/types";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { revalidatePath } from "next/cache";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import { v4 as uuidv4 } from "uuid";
 import { groupPostRevalidate } from "@/utils/revalidate";
 
 function GroupEditForm({ params }: { params: { id: string } }) {
@@ -24,7 +21,7 @@ function GroupEditForm({ params }: { params: { id: string } }) {
     isPending,
     isError,
   } = useQuery<GroupPost>({
-    queryKey: ["groupPost"],
+    queryKey: ["editGroupPost"],
     queryFn: () => getGroupPost(id),
   });
   const [title, setTitle] = useState<string>("");
@@ -77,7 +74,6 @@ function GroupEditForm({ params }: { params: { id: string } }) {
       await updateGroupPost(newGroupPost);
     },
     onSuccess: async () => {
-      // revalidatePath(`/grouppost/read/${id}`);
       groupPostRevalidate(id);
       router.push(`/grouppost/read/${id}`);
       router.refresh();

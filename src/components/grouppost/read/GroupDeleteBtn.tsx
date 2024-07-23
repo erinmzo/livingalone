@@ -22,7 +22,14 @@ function GroupDeleteBtn({ id }: { id: string }) {
     }
   };
 
-  return <button onClick={deleteGroupPostHandler}>삭제</button>;
+  return (
+    <button
+      className="w-[120px] border border-black text-[20px] rounded-full"
+      onClick={deleteGroupPostHandler}
+    >
+      삭제
+    </button>
+  );
 }
 
 export default GroupDeleteBtn;

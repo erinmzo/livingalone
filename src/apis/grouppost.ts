@@ -9,10 +9,13 @@ export async function getGroupPostOnMain() {
   return data;
 }
 
-export async function getGroupPosts(isFinished: boolean) {
-  const response = await fetch(`/api/grouppost?isFinished=${isFinished}`, {
-    next: { revalidate: 60 },
-  });
+export async function getGroupPosts(page = 0, isFinished: boolean) {
+  const response = await fetch(
+    `/api/grouppost?page=${page}&isFinished=${isFinished}`,
+    {
+      next: { revalidate: 60 },
+    }
+  );
   const data = await response.json();
   return data;
 }
