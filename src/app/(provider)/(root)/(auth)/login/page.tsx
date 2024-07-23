@@ -1,7 +1,7 @@
 import Page from "@/components/common/Page/Page";
 
-import LoginForm from "@/components/login-join/login/LoginForm";
-import LoginTitle from "@/components/login-join/login/LoginTitle";
+import LoginForm from "@/components/auth/login-join/login/LoginForm";
+import LoginTitle from "@/components/auth/login-join/login/LoginTitle";
 
 function LoginPage() {
   return (

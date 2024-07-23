@@ -11,17 +11,14 @@ function SideBar() {
   ];
 
   return (
-    <div className="flex flex-col w-[208px] h-[539px] items-center p-8 border border-gray-400 rounded-lg bg-white">
-      <div className="flex-col text-center mb-10">
+    <div className="top-0 left-0 flex flex-col justify-center w-[208px] px-[45px] py-[40px] items-center border border-gray-400 rounded-lg bg-white">
+      <div className="flex-col justify-center items-center">
         <div className="w-24 h-24 bg-gray-200 rounded-full mb-6"></div>
-        <div className="text-lg font-semibold mb-4">나는공구왕</div>
+        <div className="text-[16px] font-semibold text-center">나는 공구왕</div>
       </div>
-      <ul className="text-gray-600 space-y-3 text-center">
+      <ul className="flex flex-col gap-[24px] mt-[40px]">
         {links.map((link) => (
-          <li
-            key={link.href}
-            className="block hover:text-blue-500 hover:text-lg transition-all "
-          >
+          <li key={link.href} className="text-[18px] font-medium text-[#b3b3b3] hover:text-blue-500 transition-all ">
             <Link href={link.href}>{link.label}</Link>
           </li>
         ))}
