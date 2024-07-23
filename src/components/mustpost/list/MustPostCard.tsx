@@ -25,7 +25,9 @@ function MustPostCard({ title, item, imgUrl }: MustPostCardProps) {
         <span className="text-[14px] text-[#808080] truncate">{item}</span>
         <h4 className="text-[20px] font-bold truncate">{title}</h4>
       </div>
-      <Wish />
+      <div className="absolute right-[20px] top-[20px]">
+        <Wish />
+      </div>
     </div>
   );
 }
