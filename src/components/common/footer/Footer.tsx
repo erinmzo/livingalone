@@ -4,7 +4,7 @@ import FooterNav from "./FooterNav";
 
 function Footer() {
   return (
-    <footer className="bg-[#CCCCCC] pt-[40px] pb-[80px]">
+    <footer className="hidden sm:block bg-[#CCCCCC] pt-[40px] pb-[80px]">
       <div className="container mx-auto max-w-[1024px]">
         <h1 className="text-[20px] font-bold">
           <Link href="/">혼자살때</Link>

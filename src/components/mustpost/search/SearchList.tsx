@@ -35,8 +35,11 @@ function SearchList() {
     <div className="flex flex-col items-center justify-center">
       <div className="flex flex-col items-center justify-center">
         <Title />
-        <div className="flex flex-col justify-center items-center mb-[70px]">
+        <div className="flex flex-col justify-center items-center mb-[30px]">
           <SearchBar />
+        </div>
+        <div className="flex justify-center items-center gap-4 mb-[70px]">
+          <ResetButton />
         </div>
       </div>
       {searchedList.length > 0 ? (
@@ -50,14 +53,10 @@ function SearchList() {
               </li>
             ))}
           </ul>
-          <div className="flex justify-center items-center gap-4 mt-[64px]">
-            <ResetButton />
-          </div>
         </div>
       ) : (
         <div className="flex flex-col justify-center items-center mt-[64px] min-h-[400px]">
           <div className="mb-[64px]">해당 카테고리에 맞는 게시글이 없습니다.</div>
-          <ResetButton />
         </div>
       )}
     </div>

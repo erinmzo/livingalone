@@ -2,7 +2,7 @@ import Link from "next/link";
 
 function GlobalNav() {
   return (
-    <nav>
+    <nav className="hidden sm:block">
       <h2 className="hidden">주메뉴</h2>
       <ul className="flex gap-[34px] items-center text-[20px] font-bold">
         <li>
