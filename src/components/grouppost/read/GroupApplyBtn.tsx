@@ -7,7 +7,12 @@ function GroupApplyBtn({ id }: { id: string }) {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   return (
     <>
-      <button onClick={() => setIsModalOpen(true)}>공구 신청하기</button>
+      <button
+        className="w-[330px] py-3 text-white font-bold text-[20px] bg-black rounded-full"
+        onClick={() => setIsModalOpen(true)}
+      >
+        공구 신청하기
+      </button>
       {isModalOpen && (
         <GroupApplyModal id={id} onClose={() => setIsModalOpen(false)} />
       )}

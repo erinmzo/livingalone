@@ -28,12 +28,14 @@ export async function PUT(
   // 게시글 수정
   const { postId } = params;
   const newGroupPost = await request.json();
+
   const supabase = createClient();
   try {
     const { data } = await supabase
       .from("group_posts")
       .update(newGroupPost)
       .eq("id", postId);
+
     return NextResponse.json(data);
   } catch (error) {
     return NextResponse.json({ error: "포스트를 수정하는 데 실패했습니다." });
