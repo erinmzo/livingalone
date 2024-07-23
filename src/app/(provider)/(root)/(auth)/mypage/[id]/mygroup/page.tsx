@@ -1,5 +1,7 @@
+import MyGroup from "@/components/mypage/MyGroupPage/MyGroup";
+
 function MyGroupPage() {
-  return <div>신청 받은 공구</div>;
+  return <MyGroup />;
 }
 
 export default MyGroupPage;
