@@ -51,9 +51,6 @@ function SearchList() {
             ))}
           </ul>
           <div className="flex justify-center items-center gap-4 mt-[64px]">
-            <button className="border border-black py-4 px-8 rounded-full font-bold hover:bg-black hover:text-white">
-              더보기
-            </button>
             <ResetButton />
           </div>
         </div>
