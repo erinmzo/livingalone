@@ -1,4 +1,4 @@
-import MyGroup from "@/components/mypage/MyGroupPage/MyGroup";
+import MyGroup from "@/components/mypage/MyGroup";
 
 function MyGroupPage() {
   return <MyGroup />;

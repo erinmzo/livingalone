@@ -1,4 +1,4 @@
-import MyInformation from "@/components/mypage/myInformation/MyInformation";
+import MyInformation from "@/components/mypage/MyInformation";
 
 function MyMainPage() {
   return <MyInformation />;

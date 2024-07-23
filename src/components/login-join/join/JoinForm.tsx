@@ -66,7 +66,7 @@ const JoinForm = () => {
           <label className="">비밀번호</label>
           <input
             type="password"
-            placeholder="숫자와 영문조합 입력해주세요"
+            placeholder="숫자와 영문 조합으로 입력해주세요"
             className=""
             value={password}
             onChange={handlePasswordChange}
