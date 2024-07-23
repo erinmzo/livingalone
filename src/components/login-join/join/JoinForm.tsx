@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
@@ -40,41 +41,54 @@ const JoinForm = () => {
   };
 
   return (
-    <div className="">
-      <form onSubmit={handleJoinSubmit}>
-        <div>
-          <label className="">닉네임</label>
+    <div className="flex flex-col justify-center items-center">
+      <form
+        onSubmit={handleJoinSubmit}
+        className="flex flex-col justify-center gap-6 w-[500px] mb-6"
+      >
+        <div className="flex flex-col">
+          <label className="ml-1 mb-[10px] font-bold">닉네임</label>
           <input
             type="text"
             placeholder="커뮤니티에서 사용할 닉네임을 적어주세요"
-            className=""
+            className="py-[9px] px-4 rounded-lg border border-[#808080] text-xl font-medium placeholder-[#999999]"
             value={nickname}
             onChange={handleNicknameChange}
           />
         </div>
-        <div>
-          <label className="">이메일</label>
+        <div className="flex flex-col">
+          <label className="ml-1 mb-[10px] font-bold">이메일</label>
           <input
             type="email"
             placeholder="이메일 주소를 입력해주세요"
-            className=""
+            className="py-[9px] px-4 rounded-lg border border-[#808080] text-xl font-medium placeholder-[#999999]"
             value={email}
             onChange={handleEmailChange}
           />
         </div>
-        <div>
-          <label className="">비밀번호</label>
+        <div className="flex flex-col">
+          <label className="ml-1 mb-[10px] font-bold">비밀번호</label>
           <input
             type="password"
+<<<<<<< HEAD
             placeholder="숫자와 영문 조합으로 입력해주세요"
             className=""
+=======
+            placeholder="숫자와 영문조합 입력해주세요"
+            className="py-[9px] px-4 rounded-lg border border-[#808080] text-xl font-medium placeholder-[#999999]"
+>>>>>>> c957e558f07a809b9b525247a33c19b3f54910e4
             value={password}
             onChange={handlePasswordChange}
           />
         </div>
-        <button type="submit" className="">
-          가입하기
-        </button>
+        <Link href="/login">
+          <button
+            type="submit"
+            className="w-[500px] mt-4 py-3 text-xl bg-black text-white rounded-lg"
+          >
+            가입하기
+          </button>
+        </Link>
       </form>
     </div>
   );
