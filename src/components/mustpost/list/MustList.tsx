@@ -47,7 +47,7 @@ function MustList() {
         <div className="min-h-screen flex-col items-center justify-center">
           <ul className="grid grid-cols-3 gap-[32px]">
             {mustPosts.map((post) => (
-              <li key={post.id}>
+              <li key={post.id} className="mb-[64px]">
                 <Link href={`/mustpost/read/${post.id}`}>
                   <MustPostCard
                     title={post.title}
