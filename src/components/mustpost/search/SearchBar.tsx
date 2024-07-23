@@ -16,7 +16,7 @@ function SearchBar() {
       <input
         type="text"
         placeholder="#여름필수템"
-        className="ml-5"
+        className="ml-5 w-[340px]"
         value={searchValue}
         onChange={(e) => setSearchValue(e.target.value)}
       />

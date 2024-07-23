@@ -3,8 +3,11 @@ import { getCategories } from "@/apis/mustpost";
 import type { MustCategory } from "@/types/types";
 import { useCategoryStore } from "@/zustand/mustStore";
 import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 
 function MustCategory() {
+  const [isSelected, setIsSelected] = useState<string>("ALL");
+
   const { data: mustCategories } = useQuery<MustCategory[]>({
     queryKey: ["mustCategory"],
     queryFn: getCategories,
@@ -13,6 +16,7 @@ function MustCategory() {
   const setSelectedCategory = useCategoryStore((state) => state.setSelectedCategory);
 
   const handClickCategory = (category: string) => {
+    setIsSelected(category);
     setSelectedCategory(category);
   };
 
@@ -21,7 +25,9 @@ function MustCategory() {
       <ul className="flex flex-row gap-3">
         <li>
           <button
-            className="py-2 px-4 border border-black rounded-full hover:bg-black hover:text-white"
+            className={`py-2 px-4 border border-black rounded-full hover:bg-black hover:text-white ${
+              isSelected === "ALL" ? "bg-black text-white" : "hover:bg-black hover:text-white"
+            }`}
             onClick={() => handClickCategory("ALL")}
           >
             ALL
@@ -30,7 +36,9 @@ function MustCategory() {
         {mustCategories?.map((category) => (
           <li key={category.id}>
             <button
-              className="py-2 px-4 border border-black rounded-full hover:bg-black hover:text-white"
+              className={`py-2 px-4 border border-black rounded-full hover:bg-black hover:text-white  ${
+                isSelected === category.id ? "bg-black text-white" : "hover:bg-black hover:text-white"
+              }`}
               onClick={() => handClickCategory(category.id)}
             >
               {category.name}
