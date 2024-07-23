@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import DaumPostcode from "react-daum-postcode";
-import Input from "./Input/Input";
+import Input from "./common/Input/Input";
 
 function MyInformation() {
   const [isPostModalOpen, setIsPostModalOpen] = useState<boolean>(false);
@@ -21,9 +21,9 @@ function MyInformation() {
 
   return (
     <div className="flex-col w-auto grow">
-      <div className="flex flex-col justify-center items-start w-[560px] mx-auto gap-8">
+      <div className="flex flex-col justify-center items-start gap-8">
         <h5 className="font-bold text-[20px]">나의 정보</h5>
-        <form>
+        <form className="w-[400px]">
           <div className="flex flex-col gap-6">
             <Input variant="default" label="닉네임" />
             <Input variant="default" type="file" placeholder="사진변경" label="프로필 사진 변경" />
@@ -52,7 +52,7 @@ function MyInformation() {
           </div>
           <button
             type="submit"
-            className="bg-[#808080] text-white w-full py-2 mt-[50px] rounded-lg font-bold text-[20px]"
+            className="bg-[#808080] text-white w-full py-2 mt-[50px] rounded-lg font-bold text-[18px]"
           >
             변경하기
           </button>

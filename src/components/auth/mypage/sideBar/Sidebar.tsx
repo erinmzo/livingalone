@@ -16,9 +16,9 @@ function SideBar() {
         <div className="w-24 h-24 bg-gray-200 rounded-full mb-6"></div>
         <div className="text-[16px] font-semibold text-center">나는 공구왕</div>
       </div>
-      <ul className="flex flex-col gap-[24px] mt-[64px]">
+      <ul className="flex flex-col gap-[24px] mt-[40px]">
         {links.map((link) => (
-          <li key={link.href} className="text-[20px] font-medium text-[#b3b3b3] hover:text-blue-500 transition-all ">
+          <li key={link.href} className="text-[18px] font-medium text-[#b3b3b3] hover:text-blue-500 transition-all ">
             <Link href={link.href}>{link.label}</Link>
           </li>
         ))}
