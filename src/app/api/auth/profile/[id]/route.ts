@@ -1,6 +1,7 @@
 import { createClient } from "@/supabase/server";
 import { NextRequest, NextResponse } from "next/server";
 
+
 export async function GET(
   request: NextRequest,
   { params }: { params: { id: string } }
@@ -18,6 +19,7 @@ export async function GET(
     return NextResponse.json({ error: error.message });
   }
   return NextResponse.json(data);
+
 }
 
 export async function PUT(
