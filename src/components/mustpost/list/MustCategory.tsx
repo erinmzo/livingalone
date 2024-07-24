@@ -1,7 +1,7 @@
 "use client";
 import { getCategories } from "@/apis/mustpost";
 import type { MustCategory } from "@/types/types";
-import { useWishStore } from "@/zustand/mustStore";
+import { useCategoryStore } from "@/zustand/mustStore";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 
@@ -13,7 +13,7 @@ function MustCategory() {
     queryFn: getCategories,
   });
 
-  const setSelectedCategory = useWishStore((state) => state.setSelectedCategory);
+  const setSelectedCategory = useCategoryStore((state) => state.setSelectedCategory);
 
   const handClickCategory = (category: string) => {
     setIsSelected(category);

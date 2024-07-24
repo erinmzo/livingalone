@@ -2,7 +2,7 @@
 
 import { getMustPostAll, getMustPostbyCategory } from "@/apis/mustpost";
 import { TMustPostList } from "@/types/types";
-import { useWishStore } from "@/zustand/mustStore";
+import { useCategoryStore } from "@/zustand/mustStore";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import SearchBar from "../search/SearchBar";
@@ -11,7 +11,7 @@ import MustPostCard from "./MustPostCard";
 import Title from "./Title";
 
 function MustList() {
-  const selectedCategory = useWishStore((state) => state.selectedCategory);
+  const selectedCategory = useCategoryStore((state) => state.selectedCategory);
   const {
     data: mustPosts = [],
     isPending,
