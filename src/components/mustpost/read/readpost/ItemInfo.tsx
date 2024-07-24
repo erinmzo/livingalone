@@ -9,21 +9,24 @@ interface ItemInfoProps {
 
 function ItemInfo({ item, price, location, name }: ItemInfoProps) {
   return (
-    <div className="flex flex-col pl-2">
+    <div className="flex flex-col gap-3 px-2 py-4 border-b-[1px] border-black">
       <div>
-        <span className="py-2 px-4 border border-black rounded-full text-xs">
+        <span className="inline-flex py-[6px] px-4 border border-black rounded-full text-xs">
           {name}
         </span>
       </div>
-      <div className="flex justify-between mt-3">
+
+      <div className="flex pl-1 justify-between">
         <div>
-          <h5 className=" mb-2 text-xl">{item}</h5>
+          <h5 className="font-medium text-xl ">{item}</h5>
           <span className="text-[#808080]">{location}</span>
         </div>
-        <span>{price}</span>
+        <span className="font-bold text-2xl">{price.toLocaleString()}원</span>
       </div>
     </div>
   );
 }
 
 export default ItemInfo;
+
+// inline flex - 버튼에 많이 사용 자기 자리만 차지하면서 여러개를 씹히지 않게
