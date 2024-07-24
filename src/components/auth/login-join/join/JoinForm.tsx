@@ -21,12 +21,14 @@ const JoinForm = () => {
       },
       body: JSON.stringify(joinData),
     });
+    const data = await response.json();
 
     if (response.ok) {
       Notify.success("회원가입이 성공적으로 완료되었습니다.");
+    } else if (response.status === 401) {
+      return Notify.failure("이미 존재하는 아이디 입니다.");
     } else {
-      const data = await response.json();
-      return Notify.failure(`회원가입에 실패하였습니다: ${data.message}`);
+      return Notify.failure("회원가입에 실패하였습니다");
     }
 
     router.push("/login");

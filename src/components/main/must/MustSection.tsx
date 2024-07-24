@@ -31,7 +31,7 @@ function MustSection() {
         {mustPosts.map((post) => (
           <li key={post.id}>
             <Link href={`/mustpost/read/${post.id}`}>
-              <MustPostCard title={post.title} item={post.item} imgUrl={post.img_url} />
+              <MustPostCard title={post.title} item={post.item} imgUrl={post.img_url} postId={post.id} />
             </Link>
           </li>
         ))}

@@ -1,10 +1,8 @@
-import Image from "next/image";
-import React from "react";
+import Contents from "./readpost/Contents";
+import ItemInfo from "./readpost/ItemInfo";
+import PostImage from "./readpost/PostImage";
 import Title from "./readpost/Title";
 import UserInfo from "./readpost/UserInfo";
-import PostImage from "./readpost/PostImage";
-import ItemInfo from "./readpost/ItemInfo";
-import Contents from "./readpost/Contents";
 interface ReadPostProps {
   created_at: string;
   title: string;
@@ -16,6 +14,7 @@ interface ReadPostProps {
   nickname: string;
   profile_image_url: string;
   name: string;
+  postId: string;
 }
 function ReadPost({
   created_at,
@@ -28,6 +27,7 @@ function ReadPost({
   nickname,
   profile_image_url,
   name,
+  postId,
 }: ReadPostProps) {
   return (
     <div>
@@ -35,12 +35,8 @@ function ReadPost({
 
       <div>
         {/* 상단부분 묶기 */}
-        <Title title={title} />
-        <UserInfo
-          profile_image_url={profile_image_url}
-          nickname={nickname}
-          created_at={created_at}
-        />
+        <Title title={title} postId={postId} />
+        <UserInfo profile_image_url={profile_image_url} nickname={nickname} created_at={created_at} />
         <PostImage img_url={img_url} />
       </div>
 
