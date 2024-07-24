@@ -1,7 +1,12 @@
 import Page from "@/components/common/Page/Page";
+import MustWriteForm from "@/components/mustpost/write/MustWriteForm";
 
 function MustWritePage() {
-  return <Page>필수템 글쓰기 페이지</Page>;
+  return (
+    <Page>
+      <MustWriteForm />
+    </Page>
+  );
 }
 
 export default MustWritePage;
