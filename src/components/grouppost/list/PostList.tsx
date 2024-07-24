@@ -1,11 +1,10 @@
 "use client";
 
-import { getGroupPosts, getGroupPostOnMain } from "@/apis/grouppost";
+import { getGroupPosts } from "@/apis/grouppost";
 import { GroupApplication, GroupPost } from "@/types/types";
-import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
-import Link from "next/link";
-import GroupPostCard from "./GroupPostCard";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
+import GroupPostCard from "./GroupPostCard";
 
 type TGroupApplication = Pick<GroupApplication, "id">;
 type TGroupApplications = {
@@ -107,18 +106,17 @@ function PostList() {
           {groupPosts.map((post) => {
             return (
               <li key={post.id}>
-                <Link href={`/grouppost/read/${post.id}`}>
-                  <GroupPostCard
-                    application={post.group_applications}
-                    title={post.title}
-                    price={post.price}
-                    peopleNum={post.people_num}
-                    isFinished={post.is_finished}
-                    imgUrl={post.img_url}
-                    startDate={post.start_date}
-                    endDate={post.end_date}
-                  />
-                </Link>
+                <GroupPostCard
+                  application={post.group_applications}
+                  title={post.title}
+                  price={post.price}
+                  peopleNum={post.people_num}
+                  isFinished={post.is_finished}
+                  imgUrl={post.img_url}
+                  startDate={post.start_date}
+                  endDate={post.end_date}
+                  postId={post.id}
+                />
               </li>
             );
           })}

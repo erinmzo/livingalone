@@ -1,9 +1,9 @@
+import { getGroupDetail } from "@/apis/grouppost";
 import InnerLayout from "@/components/common/Page/InnerLayout";
 import { GroupPost } from "@/types/types";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import { getGroupDetail } from "@/apis/grouppost";
 import GroupDetailBtnList from "./GroupDetailBtnList";
 import GroupEditBtnList from "./GroupEditBtnList";
 
@@ -100,9 +100,7 @@ async function GroupDetail({ params }: Props) {
           </>
         )}
         {/* 보더 */}
-        <div className="mt-[56px] border-t border-black py-6 px-2">
-          <pre>{content}</pre>
-        </div>
+        <div className="mt-[56px] border-t border-black py-6 px-2"></div>
         <GroupEditBtnList userId={user_id} id={id} />
       </div>
     </div>

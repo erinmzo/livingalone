@@ -1,10 +1,9 @@
+import { getMustPostDetail } from "@/apis/mustpost";
 import InnerLayout from "@/components/common/Page/InnerLayout";
-import React from "react";
+import { MustPost } from "@/types/types";
 import ReadPost from "./ReadPost";
 import ReadTopBtn from "./ReadTopBtn";
 import TopList from "./TopList";
-import { getMustPostDetail } from "@/apis/mustpost";
-import { MustCategory, MustPost } from "@/types/types";
 
 type Props = {
   params: { id: string };
@@ -51,6 +50,7 @@ async function Read({ params }: Props) {
         nickname={nickname}
         profile_image_url={profile_image_url}
         name={name}
+        postId={id}
       />
       <ReadTopBtn />
       <TopList />
