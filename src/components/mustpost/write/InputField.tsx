@@ -6,6 +6,7 @@ interface InputFieldProps {
   type: string;
   placeHolder: string;
   minLength: number;
+  max?: string;
   onchangeValue: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -16,6 +17,7 @@ function InputField({
   placeHolder,
   onchangeValue,
   minLength,
+  max,
 }: InputFieldProps) {
   return (
     <div className="flex gap-2 justify-between">
@@ -27,6 +29,7 @@ function InputField({
         value={value}
         placeholder={placeHolder}
         minLength={minLength}
+        max={max}
         onChange={(e) => onchangeValue(e)}
         className="flex-1 border-b border-black"
       />
