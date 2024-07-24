@@ -36,17 +36,26 @@ function PostList() {
     refetch,
   } = useInfiniteQuery({
     queryKey: ["groupPosts", isFinished],
-    queryFn: ({ pageParam = 0 }) => getGroupPosts(pageParam, isFinished),
+    queryFn: async ({ pageParam = 0 }) => {
+      const response = await getGroupPosts(pageParam, isFinished);
+      return {
+        posts: response.posts,
+        total: response.total,
+      };
+    },
     getNextPageParam: (lastPage, allPages) => {
-      if (lastPage.length < 4) return undefined;
+      const totalFetched = allPages.reduce(
+        (acc, page) => acc + page.posts.length,
+        0
+      );
+      if (totalFetched >= lastPage.total) return undefined;
       return allPages.length;
     },
     initialPageParam: 0,
-    staleTime: Infinity,
   });
 
   const groupPosts = useMemo(
-    () => data?.pages?.flatMap((page) => page) || [],
+    () => data?.pages?.flatMap((page) => page.posts) || [],
     [data]
   );
 

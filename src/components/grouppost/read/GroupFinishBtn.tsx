@@ -12,7 +12,7 @@ function GroupFinishBtn({ id }: { id: string }) {
     isPending,
     isError,
   } = useQuery<GroupPost>({
-    queryKey: ["finishGroupPost"],
+    queryKey: ["finishGroupPost", id],
     queryFn: () => getGroupPost(id),
   });
 

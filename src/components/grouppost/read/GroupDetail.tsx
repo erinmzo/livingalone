@@ -1,14 +1,11 @@
 import InnerLayout from "@/components/common/Page/InnerLayout";
-import { createClient } from "@/supabase/server";
 import { GroupPost } from "@/types/types";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import GroupDeleteBtn from "./GroupDeleteBtn";
-import GroupApplyBtn from "./GroupApplyBtn";
 import { getGroupDetail } from "@/apis/grouppost";
-import GroupFinishBtn from "./GroupFinishBtn";
-// import { useRouter } from "next/navigation";
+import GroupDetailBtnList from "./GroupDetailBtnList";
+import GroupEditBtnList from "./GroupEditBtnList";
 
 type Props = {
   params: { id: string };
@@ -40,10 +37,11 @@ async function GroupDetail({ params }: Props) {
     is_finished,
     img_url,
     group_applications,
+    user_id,
     profiles: { nickname, profile_image_url },
   } = data as TGroupPostDetail;
   return (
-    <InnerLayout>
+    <div className={`${is_finished ? "text-[#B3B3B3]" : ""}`}>
       <div className="relative overflow-hidden rounded-lg">
         <Image
           src={img_url}
@@ -88,33 +86,26 @@ async function GroupDetail({ params }: Props) {
       <div className="mt-3">
         <p>마감일 {end_date}까지</p>
         <h5 className="font-bold text-[24px] mt-1">{title}</h5>
-        <p className="font-bold text-[24px] mt-3 mb-[35px]">
+        <p className="font-bold text-[24px] mt-3 mb-[4px]">
           {price.toLocaleString()}원
         </p>
-        {/* TODO 글 작성자는 수정삭제, 그 외엔 공구 신청 */}
-
+        <p className="mb-[20px]">{item}</p>
         {is_finished ? (
-          <button>이미 종료된 공구입니다.</button>
+          <button className="w-[330px] py-3 text-white font-bold text-[20px] bg-[#B3B3B3] rounded-full">
+            이미 종료된 공구입니다 :&#40;
+          </button>
         ) : (
           <>
-            <GroupApplyBtn id={id} />
-            <GroupFinishBtn id={id} />
+            <GroupDetailBtnList userId={user_id} id={id} />
           </>
         )}
         {/* 보더 */}
         <div className="mt-[56px] border-t border-black py-6 px-2">
           <pre>{content}</pre>
         </div>
-        <div className="flex justify-center gap-2 mt-[14px]">
-          <Link href={`/grouppost/edit/${id}`}>
-            <button className="w-[197px] h-[48px] font-bold bg-black text-white text-[20px] rounded-full">
-              글 수정
-            </button>
-          </Link>
-          <GroupDeleteBtn id={id} />
-        </div>
+        <GroupEditBtnList userId={user_id} id={id} />
       </div>
-    </InnerLayout>
+    </div>
   );
 }
 
