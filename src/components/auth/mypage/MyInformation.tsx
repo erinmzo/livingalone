@@ -1,14 +1,20 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { ChangeEventHandler, MouseEventHandler, useState } from "react";
 import DaumPostcode from "react-daum-postcode";
 import Input from "../common/Input/Input";
+import { useEditProfile } from "@/zustand/profileStore";
+import { useAuthStore } from "@/zustand/authStore";
 
 function MyInformation() {
+  const user = useAuthStore((state) => state.user);
+  const { nickname, setNickname, setUserPic } = useEditProfile();
   const [isPostModalOpen, setIsPostModalOpen] = useState<boolean>(false);
   const [address, setAddress] = useState<string>("");
   const [detailAddress, setDetailAddress] = useState<string>("");
+  const [localNickname, setLocalNickname] = useState(nickname);
+  const [localUserPic, setLocalUserPic] = useState<string | null>(null);
 
   const handleSearchAddress = () => {
     setIsPostModalOpen((prev) => !prev);
@@ -19,14 +25,42 @@ function MyInformation() {
     setIsPostModalOpen(false);
   };
 
+  const handleNickname: ChangeEventHandler<HTMLInputElement> = (e) => {
+    setLocalNickname(e.target.value);
+  };
+
+  const handleProfileUpdate: MouseEventHandler<HTMLButtonElement> = async (
+    e
+  ) => {
+    e.preventDefault();
+    try {
+      setNickname(localNickname);
+      setUserPic(localUserPic || "");
+
+      console.log("성공");
+    } catch (error) {
+      console.log("error");
+    }
+  };
+
   return (
     <div className="flex-col w-auto grow">
       <div className="flex flex-col justify-center items-start gap-8">
         <h5 className="font-bold text-[20px]">나의 정보</h5>
         <form className="w-[400px]">
           <div className="flex flex-col gap-6">
-            <Input variant="default" label="닉네임" />
-            <Input variant="default" type="file" placeholder="사진변경" label="프로필 사진 변경" />
+            <Input
+              variant="default"
+              label="닉네임"
+              placeholder="닉네임"
+              onChange={handleNickname}
+            />
+            <Input
+              variant="default"
+              type="file"
+              placeholder="사진변경"
+              label="프로필 사진 변경"
+            />
           </div>
           <div className="relative mt-6">
             <button
@@ -34,7 +68,12 @@ function MyInformation() {
               className="flex gap-3 py-[10px] px-[16px] bg-black hover:bg-slate-800 rounded-full"
               onClick={handleSearchAddress}
             >
-              <Image src="/img/icon-search-white.png" alt="검색 아이콘" width={20} height={20} />
+              <Image
+                src="/img/icon-search-white.png"
+                alt="검색 아이콘"
+                width={20}
+                height={20}
+              />
               <span className="text-white">주소변경</span>
             </button>
             {isPostModalOpen && (
@@ -53,6 +92,7 @@ function MyInformation() {
           <button
             type="submit"
             className="bg-[#808080] text-white w-full py-2 mt-[50px] rounded-lg font-bold text-[18px]"
+            onClick={handleProfileUpdate}
           >
             변경하기
           </button>

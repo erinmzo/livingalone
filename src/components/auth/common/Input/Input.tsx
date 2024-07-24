@@ -1,4 +1,4 @@
-import { ChangeEvent, useId } from "react";
+import { ChangeEvent, ChangeEventHandler, useId } from "react";
 
 type InputProps = {
   label?: string;
@@ -6,10 +6,17 @@ type InputProps = {
   type?: string;
   value?: string;
   placeholder?: string;
-  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
+  onChange?: ChangeEventHandler<HTMLInputElement>;
 };
 
-function Input({ label, variant = "default", type = "text", value, placeholder, onChange }: InputProps) {
+function Input({
+  label,
+  variant = "default",
+  type = "text",
+  value,
+  placeholder,
+  onChange,
+}: InputProps) {
   const inputId = useId();
   const variantStyles = {
     default:
@@ -20,9 +27,11 @@ function Input({ label, variant = "default", type = "text", value, placeholder, 
 
   return (
     <div className="flex flex-col">
-      <label className="ml-1 mb-[10px] font-bold" htmlFor={inputId}>
-        {label}
-      </label>
+      {label && (
+        <label className="ml-1 mb-[10px] font-bold" htmlFor={inputId}>
+          {label}
+        </label>
+      )}
       {type === "text" && (
         <input
           type="text"
@@ -30,16 +39,15 @@ function Input({ label, variant = "default", type = "text", value, placeholder, 
           className="py-[9px] px-4 rounded-lg border border-[#808080] text-xl font-medium placeholder-[#999999]"
           value={value}
           onChange={onChange}
-          id={inputId}
+          readOnly={!onChange}
         />
       )}
       {type === "file" && (
         <input
           type="file"
           className={`${variantStyles[variant]}`}
-          value={value}
           placeholder={placeholder}
-          id={inputId}
+          onChange={onChange}
         />
       )}
       {type === "password" && (
@@ -49,7 +57,7 @@ function Input({ label, variant = "default", type = "text", value, placeholder, 
           className="py-[9px] px-4 rounded-lg border border-[#808080] text-xl font-medium placeholder-[#999999]"
           value={value}
           onChange={onChange}
-          id={inputId}
+          readOnly={!onChange}
         />
       )}
     </div>
