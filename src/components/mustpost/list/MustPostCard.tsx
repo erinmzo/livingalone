@@ -2,12 +2,13 @@ import Wish from "@/components/common/Wish";
 import Image from "next/image";
 
 interface MustPostCardProps {
+  postId: string;
   title: string;
   item: string;
   imgUrl: string;
 }
 
-function MustPostCard({ title, item, imgUrl }: MustPostCardProps) {
+function MustPostCard({ postId, title, item, imgUrl }: MustPostCardProps) {
   return (
     <div className="relative">
       <div className="overflow-hidden relative aspect-square rounded-lg">
@@ -26,7 +27,9 @@ function MustPostCard({ title, item, imgUrl }: MustPostCardProps) {
         <h4 className="text-[20px] font-bold truncate">{title}</h4>
       </div>
       <div className="absolute right-[20px] top-[20px]">
-        <Wish />
+        <div className="py-1 px-5 bg-white rounded-full">
+          <Wish postId={postId} />
+        </div>
       </div>
     </div>
   );

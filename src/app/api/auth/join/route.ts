@@ -15,9 +15,6 @@ export async function POST(request: NextRequest) {
     },
   });
   if (error) {
-    if (error.status == 422) {
-      return Response.json({ message: "이미 존재하는 이메일 입니다." }, { status: error.status });
-    }
     return Response.json({ message: error.message }, { status: 401 });
   }
 
