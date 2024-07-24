@@ -10,6 +10,8 @@ export type MustCategory = Tables<"must_categories">;
 export type TMainMustPost = Pick<MustPost, "id" | "title" | "item" | "img_url">;
 export type TMustPostList = Pick<MustPost, "id" | "title" | "content" | "item" | "img_url">;
 
+export type TMustWishData = Omit<MustWish, "created_at" | "id">;
+
 export type GroupPost = Tables<"group_posts">;
 export type GroupLike = Tables<"group_likes">;
 export type GroupApplication = Tables<"group_applications">;
