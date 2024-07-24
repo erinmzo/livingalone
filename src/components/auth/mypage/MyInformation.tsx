@@ -12,6 +12,7 @@ function MyInformation() {
   const user = useAuthStore((state) => state.user);
   const { nickname, setNickname, setUserPic } = useEditProfile();
   const queryClient = useQueryClient();
+
   const [isPostModalOpen, setIsPostModalOpen] = useState<boolean>(false);
   const [address, setAddress] = useState<string>("");
   const [detailAddress, setDetailAddress] = useState<string>("");
@@ -20,7 +21,6 @@ function MyInformation() {
   );
   const [localUserPic, setLocalUserPic] = useState<string | null>(null);
 
-  console.log(user);
   const handleSearchAddress = () => {
     setIsPostModalOpen((prev) => !prev);
   };
