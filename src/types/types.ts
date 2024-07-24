@@ -18,3 +18,5 @@ export type GroupApplication = Tables<"group_applications">;
 
 export type TNewGroupPost = Omit<GroupPost, "created_at">;
 export type TNewGroupApplication = Omit<GroupApplication, "created_at">;
+
+export type TGroupLikeData = Omit<GroupLike, "created_at" | "id">;
