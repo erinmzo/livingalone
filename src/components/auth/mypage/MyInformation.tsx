@@ -9,7 +9,6 @@ import { useAuthStore } from "@/zustand/authStore";
 import { useQueryClient } from "@tanstack/react-query";
 
 function MyInformation() {
-  const user = useAuthStore((state) => state.user);
   const { nickname, setNickname, setUserPic } = useEditProfile();
   const queryClient = useQueryClient();
 
