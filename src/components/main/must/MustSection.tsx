@@ -3,7 +3,6 @@ import { getMustPostOnMain } from "@/apis/mustpost";
 import MustPostCard from "@/components/mustpost/list/MustPostCard";
 import { TMainMustPost } from "@/types/types";
 import { useQuery } from "@tanstack/react-query";
-import Link from "next/link";
 import MainSectionTitle from "../common/MainSectionTitle";
 
 function MustSection() {
@@ -30,9 +29,7 @@ function MustSection() {
       <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 px-[16px] lg:px-0">
         {mustPosts.map((post) => (
           <li key={post.id}>
-            <Link href={`/mustpost/read/${post.id}`}>
-              <MustPostCard title={post.title} item={post.item} imgUrl={post.img_url} postId={post.id} />
-            </Link>
+            <MustPostCard title={post.title} item={post.item} imgUrl={post.img_url} postId={post.id} />
           </li>
         ))}
       </ul>

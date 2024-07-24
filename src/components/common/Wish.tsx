@@ -65,8 +65,15 @@ function Wish({ postId }: WishProps) {
     }
   };
 
-  if (isPending) return <div>불러오는 중...</div>;
-  if (isError) return <div>에러</div>;
+  if (!user)
+    return (
+      <button onClick={handleToggleWish} className="flex justify-center items-center">
+        <Image src="/img/icon-wish.png" alt="찜하기 버튼" width={20} height={20} />
+      </button>
+    );
+
+  if (isPending) return <div>...</div>;
+  if (isError) return <div>에러가 발생했습니다.</div>;
 
   return (
     <button onClick={handleToggleWish} className="flex justify-center items-center">
