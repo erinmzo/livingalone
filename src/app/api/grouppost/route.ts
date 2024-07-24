@@ -12,15 +12,16 @@ export async function GET(request: NextRequest) {
 
   try {
     const supabase = createClient();
-    const { data } = await supabase
+    const { data, count } = await supabase
       .from("group_posts")
       .select(
-        "id, title, is_finished, price, people_num , img_url, start_date, end_date, group_applications(id)"
+        "id, title, is_finished, price, people_num , img_url, start_date, end_date, group_applications(id)",
+        { count: "exact" }
       )
       .eq("is_finished", isFinished)
       .order("created_at", { ascending: false })
       .range(offset, offset + itemsPerPage - 1);
-    return NextResponse.json(data);
+    return NextResponse.json({ data, count });
   } catch (error) {
     return NextResponse.json({ error: "데이터를 가져오는 데 실패했습니다." });
   }

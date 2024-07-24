@@ -1,3 +1,4 @@
+import InnerLayout from "@/components/common/Page/InnerLayout";
 import Page from "@/components/common/Page/Page";
 import GroupDetail from "@/components/grouppost/read/GroupDetail";
 
@@ -7,7 +8,9 @@ type Props = {
 function GroupReadPage({ params }: Props) {
   return (
     <Page>
-      <GroupDetail params={params} />
+      <InnerLayout>
+        <GroupDetail params={params} />
+      </InnerLayout>
     </Page>
   );
 }
