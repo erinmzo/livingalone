@@ -3,6 +3,7 @@
 import { insertGroupApply } from "@/apis/grouppost";
 import { TNewGroupApplication } from "@/types/types";
 import { groupPostRevalidate } from "@/utils/revalidate";
+import { useAuthStore } from "@/zustand/authStore";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -16,6 +17,7 @@ interface PropsType {
 
 function GroupApplyModal({ id, onClose }: PropsType) {
   const router = useRouter();
+  const user = useAuthStore((state) => state.user);
 
   const [name, setName] = useState<string>("");
   const [phone, setPhone] = useState<string>("");
@@ -48,6 +50,9 @@ function GroupApplyModal({ id, onClose }: PropsType) {
       alert("서약에 체크해주세요.");
       return;
     }
+    if (!user) {
+      return;
+    }
     const newGroupApply: TNewGroupApplication = {
       id: uuidv4(),
       post_id: id,
@@ -57,7 +62,7 @@ function GroupApplyModal({ id, onClose }: PropsType) {
       user_detail_address: detailAddress,
       is_paid: false,
       // TODO 로그인 기능 완료 시 가져온 값 넣기
-      user_id: "38341ad9-3080-4072-997e-2f53feca7bf0",
+      user_id: user.id,
     };
     addMutation.mutate(newGroupApply);
   };
@@ -73,7 +78,9 @@ function GroupApplyModal({ id, onClose }: PropsType) {
         <div className="flex justify-end">
           <button onClick={onClose}>임시 엑스버튼</button>
         </div>
-        <h6 className="flex justify-center font-bold text-[32px] mb-[33px]">공구 신청하기</h6>
+        <h6 className="flex justify-center font-bold text-[32px] mb-[33px]">
+          공구 신청하기
+        </h6>
         <input
           className="w-full h-[47px] text-[24px] mb-[26px] border-b-2 border-black p-1"
           placeholder="입금자명"
@@ -86,7 +93,10 @@ function GroupApplyModal({ id, onClose }: PropsType) {
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
         />
-        <button className="py-2 px-4 text-white bg-black rounded-full mb-3" onClick={handleSearchAddress}>
+        <button
+          className="py-2 px-4 text-white bg-black rounded-full mb-3"
+          onClick={handleSearchAddress}
+        >
           주소 검색
         </button>
         <input
@@ -107,17 +117,21 @@ function GroupApplyModal({ id, onClose }: PropsType) {
             setCheckBox(!checkBox);
           }}
         />
-        <label className="ml-2 font-bold">공구 참여자 는 2024년 7월 22일 아래와 같이 서약합니다.</label>
+        <label className="ml-2 font-bold">
+          공구 참여자 는 2024년 7월 22일 아래와 같이 서약합니다.
+        </label>
         <div className="text-[14px] mt-2">
           <p className="flex gap-1">
-            <span>1. </span> 공구 총대가 개인정보(이름, 주소, 전화번호)를 수집하는 것에 동의합니다.
+            <span>1. </span> 공구 총대가 개인정보(이름, 주소, 전화번호)를
+            수집하는 것에 동의합니다.
           </p>
           <p className="flex gap-1">
-            <span>2. </span> 개인정보 기입 오류 시 물건에 대한 피해, 금전적 피해, 불이익 등 모두 감수하며, 환불받지
-            못하는 사실에 동의합니다.
+            <span>2. </span> 개인정보 기입 오류 시 물건에 대한 피해, 금전적
+            피해, 불이익 등 모두 감수하며, 환불받지 못하는 사실에 동의합니다.
           </p>
           <p className="flex gap-1">
-            <span>3. </span> 본인 실수로 인한 불이익 발생 시 어떠한 이의제기도 하지 않을 것을 서약합니다.
+            <span>3. </span> 본인 실수로 인한 불이익 발생 시 어떠한 이의제기도
+            하지 않을 것을 서약합니다.
           </p>
         </div>
         <button
@@ -132,7 +146,10 @@ function GroupApplyModal({ id, onClose }: PropsType) {
           <DaumPostcode onComplete={onCompletePost}></DaumPostcode>
         </div>
       )}
-      <div onClick={onClose} className="fixed inset-0 bg-black bg-opacity-50"></div>
+      <div
+        onClick={onClose}
+        className="fixed inset-0 bg-black bg-opacity-50"
+      ></div>
     </div>
   );
 }

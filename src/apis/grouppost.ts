@@ -17,7 +17,10 @@ export async function getGroupPosts(page = 0, isFinished: boolean) {
     }
   );
   const data = await response.json();
-  return data;
+  return {
+    posts: data.data,
+    total: data.count,
+  };
 }
 
 export async function getGroupPost(id: string) {

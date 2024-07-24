@@ -11,6 +11,20 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { groupPostRevalidate } from "@/utils/revalidate";
+import InnerLayout from "@/components/common/Page/InnerLayout";
+
+type TGroupWriteInputs = {
+  title: string;
+  startDate: string;
+  endDate: string;
+  content: string;
+  item: string;
+  link: string;
+  peopleNum: number;
+  price: number;
+  isFinished: boolean;
+  userId: string;
+};
 
 function GroupEditForm({ params }: { params: { id: string } }) {
   const { id } = params;
@@ -21,32 +35,46 @@ function GroupEditForm({ params }: { params: { id: string } }) {
     isPending,
     isError,
   } = useQuery<GroupPost>({
-    queryKey: ["editGroupPost"],
+    queryKey: ["editGroupPost", id],
     queryFn: () => getGroupPost(id),
   });
-  const [title, setTitle] = useState<string>("");
-  const [startDate, setStartDate] = useState<string>("");
-  const [endDate, setEndDate] = useState<string>("");
-  const [peopleNum, setPeopleNum] = useState<number>(0);
-  const [price, setPrice] = useState<number>(0);
   const [imgUrl, setImgUrl] = useState<string>("");
-  const [content, setContent] = useState<string>("");
-  const [item, setItem] = useState<string>("");
-  const [link, setLink] = useState<string>("");
-  const [isFinished, setIsFinished] = useState<boolean>(false);
-
+  const [inputs, setInputs] = useState<TGroupWriteInputs>({
+    title: "",
+    startDate: "",
+    endDate: "",
+    content: "",
+    item: "",
+    link: "",
+    peopleNum: 0,
+    price: 0,
+    isFinished: false,
+    userId: "",
+  });
+  const onChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { value, name } = e.target;
+    setInputs({
+      ...inputs,
+      [name]: value,
+    });
+  };
   useEffect(() => {
     if (groupPost) {
-      setTitle(groupPost.title);
-      setStartDate(groupPost.start_date);
-      setEndDate(groupPost.end_date);
-      setPeopleNum(groupPost.people_num);
-      setPrice(groupPost.price);
+      setInputs({
+        title: groupPost.title,
+        startDate: groupPost.start_date,
+        endDate: groupPost.end_date,
+        content: groupPost.content,
+        item: groupPost.item,
+        link: groupPost.link ? groupPost.link : "",
+        peopleNum: groupPost.people_num,
+        price: groupPost.price,
+        isFinished: groupPost.is_finished,
+        userId: groupPost.user_id,
+      });
       setImgUrl(groupPost.img_url);
-      setContent(groupPost.content);
-      setItem(groupPost.item);
-      setLink(groupPost.link ? groupPost.link : "");
-      setIsFinished(groupPost.is_finished);
     }
   }, [groupPost]);
 
@@ -81,6 +109,18 @@ function GroupEditForm({ params }: { params: { id: string } }) {
   });
 
   const addGroupPostHandler = async () => {
+    const {
+      title,
+      startDate,
+      endDate,
+      content,
+      item,
+      link,
+      peopleNum,
+      price,
+      userId,
+      isFinished,
+    } = inputs;
     if (
       !title.trim() ||
       !startDate.trim() ||
@@ -99,7 +139,7 @@ function GroupEditForm({ params }: { params: { id: string } }) {
     const newGroupPost: TNewGroupPost = {
       id,
       // TODO 임시로 넣은 아이디, 나중에 로그인 기능 생기면 유저 정보 가져와서 넣어줘야 한다.
-      user_id: "38341ad9-3080-4072-997e-2f53feca7bf0",
+      user_id: userId,
       title,
       start_date: startDate,
       end_date: endDate,
@@ -121,81 +161,124 @@ function GroupEditForm({ params }: { params: { id: string } }) {
     return <div className="flex justify-center items-center">에러...</div>;
 
   return (
-    <form action={addGroupPostHandler}>
-      <div>
-        <label>제목</label>
-        <input
-          placeholder="제목을 입력하세요."
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-      </div>
-      <div>
-        <label>제품명</label>
-        <input
-          placeholder="제품명을 입력하세요."
-          value={item}
-          onChange={(e) => setItem(e.target.value)}
-        />
-      </div>
-      <div>
-        <label>관련 링크</label>
-        <input
-          placeholder="링크를 입력하세요. (선택사항)"
-          value={link}
-          onChange={(e) => setLink(e.target.value)}
-        />
-      </div>
-      <div>
-        <label>시작일자</label>
-        <input
-          type="date"
-          value={startDate}
-          onChange={(e) => setStartDate(e.target.value)}
-        />
-      </div>
-      <div>
-        <label>마감일자</label>
-        <input
-          type="date"
-          value={endDate}
-          onChange={(e) => setEndDate(e.target.value)}
-        />
-      </div>
-      <div>
-        <label>공구인원</label>
-        <input
-          type="number"
-          placeholder="숫자만 입력해주세요."
-          value={peopleNum}
-          onChange={(e) => setPeopleNum(+e.target.value)}
-        />
-      </div>
-      <div>
-        <label>공구가격</label>
-        <input
-          type="number"
-          placeholder="숫자만 입력해주세요."
-          value={price}
-          onChange={(e) => setPrice(+e.target.value)}
-        />
-      </div>
-      <div>
-        <label>이미지</label>
-        <input type="file" onChange={addImageHandler} />
-      </div>
-      {/* <Image/> */}
-      {imgUrl && (
-        <Image src={imgUrl} alt="선택한 이미지" width={500} height={500} />
-      )}
+    <InnerLayout>
+      <div className="flex flex-col gap-5">
+        <div className="flex gap-2">
+          <label className="w-[86px] font-bold text-[20px] flex-none">
+            제목
+          </label>
+          <input
+            name="title"
+            placeholder="제목을 입력하세요."
+            value={inputs.title}
+            onChange={onChange}
+            className="border-b-[1px] w-full border-black"
+          />
+        </div>
+        <div className="flex justify-between">
+          <div className="flex gap-2 items-center">
+            <label className="w-[86px] font-bold text-[20px] flex-none">
+              공구기간
+            </label>
+            <div className="border-b-[1px] border-black flex gap-1 items-center">
+              <label className="text-[12px]">시작일</label>
+              <input
+                name="startDate"
+                type="date"
+                value={inputs.startDate}
+                onChange={onChange}
+                // className="border-b-[1px] border-black"
+              />
+            </div>
+            <div className="w-4 h-[2px] border-t-2 border-black"></div>
+            <div className="border-b-[1px] border-black flex gap-1 items-center">
+              <label className="text-[12px]">마감일</label>
+              <input
+                name="endDate"
+                type="date"
+                value={inputs.endDate}
+                onChange={onChange}
+              />
+            </div>
+          </div>
+          <div className="flex gap-2">
+            <label className="w-[78px] font-bold text-[20px] flex-none">
+              공구인원
+            </label>
+            <input
+              name="peopleNum"
+              type="number"
+              placeholder="숫자만 입력해주세요."
+              value={inputs.peopleNum}
+              onChange={onChange}
+              className="w-[64px] border-b border-black text-center"
+            />
+          </div>
+        </div>
 
+        <div className="flex gap-2">
+          <label className="w-[86px] font-bold text-[20px] flex-none">
+            상품이름
+          </label>
+          <input
+            name="item"
+            placeholder="제품명을 입력하세요."
+            value={inputs.item}
+            onChange={onChange}
+            className="border-b-[1px] w-full border-black"
+          />
+        </div>
+
+        <div className="flex gap-2 items-center">
+          <label className="w-[86px] font-bold text-[20px] flex-none">
+            공구가격
+          </label>
+          <input
+            name="price"
+            type="number"
+            placeholder="숫자만 입력해주세요."
+            value={inputs.price}
+            onChange={onChange}
+            className="border-b-[1px] w-full border-black"
+          />
+        </div>
+        <div>
+          <label>이미지</label>
+          <input type="file" onChange={addImageHandler} />
+        </div>
+        {/* <Image/> */}
+        {imgUrl && (
+          <Image src={imgUrl} alt="선택한 이미지" width={500} height={500} />
+        )}
+        <div className="flex gap-2 items-center">
+          <label className="w-[86px] font-bold text-[20px] flex-none">
+            링크
+          </label>
+          <input
+            name="link"
+            placeholder="(선택사항) 상품소개 페이지 링크를 넣어주세요."
+            value={inputs.link}
+            onChange={onChange}
+            className="border-b-[1px] w-full border-black"
+          />
+        </div>
+      </div>
       <textarea
+        name="content"
         placeholder="* 여기에 글을 작성해주세요."
-        value={content}
-        onChange={(e) => setContent(e.target.value)}
+        value={inputs.content}
+        onChange={onChange}
+        className="w-full h-[330px] border-b border-black resize-none mt-[42px] p-6"
       ></textarea>
-      <button onClick={addGroupPostHandler}>포스팅 하기</button>
-    </form>
+      <div className="flex justify-center">
+        <button
+          className="bg-black w-[400px] py-4 text-white rounded-full font-bold text-[26px] mt-[196px]"
+          onClick={addGroupPostHandler}
+        >
+          포스팅 하기
+        </button>
+      </div>
+    </InnerLayout>
   );
 }
 
