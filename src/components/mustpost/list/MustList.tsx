@@ -4,7 +4,6 @@ import { getMustPostAll, getMustPostbyCategory } from "@/apis/mustpost";
 import { TMustPostList } from "@/types/types";
 import { useCategoryStore } from "@/zustand/mustStore";
 import { useQuery } from "@tanstack/react-query";
-import Link from "next/link";
 import SearchBar from "../search/SearchBar";
 import MustCategory from "./MustCategory";
 import MustPostCard from "./MustPostCard";
@@ -39,9 +38,7 @@ function MustList() {
           <ul className="grid grid-cols-3 gap-[32px]">
             {mustPosts.map((post) => (
               <li key={post.id} className="mb-[64px]">
-                <Link href={`/mustpost/read/${post.id}`}>
-                  <MustPostCard postId={post.id} title={post.title} item={post.item} imgUrl={post.img_url} />
-                </Link>
+                <MustPostCard postId={post.id} title={post.title} item={post.item} imgUrl={post.img_url} />
               </li>
             ))}
           </ul>
