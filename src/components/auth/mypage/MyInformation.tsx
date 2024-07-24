@@ -6,16 +6,21 @@ import DaumPostcode from "react-daum-postcode";
 import Input from "../common/Input/Input";
 import { useEditProfile } from "@/zustand/profileStore";
 import { useAuthStore } from "@/zustand/authStore";
+import { useQueryClient } from "@tanstack/react-query";
 
 function MyInformation() {
   const user = useAuthStore((state) => state.user);
   const { nickname, setNickname, setUserPic } = useEditProfile();
+  const queryClient = useQueryClient();
   const [isPostModalOpen, setIsPostModalOpen] = useState<boolean>(false);
   const [address, setAddress] = useState<string>("");
   const [detailAddress, setDetailAddress] = useState<string>("");
-  const [localNickname, setLocalNickname] = useState(nickname);
+  const [localNickname, setLocalNickname] = useState(
+    user?.user_metadata.display_name
+  );
   const [localUserPic, setLocalUserPic] = useState<string | null>(null);
 
+  console.log(user);
   const handleSearchAddress = () => {
     setIsPostModalOpen((prev) => !prev);
   };
