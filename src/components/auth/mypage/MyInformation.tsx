@@ -1,6 +1,5 @@
 "use client";
 
-import { useAuthStore } from "@/zustand/authStore";
 import { useEditProfile } from "@/zustand/profileStore";
 import { useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
@@ -9,7 +8,6 @@ import DaumPostcode from "react-daum-postcode";
 import Input from "../common/Input/Input";
 
 function MyInformation() {
-  const user = useAuthStore((state) => state.user);
   const { nickname, setNickname, setUserPic } = useEditProfile();
   const queryClient = useQueryClient();
 
