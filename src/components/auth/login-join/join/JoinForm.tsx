@@ -2,7 +2,7 @@
 import { useRouter } from "next/navigation";
 import { Notify } from "notiflix";
 import React, { useState } from "react";
-import Input from "../../common/Input/Input";
+import Input from "../../common/Input";
 
 const JoinForm = () => {
   const router = useRouter();

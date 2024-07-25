@@ -5,7 +5,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import { ChangeEventHandler, MouseEventHandler, useState } from "react";
 import DaumPostcode from "react-daum-postcode";
-import Input from "../common/Input/Input";
+import Input from "../common/Input";
 
 function MyInformation() {
   const { nickname, setNickname, setUserPic } = useEditProfile();
