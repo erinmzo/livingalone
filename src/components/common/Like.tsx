@@ -1,3 +1,4 @@
+"use client";
 import { deleteLike, getLikes, getMyLike, insertLike } from "@/apis/grouppost";
 import { GroupLike, TGroupLikeData } from "@/types/types";
 import { useAuthStore } from "@/zustand/authStore";
