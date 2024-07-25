@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import InputField from "./InputField";
 import InnerLayout from "@/components/common/Page/InnerLayout";
 import Button from "@/components/auth/common/button/Button";
+import SelectCategory from "./SelectCategory";
 
 function MustWriteForm() {
   const [title, setTitle] = useState<string>("");
@@ -20,7 +21,7 @@ function MustWriteForm() {
         />
 
         <div className="flex flex-row justify-between gap-2">
-          <div className="flex-grow pr-[79px]">
+          <div className="pr-[72px] flex-grow">
             <InputField
               labelName="작성일자"
               type={"date"}
@@ -31,17 +32,17 @@ function MustWriteForm() {
               onchangeValue={(e) => setTitle(e.target.value)}
             />
           </div>
-
-          <div className="flex-grow-0">
+          <SelectCategory />
+          {/* <div className="flex-grow-0">
             <InputField
-              labelName="상품이름"
+              labelName="카테고리"
               type={"text"}
               value={title}
-              placeHolder={"상품 이름을 입력해주세요."}
+              placeHolder={"카테고리를 선택해주세요"}
               minLength={2}
               onchangeValue={(e) => setTitle(e.target.value)}
             />
-          </div>
+          </div> */}
         </div>
 
         <InputField
