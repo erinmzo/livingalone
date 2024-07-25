@@ -10,8 +10,9 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import { groupPostRevalidate } from "@/utils/revalidate";
+import { postRevalidate } from "@/utils/revalidate";
 import InnerLayout from "@/components/common/Page/InnerLayout";
+import { Notify } from "notiflix";
 
 type TGroupWriteInputs = {
   title: string;
@@ -102,7 +103,7 @@ function GroupEditForm({ params }: { params: { id: string } }) {
       await updateGroupPost(newGroupPost);
     },
     onSuccess: async () => {
-      groupPostRevalidate(id);
+      postRevalidate(`/grouppost/read/${id}`);
       router.push(`/grouppost/read/${id}`);
       router.refresh();
     },
@@ -129,16 +130,15 @@ function GroupEditForm({ params }: { params: { id: string } }) {
       !content.trim() ||
       !item.trim()
     ) {
-      alert("관련 링크를 제외한 모든 값을 입력해주세요.");
+      Notify.failure("관련 링크를 제외한 모든 값을 입력해주세요.");
       return;
     }
     if (peopleNum > 30) {
-      alert("최대 공구 인원은 30명까지입니다.");
+      Notify.failure("최대 공구 인원은 30명까지입니다.");
       return;
     }
     const newGroupPost: TNewGroupPost = {
       id,
-      // TODO 임시로 넣은 아이디, 나중에 로그인 기능 생기면 유저 정보 가져와서 넣어줘야 한다.
       user_id: userId,
       title,
       start_date: startDate,
@@ -180,18 +180,7 @@ function GroupEditForm({ params }: { params: { id: string } }) {
             <label className="w-[86px] font-bold text-[20px] flex-none">
               공구기간
             </label>
-            <div className="border-b-[1px] border-black flex gap-1 items-center">
-              <label className="text-[12px]">시작일</label>
-              <input
-                name="startDate"
-                type="date"
-                value={inputs.startDate}
-                onChange={onChange}
-                // className="border-b-[1px] border-black"
-              />
-            </div>
-            <div className="w-4 h-[2px] border-t-2 border-black"></div>
-            <div className="border-b-[1px] border-black flex gap-1 items-center">
+            <div className="w-[380px] border-b-[1px] border-black flex gap-1 items-center">
               <label className="text-[12px]">마감일</label>
               <input
                 name="endDate"
@@ -242,14 +231,6 @@ function GroupEditForm({ params }: { params: { id: string } }) {
             className="border-b-[1px] w-full border-black"
           />
         </div>
-        <div>
-          <label>이미지</label>
-          <input type="file" onChange={addImageHandler} />
-        </div>
-        {/* <Image/> */}
-        {imgUrl && (
-          <Image src={imgUrl} alt="선택한 이미지" width={500} height={500} />
-        )}
         <div className="flex gap-2 items-center">
           <label className="w-[86px] font-bold text-[20px] flex-none">
             링크
@@ -262,6 +243,23 @@ function GroupEditForm({ params }: { params: { id: string } }) {
             className="border-b-[1px] w-full border-black"
           />
         </div>
+        <div className="flex gap-5 items-start">
+          <input
+            className="hidden"
+            id="image-file"
+            type="file"
+            onChange={addImageHandler}
+          />
+          <label
+            className="py-4 cursor-pointer font-bold rounded-full w-[160px] flex justify-center items-center bg-[#C2C2C2]"
+            htmlFor="image-file"
+          >
+            {imgUrl ? "이미지 수정" : "이미지 업로드"}
+          </label>
+          {imgUrl && (
+            <Image src={imgUrl} alt="선택한 이미지" width={200} height={200} />
+          )}
+        </div>
       </div>
       <textarea
         name="content"
@@ -272,10 +270,10 @@ function GroupEditForm({ params }: { params: { id: string } }) {
       ></textarea>
       <div className="flex justify-center">
         <button
-          className="bg-black w-[400px] py-4 text-white rounded-full font-bold text-[26px] mt-[196px]"
+          className="bg-black w-[400px] py-4 text-white rounded-full font-bold text-[26px] mt-[64px]"
           onClick={addGroupPostHandler}
         >
-          포스팅 하기
+          수정 완료
         </button>
       </div>
     </InnerLayout>

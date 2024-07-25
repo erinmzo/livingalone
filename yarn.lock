@@ -192,6 +192,11 @@
   resolved "https://registry.yarnpkg.com/@pkgjs/parseargs/-/parseargs-0.11.0.tgz#a77ea742fab25775145434eb1d2328cf5013ac33"
   integrity sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==
 
+"@portone/browser-sdk@^0.0.8":
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/@portone/browser-sdk/-/browser-sdk-0.0.8.tgz#660692320ab4a517c4fb4f37a39b58ef186be836"
+  integrity sha512-OPejBEDy5IhsGo4bGq9wtoulkPPg5ahKM/3/WL4E1sii3dwNQpFf3F0mEw3pau6XLm8/1khJZ44aJZheKBYKlQ==
+
 "@rollup/rollup-linux-x64-gnu@^4.9.5":
   version "4.19.0"
   resolved "https://registry.yarnpkg.com/@rollup/rollup-linux-x64-gnu/-/rollup-linux-x64-gnu-4.19.0.tgz#f0282d761b8b4e7b92b236813475248e37231849"
