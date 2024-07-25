@@ -2,10 +2,11 @@
 
 import { insertGroupApply } from "@/apis/grouppost";
 import { TNewGroupApplication } from "@/types/types";
-import { groupPostRevalidate } from "@/utils/revalidate";
+import { postRevalidate } from "@/utils/revalidate";
 import { useAuthStore } from "@/zustand/authStore";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
+import { Notify } from "notiflix";
 import { useState } from "react";
 import DaumPostcode from "react-daum-postcode";
 import { v4 as uuidv4 } from "uuid";
@@ -36,18 +37,18 @@ function GroupApplyModal({ id, onClose }: PropsType) {
     },
     onSuccess: () => {
       onClose();
-      groupPostRevalidate(id);
+      postRevalidate(`/grouppost/read/${id}`);
       router.refresh();
     },
   });
 
   const addGroupApplyHandler = async () => {
     if (!name.trim() || !phone.trim() || !address.trim()) {
-      alert("상세 주소를 제외한 입력창을 모두 채워주세요.");
+      Notify.failure("상세 주소를 제외한 입력창을 모두 채워주세요.");
       return;
     }
     if (!checkBox) {
-      alert("서약에 체크해주세요.");
+      Notify.failure("서약에 체크해주세요.");
       return;
     }
     if (!user) {

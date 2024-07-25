@@ -1,5 +1,9 @@
 import { createClient } from "@/supabase/client";
-import { TGroupLikeData, TNewGroupApplication, TNewGroupPost } from "@/types/types";
+import {
+  TGroupLikeData,
+  TNewGroupApplication,
+  TNewGroupPost,
+} from "@/types/types";
 
 export async function getGroupPostOnMain() {
   const response = await fetch("/api/main/group", {
@@ -10,9 +14,12 @@ export async function getGroupPostOnMain() {
 }
 
 export async function getGroupPosts(page = 0, isFinished: boolean) {
-  const response = await fetch(`/api/grouppost?page=${page}&isFinished=${isFinished}`, {
-    next: { revalidate: 60 },
-  });
+  const response = await fetch(
+    `/api/grouppost?page=${page}&isFinished=${isFinished}`,
+    {
+      next: { revalidate: 60 },
+    }
+  );
   const data = await response.json();
   return {
     posts: data.data,
@@ -61,7 +68,7 @@ export async function updateGroupPost(newGroupPost: TNewGroupPost) {
   });
 }
 
-export async function deleteGroupPost(id: string) {
+export async function deleteGroupPost(id: string): Promise<void> {
   await fetch(`/api/grouppost/${id}`, {
     method: "DELETE",
   });

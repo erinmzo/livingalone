@@ -49,8 +49,12 @@ function GroupPostCard({
           </div>
           <h4 className="text-[20px] font-bold truncate mt-[6px]">{title}</h4>
           <div className="flex items-center gap-2 mt-[6px]">
-            <span className="text-red-600 text-[20px] font-bold">{peopleNum - application.length}명 남음!</span>
-            <span className="text-[24px] font-bold">{price.toLocaleString()}원</span>
+            <span className="text-red-600 text-[20px] font-bold">
+              {peopleNum - application.length}명 남음!
+            </span>
+            <span className="text-[24px] font-bold">
+              {price.toLocaleString()}원
+            </span>
           </div>
         </div>
       </Link>
