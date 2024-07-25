@@ -7,6 +7,7 @@ import { useAuthStore } from "@/zustand/authStore";
 import { useMutation } from "@tanstack/react-query";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { Notify } from "notiflix";
 import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
@@ -81,15 +82,15 @@ function GroupWriteForm() {
       !content.trim() ||
       !item.trim()
     ) {
-      alert("관련 링크를 제외한 모든 값을 입력해주세요.");
+      Notify.failure("관련 링크를 제외한 모든 값을 입력해주세요.");
       return;
     }
     if (peopleNum > 30) {
-      alert("최대 공구 인원은 30명까지입니다.");
+      Notify.failure("최대 공구 인원은 30명까지입니다.");
       return;
     }
     if (peopleNum <= 0) {
-      alert("최소 공구 인원은 1명입니다.");
+      Notify.failure("최소 공구 인원은 1명입니다.");
       return;
     }
     if (!user) {

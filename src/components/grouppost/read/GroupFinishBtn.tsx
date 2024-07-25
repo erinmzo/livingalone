@@ -4,6 +4,7 @@ import { getGroupPost, updateGroupPost } from "@/apis/grouppost";
 import { GroupPost, TNewGroupPost } from "@/types/types";
 import { postRevalidate } from "@/utils/revalidate";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { Confirm } from "notiflix";
 import React from "react";
 
 function GroupFinishBtn({ id }: { id: string }) {
@@ -32,22 +33,33 @@ function GroupFinishBtn({ id }: { id: string }) {
     return <div className="flex justify-center items-center">에러...</div>;
 
   const finishGroupPostHandler = async () => {
-    if (confirm("정말로 종료하시겠습니까?") && groupPost) {
-      const finishGroupPost: TNewGroupPost = {
-        id: groupPost.id,
-        user_id: groupPost.user_id,
-        title: groupPost.title,
-        start_date: groupPost.start_date,
-        end_date: groupPost.end_date,
-        people_num: groupPost.people_num,
-        price: groupPost.price,
-        content: groupPost.content,
-        item: groupPost.item,
-        link: groupPost.link,
-        img_url: groupPost.img_url,
-        is_finished: true,
-      };
-      updateMutation.mutate(finishGroupPost);
+    const finishGroupPost: TNewGroupPost = {
+      id: groupPost.id,
+      user_id: groupPost.user_id,
+      title: groupPost.title,
+      start_date: groupPost.start_date,
+      end_date: groupPost.end_date,
+      people_num: groupPost.people_num,
+      price: groupPost.price,
+      content: groupPost.content,
+      item: groupPost.item,
+      link: groupPost.link,
+      img_url: groupPost.img_url,
+      is_finished: true,
+    };
+    if (groupPost) {
+      Confirm.show(
+        "혼자살때",
+        "정말로 종료하시겠습니까?",
+        "네",
+        "아니오",
+        () => {
+          updateMutation.mutate(finishGroupPost);
+        },
+        () => {
+          return;
+        }
+      );
     }
   };
 

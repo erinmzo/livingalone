@@ -12,6 +12,7 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { postRevalidate } from "@/utils/revalidate";
 import InnerLayout from "@/components/common/Page/InnerLayout";
+import { Notify } from "notiflix";
 
 type TGroupWriteInputs = {
   title: string;
@@ -129,16 +130,15 @@ function GroupEditForm({ params }: { params: { id: string } }) {
       !content.trim() ||
       !item.trim()
     ) {
-      alert("관련 링크를 제외한 모든 값을 입력해주세요.");
+      Notify.failure("관련 링크를 제외한 모든 값을 입력해주세요.");
       return;
     }
     if (peopleNum > 30) {
-      alert("최대 공구 인원은 30명까지입니다.");
+      Notify.failure("최대 공구 인원은 30명까지입니다.");
       return;
     }
     const newGroupPost: TNewGroupPost = {
       id,
-      // TODO 임시로 넣은 아이디, 나중에 로그인 기능 생기면 유저 정보 가져와서 넣어줘야 한다.
       user_id: userId,
       title,
       start_date: startDate,
