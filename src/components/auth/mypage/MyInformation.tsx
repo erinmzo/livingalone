@@ -1,21 +1,30 @@
 "use client";
 
 import { useEditProfile } from "@/zustand/profileStore";
-import { useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import { ChangeEventHandler, MouseEventHandler, useState } from "react";
 import DaumPostcode from "react-daum-postcode";
 import Input from "../common/Input";
+import { useAuthStore } from "@/zustand/authStore";
+import { getMyProfile } from "@/apis/mypage";
+import { Profile } from "@/types/types";
 
 function MyInformation() {
-  const { nickname, setNickname, setUserPic } = useEditProfile();
-  const queryClient = useQueryClient();
+  // const { nickname, setNickname, setUserPic } = useEditProfile();
+  const user = useAuthStore((state) => state.user);
+  const userId = user?.id as string;
 
   const [isPostModalOpen, setIsPostModalOpen] = useState<boolean>(false);
   const [address, setAddress] = useState<string>("");
   const [detailAddress, setDetailAddress] = useState<string>("");
   const [localNickname, setLocalNickname] = useState("");
   const [localUserPic, setLocalUserPic] = useState<string | null>(null);
+
+  const { data: profile, isPending } = useQuery<Profile>({
+    queryKey: ["profile", userId],
+    queryFn: () => getMyProfile(userId),
+  });
 
   const handleSearchAddress = () => {
     setIsPostModalOpen((prev) => !prev);
@@ -30,18 +39,14 @@ function MyInformation() {
     setLocalNickname(e.target.value);
   };
 
+  const handleDetailAddress: ChangeEventHandler<HTMLInputElement> = (e) => {
+    setDetailAddress(e.target.value);
+  };
+
   const handleProfileUpdate: MouseEventHandler<HTMLButtonElement> = async (
     e
   ) => {
     e.preventDefault();
-    try {
-      setNickname(localNickname);
-      setUserPic(localUserPic || "");
-
-      console.log("성공");
-    } catch (error) {
-      console.log("error");
-    }
   };
 
   return (
@@ -53,7 +58,8 @@ function MyInformation() {
             <Input
               variant="default"
               label="닉네임"
-              placeholder="닉네임"
+              placeholder="닉네임 변경하기"
+              value={profile?.nickname}
               onChange={handleNickname}
             />
             <Input
@@ -86,7 +92,7 @@ function MyInformation() {
             <Input
               variant="underline"
               value={detailAddress}
-              onChange={(e) => setDetailAddress(e.target.value)}
+              onChange={handleDetailAddress}
               placeholder="상세 주소"
             />
           </div>

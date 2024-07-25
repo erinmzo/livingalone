@@ -6,11 +6,11 @@ import { useEditProfile } from "@/zustand/profileStore";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect } from "react";
 
 function SideBar() {
   const user = useAuthStore((state) => state.user);
   const userId = user?.id as string;
-  const { setNickname, setUserPic } = useEditProfile();
 
   const links = [
     { href: `/mypage/${1}`, label: "나의 정보" },
@@ -22,7 +22,7 @@ function SideBar() {
   ];
 
   const { data: profile, isPending } = useQuery<Profile>({
-    queryKey: ["profile"],
+    queryKey: ["profile", userId],
     queryFn: () => getMyProfile(userId),
   });
 
@@ -36,8 +36,8 @@ function SideBar() {
             className="bg-gray-200 rounded-full mb-6"
             src={profile.profile_image_url}
             alt={profile.nickname}
-            width={24}
-            height={24}
+            width={100}
+            height={100}
           />
           <div className="text-[16px] font-semibold text-center">
             {profile.nickname}

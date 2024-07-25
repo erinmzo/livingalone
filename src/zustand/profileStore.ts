@@ -9,7 +9,7 @@ type EditProfile = {
 
 export const useEditProfile = create<EditProfile>((set) => ({
   nickname: "초기값",
-  userPic: "",
+  userPic: "/public/img/icon-profile.png",
   setNickname: (nickname) => set({ nickname }),
   setUserPic: (userPic) => set({ userPic }),
 }));
