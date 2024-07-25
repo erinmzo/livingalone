@@ -25,6 +25,7 @@ function SelectCategory() {
     queryKey: ["mustCategory"],
     queryFn: getCategories,
   });
+
   return (
     <div className="relative">
       <div>
@@ -50,11 +51,10 @@ function SelectCategory() {
       {isOpen && (
         <ul className="absolute right-0 px-2 bg-[#E6E6E6] w-[164px]">
           {mustCategories?.map((category) => (
-            <li
-              key={category.id}
-              className="py-2 border-b border-black text-right font-medium"
-            >
-              {category.name}
+            <li key={category.id} className="border-b border-black font-medium">
+              <button className="w-full py-2 text-right">
+                {category.name}
+              </button>
             </li>
           ))}
         </ul>
