@@ -1,5 +1,5 @@
 import { createClient } from "@/supabase/client";
-import { TNewGroupApplication, TNewGroupPost } from "@/types/types";
+import { TGroupLikeData, TNewGroupApplication, TNewGroupPost } from "@/types/types";
 
 export async function getGroupPostOnMain() {
   const response = await fetch("/api/main/group", {
@@ -10,12 +10,9 @@ export async function getGroupPostOnMain() {
 }
 
 export async function getGroupPosts(page = 0, isFinished: boolean) {
-  const response = await fetch(
-    `/api/grouppost?page=${page}&isFinished=${isFinished}`,
-    {
-      next: { revalidate: 60 },
-    }
-  );
+  const response = await fetch(`/api/grouppost?page=${page}&isFinished=${isFinished}`, {
+    next: { revalidate: 60 },
+  });
   const data = await response.json();
   return {
     posts: data.data,
@@ -74,5 +71,31 @@ export async function insertGroupApply(newGroupApply: TNewGroupApplication) {
   await fetch("/api/applygroup", {
     method: "POST",
     body: JSON.stringify(newGroupApply),
+  });
+}
+
+export async function getLikes(postId: string) {
+  const response = await fetch(`/api/grouppost/like/${postId}`);
+  const data = await response.json();
+  return data;
+}
+
+export async function getMyLike(postId: string, userId: string) {
+  const response = await fetch(`/api/grouppost/like/${postId}/${userId}`);
+  const data = await response.json();
+  return data;
+}
+
+export async function insertLike(likeData: TGroupLikeData) {
+  await fetch("/api/grouppost/like", {
+    method: "POST",
+    body: JSON.stringify(likeData),
+  });
+}
+
+export async function deleteLike(likeData: TGroupLikeData) {
+  await fetch("/api/grouppost/like", {
+    method: "DELETE",
+    body: JSON.stringify(likeData),
   });
 }

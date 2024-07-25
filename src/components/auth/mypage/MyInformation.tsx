@@ -14,9 +14,7 @@ function MyInformation() {
   const [isPostModalOpen, setIsPostModalOpen] = useState<boolean>(false);
   const [address, setAddress] = useState<string>("");
   const [detailAddress, setDetailAddress] = useState<string>("");
-
   const [localNickname, setLocalNickname] = useState("");
-
   const [localUserPic, setLocalUserPic] = useState<string | null>(null);
 
   const handleSearchAddress = () => {

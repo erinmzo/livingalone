@@ -37,8 +37,8 @@ export async function getMustPostDetail(id: string) {
   return data;
 }
 
-export async function getMyWish(id: string, postId: string) {
-  const response = await fetch(`/api/mustpost/wish/${id}/${postId}`);
+export async function getMyWish(userId: string, postId: string) {
+  const response = await fetch(`/api/mustpost/wish/${userId}/${postId}`);
   const data = await response.json();
   return data;
 }
