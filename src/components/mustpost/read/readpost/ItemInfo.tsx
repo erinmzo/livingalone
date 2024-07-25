@@ -28,5 +28,3 @@ function ItemInfo({ item, price, location, name }: ItemInfoProps) {
 }
 
 export default ItemInfo;
-
-// inline flex - 버튼에 많이 사용 자기 자리만 차지하면서 여러개를 씹히지 않게
