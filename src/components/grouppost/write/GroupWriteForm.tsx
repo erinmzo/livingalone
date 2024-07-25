@@ -12,7 +12,6 @@ import { v4 as uuidv4 } from "uuid";
 
 type TGroupWriteInputs = {
   title: string;
-  startDate: string;
   endDate: string;
   content: string;
   item: string;
@@ -28,7 +27,6 @@ function GroupWriteForm() {
   const [imgUrl, setImgUrl] = useState<string>("");
   const [inputs, setInputs] = useState<TGroupWriteInputs>({
     title: "",
-    startDate: "",
     endDate: "",
     content: "",
     item: "",
@@ -75,11 +73,9 @@ function GroupWriteForm() {
   });
 
   const addGroupPostHandler = async () => {
-    const { title, startDate, endDate, content, item, link, peopleNum, price } =
-      inputs;
+    const { title, endDate, content, item, link, peopleNum, price } = inputs;
     if (
       !title.trim() ||
-      !startDate.trim() ||
       !endDate.trim() ||
       !imgUrl.trim() ||
       !content.trim() ||
@@ -99,6 +95,13 @@ function GroupWriteForm() {
     if (!user) {
       return;
     }
+
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, "0");
+    const day = String(today.getDate()).padStart(2, "0");
+    const startDate = `${year}-${month}-${day}`;
+
     const newGroupPost: TNewGroupPost = {
       id: uuidv4(),
       user_id: user.id,
@@ -136,18 +139,7 @@ function GroupWriteForm() {
             <label className="w-[86px] font-bold text-[20px] flex-none">
               공구기간
             </label>
-            <div className="border-b-[1px] border-black flex gap-1 items-center">
-              <label className="text-[12px]">시작일</label>
-              <input
-                name="startDate"
-                type="date"
-                value={inputs.startDate}
-                onChange={onChange}
-                // className="border-b-[1px] border-black"
-              />
-            </div>
-            <div className="w-4 h-[2px] border-t-2 border-black"></div>
-            <div className="border-b-[1px] border-black flex gap-1 items-center">
+            <div className="w-[380px] border-b-[1px] border-black flex gap-1 items-center">
               <label className="text-[12px]">마감일</label>
               <input
                 name="endDate"
@@ -198,14 +190,6 @@ function GroupWriteForm() {
             className="border-b-[1px] w-full border-black"
           />
         </div>
-        <div>
-          <label>이미지</label>
-          <input type="file" onChange={addImageHandler} />
-        </div>
-        {/* <Image/> */}
-        {imgUrl && (
-          <Image src={imgUrl} alt="선택한 이미지" width={500} height={500} />
-        )}
         <div className="flex gap-2 items-center">
           <label className="w-[86px] font-bold text-[20px] flex-none">
             링크
@@ -218,6 +202,23 @@ function GroupWriteForm() {
             className="border-b-[1px] w-full border-black"
           />
         </div>
+        <div className="flex gap-5 items-start">
+          <input
+            className="hidden"
+            id="image-file"
+            type="file"
+            onChange={addImageHandler}
+          />
+          <label
+            className="py-4 cursor-pointer font-bold rounded-full w-[160px] flex justify-center items-center bg-[#C2C2C2]"
+            htmlFor="image-file"
+          >
+            {imgUrl ? "이미지 수정" : "이미지 업로드"}
+          </label>
+          {imgUrl && (
+            <Image src={imgUrl} alt="선택한 이미지" width={200} height={200} />
+          )}
+        </div>
       </div>
       <textarea
         name="content"
@@ -228,7 +229,7 @@ function GroupWriteForm() {
       ></textarea>
       <div className="flex justify-center">
         <button
-          className="bg-black w-[400px] py-4 text-white rounded-full font-bold text-[26px] mt-[196px]"
+          className="bg-black w-[400px] py-4 text-white rounded-full font-bold text-[26px] mt-[64px]"
           onClick={addGroupPostHandler}
         >
           포스팅 하기
