@@ -6,6 +6,7 @@ import Link from "next/link";
 import React from "react";
 import GroupDetailBtnList from "./GroupDetailBtnList";
 import GroupEditBtnList from "./GroupEditBtnList";
+import Like from "@/components/common/Like";
 
 type Props = {
   params: { id: string };
@@ -58,7 +59,9 @@ async function GroupDetail({ params }: Props) {
           </Link>
         )}
 
-        {/* <div>999(하트수)</div> */}
+        <div className="absolute bottom-5 left-5 py-1 px-5 bg-white rounded-full">
+          <Like postId={id} />
+        </div>
       </div>
       <div className="flex justify-between mt-[23px]">
         <div className="flex gap-2 items-center">
