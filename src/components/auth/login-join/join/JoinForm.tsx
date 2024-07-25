@@ -48,10 +48,7 @@ const JoinForm = () => {
 
   return (
     <div className="flex flex-col justify-center items-center">
-      <form
-        onSubmit={handleSubmitJoin}
-        className="flex flex-col justify-center gap-6 w-[500px] mb-6"
-      >
+      <form onSubmit={handleSubmitJoin} className="flex flex-col justify-center gap-6 w-[500px] mb-6">
         <Input
           label="닉네임"
           type="text"
@@ -73,10 +70,7 @@ const JoinForm = () => {
           placeholder="숫자와 영문 조합으로 입력해주세요"
           onChange={handlePasswordChange}
         />
-        <button
-          type="submit"
-          className="w-[500px] mt-4 py-3 text-xl bg-black text-white rounded-lg"
-        >
+        <button type="submit" className="w-[500px] mt-4 py-3 text-xl bg-black text-white rounded-lg">
           가입하기
         </button>
       </form>
