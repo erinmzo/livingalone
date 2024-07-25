@@ -1,5 +1,4 @@
 "use client";
-
 import { deleteLike, getLikes, getMyLike, insertLike } from "@/apis/grouppost";
 import { GroupLike, TGroupLikeData } from "@/types/types";
 import { useAuthStore } from "@/zustand/authStore";
@@ -72,12 +71,7 @@ function Like({ postId }: LikeProps) {
   if (!user)
     return (
       <div className="flex justify-center items-center">
-        <Image
-          src="/img/icon-like.png"
-          alt="좋아요 버튼"
-          width={20}
-          height={20}
-        />
+        <Image src="/img/icon-like.png" alt="좋아요 버튼" width={20} height={20} />
         <span>{likesCount}</span>
       </div>
     );
@@ -86,24 +80,11 @@ function Like({ postId }: LikeProps) {
   if (isError) return <span>에러</span>;
 
   return (
-    <button
-      onClick={handleToggleLike}
-      className="flex justify-center items-center"
-    >
+    <button onClick={handleToggleLike} className="flex justify-center items-center">
       {isLike ? (
-        <Image
-          src="/img/icon-like-on.png"
-          alt="좋아요 버튼"
-          width={18}
-          height={18}
-        />
+        <Image src="/img/icon-like-on.png" alt="좋아요 버튼" width={18} height={18} />
       ) : (
-        <Image
-          src="/img/icon-like.png"
-          alt="좋아요 버튼"
-          width={18}
-          height={18}
-        />
+        <Image src="/img/icon-like.png" alt="좋아요 버튼" width={18} height={18} />
       )}
       <span className="ml-1">{likesCount}</span>
     </button>
