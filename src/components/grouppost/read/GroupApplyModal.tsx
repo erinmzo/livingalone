@@ -2,7 +2,7 @@
 
 import { insertGroupApply } from "@/apis/grouppost";
 import { TNewGroupApplication } from "@/types/types";
-import { groupPostRevalidate } from "@/utils/revalidate";
+import { postRevalidate } from "@/utils/revalidate";
 import { useAuthStore } from "@/zustand/authStore";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
@@ -36,7 +36,7 @@ function GroupApplyModal({ id, onClose }: PropsType) {
     },
     onSuccess: () => {
       onClose();
-      groupPostRevalidate(id);
+      postRevalidate(`/grouppost/read/${id}`);
       router.refresh();
     },
   });

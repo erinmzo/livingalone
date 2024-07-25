@@ -2,7 +2,7 @@
 
 import { getGroupPost, updateGroupPost } from "@/apis/grouppost";
 import { GroupPost, TNewGroupPost } from "@/types/types";
-import { groupPostRevalidate } from "@/utils/revalidate";
+import { postRevalidate } from "@/utils/revalidate";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import React from "react";
 
@@ -21,7 +21,7 @@ function GroupFinishBtn({ id }: { id: string }) {
       await updateGroupPost(finishGroupPost);
     },
     onSuccess: async () => {
-      groupPostRevalidate(id);
+      postRevalidate(`/grouppost/read/${id}`);
     },
   });
 

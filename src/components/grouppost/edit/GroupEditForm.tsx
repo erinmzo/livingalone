@@ -10,7 +10,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import { groupPostRevalidate } from "@/utils/revalidate";
+import { postRevalidate } from "@/utils/revalidate";
 import InnerLayout from "@/components/common/Page/InnerLayout";
 
 type TGroupWriteInputs = {
@@ -102,7 +102,7 @@ function GroupEditForm({ params }: { params: { id: string } }) {
       await updateGroupPost(newGroupPost);
     },
     onSuccess: async () => {
-      groupPostRevalidate(id);
+      postRevalidate(`/grouppost/read/${id}`);
       router.push(`/grouppost/read/${id}`);
       router.refresh();
     },
