@@ -1,12 +1,11 @@
 "use client";
 
+import { useEditProfile } from "@/zustand/profileStore";
+import { useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import { ChangeEventHandler, MouseEventHandler, useState } from "react";
 import DaumPostcode from "react-daum-postcode";
 import Input from "../common/Input/Input";
-import { useEditProfile } from "@/zustand/profileStore";
-import { useAuthStore } from "@/zustand/authStore";
-import { useQueryClient } from "@tanstack/react-query";
 
 function MyInformation() {
   const { nickname, setNickname, setUserPic } = useEditProfile();
@@ -15,7 +14,9 @@ function MyInformation() {
   const [isPostModalOpen, setIsPostModalOpen] = useState<boolean>(false);
   const [address, setAddress] = useState<string>("");
   const [detailAddress, setDetailAddress] = useState<string>("");
+
   const [localNickname, setLocalNickname] = useState("");
+
   const [localUserPic, setLocalUserPic] = useState<string | null>(null);
 
   const handleSearchAddress = () => {
