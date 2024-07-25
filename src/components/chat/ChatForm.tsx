@@ -7,12 +7,12 @@ import { v4 as uuidv4 } from "uuid";
 type TChat = {
   created_at: string;
   id: string;
-  profiles: { nickname: string };
+  profiles: { user_id: string; nickname: string };
   text: string;
   user_id: string;
 };
 
-export default function Home() {
+export default function ChatForm() {
   const supabase = createClient();
   const user = useAuthStore((state) => state.user);
   const [messages, setMessages] = useState<TChat[]>([]);
@@ -20,23 +20,20 @@ export default function Home() {
 
   useEffect(() => {
     const fetchInitialMessages = async () => {
-      const { data, error } = await supabase
+      const { data } = await supabase
         .from("chat")
-        .select("*, profiles!inner(nickname)")
+        .select("*, profiles!inner( user_id , nickname)")
         .order("created_at", { ascending: true });
 
-      if (error) {
-        console.error("Error fetching messages:", error);
-      } else if (data) {
-        // setMessages(data);
-        console.log(data);
+      if (data) {
+        setMessages(data);
       }
     };
 
     fetchInitialMessages();
 
     const messageSubscription = supabase
-      .channel("public:chat")
+      .channel("chat1")
       .on("postgres_changes", { event: "INSERT", schema: "public", table: "chat" }, (payload: any) => {
         setMessages((currentMessages) => [...currentMessages, payload.new]);
       })
@@ -45,7 +42,7 @@ export default function Home() {
     return () => {
       supabase.removeChannel(messageSubscription);
     };
-  }, [supabase]);
+  }, [messages]);
 
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -67,28 +64,29 @@ export default function Home() {
       }
     }
   };
+
   return (
-    <div>
-      <h1>Realtime Chat</h1>
-      <div id="chat-container">
-        <div id="messages">
-          {messages.map((msg) => (
-            <div key={msg.id}>
-              <span>{msg.profiles.nickname}</span>
-              <span>{msg.text}</span>
-            </div>
-          ))}
-        </div>
-        <form onSubmit={handleSendMessage}>
-          <input
-            type="text"
-            value={newMessage}
-            onChange={(e) => setNewMessage(e.target.value)}
-            placeholder="Type your message here..."
-          />
-          <button type="submit">Send</button>
-        </form>
+    <div className="w-[360px] mx-auto">
+      <div className="border border-gray-400 p-[30px] rounded-xl h-[500px] overflow-y-scroll flex flex-col justify-end">
+        {messages.map((message) => (
+          <div key={message.id} className="grid grid-cols-[70px_1fr]">
+            <span className="font-bold mr-3 truncate">{message.profiles.nickname}</span>
+            <span className="grow">{message.text}</span>
+          </div>
+        ))}
       </div>
+      <form onSubmit={handleSendMessage} className="mt-[15px] mx-auto w-[320px]">
+        <input
+          type="text"
+          value={newMessage}
+          onChange={(e) => setNewMessage(e.target.value)}
+          placeholder="채팅을 입력하세요."
+          className="border border-gray-400 rounded py-2 px-4 w-[250px]"
+        />
+        <button type="submit" className="py-2 px-4 bg-black text-white rounded">
+          Send
+        </button>
+      </form>
     </div>
   );
 }

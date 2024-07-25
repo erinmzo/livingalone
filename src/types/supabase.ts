@@ -28,7 +28,15 @@ export type Database = {
           text?: string
           user_id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "chat_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["user_id"]
+          },
+        ]
       }
       group_applications: {
         Row: {
@@ -349,35 +357,6 @@ export type Database = {
             isOneToOne: true
             referencedRelation: "users"
             referencedColumns: ["id"]
-          },
-        ]
-      }
-      subscribe: {
-        Row: {
-          created_at: string
-          id: number
-          subscribe_from: string
-          subscribe_to: string
-        }
-        Insert: {
-          created_at?: string
-          id?: number
-          subscribe_from: string
-          subscribe_to?: string
-        }
-        Update: {
-          created_at?: string
-          id?: number
-          subscribe_from?: string
-          subscribe_to?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "subscribe_subscribe_from_fkey"
-            columns: ["subscribe_from"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["user_id"]
           },
         ]
       }
