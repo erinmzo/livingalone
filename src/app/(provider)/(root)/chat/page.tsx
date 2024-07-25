@@ -1,10 +1,11 @@
 import ChatForm from "@/components/chat/ChatForm";
+import Page from "@/components/common/Page/Page";
 
 function ChatPage() {
   return (
-    <div>
+    <Page>
       <ChatForm />
-    </div>
+    </Page>
   );
 }
 
