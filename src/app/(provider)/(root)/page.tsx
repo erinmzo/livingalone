@@ -1,3 +1,5 @@
+"use client";
+
 import JoinMarketing from "@/components/main/common/JoinMarketing";
 import GroupSection from "@/components/main/group/GroupSection";
 import GroupVisual from "@/components/main/group/GroupVisual";
