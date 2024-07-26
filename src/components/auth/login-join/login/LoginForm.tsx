@@ -6,13 +6,19 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Notify, Report } from "notiflix";
 import React, { useState } from "react";
+<<<<<<< HEAD
+import Input from "../../common/Input/Input";
+import { createClient } from "@/supabase/client";
+=======
 import Input from "../../common/Input";
+>>>>>>> 453d8bdaf689ae9d226c8e1c114c30168d643114
 
 const LoginForm = () => {
   const router = useRouter();
   const saveUser = useAuthStore((state) => state.saveUser);
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const supabase = createClient();
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
@@ -42,6 +48,20 @@ const LoginForm = () => {
     saveUser(data.user);
     Notify.success("로그인에 성공했습니다.");
     router.push("/");
+  };
+
+  const handleGoogleLogin = async () => {
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        queryParams: {
+          access_type: "offline",
+          prompt: "consent",
+        },
+      },
+    });
+    if (data) alert("구글 로그인 중");
+    if (error) console.log("error : ", error);
   };
 
   return (
@@ -78,7 +98,14 @@ const LoginForm = () => {
             회원가입
           </button>
         </Link>
+<<<<<<< HEAD
+        <button
+          className="flex items-center justify-center w-[500px] py-2 text-xl border-2 border-[#000] rounded-lg font-medium"
+          onClick={handleGoogleLogin}
+        >
+=======
         <button className="flex items-center justify-center w-[500px] py-2 text-xl border-2 border-[#000] rounded-lg font-medium">
+>>>>>>> 453d8bdaf689ae9d226c8e1c114c30168d643114
           <Image
             src="/img/icon-google.png"
             alt="구글 로그인 아이콘"
