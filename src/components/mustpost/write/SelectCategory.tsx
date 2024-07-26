@@ -8,15 +8,7 @@ import { MustCategory } from "@/types/types";
 
 function SelectCategory() {
   const [isOpen, setIsOpen] = useState(false);
-  const [category, setCategory] = useState("");
-
-  const handleIsOpen = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
-    setIsOpen((isOpen) => !isOpen);
-  };
-
-  const selectedCategory = () => {};
-
+  const [selectedCategory, setSelectedCategory] = useState("카테고리 선택");
   const {
     data: mustCategories,
     isPending,
@@ -25,6 +17,19 @@ function SelectCategory() {
     queryKey: ["mustCategory"],
     queryFn: getCategories,
   });
+
+  const handleIsOpen = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setIsOpen(true);
+  };
+
+  const handleSelectCategory = (name: string) => {
+    setSelectedCategory(name);
+    setIsOpen(false);
+  };
+
+  if (isPending) return <div>로딩중...</div>;
+  if (isError) return <div>에러 발생!</div>;
 
   return (
     <div className="relative">
@@ -37,6 +42,7 @@ function SelectCategory() {
             className="w-[164px] border-b border-black"
             onClick={handleIsOpen}
           >
+            {selectedCategory}
             <Image
               // selectedCategory
               src="/img/icon-input-must.png"
@@ -51,8 +57,14 @@ function SelectCategory() {
       {isOpen && (
         <ul className="absolute right-0 px-2 bg-[#E6E6E6] w-[164px]">
           {mustCategories?.map((category) => (
-            <li key={category.id} className="border-b border-black font-medium">
-              <button className="w-full py-2 text-right">
+            <li
+              key={category.id}
+              className=" border-b border-black text-right font-medium"
+            >
+              <button
+                onClick={() => handleSelectCategory(category.name)}
+                className="w-full py-2 text-right"
+              >
                 {category.name}
               </button>
             </li>
