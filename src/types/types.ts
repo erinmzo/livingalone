@@ -1,7 +1,7 @@
 import { Tables } from "./supabase";
 
 export type Profile = Tables<"profiles">;
-export type TProfile = Pick<Profile, "nickname" | "profile_image_url">;
+export type TProfile = Partial<Profile>;
 
 export type MustPost = Tables<"must_posts">;
 export type MustWish = Tables<"must_wishes">;

@@ -13,6 +13,7 @@ import Input from "../common/Input";
 import { useAuthStore } from "@/zustand/authStore";
 import { editMyProfile, getMyProfile, uploadImage } from "@/apis/mypage";
 import { Profile, TProfile } from "@/types/types";
+import { Report } from "notiflix";
 
 function MyInformation() {
   const queryClient = useQueryClient();
@@ -41,7 +42,6 @@ function MyInformation() {
       const formData = new FormData();
       formData.append("file", profileImage);
       const response = await uploadImage(formData);
-      console.log(response);
       setImgUrl(
         `https://nqqsefrllkqytkwxfshk.supabase.co/storage/v1/object/public/${response.fullPath}`
       );
@@ -69,15 +69,26 @@ function MyInformation() {
 
   const handleProfileUpdate: MouseEventHandler<HTMLButtonElement> = (e) => {
     e.preventDefault();
-
-    console.log(imgUrl);
-
     const newProfile = {
-      nickname: localNickname,
-      profile_image_url: imgUrl,
+      nickname: localNickname || profile?.nickname,
+      profile_image_url: imgUrl || profile?.profile_image_url,
+      address: address || profile?.address,
+      detail_address: detailAddress || profile?.address,
     };
 
+    if (!localNickname && !imgUrl && !address && !detailAddress) {
+      Report.info("변경된 내용이 없습니다.", "", "확인");
+      return;
+    }
+
     editProfile(newProfile);
+
+    Report.success("변경이 완료되었습니다!", "", "확인");
+
+    setLocalNickname("");
+    setImgUrl("");
+    setAddress("");
+    setDetailAddress("");
   };
 
   const handleUploadImage = (e: ChangeEvent<HTMLInputElement>) => {
@@ -112,7 +123,7 @@ function MyInformation() {
           <div className="relative mt-6">
             <button
               type="button"
-              className="flex gap-3 py-[10px] px-[16px] bg-black hover:bg-slate-800 rounded-full"
+              className="flex gap-3 py-[10px] px-[16px] bg-black hover:bg-slate-800 rounded-full mb-3"
               onClick={handleSearchAddress}
             >
               <Image
@@ -124,16 +135,20 @@ function MyInformation() {
               <span className="text-white">주소변경</span>
             </button>
             {isPostModalOpen && (
-              <div className="absolute left-0 top-[48px] border border-black">
+              <div className="absolute left-0 top-[48px] border border-black z-50">
                 <DaumPostcode onComplete={onCompletePost}></DaumPostcode>
               </div>
             )}
-            <Input variant="underline" value={address} placeholder="주소" />
+            <Input
+              variant="underline"
+              value={address}
+              placeholder={profile?.address!}
+            />
             <Input
               variant="underline"
               value={detailAddress}
               onChange={handleDetailAddress}
-              placeholder="상세 주소"
+              placeholder={profile?.detail_address!}
             />
           </div>
           <button
