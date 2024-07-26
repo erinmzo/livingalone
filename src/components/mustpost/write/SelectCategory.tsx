@@ -6,7 +6,12 @@ import { useQuery } from "@tanstack/react-query";
 import { getCategories } from "@/apis/mustpost";
 import { MustCategory } from "@/types/types";
 
-function SelectCategory() {
+interface SelectCategoryProps {
+  selectCategoryName: (category: MustCategory) => void;
+}
+//선택된 카테고리를 MustWriteForm으로 전달
+
+function SelectCategory({ selectCategoryName }: SelectCategoryProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("카테고리 선택");
   const {
@@ -23,10 +28,16 @@ function SelectCategory() {
     setIsOpen(true);
   };
 
-  const handleSelectCategory = (name: string) => {
-    setSelectedCategory(name);
+  const handleSelectCategory = (category: MustCategory) => {
+    setSelectedCategory(category.name);
     setIsOpen(false);
+    selectCategoryName(category);
   };
+
+  // const handleSelectCategory = (name: string) => {
+  //   setSelectedCategory(name);
+  //   setIsOpen(false);
+  // };
 
   if (isPending) return <div>로딩중...</div>;
   if (isError) return <div>에러 발생!</div>;
@@ -62,7 +73,8 @@ function SelectCategory() {
               className=" border-b border-black text-right font-medium"
             >
               <button
-                onClick={() => handleSelectCategory(category.name)}
+                // onClick={() => handleSelectCategory(category.name)}
+                onClick={() => handleSelectCategory(category)}
                 className="w-full py-2 text-right"
               >
                 {category.name}

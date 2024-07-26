@@ -4,6 +4,7 @@ import { MustPost } from "@/types/types";
 import ReadPost from "./ReadPost";
 import ReadTopBtn from "./ReadTopBtn";
 import TopList from "./TopList";
+import MustDeleteBtn from "./MustDeleteBtn";
 
 type Props = {
   params: { id: string };
@@ -26,6 +27,7 @@ async function Read({ params }: Props) {
     return <div>로딩중 ･･･</div>;
   }
   const {
+    user_id,
     created_at,
     title,
     content,
@@ -52,6 +54,7 @@ async function Read({ params }: Props) {
         name={name}
         postId={id}
       />
+      <MustDeleteBtn id={id} />
       <ReadTopBtn />
       <TopList />
     </InnerLayout>

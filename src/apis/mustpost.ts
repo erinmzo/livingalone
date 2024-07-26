@@ -1,5 +1,5 @@
 import { createClient } from "@/supabase/client";
-import { TMustWishData } from "@/types/types";
+import { MustPost, TMustWishData, TNewMustPost } from "@/types/types";
 
 export async function getMustPostOnMain() {
   const response = await fetch("/api/main/must", {
@@ -54,5 +54,27 @@ export async function deleteWish(wishData: TMustWishData) {
   await fetch("/api/mustpost/wish", {
     method: "DELETE",
     body: JSON.stringify(wishData),
+  });
+}
+
+export async function insertMustImage(formData: any) {
+  const response = await fetch("/api/mustpost/image", {
+    method: "POST",
+    body: formData,
+  });
+  const data = await response.json();
+  return data;
+}
+
+export async function insertMustPost(newMustPost: TNewMustPost) {
+  await fetch("/api/mustpost", {
+    method: "POST",
+    body: JSON.stringify(newMustPost),
+  });
+}
+
+export async function deleteMustPost(id: string): Promise<void> {
+  await fetch(`/api/mustpost/${id}`, {
+    method: "DELETE",
   });
 }
