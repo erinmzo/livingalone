@@ -78,3 +78,11 @@ export async function deleteMustPost(id: string): Promise<void> {
     method: "DELETE",
   });
 }
+
+export async function getMustPost(id: string) {
+  const response = await fetch(`/api/mustpost/${id}`, {
+    next: { revalidate: 60 },
+  });
+  const data = await response.json();
+  return data;
+}
