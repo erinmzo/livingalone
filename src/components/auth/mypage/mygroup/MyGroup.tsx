@@ -3,32 +3,45 @@
 import Image from "next/image";
 import { useState } from "react";
 import ApplyList from "./ApplyList";
+import { useQuery } from "@tanstack/react-query";
+import { getMyGroupPosts } from "@/apis/mypage";
+import { useAuthStore } from "@/zustand/authStore";
+import MyGroupPost from "./MyGroupPost";
 
 function MyGroup() {
   const [isOpen, setIsOpen] = useState(false);
+  const user = useAuthStore((state) => state.user);
+  console.log(user?.id);
 
+  // TODO useQuery 타입 지정해주기
+  const {
+    data: groupPosts,
+    isPending,
+    isError,
+  } = useQuery({
+    queryKey: ["myGroupPosts", user?.id],
+    queryFn: () => (user?.id ? getMyGroupPosts(user.id) : null),
+    enabled: !!user?.id,
+  });
+
+  console.log(groupPosts);
+
+  if (isPending)
+    return <div className="flex justify-center items-center">로딩중...</div>;
+
+  if (isError)
+    return <div className="flex justify-center items-center">에러...</div>;
   return (
     <div className="flex-col">
       <h5 className="font-bold text-[24px] mb-[32px] w-full">나의 정보</h5>
-      <div
-        onClick={() => setIsOpen(!isOpen)}
-        className="flex justify-between items-center py-3 cursor-pointer border-b border-t border-black"
-      >
-        <span className="flex items-center mr-1]">
-          {isOpen ? (
-            <Image src="/img/icon-toggle-up.png" alt="위" width={20} height={20} />
-          ) : (
-            <Image src="/img/icon-toggle-down.png" alt="" width={20} height={20} />
-          )}
-        </span>
-        <div className="font-bold w-[250px] truncate">두루마리 휴지 30개 공구합니다!</div>
-        <span>2024/07/21 - 2024/08/03</span>
-        <span>10명/30명</span>
-        <div className="flex">
-          <button>진행중</button>|<button className="font-bold">종료</button>
-        </div>
-      </div>
-      {isOpen && <ApplyList />}
+      {/* any 나중에 제대로 설정 */}
+      {groupPosts.map((groupPost: any) => {
+        return (
+          <div key={groupPost.id}>
+            <MyGroupPost groupPost={groupPost} />
+          </div>
+        );
+      })}
     </div>
   );
 }

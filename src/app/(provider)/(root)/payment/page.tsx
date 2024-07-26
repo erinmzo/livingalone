@@ -56,14 +56,11 @@ function PaymentPage() {
     //
     // 고객사 서버에서 /payment/complete 엔드포인트를 구현해야 합니다.
     // (다음 목차에서 설명합니다)
-    const notified = await fetch(`/api/payment/complete`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      // paymentId와 주문 정보를 서버에 전달합니다
-      body: JSON.stringify({
-        paymentId: paymentId,
-      }),
-    });
+    const notified = await fetch(
+      `/api/payment/complete?paymentId=${paymentId}`
+    );
+    const paymentData = await notified.json();
+    console.log(paymentData);
   };
 
   return (
