@@ -1,6 +1,7 @@
 import { Tables } from "./supabase";
 
 export type Profile = Tables<"profiles">;
+export type TProfile = Partial<Profile>;
 
 export type MustPost = Tables<"must_posts">;
 export type MustWish = Tables<"must_wishes">;
