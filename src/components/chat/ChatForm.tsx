@@ -34,9 +34,13 @@ export default function ChatForm() {
 
     const messageSubscription = supabase
       .channel("chat1")
-      .on("postgres_changes", { event: "INSERT", schema: "public", table: "chat" }, (payload: any) => {
-        setMessages((currentMessages) => [...currentMessages, payload.new]);
-      })
+      .on(
+        "postgres_changes",
+        { event: "INSERT", schema: "public", table: "chat" },
+        (payload: any) => {
+          setMessages((currentMessages) => [...currentMessages, payload.new]);
+        }
+      )
       .subscribe();
 
     return () => {
@@ -70,12 +74,17 @@ export default function ChatForm() {
       <div className="border border-gray-400 p-[30px] rounded-xl h-[500px] overflow-y-scroll flex flex-col justify-end">
         {messages.map((message) => (
           <div key={message.id} className="grid grid-cols-[70px_1fr]">
-            <span className="font-bold mr-3 truncate">{message.profiles.nickname}</span>
+            <span className="font-bold mr-3 truncate">
+              {message.profiles.nickname}
+            </span>
             <span className="grow">{message.text}</span>
           </div>
         ))}
       </div>
-      <form onSubmit={handleSendMessage} className="mt-[15px] mx-auto w-[320px]">
+      <form
+        onSubmit={handleSendMessage}
+        className="mt-[15px] mx-auto w-[320px]"
+      >
         <input
           type="text"
           value={newMessage}
