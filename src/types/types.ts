@@ -1,6 +1,7 @@
 import { Tables } from "./supabase";
 
 export type Profile = Tables<"profiles">;
+export type TProfile = Pick<Profile, "nickname" | "profile_image_url">;
 
 export type MustPost = Tables<"must_posts">;
 export type MustWish = Tables<"must_wishes">;
@@ -8,7 +9,10 @@ export type MustComment = Tables<"must_comments">;
 export type MustCategory = Tables<"must_categories">;
 
 export type TMainMustPost = Pick<MustPost, "id" | "title" | "item" | "img_url">;
-export type TMustPostList = Pick<MustPost, "id" | "title" | "content" | "item" | "img_url">;
+export type TMustPostList = Pick<
+  MustPost,
+  "id" | "title" | "content" | "item" | "img_url"
+>;
 
 export type TMustWishData = Omit<MustWish, "created_at" | "id">;
 

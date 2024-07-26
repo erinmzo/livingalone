@@ -18,7 +18,7 @@ function MyInformation() {
   const [isPostModalOpen, setIsPostModalOpen] = useState<boolean>(false);
   const [address, setAddress] = useState<string>("");
   const [detailAddress, setDetailAddress] = useState<string>("");
-  const [localNickname, setLocalNickname] = useState("");
+  const [localNickname, setLocalNickname] = useState<string>("");
   const [localUserPic, setLocalUserPic] = useState<string | null>(null);
 
   const { data: profile, isPending } = useQuery<Profile>({
@@ -58,8 +58,8 @@ function MyInformation() {
             <Input
               variant="default"
               label="닉네임"
-              placeholder="닉네임 변경하기"
-              value={profile?.nickname}
+              placeholder={profile?.nickname}
+              value={localNickname}
               onChange={handleNickname}
             />
             <Input

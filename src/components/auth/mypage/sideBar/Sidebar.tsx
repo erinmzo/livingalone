@@ -2,11 +2,9 @@
 import { getMyProfile } from "@/apis/mypage";
 import { Profile } from "@/types/types";
 import { useAuthStore } from "@/zustand/authStore";
-import { useEditProfile } from "@/zustand/profileStore";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect } from "react";
 
 function SideBar() {
   const user = useAuthStore((state) => state.user);
