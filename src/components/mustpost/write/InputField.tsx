@@ -2,12 +2,13 @@ import React from "react";
 
 interface InputFieldProps {
   labelName: string;
-  value: string;
+  value?: string | number;
   type: string;
-  placeHolder: string;
-  minLength: number;
+  placeHolder?: string;
+  minLength?: number;
   max?: string;
   onchangeValue: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  name?: string;
 }
 
 function InputField({
@@ -18,6 +19,7 @@ function InputField({
   onchangeValue,
   minLength,
   max,
+  name,
 }: InputFieldProps) {
   return (
     <div className="flex gap-2 justify-between">
@@ -26,6 +28,7 @@ function InputField({
       </label>
       <input
         type={type}
+        name={name}
         value={value}
         placeholder={placeHolder}
         minLength={minLength}
