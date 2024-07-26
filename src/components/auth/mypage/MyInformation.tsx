@@ -1,17 +1,21 @@
 "use client";
 
-import { useEditProfile } from "@/zustand/profileStore";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
-import { ChangeEventHandler, MouseEventHandler, useState } from "react";
+import {
+  ChangeEvent,
+  ChangeEventHandler,
+  MouseEventHandler,
+  useState,
+} from "react";
 import DaumPostcode from "react-daum-postcode";
 import Input from "../common/Input";
 import { useAuthStore } from "@/zustand/authStore";
-import { getMyProfile } from "@/apis/mypage";
-import { Profile } from "@/types/types";
+import { editMyProfile, getMyProfile, uploadImage } from "@/apis/mypage";
+import { Profile, TProfile } from "@/types/types";
 
 function MyInformation() {
-  // const { nickname, setNickname, setUserPic } = useEditProfile();
+  const queryClient = useQueryClient();
   const user = useAuthStore((state) => state.user);
   const userId = user?.id as string;
 
@@ -19,11 +23,31 @@ function MyInformation() {
   const [address, setAddress] = useState<string>("");
   const [detailAddress, setDetailAddress] = useState<string>("");
   const [localNickname, setLocalNickname] = useState<string>("");
-  const [localUserPic, setLocalUserPic] = useState<string | null>(null);
+  const [imgUrl, setImgUrl] = useState<string>("");
 
   const { data: profile, isPending } = useQuery<Profile>({
     queryKey: ["profile", userId],
     queryFn: () => getMyProfile(userId),
+  });
+
+  const { mutate: editProfile } = useMutation({
+    mutationFn: (newProfile: TProfile) => editMyProfile(userId, newProfile),
+    onSuccess: () =>
+      queryClient.invalidateQueries({ queryKey: ["profile", userId] }),
+  });
+  // 이미지
+  const { mutate: uploadImageProfile } = useMutation({
+    mutationFn: async (profileImage: File) => {
+      const formData = new FormData();
+      formData.append("file", profileImage);
+      const response = await uploadImage(formData);
+      console.log(response);
+      setImgUrl(
+        `https://nqqsefrllkqytkwxfshk.supabase.co/storage/v1/object/public/${response.fullPath}`
+      );
+    },
+    onSuccess: () =>
+      queryClient.invalidateQueries({ queryKey: ["profile", userId] }),
   });
 
   const handleSearchAddress = () => {
@@ -43,11 +67,26 @@ function MyInformation() {
     setDetailAddress(e.target.value);
   };
 
-  const handleProfileUpdate: MouseEventHandler<HTMLButtonElement> = async (
-    e
-  ) => {
+  const handleProfileUpdate: MouseEventHandler<HTMLButtonElement> = (e) => {
     e.preventDefault();
+
+    console.log(imgUrl);
+
+    const newProfile = {
+      nickname: localNickname,
+      profile_image_url: imgUrl,
+    };
+
+    editProfile(newProfile);
   };
+
+  const handleUploadImage = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      uploadImageProfile(e.target.files[0]);
+    }
+  };
+
+  if (isPending) return <div>로딩 중..</div>;
 
   return (
     <div className="flex-col w-auto grow">
@@ -67,6 +106,7 @@ function MyInformation() {
               type="file"
               placeholder="사진변경"
               label="프로필 사진 변경"
+              onChange={(e) => handleUploadImage(e)}
             />
           </div>
           <div className="relative mt-6">
@@ -108,4 +148,5 @@ function MyInformation() {
     </div>
   );
 }
+
 export default MyInformation;

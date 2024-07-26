@@ -6,10 +6,19 @@ export async function getMyProfile(id: string) {
   return data;
 }
 
-export async function insetMyProfile(id: string, newProfile: TProfile) {
+export async function editMyProfile(id: string, newProfile: TProfile) {
   const response = await fetch(`/api/auth/profile/${id}`, {
     method: "PUT",
     body: JSON.stringify(newProfile),
+  });
+  const data = await response.json();
+  return data;
+}
+
+export async function uploadImage(formData: any) {
+  const response = await fetch("/api/auth/profile/image", {
+    method: "POST",
+    body: formData,
   });
   const data = await response.json();
   return data;
