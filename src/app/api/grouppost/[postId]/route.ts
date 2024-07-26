@@ -6,7 +6,6 @@ export async function GET(
   { params }: { params: { postId: string } }
 ) {
   // 게시글 상세 가져오기
-  // try catch
   const { postId } = params;
   const supabase = createClient();
   try {
