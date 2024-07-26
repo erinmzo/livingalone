@@ -135,7 +135,7 @@ function MyInformation() {
               <span className="text-white">주소변경</span>
             </button>
             {isPostModalOpen && (
-              <div className="absolute left-0 top-[48px] border border-black z-50">
+              <div className="absolute left-0 top-[48px] border border-black ">
                 <DaumPostcode onComplete={onCompletePost}></DaumPostcode>
               </div>
             )}
