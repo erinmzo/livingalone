@@ -1,19 +1,15 @@
 "use client";
 
+import { editMyProfile, getMyProfile, uploadImage } from "@/apis/mypage";
+import { useInputChange } from "@/hooks/useInput";
+import { Profile, TProfile } from "@/types/types";
+import { useAuthStore } from "@/zustand/authStore";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
-import {
-  ChangeEvent,
-  ChangeEventHandler,
-  MouseEventHandler,
-  useState,
-} from "react";
+import { Report } from "notiflix";
+import { ChangeEvent, MouseEventHandler, useState } from "react";
 import DaumPostcode from "react-daum-postcode";
 import Input from "../common/Input";
-import { useAuthStore } from "@/zustand/authStore";
-import { editMyProfile, getMyProfile, uploadImage } from "@/apis/mypage";
-import { Profile, TProfile } from "@/types/types";
-import { Report } from "notiflix";
 
 function MyInformation() {
   const queryClient = useQueryClient();
@@ -22,19 +18,25 @@ function MyInformation() {
 
   const [isPostModalOpen, setIsPostModalOpen] = useState<boolean>(false);
   const [address, setAddress] = useState<string>("");
-  const [detailAddress, setDetailAddress] = useState<string>("");
-  const [localNickname, setLocalNickname] = useState<string>("");
+  const [imgFile, setImgFile] = useState<any>();
   const [imgUrl, setImgUrl] = useState<string>("");
+
+  const { values: input, handler: onChangeInput } = useInputChange({
+    nickname: "",
+    detailAddress: "",
+  });
+
+  const { nickname, detailAddress } = input;
 
   const { data: profile, isPending } = useQuery<Profile>({
     queryKey: ["profile", userId],
     queryFn: () => getMyProfile(userId),
+    enabled: !!user,
   });
 
   const { mutate: editProfile } = useMutation({
     mutationFn: (newProfile: TProfile) => editMyProfile(userId, newProfile),
-    onSuccess: () =>
-      queryClient.invalidateQueries({ queryKey: ["profile", userId] }),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["profile", userId] }),
   });
   // 이미지
   const { mutate: uploadImageProfile } = useMutation({
@@ -42,59 +44,68 @@ function MyInformation() {
       const formData = new FormData();
       formData.append("file", profileImage);
       const response = await uploadImage(formData);
-      setImgUrl(
-        `https://nqqsefrllkqytkwxfshk.supabase.co/storage/v1/object/public/${response.fullPath}`
-      );
+      setImgUrl(`https://nqqsefrllkqytkwxfshk.supabase.co/storage/v1/object/public/${response.fullPath}`);
+      return `https://nqqsefrllkqytkwxfshk.supabase.co/storage/v1/object/public/${response.fullPath}`;
     },
-    onSuccess: () =>
-      queryClient.invalidateQueries({ queryKey: ["profile", userId] }),
+    onMutate: async (profileImage: File) => {
+      await queryClient.cancelQueries({ queryKey: ["profile", userId] });
+
+      const previousProfile = queryClient.getQueryData<Profile>(["profile", userId]);
+
+      if (previousProfile) {
+        queryClient.setQueryData(["profile", userId], {
+          ...previousProfile,
+          profile_image_url: `https://nqqsefrllkqytkwxfshk.supabase.co/storage/v1/object/public/${profileImage}`,
+        });
+      }
+
+      return { previousProfile };
+    },
+    onError: (err, profileImage, context) => {
+      if (context?.previousProfile) {
+        queryClient.setQueryData(["profile", userId], context.previousProfile);
+      }
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["profile", userId] });
+    },
   });
 
   const handleSearchAddress = () => {
     setIsPostModalOpen((prev) => !prev);
   };
 
-  const onCompletePost = (data: { address: string }) => {
+  const onCompleteAddress = (data: { address: string }) => {
     setAddress(data.address);
     setIsPostModalOpen(false);
   };
 
-  const handleNickname: ChangeEventHandler<HTMLInputElement> = (e) => {
-    setLocalNickname(e.target.value);
-  };
-
-  const handleDetailAddress: ChangeEventHandler<HTMLInputElement> = (e) => {
-    setDetailAddress(e.target.value);
+  const handleUploadImage = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      setImgFile(e.target.files[0]);
+      uploadImageProfile(e.target.files[0]);
+    }
   };
 
   const handleProfileUpdate: MouseEventHandler<HTMLButtonElement> = (e) => {
     e.preventDefault();
+    console.log();
     const newProfile = {
-      nickname: localNickname || profile?.nickname,
+      nickname: nickname || profile?.nickname,
       profile_image_url: imgUrl || profile?.profile_image_url,
       address: address || profile?.address,
-      detail_address: detailAddress || profile?.address,
+      detail_address: detailAddress || profile?.detail_address,
     };
 
-    if (!localNickname && !imgUrl && !address && !detailAddress) {
+    const isChanged = !!nickname || !!imgFile || !!address || !!detailAddress;
+
+    if (!isChanged) {
       Report.info("변경된 내용이 없습니다.", "", "확인");
       return;
     }
 
     editProfile(newProfile);
-
     Report.success("변경이 완료되었습니다!", "", "확인");
-
-    setLocalNickname("");
-    setImgUrl("");
-    setAddress("");
-    setDetailAddress("");
-  };
-
-  const handleUploadImage = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      uploadImageProfile(e.target.files[0]);
-    }
   };
 
   if (isPending) return <div>로딩 중..</div>;
@@ -109,8 +120,9 @@ function MyInformation() {
               variant="default"
               label="닉네임"
               placeholder={profile?.nickname}
-              value={localNickname}
-              onChange={handleNickname}
+              value={nickname}
+              name="nickname"
+              onChange={onChangeInput}
             />
             <Input
               variant="default"
@@ -126,30 +138,24 @@ function MyInformation() {
               className="flex gap-3 py-[10px] px-[16px] bg-black hover:bg-slate-800 rounded-full mb-3"
               onClick={handleSearchAddress}
             >
-              <Image
-                src="/img/icon-search-white.png"
-                alt="검색 아이콘"
-                width={20}
-                height={20}
-              />
+              <Image src="/img/icon-search-white.png" alt="검색 아이콘" width={20} height={20} />
               <span className="text-white">주소변경</span>
             </button>
             {isPostModalOpen && (
               <div className="absolute left-0 top-[48px] border border-black ">
-                <DaumPostcode onComplete={onCompletePost}></DaumPostcode>
+                <DaumPostcode onComplete={onCompleteAddress}></DaumPostcode>
               </div>
             )}
-            <Input
-              variant="underline"
-              value={address}
-              placeholder={profile?.address!}
-            />
-            <Input
-              variant="underline"
-              value={detailAddress}
-              onChange={handleDetailAddress}
-              placeholder={profile?.detail_address!}
-            />
+            <div className="flex flex-col gap-2">
+              <Input variant="underline" value={address} onChange={() => {}} placeholder={profile?.address!} />
+              <Input
+                variant="underline"
+                value={detailAddress}
+                name="detailAddress"
+                onChange={onChangeInput}
+                placeholder={profile?.detail_address!}
+              />
+            </div>
           </div>
           <button
             type="submit"
