@@ -1,37 +1,40 @@
-"use client";
-
-import React, { useState } from "react";
-import InputField from "./InputField";
 import InnerLayout from "@/components/common/Page/InnerLayout";
-import Button from "@/components/auth/common/button/Button";
-import SelectCategory from "./SelectCategory";
-import { useMutation } from "@tanstack/react-query";
-import { insertMustImage, insertMustPost } from "@/apis/mustpost";
+import React, { useEffect, useState } from "react";
+import InputField from "../write/InputField";
 import Image from "next/image";
-import { Notify } from "notiflix";
 import { MustCategory, MustPost, TNewMustPost } from "@/types/types";
-import { v4 as uuidv4 } from "uuid";
-
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { getMustPost, insertMustImage, updateMustPost } from "@/apis/mustpost";
+import { Notify } from "notiflix";
+import SelectCategory from "../write/SelectCategory";
 import { useAuthStore } from "@/zustand/authStore";
-import { useRouter } from "next/navigation";
 
 type TMustInputs = {
   title: string;
-  date: string;
   category: MustCategory | null;
   itemName: string;
   company: string;
   price: number;
   content: string;
 };
-function MustWriteForm() {
-  const router = useRouter();
+
+function MustEditPage({ params }: { params: { id: string } }) {
+  const { id } = params;
   const user = useAuthStore((state) => state.user);
+  const userId = user?.id;
+
+  const {
+    data: mustPost,
+    isPending,
+    isError,
+  } = useQuery<MustPost>({
+    queryKey: ["editMustPost", id],
+    queryFn: () => getMustPost(id),
+  });
 
   const [imgUrl, setImgUrl] = useState<string>("");
   const [inputs, setInputs] = useState<TMustInputs>({
     title: "",
-    date: "",
     category: null,
     itemName: "",
     company: "",
@@ -56,12 +59,20 @@ function MustWriteForm() {
     });
   };
 
-  const { mutate: addMustPost } = useMutation({
-    mutationFn: (newMustPost: TNewMustPost) => insertMustPost(newMustPost),
-    onSuccess: () => {
-      router.back();
-    },
-  });
+  useEffect(() => {
+    if (mustPost) {
+      setInputs({
+        title: "",
+        category: null,
+        // 낸중에 한번 확인
+        itemName: mustPost.item,
+        company: mustPost.location,
+        price: mustPost.price,
+        content: mustPost.content,
+      });
+      setImgUrl(mustPost.img_url);
+    }
+  }, [mustPost]);
 
   const { mutate: addImage } = useMutation({
     mutationFn: async (newMustPostImage: any) => {
@@ -82,6 +93,11 @@ function MustWriteForm() {
     }
   };
 
+  const { mutate: updateMutation } = useMutation({
+    mutationFn: (newMustPost: TNewMustPost) => updateMustPost(newMustPost),
+    onSuccess: () => {},
+  });
+
   const today = new Date();
   const year = today.getFullYear();
   const month = String(today.getMonth() + 1).padStart(2, "0");
@@ -89,7 +105,7 @@ function MustWriteForm() {
   const startDate = `${year}-${month}-${day}` as string;
 
   const addMustPostBtn = () => {
-    const { title, date, category, itemName, company, price, content } = inputs;
+    const { title, category, itemName, company, price, content } = inputs;
     if (
       !title.trim() ||
       !category ||
@@ -100,23 +116,31 @@ function MustWriteForm() {
       Notify.failure("모든 항목을 입력해주세요");
       return;
     }
-    if (!user) {
-      return;
+    if (userId) {
+      const newMustPost: TNewMustPost = {
+        id,
+        user_id: userId,
+        title,
+        category_id: category.id,
+        content,
+        img_url: imgUrl,
+        item: itemName,
+        location: company,
+        price,
+      };
+      updateMutation(newMustPost);
     }
-
-    const newMustPost: TNewMustPost = {
-      id: uuidv4(),
-      user_id: user.id,
-      title,
-      category_id: category.id,
-      content,
-      img_url: imgUrl,
-      item: itemName,
-      location: company,
-      price,
-    };
-    addMustPost(newMustPost);
   };
+
+  if (isPending)
+    return <div className="flex justify-center items-center">로딩중...</div>;
+
+  if (isError)
+    return (
+      <div className="flex justify-center items-center">
+        오류가 발생하였습니다!...
+      </div>
+    );
 
   return (
     <InnerLayout>
@@ -207,4 +231,4 @@ function MustWriteForm() {
   );
 }
 
-export default MustWriteForm;
+export default MustEditPage;
