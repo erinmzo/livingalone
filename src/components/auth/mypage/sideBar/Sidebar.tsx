@@ -2,15 +2,14 @@
 import { getMyProfile } from "@/apis/mypage";
 import { Profile } from "@/types/types";
 import { useAuthStore } from "@/zustand/authStore";
-import { useEditProfile } from "@/zustand/profileStore";
 import { useQuery } from "@tanstack/react-query";
+
 import Image from "next/image";
 import Link from "next/link";
 
 function SideBar() {
   const user = useAuthStore((state) => state.user);
   const userId = user?.id as string;
-  const { setNickname, setUserPic } = useEditProfile();
 
   const links = [
     { href: `/mypage/${1}`, label: "나의 정보" },
@@ -22,25 +21,27 @@ function SideBar() {
   ];
 
   const { data: profile, isPending } = useQuery<Profile>({
-    queryKey: ["profile"],
+    queryKey: ["profile", userId],
     queryFn: () => getMyProfile(userId),
   });
 
+  console.log(profile);
+
   if (isPending) return <div>로딩 중...</div>;
 
-  if (profile) {
+  if (profile)
     return (
       <div className="top-0 left-0 flex flex-col justify-center w-[208px] px-[45px] py-[40px] items-center border border-gray-400 rounded-lg bg-white">
         <div className="flex-col justify-center items-center">
           <Image
             className="bg-gray-200 rounded-full mb-6"
-            src={profile.profile_image_url}
-            alt={profile.nickname}
-            width={24}
-            height={24}
+            src={profile?.profile_image_url || "/img/icon-profile.png"}
+            alt={profile?.nickname}
+            width={100}
+            height={100}
           />
           <div className="text-[16px] font-semibold text-center">
-            {profile.nickname}
+            {profile?.nickname}
           </div>
         </div>
         <ul className="flex flex-col gap-[24px] mt-[40px]">
@@ -55,7 +56,7 @@ function SideBar() {
         </ul>
       </div>
     );
-  }
+  return <div>아무 정보가 없습니다...</div>;
 }
 
 export default SideBar;

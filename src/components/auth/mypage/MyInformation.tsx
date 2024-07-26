@@ -1,21 +1,54 @@
 "use client";
 
-import { useEditProfile } from "@/zustand/profileStore";
-import { useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
-import { ChangeEventHandler, MouseEventHandler, useState } from "react";
+import {
+  ChangeEvent,
+  ChangeEventHandler,
+  MouseEventHandler,
+  useState,
+} from "react";
 import DaumPostcode from "react-daum-postcode";
-import Input from "../common/Input/Input";
+import Input from "../common/Input";
+import { useAuthStore } from "@/zustand/authStore";
+import { editMyProfile, getMyProfile, uploadImage } from "@/apis/mypage";
+import { Profile, TProfile } from "@/types/types";
+import { Report } from "notiflix";
 
 function MyInformation() {
-  const { nickname, setNickname, setUserPic } = useEditProfile();
   const queryClient = useQueryClient();
+  const user = useAuthStore((state) => state.user);
+  const userId = user?.id as string;
 
   const [isPostModalOpen, setIsPostModalOpen] = useState<boolean>(false);
   const [address, setAddress] = useState<string>("");
   const [detailAddress, setDetailAddress] = useState<string>("");
-  const [localNickname, setLocalNickname] = useState("");
-  const [localUserPic, setLocalUserPic] = useState<string | null>(null);
+  const [localNickname, setLocalNickname] = useState<string>("");
+  const [imgUrl, setImgUrl] = useState<string>("");
+
+  const { data: profile, isPending } = useQuery<Profile>({
+    queryKey: ["profile", userId],
+    queryFn: () => getMyProfile(userId),
+  });
+
+  const { mutate: editProfile } = useMutation({
+    mutationFn: (newProfile: TProfile) => editMyProfile(userId, newProfile),
+    onSuccess: () =>
+      queryClient.invalidateQueries({ queryKey: ["profile", userId] }),
+  });
+  // 이미지
+  const { mutate: uploadImageProfile } = useMutation({
+    mutationFn: async (profileImage: File) => {
+      const formData = new FormData();
+      formData.append("file", profileImage);
+      const response = await uploadImage(formData);
+      setImgUrl(
+        `https://nqqsefrllkqytkwxfshk.supabase.co/storage/v1/object/public/${response.fullPath}`
+      );
+    },
+    onSuccess: () =>
+      queryClient.invalidateQueries({ queryKey: ["profile", userId] }),
+  });
 
   const handleSearchAddress = () => {
     setIsPostModalOpen((prev) => !prev);
@@ -30,19 +63,41 @@ function MyInformation() {
     setLocalNickname(e.target.value);
   };
 
-  const handleProfileUpdate: MouseEventHandler<HTMLButtonElement> = async (
-    e
-  ) => {
-    e.preventDefault();
-    try {
-      setNickname(localNickname);
-      setUserPic(localUserPic || "");
+  const handleDetailAddress: ChangeEventHandler<HTMLInputElement> = (e) => {
+    setDetailAddress(e.target.value);
+  };
 
-      console.log("성공");
-    } catch (error) {
-      console.log("error");
+  const handleProfileUpdate: MouseEventHandler<HTMLButtonElement> = (e) => {
+    e.preventDefault();
+    const newProfile = {
+      nickname: localNickname || profile?.nickname,
+      profile_image_url: imgUrl || profile?.profile_image_url,
+      address: address || profile?.address,
+      detail_address: detailAddress || profile?.address,
+    };
+
+    if (!localNickname && !imgUrl && !address && !detailAddress) {
+      Report.info("변경된 내용이 없습니다.", "", "확인");
+      return;
+    }
+
+    editProfile(newProfile);
+
+    Report.success("변경이 완료되었습니다!", "", "확인");
+
+    setLocalNickname("");
+    setImgUrl("");
+    setAddress("");
+    setDetailAddress("");
+  };
+
+  const handleUploadImage = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      uploadImageProfile(e.target.files[0]);
     }
   };
+
+  if (isPending) return <div>로딩 중..</div>;
 
   return (
     <div className="flex-col w-auto grow">
@@ -53,7 +108,8 @@ function MyInformation() {
             <Input
               variant="default"
               label="닉네임"
-              placeholder="닉네임"
+              placeholder={profile?.nickname}
+              value={localNickname}
               onChange={handleNickname}
             />
             <Input
@@ -61,12 +117,13 @@ function MyInformation() {
               type="file"
               placeholder="사진변경"
               label="프로필 사진 변경"
+              onChange={(e) => handleUploadImage(e)}
             />
           </div>
           <div className="relative mt-6">
             <button
               type="button"
-              className="flex gap-3 py-[10px] px-[16px] bg-black hover:bg-slate-800 rounded-full"
+              className="flex gap-3 py-[10px] px-[16px] bg-black hover:bg-slate-800 rounded-full mb-3"
               onClick={handleSearchAddress}
             >
               <Image
@@ -78,16 +135,20 @@ function MyInformation() {
               <span className="text-white">주소변경</span>
             </button>
             {isPostModalOpen && (
-              <div className="absolute left-0 top-[48px] border border-black">
+              <div className="absolute left-0 top-[48px] border border-black ">
                 <DaumPostcode onComplete={onCompletePost}></DaumPostcode>
               </div>
             )}
-            <Input variant="underline" value={address} placeholder="주소" />
+            <Input
+              variant="underline"
+              value={address}
+              placeholder={profile?.address!}
+            />
             <Input
               variant="underline"
               value={detailAddress}
-              onChange={(e) => setDetailAddress(e.target.value)}
-              placeholder="상세 주소"
+              onChange={handleDetailAddress}
+              placeholder={profile?.detail_address!}
             />
           </div>
           <button
@@ -102,4 +163,5 @@ function MyInformation() {
     </div>
   );
 }
+
 export default MyInformation;
