@@ -43,6 +43,12 @@ function GroupApplyModal({ id, onClose }: PropsType) {
   });
 
   const addGroupApplyHandler = async () => {
+    // var regExp = /^\d{3}-\d{4}-\d{4}$/;
+    var regExp = /^01([0|1|6|7|8|9])-([0-9]{3,4})-([0-9]{4})$/;
+    if (!regExp.test(phone)) {
+      Notify.failure("전화번호는 01X-XXXX-XXXX 형식으로 작성해주세요.");
+      return;
+    }
     if (!name.trim() || !phone.trim() || !address.trim()) {
       Notify.failure("상세 주소를 제외한 입력창을 모두 채워주세요.");
       return;
