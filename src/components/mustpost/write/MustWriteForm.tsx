@@ -15,34 +15,13 @@ import { useInputChange } from "@/hooks/useInput";
 import { useAuthStore } from "@/zustand/authStore";
 import { useRouter } from "next/navigation";
 
+import { colorSyntaxOptions, toolbarItems } from "@/components/common/editor/EditorModule";
 import colorSyntax from "@toast-ui/editor-plugin-color-syntax";
 import "@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css";
 import "@toast-ui/editor/dist/toastui-editor.css";
 import { Editor } from "@toast-ui/react-editor";
 import { useRef } from "react";
 import "tui-color-picker/dist/tui-color-picker.css";
-
-const colorSyntaxOptions = {
-  preset: [
-    "#333333",
-    "#666666",
-    "#FFFFFF",
-    "#EE2323",
-    "#F89009",
-    "#009A87",
-    "#006DD7",
-    "#8A3DB6",
-    "#781B33",
-    "#5733B1",
-    "#953B34",
-    "#FFC1C8",
-    "#FFC9AF",
-    "#9FEEC3",
-    "#99CEFA",
-    "#C1BEF9",
-  ],
-};
-const toolbarItems = [["heading", "bold", "italic", "strike"], ["hr"], ["ul", "ol", "task"], ["link"], ["scrollSync"]];
 
 type TCategory = {
   id: string;
@@ -180,15 +159,6 @@ function MustWriteForm() {
 
         <InputField labelName="이미지" type="file" onchangeValue={addImageHandler} />
         {imgUrl && <Image src={imgUrl} alt="포스팅한 이미지" width={200} height={200} />}
-        {/* <div className="mt-[22px] mb-[64px] p-6 border-b border-black">
-          <textarea
-            name="content"
-            value={content}
-            placeholder="※ 여기에 글을 작성해주세요."
-            onChange={onChangeInput}
-            className="w-full h-[456px] outline-none"
-          ></textarea>
-        </div> */}
         <div>
           <Editor
             initialValue=" "
