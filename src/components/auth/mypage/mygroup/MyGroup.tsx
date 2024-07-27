@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getMyGroupPosts } from "@/apis/mypage";
 import { useAuthStore } from "@/zustand/authStore";
 import MyGroupPost from "./MyGroupPost";
+import { GroupApplication, GroupPost, TMyGroupPost } from "@/types/types";
 
 function MyGroup() {
   const user = useAuthStore((state) => state.user);
@@ -14,9 +15,12 @@ function MyGroup() {
     isPending,
     isError,
     refetch,
-  } = useQuery({
+  } = useQuery<TMyGroupPost[]>({
     queryKey: ["myGroupPosts", user?.id],
-    queryFn: () => (user?.id ? getMyGroupPosts(user.id) : null),
+    queryFn: () => {
+      if (!user || !user.id) throw new Error("User not found");
+      return getMyGroupPosts(user.id);
+    },
     enabled: !!user?.id,
   });
 
@@ -29,7 +33,7 @@ function MyGroup() {
     <div className="flex-col">
       <h5 className="font-bold text-[24px] mb-[32px] w-full">나의 정보</h5>
       {/* any 나중에 제대로 설정 */}
-      {groupPosts.map((groupPost: any) => {
+      {groupPosts?.map((groupPost: TMyGroupPost) => {
         return (
           <div key={groupPost.id}>
             <MyGroupPost groupPost={groupPost} refetch={refetch} />

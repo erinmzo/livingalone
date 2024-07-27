@@ -1,4 +1,4 @@
-import { TProfile } from "@/types/types";
+import { GroupApplication, TProfile } from "@/types/types";
 
 export async function getMyProfile(id: string) {
   const response = await fetch(`/api/auth/profile/${id}`);
@@ -32,7 +32,10 @@ export async function getMyGroupPosts(userId: string) {
   return data;
 }
 
-export async function editMyGroupApply(id: string, newGroupApply: any) {
+export async function editMyGroupApply(
+  id: string,
+  newGroupApply: GroupApplication
+) {
   const response = await fetch(`/api/applygroup/${id}`, {
     method: "PUT",
     body: JSON.stringify(newGroupApply),

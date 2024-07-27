@@ -1,6 +1,7 @@
 "use client";
 
 import { editMyGroupApply } from "@/apis/mypage";
+import { GroupApplication } from "@/types/types";
 import { postRevalidate } from "@/utils/revalidate";
 import { useAuthStore } from "@/zustand/authStore";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -12,7 +13,7 @@ function MyGroupApply({
   idx,
   refetch,
 }: {
-  groupApply: any;
+  groupApply: GroupApplication;
   idx: number;
   refetch: () => void;
 }) {
@@ -28,7 +29,7 @@ function MyGroupApply({
   const [isPaid, setIsPaid] = useState(groupApply.is_paid);
 
   const updateMutation = useMutation({
-    mutationFn: async (newGroupApply) => {
+    mutationFn: async (newGroupApply: GroupApplication) => {
       await editMyGroupApply(groupApply.id, newGroupApply);
     },
     onSuccess: async () => {
@@ -40,7 +41,7 @@ function MyGroupApply({
   });
 
   const paidGroupApplyHandler = async () => {
-    const newGroupApply = {
+    const newGroupApply: GroupApplication = {
       ...groupApply,
       is_paid: !isPaid,
     };

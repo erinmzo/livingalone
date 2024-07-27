@@ -2,19 +2,20 @@
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import MyGroupApply from "./MyGroupApply";
-import { TNewGroupPost } from "@/types/types";
+import { TMyGroupPost, TNewGroupPost } from "@/types/types";
 import { Confirm } from "notiflix";
 import { updateGroupPost } from "@/apis/grouppost";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { postRevalidate } from "@/utils/revalidate";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/zustand/authStore";
+import Link from "next/link";
 
 function MyGroupPost({
   groupPost,
   refetch,
 }: {
-  groupPost: any;
+  groupPost: TMyGroupPost;
   refetch: () => void;
 }) {
   const user = useAuthStore((state) => state.user);
@@ -35,9 +36,7 @@ function MyGroupPost({
       await queryClient.invalidateQueries({
         queryKey: ["myGroupPosts", user?.id],
       });
-      await postRevalidate(`/mypage/1/mygroup`);
       await refetch();
-      router.refresh();
     },
   });
 
@@ -106,9 +105,11 @@ function MyGroupPost({
             />
           )}
         </span>
-        <div className="font-bold w-[250px] truncate">{groupPost.title}</div>
+        <Link href={`/grouppost/read/${groupPost.id}`}>
+          <div className="font-bold w-[250px] truncate">{groupPost.title}</div>
+        </Link>
         <span>
-          {groupPost.start_date} - {groupPost.end_date}
+          {groupPost.start_date} ~ {groupPost.end_date}
         </span>
         <span>
           {groupPost.group_applications.length}명/{groupPost.people_num}명
@@ -141,7 +142,7 @@ function MyGroupPost({
                   </tr>
                 </thead>
                 <tbody>
-                  {sortedApply.map((groupApply: any, idx: number) => {
+                  {sortedApply.map((groupApply, idx: number) => {
                     return (
                       <tr className="text-sm" key={groupApply.id}>
                         <MyGroupApply
