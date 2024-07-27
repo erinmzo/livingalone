@@ -1,21 +1,51 @@
 "use client";
 
-import React, { useState } from "react";
+import { editMyGroupApply } from "@/apis/mypage";
+import { postRevalidate } from "@/utils/revalidate";
+import { useAuthStore } from "@/zustand/authStore";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
 
-function MyGroupApply({ groupApply, idx }: { groupApply: any; idx: number }) {
-  console.log(groupApply);
-  console.log(idx);
+function MyGroupApply({
+  groupApply,
+  idx,
+  refetch,
+}: {
+  groupApply: any;
+  idx: number;
+  refetch: () => void;
+}) {
+  const user = useAuthStore((state) => state.user);
+
+  useEffect(() => {
+    setIsPaid(groupApply.is_paid);
+  }, [groupApply.is_paid]);
+
+  const queryClient = useQueryClient();
+  const router = useRouter();
+
   const [isPaid, setIsPaid] = useState(groupApply.is_paid);
 
+  const updateMutation = useMutation({
+    mutationFn: async (newGroupApply) => {
+      await editMyGroupApply(groupApply.id, newGroupApply);
+    },
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: ["myGroupPosts", user?.id],
+      });
+      await refetch();
+    },
+  });
+
   const paidGroupApplyHandler = async () => {
-    console.log(groupApply);
     const newGroupApply = {
       ...groupApply,
       is_paid: !isPaid,
     };
     setIsPaid(!isPaid);
-
-    console.log(newGroupApply.is_paid);
+    updateMutation.mutate(newGroupApply);
   };
 
   return (
@@ -27,11 +57,13 @@ function MyGroupApply({ groupApply, idx }: { groupApply: any; idx: number }) {
         {groupApply.user_address} {groupApply.user_detail_address}
       </td>
       <td className="p-2 text-center">
-        {groupApply.is_paid ? (
-          <input onChange={paidGroupApplyHandler} type="checkbox" checked />
-        ) : (
-          <input onChange={paidGroupApplyHandler} type="checkbox" />
-        )}
+        <div onClick={paidGroupApplyHandler} className="w-6 h-6 cursor-pointer">
+          {isPaid ? (
+            <div className="bg-red-1 w-full h-full"></div>
+          ) : (
+            <div className="bg-black w-full h-full"></div>
+          )}
+        </div>
       </td>
     </>
   );
