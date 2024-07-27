@@ -1,12 +1,12 @@
 import Page from "@/components/common/Page/Page";
 
+import AuthTitle from "@/components/auth/common/AuthTitle";
 import LoginForm from "@/components/auth/login-join/login/LoginForm";
-import LoginTitle from "@/components/auth/login-join/login/LoginTitle";
 
 function LoginPage() {
   return (
     <Page>
-      <LoginTitle />
+      <AuthTitle title="로그인" />
       <LoginForm />
     </Page>
   );
