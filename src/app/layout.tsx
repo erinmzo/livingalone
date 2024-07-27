@@ -1,6 +1,13 @@
 import type { Metadata } from "next";
+import localFont from "next/font/local";
 import "./globals.css";
-// const inter = Inter({ subsets: ["latin"] });
+
+const pretendard = localFont({
+  src: "../fonts/PretendardVariable.woff2",
+  display: "swap",
+  weight: "45 920",
+  variable: "--font-pretendard",
+});
 
 export const metadata: Metadata = {
   title: "혼자살때",
@@ -14,8 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      {/* <body className={inter.className}>{children}</body> */}
-      <body>{children}</body>
+      <body className={`${pretendard.variable}`}>{children}</body>
     </html>
   );
 }
