@@ -3,7 +3,6 @@ import Header from "@/components/common/header/Header";
 import { PropsWithChildren } from "react";
 
 async function MainLayout({ children }: PropsWithChildren) {
-  //  console.log("userSessionInfo", userSessionInfo);
   return (
     <div className="font-pretendard">
       <Header />
