@@ -1,5 +1,7 @@
 "use client";
 
+import { googleLogin, login } from "@/apis/auth";
+import { useInputChange } from "@/hooks/useInput";
 import { useAuthStore } from "@/zustand/authStore";
 import Image from "next/image";
 import Link from "next/link";
@@ -12,27 +14,20 @@ import { createClient } from "@/supabase/client";
 const LoginForm = () => {
   const router = useRouter();
   const saveUser = useAuthStore((state) => state.saveUser);
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const supabase = createClient();
 
-  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
-  };
+  const { values: input, handler: onChangeInput } = useInputChange({
+    email: "",
+    password: "",
+  });
 
-  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value);
-  };
+  const { email, password } = input;
 
   const handleLoginSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const loginData = { email, password };
-    const response = await fetch("/api/auth/login", {
-      method: "POST",
-      body: JSON.stringify(loginData),
-    });
+    const { data, error } = await login(loginData);
 
-    if (response.status !== 200) {
+    if (error) {
       return Report.failure(
         "로그인에 실패했습니다.",
         "아이디와 비밀번호를 정확히 입력해 주세요.",
@@ -40,24 +35,14 @@ const LoginForm = () => {
       );
     }
 
-    const data = await response.json();
     saveUser(data.user);
     Notify.success("로그인에 성공했습니다.");
     router.push("/");
   };
 
   const handleGoogleLogin = async () => {
-    const { data, error } = await supabase.auth.signInWithOAuth({
-      provider: "google",
-      options: {
-        queryParams: {
-          access_type: "offline",
-          prompt: "consent",
-        },
-      },
-    });
-    if (data) alert("구글 로그인 중");
-    if (error) console.log("error : ", error);
+    const { error } = await googleLogin();
+    if (error) return Report.failure("구글 로그인에 실패했습니다.", "", "확인");
   };
 
   return (
@@ -71,8 +56,9 @@ const LoginForm = () => {
             label="이메일"
             type="text"
             value={email}
+            name="email"
             placeholder="이메일 주소를 입력해주세요"
-            onChange={handleEmailChange}
+            onChange={onChangeInput}
           />
         </div>
         <div className="flex flex-col mb-14">
@@ -80,8 +66,9 @@ const LoginForm = () => {
             label="비밀번호"
             type="password"
             value={password}
+            name="password"
             placeholder="비밀번호를 입력해주세요"
-            onChange={handlePasswordChange}
+            onChange={onChangeInput}
           />
         </div>
         <button className="py-3 text-xl bg-black text-white rounded-lg">

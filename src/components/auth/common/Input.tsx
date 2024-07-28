@@ -1,29 +1,24 @@
-import { ChangeEvent, ChangeEventHandler, useId } from "react";
+import { useId } from "react";
 
-type InputProps = {
-  label?: string;
+interface InputProps {
   variant?: "default" | "underline";
+  label?: string;
   type?: string;
   value?: string;
+  name?: string;
   placeholder?: string;
-  onChange?: ChangeEventHandler<HTMLInputElement>;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+const variantStyles = {
+  default:
+    "border border-[#808080] rounded-lg px-[16px] py-[8px] text-[16px] focus:outline-none focus:border-gray-950 transition",
+  underline:
+    "border-b border-[#808080] px-[16px] py-[8px] text-[16px] focus:outline-none focus:border-gray-950 transition",
 };
 
-function Input({
-  label,
-  variant = "default",
-  type = "text",
-  value,
-  placeholder,
-  onChange,
-}: InputProps) {
+function Input({ name, label, variant = "default", type = "text", value, placeholder, onChange }: InputProps) {
   const inputId = useId();
-  const variantStyles = {
-    default:
-      "border border-[#808080] rounded-lg px-[16px] py-[8px] text-[16px] focus:outline-none focus:border-gray-950 transition",
-    underline:
-      "border-b border-[#808080] px-[16px] py-[8px] text-[16px] focus:outline-none focus:border-gray-950 transition",
-  };
 
   return (
     <div className="flex flex-col">
@@ -32,33 +27,18 @@ function Input({
           {label}
         </label>
       )}
-      {type === "text" && (
+      {(type === "text" || type === "password") && (
         <input
-          type="text"
-          placeholder={placeholder}
           className="py-[9px] px-4 rounded-lg border border-[#808080] text-xl font-medium placeholder-[#999999]"
+          type={type}
           value={value}
-          onChange={onChange}
-          readOnly={!onChange}
-        />
-      )}
-      {type === "file" && (
-        <input
-          type="file"
-          className={`${variantStyles[variant]}`}
+          name={name}
           placeholder={placeholder}
           onChange={onChange}
         />
       )}
-      {type === "password" && (
-        <input
-          type="password"
-          placeholder={placeholder}
-          className="py-[9px] px-4 rounded-lg border border-[#808080] text-xl font-medium placeholder-[#999999]"
-          value={value}
-          onChange={onChange}
-          readOnly={!onChange}
-        />
+      {type === "file" && (
+        <input type="file" className={`${variantStyles[variant]}`} placeholder={placeholder} onChange={onChange} />
       )}
     </div>
   );

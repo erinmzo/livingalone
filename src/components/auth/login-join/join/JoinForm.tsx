@@ -1,14 +1,21 @@
 "use client";
+import { useInputChange } from "@/hooks/useInput";
 import { useRouter } from "next/navigation";
 import { Notify } from "notiflix";
-import React, { useState } from "react";
+import React from "react";
 import Input from "../../common/Input";
 
 const JoinForm = () => {
   const router = useRouter();
-  const [nickname, setNickname] = useState<string>("");
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
+
+  const { values: input, handler: onChangeInput } = useInputChange({
+    nickname: "",
+    email: "",
+    password: "",
+  });
+
+  const { nickname, email, password } = input;
+
   const joinData = { nickname, email, password };
 
   const handleSubmitJoin = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -34,18 +41,6 @@ const JoinForm = () => {
     router.push("/login");
   };
 
-  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
-  };
-
-  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value);
-  };
-
-  const handleNicknameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNickname(e.target.value);
-  };
-
   return (
     <div className="flex flex-col justify-center items-center">
       <form onSubmit={handleSubmitJoin} className="flex flex-col justify-center gap-6 w-[500px] mb-6">
@@ -53,22 +48,25 @@ const JoinForm = () => {
           label="닉네임"
           type="text"
           value={nickname}
+          name="nickname"
           placeholder="커뮤니티에서 사용할 닉네임을 적어주세요"
-          onChange={handleNicknameChange}
+          onChange={onChangeInput}
         />
         <Input
           label="이메일"
           type="text"
           value={email}
+          name="email"
           placeholder="이메일 주소를 입력해주세요"
-          onChange={handleEmailChange}
+          onChange={onChangeInput}
         />
         <Input
           label="비밀번호"
           type="password"
           value={password}
+          name="password"
           placeholder="숫자와 영문 조합으로 입력해주세요"
-          onChange={handlePasswordChange}
+          onChange={onChangeInput}
         />
         <button type="submit" className="w-[500px] mt-4 py-3 text-xl bg-black text-white rounded-lg">
           가입하기

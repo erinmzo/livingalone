@@ -1,11 +1,11 @@
+import AuthTitle from "@/components/auth/common/AuthTitle";
 import JoinForm from "@/components/auth/login-join/join/JoinForm";
-import JoinTitle from "@/components/auth/login-join/join/JoinTitle";
 import Page from "@/components/common/Page/Page";
 
 function JoinPage() {
   return (
     <Page>
-      <JoinTitle />
+      <AuthTitle title="회원가입" />
       <JoinForm />
     </Page>
   );
