@@ -2,10 +2,8 @@
 
 import { editMyGroupApply } from "@/apis/mypage";
 import { GroupApplication } from "@/types/types";
-import { postRevalidate } from "@/utils/revalidate";
 import { useAuthStore } from "@/zustand/authStore";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 function MyGroupApply({
@@ -24,7 +22,6 @@ function MyGroupApply({
   }, [groupApply.is_paid]);
 
   const queryClient = useQueryClient();
-  const router = useRouter();
 
   const [isPaid, setIsPaid] = useState(groupApply.is_paid);
 
