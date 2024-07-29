@@ -1,6 +1,7 @@
 "use client";
 import { createClient } from "@/supabase/client";
 import { useAuthStore } from "@/zustand/authStore";
+import { Report } from "notiflix";
 import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
@@ -12,7 +13,7 @@ type TChat = {
   user_id: string;
 };
 
-export default function ChatForm() {
+export default function ChatForm({ postId }: { postId: string }) {
   const supabase = createClient();
   const user = useAuthStore((state) => state.user);
   const [messages, setMessages] = useState<TChat[]>([]);
@@ -23,6 +24,7 @@ export default function ChatForm() {
       const { data } = await supabase
         .from("chat")
         .select("*, profiles!inner( user_id , nickname)")
+        .eq("post_id", postId)
         .order("created_at", { ascending: true });
 
       if (data) {
@@ -34,13 +36,9 @@ export default function ChatForm() {
 
     const messageSubscription = supabase
       .channel("chat1")
-      .on(
-        "postgres_changes",
-        { event: "INSERT", schema: "public", table: "chat" },
-        (payload: any) => {
-          setMessages((currentMessages) => [...currentMessages, payload.new]);
-        }
-      )
+      .on("postgres_changes", { event: "INSERT", schema: "public", table: "chat" }, (payload: any) => {
+        setMessages((currentMessages) => [...currentMessages, payload.new]);
+      })
       .subscribe();
 
     return () => {
@@ -50,6 +48,7 @@ export default function ChatForm() {
 
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!user) return Report.failure("로그인 후 이용하실 수 있습니다.", "", "확인");
 
     if (user) {
       const chatInfo = {
@@ -57,6 +56,7 @@ export default function ChatForm() {
         text: newMessage,
         user_id: user?.id,
         created_at: new Date().toISOString(),
+        post_id: postId,
       };
 
       const { error } = await supabase.from("chat").insert(chatInfo);
@@ -70,30 +70,29 @@ export default function ChatForm() {
   };
 
   return (
-    <div className="w-[360px] mx-auto">
-      <div className="border border-gray-400 p-[30px] rounded-xl h-[500px] overflow-y-scroll flex flex-col justify-end">
-        {messages.map((message) => (
-          <div key={message.id} className="grid grid-cols-[70px_1fr]">
-            <span className="font-bold mr-3 truncate">
-              {message.profiles.nickname}
-            </span>
-            <span className="grow">{message.text}</span>
+    <div className="w-full min-w-full max-w-[682px] mx-auto">
+      <div className="rounded-lg p-[24px] border border-gray-5">
+        <div className="flex flex-col justify-end">
+          <div className="h-[100px] scroll-smooth overflow-x-scroll scrolling-touch">
+            {messages.map((message) => (
+              <div key={message.id} className="grid grid-cols-[70px_1fr] text-gray-2 gap-[24px]">
+                <span className="font-bold mr-3 truncate">{message.profiles.nickname}</span>
+                <span className="grow">{message.text}</span>
+              </div>
+            ))}
           </div>
-        ))}
+        </div>
       </div>
-      <form
-        onSubmit={handleSendMessage}
-        className="mt-[15px] mx-auto w-[320px]"
-      >
+      <form onSubmit={handleSendMessage} className="flex items-center gap-1 mt-4">
         <input
           type="text"
           value={newMessage}
           onChange={(e) => setNewMessage(e.target.value)}
           placeholder="채팅을 입력하세요."
-          className="border border-gray-400 rounded py-2 px-4 w-[250px]"
+          className="border border-gray-5 rounded-full py-[10px] px-[24px] grow"
         />
-        <button type="submit" className="py-2 px-4 bg-black text-white rounded">
-          Send
+        <button type="submit" className="py-[10px] px-[24px] bg-gray-5 text-gray-3 rounded-full">
+          보내기
         </button>
       </form>
     </div>
