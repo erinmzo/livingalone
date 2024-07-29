@@ -64,8 +64,11 @@ function Wish({ postId }: WishProps) {
 
   if (!user)
     return (
-      <button onClick={handleToggleWish} className="flex justify-center items-center">
-        <Image src="/img/icon-wish.png" alt="찜하기 버튼" width={20} height={20} />
+      <button
+        onClick={handleToggleWish}
+        className="flex justify-center items-center border border-gray-2 bg-white rounded-full p-[6px]"
+      >
+        <Image src="/img/icon-wish.svg" alt="찜하기 버튼" width={20} height={20} />
       </button>
     );
 

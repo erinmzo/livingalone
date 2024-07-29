@@ -70,8 +70,8 @@ function Like({ postId }: LikeProps) {
 
   if (!user)
     return (
-      <div className="flex justify-center items-center">
-        <Image src="/img/icon-like.png" alt="좋아요 버튼" width={20} height={20} />
+      <div className="flex justify-center items-center border border-gray-3 bg-white rounded-full py-1 px-3">
+        <Image src="/img/icon-like.svg" alt="좋아요 버튼" width={20} height={20} />
         <span>{likesCount}</span>
       </div>
     );
@@ -88,7 +88,7 @@ function Like({ postId }: LikeProps) {
             <span className="ml-1 text-main-8">{likesCount}</span>
           </div>
         ) : (
-          <div className="flex justify-center items-center border border-gray-4 bg-white rounded-full py-1 px-3">
+          <div className="flex justify-center items-center border border-gray-3 bg-white rounded-full py-1 px-3">
             <Image src="/img/icon-like.svg" alt="좋아요 버튼" width={18} height={18} />
             <span className="ml-1 text-gray-4">{likesCount}</span>
           </div>
