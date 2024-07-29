@@ -1,12 +1,10 @@
 import { getGroupDetail } from "@/apis/grouppost";
-import InnerLayout from "@/components/common/Page/InnerLayout";
+import Like from "@/components/common/Like";
 import { GroupPost } from "@/types/types";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
 import GroupDetailBtnList from "./GroupDetailBtnList";
 import GroupEditBtnList from "./GroupEditBtnList";
-import Like from "@/components/common/Like";
 
 type Props = {
   params: { id: string };
@@ -44,13 +42,7 @@ async function GroupDetail({ params }: Props) {
   return (
     <div className={`${is_finished ? "text-[#B3B3B3]" : ""}`}>
       <div className="relative overflow-hidden rounded-lg">
-        <Image
-          src={img_url}
-          alt="공구템 이미지"
-          width={680}
-          height={500}
-          className="border rounded-lg"
-        />
+        <Image src={img_url} alt="공구템 이미지" width={680} height={500} className="border rounded-lg" />
         {link && (
           <Link href={link}>
             <div className=" cursor-pointer flex justify-center items-center bg-black absolute w-full h-full top-0 left-0 opacity-0 hover:opacity-100 hover:bg-opacity-50">
@@ -65,13 +57,7 @@ async function GroupDetail({ params }: Props) {
       </div>
       <div className="flex justify-between mt-[23px]">
         <div className="flex gap-2 items-center">
-          <Image
-            src={profile_image_url}
-            alt="프로필 사진"
-            width={40}
-            height={40}
-            className="rounded-full"
-          />
+          <Image src={profile_image_url} alt="프로필 사진" width={40} height={40} className="rounded-full" />
           <div>
             <p>{nickname}</p>
             <p className="text-[12px] text-[#757575]">{start_date}</p>
@@ -79,19 +65,14 @@ async function GroupDetail({ params }: Props) {
         </div>
         <div className="flex">
           <p className="font-bold text-[20px]">
-            달성률{" "}
-            <span className="text-[36px]">
-              {Math.round((group_applications.length / people_num) * 100)}%
-            </span>
+            달성률 <span className="text-[36px]">{Math.round((group_applications.length / people_num) * 100)}%</span>
           </p>
         </div>
       </div>
       <div className="mt-3">
         <p>마감일 {end_date}까지</p>
         <h5 className="font-bold text-[24px] mt-1">{title}</h5>
-        <p className="font-bold text-[24px] mt-3 mb-[4px]">
-          {price.toLocaleString()}원
-        </p>
+        <p className="font-bold text-[24px] mt-3 mb-[4px]">{price.toLocaleString()}원</p>
         <p className="mb-[20px]">{item}</p>
         {is_finished ? (
           <button className="w-[330px] py-3 text-white font-bold text-[20px] bg-[#B3B3B3] rounded-full">
@@ -103,7 +84,9 @@ async function GroupDetail({ params }: Props) {
           </>
         )}
         {/* 보더 */}
-        <div className="mt-[56px] border-t border-black py-6 px-2"></div>
+        <div className="mt-[56px] border-t border-black py-6 px-2">
+          {content}
+        </div>
         <GroupEditBtnList userId={user_id} id={id} />
       </div>
     </div>

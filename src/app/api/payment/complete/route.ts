@@ -42,7 +42,7 @@ export const GET = async (request: NextRequest) => {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `PortOne ${process.env.PORTONE_API_KEY}`,
+          Authorization: `PortOne ${process.env.NEXT_PUBLIC_PORTONE_API_KEY}`,
         },
       }
     );
