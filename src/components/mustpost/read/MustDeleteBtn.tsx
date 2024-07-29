@@ -1,16 +1,19 @@
 "use client";
 import { deleteMustPost } from "@/apis/mustpost";
-import { useMutation } from "@tanstack/react-query";
+import { useCategoryStore } from "@/zustand/mustStore";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { Confirm } from "notiflix";
-import React from "react";
 
 function MustDeleteBtn({ id }: { id: string }) {
+  const queryClient = useQueryClient();
+  const selectedCategory = useCategoryStore((state) => state.selectedCategory);
+
   const router = useRouter();
   const { mutate: deletePost } = useMutation({
     mutationFn: (id: string) => deleteMustPost(id),
     onSuccess: () => {
-      // router.back();
+      queryClient.invalidateQueries({ queryKey: ["mustPosts", selectedCategory] });
       router.push("/mustpost");
     },
   });

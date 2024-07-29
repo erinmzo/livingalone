@@ -7,15 +7,13 @@ import MainSectionTitle from "../common/MainSectionTitle";
 
 function MustSection() {
   const {
-    data: mustPosts,
+    data: mustPosts = [],
     isPending,
     isError,
   } = useQuery<TMainMustPost[]>({
     queryKey: ["mustPost"],
     queryFn: getMustPostOnMain,
   });
-
-  console.log(mustPosts);
 
   if (isPending) return <div className="flex justify-center items-center">로딩중...</div>;
 

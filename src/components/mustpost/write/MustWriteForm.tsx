@@ -3,7 +3,7 @@
 import { insertMustImage, insertMustPost } from "@/apis/mustpost";
 import InnerLayout from "@/components/common/Page/InnerLayout";
 import { MustCategory, TNewMustPost } from "@/types/types";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import { Notify } from "notiflix";
 import React, { useState } from "react";
@@ -15,10 +15,8 @@ import { useInputChange } from "@/hooks/useInput";
 import { useAuthStore } from "@/zustand/authStore";
 import { useRouter } from "next/navigation";
 
-import {
-  colorSyntaxOptions,
-  toolbarItems,
-} from "@/components/common/editor/EditorModule";
+import { colorSyntaxOptions, toolbarItems } from "@/components/common/editor/EditorModule";
+import { useCategoryStore } from "@/zustand/mustStore";
 import colorSyntax from "@toast-ui/editor-plugin-color-syntax";
 import "@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css";
 import "@toast-ui/editor/dist/toastui-editor.css";
@@ -26,18 +24,16 @@ import { Editor } from "@toast-ui/react-editor";
 import { useRef } from "react";
 import "tui-color-picker/dist/tui-color-picker.css";
 
-type TCategory = {
-  id: string;
-  name: string;
-};
-
 function MustWriteForm() {
   const router = useRouter();
   const user = useAuthStore((state) => state.user);
+  const queryClient = useQueryClient();
+  const selectedCategory = useCategoryStore((state) => state.selectedCategory);
 
   const [imgUrl, setImgUrl] = useState<string>("");
-  const [category, setCategory] = useState<TCategory>();
   const editorRef = useRef<Editor | null>(null);
+  const [selectedCategoryName, setSelectedCategoryName] = useState<string>("카테고리 선택");
+  const [selectedCategoryId, setSelectedCategoryId] = useState<string>("");
 
   const { values: input, handler: onChangeInput } = useInputChange({
     title: "",
@@ -47,15 +43,17 @@ function MustWriteForm() {
     price: 0,
     content: "",
   });
-  const { title, date, itemName, company, price, content } = input;
+  const { title, itemName, company, price } = input;
 
-  const selectCategoryName = (category: MustCategory) => {
-    setCategory(category);
+  const selectCategory = (category: MustCategory) => {
+    setSelectedCategoryName(category.name);
+    setSelectedCategoryId(category.id);
   };
 
   const { mutate: addMustPost } = useMutation({
     mutationFn: (newMustPost: TNewMustPost) => insertMustPost(newMustPost),
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["mustPosts", selectedCategory] });
       router.push("/mustpost");
     },
   });
@@ -65,9 +63,7 @@ function MustWriteForm() {
       const formData = new FormData();
       formData.append("file", newMustPostImage);
       const response = await insertMustImage(formData);
-      setImgUrl(
-        `https://nqqsefrllkqytkwxfshk.supabase.co/storage/v1/object/public/mustposts/${response.path}`
-      );
+      setImgUrl(`https://nqqsefrllkqytkwxfshk.supabase.co/storage/v1/object/public/mustposts/${response.path}`);
     },
   });
 
@@ -86,7 +82,7 @@ function MustWriteForm() {
   const startDate = `${year}-${month}-${day}` as string;
 
   const addMustPostBtn = () => {
-    if (!title.trim() || !category || !itemName.trim() || !company.trim()) {
+    if (!title.trim() || !selectedCategoryId || !itemName.trim() || !company.trim()) {
       Notify.failure("모든 항목을 입력해주세요");
       return;
     }
@@ -101,7 +97,7 @@ function MustWriteForm() {
         id: uuidv4(),
         user_id: user.id,
         title,
-        category_id: category.id,
+        category_id: selectedCategoryId,
         content: editorContent,
         img_url: imgUrl,
         item: itemName,
@@ -127,15 +123,9 @@ function MustWriteForm() {
 
         <div className="flex flex-row justify-between gap-2">
           <div className="pr-[72px] flex-grow">
-            <InputField
-              labelName="작성일자"
-              name="date"
-              type="text"
-              value={startDate}
-              onchangeValue={onChangeInput}
-            />
+            <InputField labelName="작성일자" name="date" type="text" value={startDate} onchangeValue={onChangeInput} />
           </div>
-          <SelectCategory selectCategoryName={selectCategoryName} />
+          <SelectCategory selectCategory={selectCategory} initialCategoryName={selectedCategoryName} />
         </div>
 
         <InputField
@@ -168,14 +158,8 @@ function MustWriteForm() {
           onchangeValue={onChangeInput}
         />
 
-        <InputField
-          labelName="이미지"
-          type="file"
-          onchangeValue={addImageHandler}
-        />
-        {imgUrl && (
-          <Image src={imgUrl} alt="포스팅한 이미지" width={200} height={200} />
-        )}
+        <InputField labelName="이미지" type="file" onchangeValue={addImageHandler} />
+        {imgUrl && <Image src={imgUrl} alt="포스팅한 이미지" width={200} height={200} />}
         <div>
           <Editor
             initialValue=" "
