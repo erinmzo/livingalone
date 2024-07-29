@@ -89,7 +89,6 @@ function MyInformation() {
 
   const handleProfileUpdate: MouseEventHandler<HTMLButtonElement> = (e) => {
     e.preventDefault();
-    console.log();
     const newProfile = {
       nickname: nickname || profile?.nickname,
       profile_image_url: imgUrl || profile?.profile_image_url,

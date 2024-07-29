@@ -56,7 +56,7 @@ function MustWriteForm() {
   const { mutate: addMustPost } = useMutation({
     mutationFn: (newMustPost: TNewMustPost) => insertMustPost(newMustPost),
     onSuccess: () => {
-      router.back();
+      router.push("/mustpost");
     },
   });
 
