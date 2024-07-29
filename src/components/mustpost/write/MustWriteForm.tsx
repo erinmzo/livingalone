@@ -15,43 +15,26 @@ import { useInputChange } from "@/hooks/useInput";
 import { useAuthStore } from "@/zustand/authStore";
 import { useRouter } from "next/navigation";
 
-// type TMustInputs = {
-//   title: string;
-//   date: string;
-//   category: MustCategory | null;
-//   itemName: string;
-//   company: string;
-//   price: number;
-//   content: string;
-// };
+import { colorSyntaxOptions, toolbarItems } from "@/components/common/editor/EditorModule";
+import colorSyntax from "@toast-ui/editor-plugin-color-syntax";
+import "@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css";
+import "@toast-ui/editor/dist/toastui-editor.css";
+import { Editor } from "@toast-ui/react-editor";
+import { useRef } from "react";
+import "tui-color-picker/dist/tui-color-picker.css";
 
 type TCategory = {
   id: string;
   name: string;
 };
+
 function MustWriteForm() {
   const router = useRouter();
   const user = useAuthStore((state) => state.user);
 
   const [imgUrl, setImgUrl] = useState<string>("");
   const [category, setCategory] = useState<TCategory>();
-  // const [inputs, setInputs] = useState<TMustInputs>({
-  //   title: "",
-  //   date: "",
-  //   category: null,
-  //   itemName: "",
-  //   company: "",
-  //   price: 0,
-  //   content: "",
-  // });
-
-  // const onChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-  //   const { value, name } = e.target;
-  //   setInputs({
-  //     ...inputs,
-  //     [name]: value,
-  //   });
-  // };
+  const editorRef = useRef<Editor | null>(null);
 
   const { values: input, handler: onChangeInput } = useInputChange({
     title: "",
@@ -98,7 +81,7 @@ function MustWriteForm() {
   const startDate = `${year}-${month}-${day}` as string;
 
   const addMustPostBtn = () => {
-    if (!title.trim() || !category || !itemName.trim() || !company.trim() || !content.trim()) {
+    if (!title.trim() || !category || !itemName.trim() || !company.trim()) {
       Notify.failure("모든 항목을 입력해주세요");
       return;
     }
@@ -106,18 +89,22 @@ function MustWriteForm() {
       return;
     }
 
-    const newMustPost: TNewMustPost = {
-      id: uuidv4(),
-      user_id: user.id,
-      title,
-      category_id: category.id,
-      content,
-      img_url: imgUrl,
-      item: itemName,
-      location: company,
-      price,
-    };
-    addMustPost(newMustPost);
+    if (editorRef.current) {
+      const editorContent = editorRef.current.getInstance().getMarkdown();
+
+      const newMustPost: TNewMustPost = {
+        id: uuidv4(),
+        user_id: user.id,
+        title,
+        category_id: category.id,
+        content: editorContent,
+        img_url: imgUrl,
+        item: itemName,
+        location: company,
+        price,
+      };
+      addMustPost(newMustPost);
+    }
   };
 
   return (
@@ -172,20 +159,22 @@ function MustWriteForm() {
 
         <InputField labelName="이미지" type="file" onchangeValue={addImageHandler} />
         {imgUrl && <Image src={imgUrl} alt="포스팅한 이미지" width={200} height={200} />}
-        <div className="mt-[22px] mb-[64px] p-6 border-b border-black">
-          <textarea
-            name="content"
-            value={content}
-            placeholder="※ 여기에 글을 작성해주세요."
-            onChange={onChangeInput}
-            className="w-full h-[456px] outline-none"
-          ></textarea>
+        <div>
+          <Editor
+            initialValue=" "
+            placeholder="여기에 글을 작성해주세요."
+            previewStyle="tab"
+            height="400px"
+            initialEditType="wysiwyg"
+            useCommandShortcut={true}
+            ref={editorRef}
+            plugins={[[colorSyntax, colorSyntaxOptions]]}
+            toolbarItems={toolbarItems}
+            usageStatistics={false} // 통계 수집 거부
+          />
         </div>
       </form>
       <div className="flex justify-center">
-        {/* <Button onClick={addMustPostBtn} className="w-[400px] py-3 text-[26px]">
-          포스팅 하기
-        </Button> */}
         <button
           onClick={addMustPostBtn}
           className="w-[400px] py-5 text-[26px] text-white font-bold px-4 focus:outline-none bg-black hover:bg-slate-800 rounded-full"

@@ -20,7 +20,7 @@ const config: Config = {
         "10%": "10%",
       },
       fontFamily: {
-        pretendard: ["Pretendard-Regular"],
+        pretendard: ["var(--font-pretendard)"],
       },
       colors: {
         black: "#161817",
