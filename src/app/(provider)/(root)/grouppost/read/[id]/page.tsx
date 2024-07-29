@@ -8,9 +8,7 @@ type Props = {
 function GroupReadPage({ params }: Props) {
   return (
     <Page>
-      <InnerLayout>
-        <GroupDetail params={params} />
-      </InnerLayout>
+      <GroupDetail params={params} />
     </Page>
   );
 }
