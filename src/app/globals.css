@@ -33,4 +33,8 @@ button {
 } */
 
 @layer utilities {
+  .btn-fixed-right {
+    @apply fixed bottom-8 z-50 p-[17px] border-2 border-[#899490] rounded-full;
+    right: calc(50% - 512px);
+  }
 }

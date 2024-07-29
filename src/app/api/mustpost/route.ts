@@ -23,7 +23,6 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
-  // 공구템 작성
   const newMustPost = await request.json();
   try {
     const supabase = createClient();

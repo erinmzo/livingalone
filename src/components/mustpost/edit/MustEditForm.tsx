@@ -1,3 +1,4 @@
+"use client";
 import InnerLayout from "@/components/common/Page/InnerLayout";
 import React, { useEffect, useState } from "react";
 import InputField from "../write/InputField";
@@ -8,6 +9,8 @@ import { getMustPost, insertMustImage, updateMustPost } from "@/apis/mustpost";
 import { Notify } from "notiflix";
 import SelectCategory from "../write/SelectCategory";
 import { useAuthStore } from "@/zustand/authStore";
+import { postRevalidate } from "@/utils/revalidate";
+import { useRouter } from "next/navigation";
 
 type TMustInputs = {
   title: string;
@@ -18,10 +21,11 @@ type TMustInputs = {
   content: string;
 };
 
-function MustEditPage({ params }: { params: { id: string } }) {
+function MustEditForm({ params }: { params: { id: string } }) {
   const { id } = params;
   const user = useAuthStore((state) => state.user);
   const userId = user?.id;
+  const router = useRouter();
 
   const {
     data: mustPost,
@@ -62,7 +66,7 @@ function MustEditPage({ params }: { params: { id: string } }) {
   useEffect(() => {
     if (mustPost) {
       setInputs({
-        title: "",
+        title: mustPost.title,
         category: null,
         // 낸중에 한번 확인
         itemName: mustPost.item,
@@ -95,7 +99,11 @@ function MustEditPage({ params }: { params: { id: string } }) {
 
   const { mutate: updateMutation } = useMutation({
     mutationFn: (newMustPost: TNewMustPost) => updateMustPost(newMustPost),
-    onSuccess: () => {},
+    onSuccess: () => {
+      postRevalidate(`/mustpost/read/${id}`);
+      router.push(`/mustpost/read/${id}`);
+      router.refresh();
+    },
   });
 
   const today = new Date();
@@ -217,18 +225,15 @@ function MustEditPage({ params }: { params: { id: string } }) {
         </div>
       </form>
       <div className="flex justify-center">
-        {/* <Button onClick={addMustPostBtn} className="w-[400px] py-3 text-[26px]">
-          포스팅 하기
-        </Button> */}
         <button
           onClick={addMustPostBtn}
           className="w-[400px] py-5 text-[26px] text-white font-bold px-4 focus:outline-none bg-black hover:bg-slate-800 rounded-full"
         >
-          포스팅 하기
+          수정 완료
         </button>
       </div>
     </InnerLayout>
   );
 }
 
-export default MustEditPage;
+export default MustEditForm;
