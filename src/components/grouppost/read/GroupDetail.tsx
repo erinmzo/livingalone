@@ -1,4 +1,5 @@
 import { getGroupDetail } from "@/apis/grouppost";
+import ChatForm from "@/components/chat/ChatForm";
 import Like from "@/components/common/Like";
 import { GroupPost } from "@/types/types";
 import Image from "next/image";
@@ -88,6 +89,7 @@ async function GroupDetail({ params }: Props) {
         <div className="mt-[56px] border-t border-black py-6 px-2">
           <GroupContent content={content} />
         </div>
+        <ChatForm postId={id} />
         <GroupEditBtnList userId={user_id} id={id} />
       </div>
     </div>
