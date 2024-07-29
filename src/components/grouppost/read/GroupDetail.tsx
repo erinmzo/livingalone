@@ -114,7 +114,7 @@ async function GroupDetail({ params }: Props) {
         </div>
       </InnerLayout>
       <GroupPopularList id={id} />
-      <div>
+      <div className="flex justify-center">
         <Link href={"/grouppost"}>
           <button>목록으로 돌아가기</button>
         </Link>
