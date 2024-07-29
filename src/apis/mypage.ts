@@ -55,3 +55,9 @@ export async function myItemsPost(id: string) {
   const data = await response.json();
   return data;
 }
+
+export async function likeItemPage(id: string) {
+  const response = await fetch(`/api/mustpost/user/${id}`);
+  const data = await response.json();
+  return data;
+}

@@ -22,7 +22,6 @@ function MyItems() {
   if (isPending) return <div>로딩 중..</div>;
   if (isError) return <div>에러.. </div>;
 
-  console.log(like);
   return (
     user && (
       <div>
