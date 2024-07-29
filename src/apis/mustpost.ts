@@ -1,5 +1,5 @@
 import { createClient } from "@/supabase/client";
-import { TMustWishData, TNewMustPost } from "@/types/types";
+import { MustPost, TMustWishData, TNewMustPost } from "@/types/types";
 
 export async function getMustPostOnMain() {
   const response = await fetch("/api/main/must", {
@@ -31,7 +31,9 @@ export async function getCategories() {
 }
 
 export async function getMustPostbyCategory(page = 0, categoryId: string) {
-  const response = await fetch(`/api/mustpost/category/${categoryId}?page=${page}`);
+  const response = await fetch(
+    `/api/mustpost/category/${categoryId}?page=${page}`
+  );
   const data = await response.json();
   return {
     posts: data.data,
@@ -91,7 +93,6 @@ export async function deleteMustPost(id: string): Promise<void> {
   });
 }
 
-//수정 시 사용
 export async function getMustPost(id: string) {
   const response = await fetch(`/api/mustpost/${id}`, {
     next: { revalidate: 60 },
@@ -105,4 +106,15 @@ export async function updateMustPost(newMustPost: TNewMustPost) {
     method: "PUT",
     body: JSON.stringify(newMustPost),
   });
+}
+
+export async function NewMustCategoryPost(postCategoryId: string) {
+  const supabase = createClient();
+  const { data } = await supabase
+    .from("must_posts")
+    .select("*")
+    .eq("category_id", postCategoryId)
+    .order("created_at", { ascending: false })
+    .limit(3);
+  return data;
 }
