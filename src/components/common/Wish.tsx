@@ -73,11 +73,14 @@ function Wish({ postId }: WishProps) {
   if (isError) return <div>에러가 발생했습니다.</div>;
 
   return (
-    <button onClick={handleToggleWish} className="flex justify-center items-center">
+    <button
+      onClick={handleToggleWish}
+      className="flex justify-center items-center border border-gray-2 bg-white rounded-full p-[6px]"
+    >
       {isWish ? (
-        <Image src="/img/icon-wish-on.png" alt="찜하기 버튼" width={20} height={20} />
+        <Image src="/img/icon-wish-on.svg" alt="찜하기 버튼" width={20} height={20} />
       ) : (
-        <Image src="/img/icon-wish.png" alt="찜하기 버튼" width={20} height={20} />
+        <Image src="/img/icon-wish.svg" alt="찜하기 버튼" width={20} height={20} />
       )}
     </button>
   );
