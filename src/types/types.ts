@@ -27,4 +27,10 @@ export type TNewGroupApplication = Omit<GroupApplication, "created_at">;
 
 export type TGroupLikeData = Omit<GroupLike, "created_at" | "id">;
 
+export type TGroupApplications = {
+  group_applications: GroupApplication[];
+};
+
+export type TMyGroupPost = GroupPost & TGroupApplications;
+
 export type Chat = Tables<"chat">;

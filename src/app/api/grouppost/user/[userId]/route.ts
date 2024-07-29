@@ -10,9 +10,10 @@ export async function GET(
   try {
     const { data } = await supabase
       .from("group_posts")
-      .select("*, group_applications(*)")
+      .select(`*, group_applications(*)`)
       .eq("user_id", userId)
       .order("created_at", { ascending: false });
+
     return NextResponse.json(data);
   } catch (error) {
     return NextResponse.json({ error: "포스트를 가져오는 데 실패했습니다." });

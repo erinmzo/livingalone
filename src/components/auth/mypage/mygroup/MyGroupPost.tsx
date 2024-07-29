@@ -1,31 +1,42 @@
 "use client";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import MyGroupApply from "./MyGroupApply";
-import { TNewGroupPost } from "@/types/types";
+import { TMyGroupPost, TNewGroupPost } from "@/types/types";
 import { Confirm } from "notiflix";
 import { updateGroupPost } from "@/apis/grouppost";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { postRevalidate } from "@/utils/revalidate";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/zustand/authStore";
+import Link from "next/link";
 
-function MyGroupPost({ groupPost }: { groupPost: any }) {
-  console.log(groupPost);
+function MyGroupPost({
+  groupPost,
+  refetch,
+}: {
+  groupPost: TMyGroupPost;
+  refetch: () => void;
+}) {
   const user = useAuthStore((state) => state.user);
   const queryClient = useQueryClient();
   const [isOpen, setIsOpen] = useState(false);
   const [isFinished, setIsFinished] = useState(groupPost.is_finished);
   const router = useRouter();
 
+  useEffect(() => {
+    setIsFinished(groupPost.is_finished);
+  }, [groupPost.is_finished]);
+
   const updateMutation = useMutation({
     mutationFn: async (finishGroupPost: TNewGroupPost) => {
       await updateGroupPost(finishGroupPost);
     },
     onSuccess: async () => {
-      queryClient.invalidateQueries({ queryKey: ["myGroupPosts", user?.id] });
-      postRevalidate(`/mypage/1/mygroup`);
-      router.refresh();
+      await queryClient.invalidateQueries({
+        queryKey: ["myGroupPosts", user?.id],
+      });
+      await refetch();
     },
   });
 
@@ -47,7 +58,11 @@ function MyGroupPost({ groupPost }: { groupPost: any }) {
     if (groupPost) {
       Confirm.show(
         "혼자살때",
-        "정말로 종료하시겠습니까?(이거 바꿔야댐 )",
+        `${
+          isFinished
+            ? "종료된 상태를 진행 중으로 바꾸시겠습니까?"
+            : "정말로 종료하시겠습니까?"
+        }`,
         "네",
         "아니오",
         () => {
@@ -60,6 +75,12 @@ function MyGroupPost({ groupPost }: { groupPost: any }) {
       );
     }
   };
+
+  // 순서대로 sort
+  const sortedApply = groupPost.group_applications.sort(
+    (a: any, b: any) =>
+      new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+  );
 
   return (
     <>
@@ -84,9 +105,11 @@ function MyGroupPost({ groupPost }: { groupPost: any }) {
             />
           )}
         </span>
-        <div className="font-bold w-[250px] truncate">{groupPost.title}</div>
+        <Link href={`/grouppost/read/${groupPost.id}`}>
+          <div className="font-bold w-[250px] truncate">{groupPost.title}</div>
+        </Link>
         <span>
-          {groupPost.start_date} - {groupPost.end_date}
+          {groupPost.start_date} ~ {groupPost.end_date}
         </span>
         <span>
           {groupPost.group_applications.length}명/{groupPost.people_num}명
@@ -119,15 +142,17 @@ function MyGroupPost({ groupPost }: { groupPost: any }) {
                   </tr>
                 </thead>
                 <tbody>
-                  {groupPost.group_applications.map(
-                    (groupApply: any, idx: number) => {
-                      return (
-                        <tr className="text-sm" key={groupApply.id}>
-                          <MyGroupApply groupApply={groupApply} idx={idx} />
-                        </tr>
-                      );
-                    }
-                  )}
+                  {sortedApply.map((groupApply, idx: number) => {
+                    return (
+                      <tr className="text-sm" key={groupApply.id}>
+                        <MyGroupApply
+                          groupApply={groupApply}
+                          idx={idx}
+                          refetch={refetch}
+                        />
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>

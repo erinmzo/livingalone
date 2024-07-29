@@ -9,10 +9,19 @@ export async function getMustPostOnMain() {
   return data;
 }
 
-export async function getMustPostAll() {
-  const response = await fetch("/api/mustpost");
+export async function getMustPostOnSearch() {
+  const response = await fetch(`/api/mustpost/search`);
   const data = await response.json();
   return data;
+}
+
+export async function getMustPostAll(page = 0) {
+  const response = await fetch(`/api/mustpost?page=${page}`);
+  const data = await response.json();
+  return {
+    posts: data.data,
+    total: data.count,
+  };
 }
 
 export async function getCategories() {
@@ -21,10 +30,15 @@ export async function getCategories() {
   return data;
 }
 
-export async function getMustPostbyCategory(categoryId: string) {
-  const response = await fetch(`/api/mustpost/category/${categoryId}`);
+export async function getMustPostbyCategory(page = 0, categoryId: string) {
+  const response = await fetch(
+    `/api/mustpost/category/${categoryId}?page=${page}`
+  );
   const data = await response.json();
-  return data;
+  return {
+    posts: data.data,
+    total: data.count,
+  };
 }
 
 export async function getMustPostDetail(id: string) {
