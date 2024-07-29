@@ -7,7 +7,7 @@ import MainSectionTitle from "../common/MainSectionTitle";
 
 function MustSection() {
   const {
-    data: mustPosts,
+    data: mustPosts = [],
     isPending,
     isError,
   } = useQuery<TMainMustPost[]>({
