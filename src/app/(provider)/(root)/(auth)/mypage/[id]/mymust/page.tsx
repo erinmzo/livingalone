@@ -1,5 +1,7 @@
+import MyItems from "@/components/auth/mypage/myItem/MyItems";
+
 function MyMustPage() {
-  return <div>나의 자취템</div>;
+  return <MyItems />;
 }
 
 export default MyMustPage;
