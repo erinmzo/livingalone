@@ -1,5 +1,7 @@
+import WishMust from "@/components/auth/mypage/wishMust/WishMust";
+
 function WishMustPage() {
-  return <div>찜한 자취템</div>;
+  return <WishMust />;
 }
 
 export default WishMustPage;
