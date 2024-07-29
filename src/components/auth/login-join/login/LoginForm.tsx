@@ -7,8 +7,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Notify, Report } from "notiflix";
-import React from "react";
+import React, { useState } from "react";
 import Input from "../../common/Input";
+import { createClient } from "@/supabase/client";
 
 const LoginForm = () => {
   const router = useRouter();
@@ -27,7 +28,11 @@ const LoginForm = () => {
     const { data, error } = await login(loginData);
 
     if (error) {
-      return Report.failure("로그인에 실패했습니다.", "아이디와 비밀번호를 정확히 입력해 주세요.", "확인");
+      return Report.failure(
+        "로그인에 실패했습니다.",
+        "아이디와 비밀번호를 정확히 입력해 주세요.",
+        "확인"
+      );
     }
 
     saveUser(data.user);
@@ -42,7 +47,10 @@ const LoginForm = () => {
 
   return (
     <div className="flex flex-col justify-center items-center">
-      <form onSubmit={handleLoginSubmit} className="flex flex-col justify-center w-[500px] mb-6">
+      <form
+        onSubmit={handleLoginSubmit}
+        className="flex flex-col justify-center w-[500px] mb-6"
+      >
         <div className="flex flex-col mb-6">
           <Input
             label="이메일"
@@ -63,7 +71,9 @@ const LoginForm = () => {
             onChange={onChangeInput}
           />
         </div>
-        <button className="py-3 text-xl bg-black text-white rounded-lg">로그인</button>
+        <button className="py-3 text-xl bg-black text-white rounded-lg">
+          로그인
+        </button>
       </form>
       <div className="flex flex-col items-center gap-6 w-[500px]">
         <Link href="/join">
@@ -75,7 +85,13 @@ const LoginForm = () => {
           className="flex items-center justify-center w-[500px] py-2 text-xl border-2 border-[#000] rounded-lg font-medium"
           onClick={handleGoogleLogin}
         >
-          <Image src="/img/icon-google.png" alt="구글 로그인 아이콘" width={32} height={32} className="mr-2" />
+          <Image
+            src="/img/icon-google.png"
+            alt="구글 로그인 아이콘"
+            width={32}
+            height={32}
+            className="mr-2"
+          />
           구글 간편로그인
         </button>
       </div>
