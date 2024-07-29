@@ -1,19 +1,19 @@
 "use client";
-import React, { useState } from "react";
-import InputField from "./InputField";
-import Image from "next/image";
-import { useQuery } from "@tanstack/react-query";
 import { getCategories } from "@/apis/mustpost";
 import { MustCategory } from "@/types/types";
+import { useQuery } from "@tanstack/react-query";
+import Image from "next/image";
+import { useState } from "react";
 
 interface SelectCategoryProps {
-  selectCategoryName: (category: MustCategory) => void;
+  initialCategoryName: string;
+  selectCategory: (category: MustCategory) => void;
 }
 //선택된 카테고리를 MustWriteForm으로 전달
 
-function SelectCategory({ selectCategoryName }: SelectCategoryProps) {
+function SelectCategory({ initialCategoryName, selectCategory }: SelectCategoryProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState("카테고리 선택");
+
   const {
     data: mustCategories,
     isPending,
@@ -29,15 +29,9 @@ function SelectCategory({ selectCategoryName }: SelectCategoryProps) {
   };
 
   const handleSelectCategory = (category: MustCategory) => {
-    setSelectedCategory(category.name);
     setIsOpen(false);
-    selectCategoryName(category);
+    selectCategory(category);
   };
-
-  // const handleSelectCategory = (name: string) => {
-  //   setSelectedCategory(name);
-  //   setIsOpen(false);
-  // };
 
   if (isPending) return <div>로딩중...</div>;
   if (isError) return <div>에러 발생!</div>;
@@ -46,14 +40,9 @@ function SelectCategory({ selectCategoryName }: SelectCategoryProps) {
     <div className="relative">
       <div>
         <div className="flex gap-2">
-          <span className="w-[78px] m-auto py-1 text-xl font-bold">
-            카테고리
-          </span>
-          <button
-            className="w-[164px] border-b border-black"
-            onClick={handleIsOpen}
-          >
-            {selectedCategory}
+          <span className="w-[78px] m-auto py-1 text-xl font-bold">카테고리</span>
+          <button className="w-[164px] border-b border-black" onClick={handleIsOpen}>
+            {initialCategoryName}
             <Image
               // selectedCategory
               src="/img/icon-input-must.png"
@@ -68,10 +57,7 @@ function SelectCategory({ selectCategoryName }: SelectCategoryProps) {
       {isOpen && (
         <ul className="absolute right-0 px-2 bg-[#E6E6E6] w-[164px]">
           {mustCategories?.map((category) => (
-            <li
-              key={category.id}
-              className=" border-b border-black text-right font-medium"
-            >
+            <li key={category.id} className=" border-b border-black text-right font-medium">
               <button
                 // onClick={() => handleSelectCategory(category.name)}
                 onClick={() => handleSelectCategory(category)}

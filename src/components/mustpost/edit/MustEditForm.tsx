@@ -1,6 +1,7 @@
 "use client";
 import { getMustPost, insertMustImage, updateMustPost } from "@/apis/mustpost";
 import InnerLayout from "@/components/common/Page/InnerLayout";
+import { useInputChange } from "@/hooks/useInput";
 import { MustCategory, MustPost, TNewMustPost } from "@/types/types";
 import { postRevalidate } from "@/utils/revalidate";
 import { useAuthStore } from "@/zustand/authStore";
@@ -8,17 +9,19 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Notify } from "notiflix";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import InputField from "../write/InputField";
 import SelectCategory from "../write/SelectCategory";
 
-type TMustInputs = {
-  title: string;
-  category: MustCategory | null;
-  itemName: string;
-  company: string;
-  price: number;
-  content: string;
+import { colorSyntaxOptions, toolbarItems } from "@/components/common/editor/EditorModule";
+import colorSyntax from "@toast-ui/editor-plugin-color-syntax";
+import "@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css";
+import "@toast-ui/editor/dist/toastui-editor.css";
+import { Editor } from "@toast-ui/react-editor";
+import "tui-color-picker/dist/tui-color-picker.css";
+
+type TMustPost = MustPost & {
+  must_categories: { id: string; name: string };
 };
 
 function MustEditForm({ params }: { params: { id: string } }) {
@@ -27,54 +30,50 @@ function MustEditForm({ params }: { params: { id: string } }) {
   const userId = user?.id;
   const router = useRouter();
 
+  const editorRef = useRef<Editor | null>(null);
+
+  const [imgUrl, setImgUrl] = useState<string>("");
+  const [selectedCategoryName, setSelectedCategoryName] = useState<string>("카테고리 선택");
+  const [selectedCategoryId, setSelectedCategoryId] = useState<string>("");
+
+  const {
+    values: input,
+    handler: onChangeInput,
+    setValueInit,
+  } = useInputChange({
+    title: "",
+    itemName: "",
+    company: "",
+    price: 0,
+  });
+  const { title, itemName, company, price } = input;
+
   const {
     data: mustPost,
     isPending,
     isError,
-  } = useQuery<MustPost>({
+  } = useQuery<TMustPost>({
     queryKey: ["editMustPost", id],
     queryFn: () => getMustPost(id),
   });
 
-  const [imgUrl, setImgUrl] = useState<string>("");
-  const [inputs, setInputs] = useState<TMustInputs>({
-    title: "",
-    category: null,
-    itemName: "",
-    company: "",
-    price: 0,
-    content: "",
-  });
-
-  const onChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { value, name } = e.target;
-    setInputs({
-      ...inputs,
-      [name]: value,
-    });
-  };
-
-  const selectCategoryName = (category: MustCategory) => {
-    setInputs({
-      ...inputs,
-      category,
-    });
-  };
-
   useEffect(() => {
     if (mustPost) {
-      setInputs({
+      setValueInit({
         title: mustPost.title,
-        category: null,
-        // 낸중에 한번 확인
         itemName: mustPost.item,
         company: mustPost.location,
         price: mustPost.price,
-        content: mustPost.content,
       });
-      setImgUrl(mustPost.img_url);
+      setSelectedCategoryName(mustPost.must_categories.name);
+      setSelectedCategoryId(mustPost.must_categories.id);
     }
   }, [mustPost]);
+
+  const selectCategory = useCallback((category: MustCategory) => {
+    setSelectedCategoryName(category.name);
+    setSelectedCategoryId(category.id);
+  }, []);
 
   const { mutate: addImage } = useMutation({
     mutationFn: async (newMustPostImage: any) => {
@@ -109,19 +108,25 @@ function MustEditForm({ params }: { params: { id: string } }) {
   const startDate = `${year}-${month}-${day}` as string;
 
   const addMustPostBtn = () => {
-    const { title, category, itemName, company, price, content } = inputs;
-    if (!title.trim() || !category || !itemName.trim() || !company.trim() || !content.trim()) {
+    if (!title.trim() || !selectedCategoryId || !itemName.trim() || !company.trim()) {
       Notify.failure("모든 항목을 입력해주세요");
       return;
     }
-    if (userId) {
+    if (!userId) {
+      return;
+    }
+
+    if (!editorRef.current) return Notify.failure("모든 항목을 입력해주세요");
+
+    if (editorRef.current) {
+      const editorContent = editorRef.current.getInstance().getMarkdown();
       const newMustPost: TNewMustPost = {
         id,
         user_id: userId,
         title,
-        category_id: category.id,
-        content,
-        img_url: imgUrl,
+        category_id: selectedCategoryId,
+        content: editorContent,
+        img_url: imgUrl || (mustPost?.img_url as string),
         item: itemName,
         location: company,
         price,
@@ -141,59 +146,64 @@ function MustEditForm({ params }: { params: { id: string } }) {
           labelName="제목"
           name="title"
           type="text"
-          value={inputs.title}
+          value={title}
           placeHolder="제목을 입력해주세요"
           minLength={2}
-          onchangeValue={onChange}
+          onchangeValue={onChangeInput}
         />
 
         <div className="flex flex-row justify-between gap-2">
           <div className="pr-[72px] flex-grow">
-            <InputField labelName="작성일자" name="date" type="text" value={startDate} onchangeValue={onChange} />
+            <InputField labelName="작성일자" name="date" type="text" value={startDate} onchangeValue={onChangeInput} />
           </div>
-          <SelectCategory selectCategoryName={selectCategoryName} />
+          <SelectCategory selectCategory={selectCategory} initialCategoryName={selectedCategoryName} />
         </div>
 
         <InputField
           labelName="상품이름"
           name="itemName"
           type="text"
-          value={inputs.itemName}
+          value={itemName}
           placeHolder="상품 이름을 입력해주세요."
           minLength={2}
-          onchangeValue={onChange}
+          onchangeValue={onChangeInput}
         />
 
         <InputField
           labelName="제작업체"
           name="company"
           type="text"
-          value={inputs.company}
+          value={company}
           placeHolder="구매처룰 입력해주세요."
           minLength={1}
-          onchangeValue={onChange}
+          onchangeValue={onChangeInput}
         />
 
         <InputField
           labelName="판매가격"
           name="price"
           type="number"
-          value={inputs.price}
+          value={price}
           placeHolder="숫자만 입력해주세요"
           minLength={2}
-          onchangeValue={onChange}
+          onchangeValue={onChangeInput}
         />
 
         <InputField labelName="이미지" type="file" onchangeValue={addImageHandler} />
         {imgUrl && <Image src={imgUrl} alt="포스팅한 이미지" width={200} height={200} />}
-        <div className="mt-[22px] mb-[64px] p-6 border-b border-black">
-          <textarea
-            name="content"
-            value={inputs.content}
-            placeholder="※ 여기에 글을 작성해주세요."
-            onChange={onChange}
-            className="w-full h-[456px] outline-none"
-          ></textarea>
+        <div>
+          <Editor
+            initialValue={mustPost.content}
+            placeholder="여기에 글을 작성해주세요."
+            previewStyle="tab"
+            height="400px"
+            initialEditType="wysiwyg"
+            useCommandShortcut={true}
+            ref={editorRef}
+            plugins={[[colorSyntax, colorSyntaxOptions]]}
+            toolbarItems={toolbarItems}
+            usageStatistics={false} // 통계 수집 거부
+          />
         </div>
       </form>
       <div className="flex justify-center">
