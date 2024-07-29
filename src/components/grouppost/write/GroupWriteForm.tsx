@@ -80,6 +80,8 @@ function GroupWriteForm() {
       return;
     }
 
+    if (!editorRef.current) return Notify.failure("모든 항목을 입력해주세요");
+
     const today = new Date();
     const year = today.getFullYear();
     const month = String(today.getMonth() + 1).padStart(2, "0");

@@ -13,14 +13,18 @@ export async function GET(request: NextRequest, { params }: { params: { postId: 
   }
 }
 
-export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
-  const editMustPost = await request.json();
+export async function PUT(request: NextRequest, { params }: { params: { postId: string } }) {
+  // 게시글 수정
+  const { postId } = params;
+  const editGroupPost = await request.json();
+
+  const supabase = createClient();
   try {
-    const supabase = createClient();
-    const { data } = await supabase.from("must_posts").update(editMustPost);
+    const { data } = await supabase.from("must_posts").update(editGroupPost).eq("id", postId);
+
     return NextResponse.json(data);
   } catch (error) {
-    return NextResponse.json({ error: "데이터를 등록하는 데 실패했습니다." });
+    return NextResponse.json({ error: "포스트를 수정하는 데 실패했습니다." });
   }
 }
 
