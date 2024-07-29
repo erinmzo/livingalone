@@ -1,6 +1,20 @@
+import { createClient } from "@/supabase/client";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(request: NextRequest) {
-  // 유저가 쓴 글 가져오기
-  return NextResponse.json("유저");
+export async function GET(
+  request: NextRequest,
+  { params }: { params: { userId: string } }
+) {
+  const { userId } = params;
+  const supabase = createClient();
+  console.log(userId);
+  const { data, error } = await supabase
+    .from("must_wishes")
+    .select("id,post_id, must_posts(title,item,img_url)")
+    .eq("user_id", userId);
+
+  if (error) {
+    return NextResponse.json({ error: error.message });
+  }
+  return NextResponse.json(data);
 }
