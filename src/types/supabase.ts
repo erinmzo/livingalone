@@ -360,6 +360,24 @@ export type Database = {
           },
         ]
       }
+      test: {
+        Row: {
+          content: string | null
+          created_at: string
+          id: number
+        }
+        Insert: {
+          content?: string | null
+          created_at?: string
+          id?: number
+        }
+        Update: {
+          content?: string | null
+          created_at?: string
+          id?: number
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

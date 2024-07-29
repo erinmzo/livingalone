@@ -1,21 +1,36 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@font-face {
-  font-family: "Pretendard-Regular";
-  src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff") format("woff");
+
+/* @font-face {
+  font-family: "Pretendard Variable";
+  src: url("../fonts/PretendardVariable.woff2");
   font-weight: 400;
   font-style: normal;
 }
 
+@font-face {
+  font-family: "Pretendard Variable";
+  src: url("../fonts/PretendardVariable.woff2");
+  font-weight: 500;
+  font-style: medium;
+}
+
+@font-face {
+  font-family: "Pretendard Variable";
+  src: url("../fonts/PretendardVariable.woff2");
+  font-weight: 700;
+  font-style: bold;
+}
+
+*,
+body,
+pre,
+button {
+  font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue",
+    "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol", sans-serif;
+} */
+
 @layer utilities {
-  *,
-  body,
-  pre,
-  button {
-    font-family: "Pretendard Variable !important", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto,
-      "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji",
-      "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
-    letter-spacing: -0.02em;
-  }
 }
