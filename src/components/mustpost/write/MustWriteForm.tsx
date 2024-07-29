@@ -15,7 +15,10 @@ import { useInputChange } from "@/hooks/useInput";
 import { useAuthStore } from "@/zustand/authStore";
 import { useRouter } from "next/navigation";
 
-import { colorSyntaxOptions, toolbarItems } from "@/components/common/editor/EditorModule";
+import {
+  colorSyntaxOptions,
+  toolbarItems,
+} from "@/components/common/editor/EditorModule";
 import colorSyntax from "@toast-ui/editor-plugin-color-syntax";
 import "@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css";
 import "@toast-ui/editor/dist/toastui-editor.css";
@@ -62,7 +65,9 @@ function MustWriteForm() {
       const formData = new FormData();
       formData.append("file", newMustPostImage);
       const response = await insertMustImage(formData);
-      setImgUrl(`https://nqqsefrllkqytkwxfshk.supabase.co/storage/v1/object/public/mustposts/${response.path}`);
+      setImgUrl(
+        `https://nqqsefrllkqytkwxfshk.supabase.co/storage/v1/object/public/mustposts/${response.path}`
+      );
     },
   });
 
@@ -122,7 +127,13 @@ function MustWriteForm() {
 
         <div className="flex flex-row justify-between gap-2">
           <div className="pr-[72px] flex-grow">
-            <InputField labelName="작성일자" name="date" type="text" value={startDate} onchangeValue={onChangeInput} />
+            <InputField
+              labelName="작성일자"
+              name="date"
+              type="text"
+              value={startDate}
+              onchangeValue={onChangeInput}
+            />
           </div>
           <SelectCategory selectCategoryName={selectCategoryName} />
         </div>
@@ -157,8 +168,14 @@ function MustWriteForm() {
           onchangeValue={onChangeInput}
         />
 
-        <InputField labelName="이미지" type="file" onchangeValue={addImageHandler} />
-        {imgUrl && <Image src={imgUrl} alt="포스팅한 이미지" width={200} height={200} />}
+        <InputField
+          labelName="이미지"
+          type="file"
+          onchangeValue={addImageHandler}
+        />
+        {imgUrl && (
+          <Image src={imgUrl} alt="포스팅한 이미지" width={200} height={200} />
+        )}
         <div>
           <Editor
             initialValue=" "
