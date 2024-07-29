@@ -9,14 +9,22 @@ import { useMutation } from "@tanstack/react-query";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Notify } from "notiflix";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+
+import { colorSyntaxOptions, toolbarItems } from "@/components/common/editor/EditorModule";
+import colorSyntax from "@toast-ui/editor-plugin-color-syntax";
+import "@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css";
+import "@toast-ui/editor/dist/toastui-editor.css";
+import { Editor } from "@toast-ui/react-editor";
+import "tui-color-picker/dist/tui-color-picker.css";
 
 function GroupWriteForm() {
   const router = useRouter();
   const user = useAuthStore((state) => state.user);
 
   const [imgUrl, setImgUrl] = useState<string>("");
+  const editorRef = useRef<Editor | null>(null);
 
   const { values: input, handler: onChangeInput } = useInputChange({
     title: "",
@@ -56,7 +64,7 @@ function GroupWriteForm() {
   });
 
   const addGroupPostHandler = async () => {
-    if (!title.trim() || !endDate.trim() || !imgUrl.trim() || !content.trim() || !item.trim()) {
+    if (!title.trim() || !endDate.trim() || !imgUrl.trim() || !item.trim()) {
       Notify.failure("관련 링크를 제외한 모든 값을 입력해주세요.");
       return;
     }
@@ -78,21 +86,24 @@ function GroupWriteForm() {
     const day = String(today.getDate()).padStart(2, "0");
     const startDate = `${year}-${month}-${day}`;
 
-    const newGroupPost: TNewGroupPost = {
-      id: uuidv4(),
-      user_id: user.id,
-      title,
-      start_date: startDate,
-      end_date: endDate,
-      people_num: +peopleNum,
-      price,
-      content,
-      item,
-      link,
-      img_url: imgUrl,
-      is_finished: false,
-    };
-    addMutation.mutate(newGroupPost);
+    if (editorRef.current) {
+      const editorContent = editorRef.current.getInstance().getMarkdown();
+      const newGroupPost: TNewGroupPost = {
+        id: uuidv4(),
+        user_id: user.id,
+        title,
+        start_date: startDate,
+        end_date: endDate,
+        people_num: +peopleNum,
+        price,
+        content: editorContent,
+        item,
+        link,
+        img_url: imgUrl,
+        is_finished: false,
+      };
+      addMutation.mutate(newGroupPost);
+    }
   };
 
   return (
@@ -172,13 +183,20 @@ function GroupWriteForm() {
           {imgUrl && <Image src={imgUrl} alt="선택한 이미지" width={200} height={200} />}
         </div>
       </div>
-      <textarea
-        name="content"
-        placeholder="* 여기에 글을 작성해주세요."
-        value={content}
-        onChange={onChangeInput}
-        className="w-full h-[330px] border-b border-black resize-none mt-[42px] p-6"
-      ></textarea>
+      <div>
+        <Editor
+          initialValue=" "
+          placeholder="여기에 글을 작성해주세요."
+          previewStyle="tab"
+          height="400px"
+          initialEditType="wysiwyg"
+          useCommandShortcut={true}
+          ref={editorRef}
+          plugins={[[colorSyntax, colorSyntaxOptions]]}
+          toolbarItems={toolbarItems}
+          usageStatistics={false} // 통계 수집 거부
+        />
+      </div>
       <div className="flex justify-center">
         <button
           className="bg-black w-[400px] py-4 text-white rounded-full font-bold text-[26px] mt-[64px]"
