@@ -1,4 +1,4 @@
-import { TProfile } from "@/types/types";
+import { GroupApplication, TProfile } from "@/types/types";
 
 export async function getMyProfile(id: string) {
   const response = await fetch(`/api/auth/profile/${id}`);
@@ -27,6 +27,18 @@ export async function uploadImage(formData: any) {
 export async function getMyGroupPosts(userId: string) {
   const response = await fetch(`/api/grouppost/user/${userId}`, {
     next: { revalidate: 60 },
+  });
+  const data = await response.json();
+  return data;
+}
+
+export async function editMyGroupApply(
+  id: string,
+  newGroupApply: GroupApplication
+) {
+  const response = await fetch(`/api/applygroup/${id}`, {
+    method: "PUT",
+    body: JSON.stringify(newGroupApply),
   });
   const data = await response.json();
   return data;
