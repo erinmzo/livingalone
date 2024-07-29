@@ -79,7 +79,9 @@ function MustWriteForm() {
       const formData = new FormData();
       formData.append("file", newMustPostImage);
       const response = await insertMustImage(formData);
-      setImgUrl(`https://nqqsefrllkqytkwxfshk.supabase.co/storage/v1/object/public/mustposts/${response.path}`);
+      setImgUrl(
+        `https://nqqsefrllkqytkwxfshk.supabase.co/storage/v1/object/public/mustposts/${response.path}`
+      );
     },
   });
 
@@ -98,7 +100,13 @@ function MustWriteForm() {
   const startDate = `${year}-${month}-${day}` as string;
 
   const addMustPostBtn = () => {
-    if (!title.trim() || !category || !itemName.trim() || !company.trim() || !content.trim()) {
+    if (
+      !title.trim() ||
+      !category ||
+      !itemName.trim() ||
+      !company.trim() ||
+      !content.trim()
+    ) {
       Notify.failure("모든 항목을 입력해주세요");
       return;
     }
@@ -117,6 +125,7 @@ function MustWriteForm() {
       location: company,
       price,
     };
+    console.log("newMustPost:", newMustPost);
     addMustPost(newMustPost);
   };
 
@@ -135,7 +144,13 @@ function MustWriteForm() {
 
         <div className="flex flex-row justify-between gap-2">
           <div className="pr-[72px] flex-grow">
-            <InputField labelName="작성일자" name="date" type="text" value={startDate} onchangeValue={onChangeInput} />
+            <InputField
+              labelName="작성일자"
+              name="date"
+              type="text"
+              value={startDate}
+              onchangeValue={onChangeInput}
+            />
           </div>
           <SelectCategory selectCategoryName={selectCategoryName} />
         </div>
@@ -170,8 +185,14 @@ function MustWriteForm() {
           onchangeValue={onChangeInput}
         />
 
-        <InputField labelName="이미지" type="file" onchangeValue={addImageHandler} />
-        {imgUrl && <Image src={imgUrl} alt="포스팅한 이미지" width={200} height={200} />}
+        <InputField
+          labelName="이미지"
+          type="file"
+          onchangeValue={addImageHandler}
+        />
+        {imgUrl && (
+          <Image src={imgUrl} alt="포스팅한 이미지" width={200} height={200} />
+        )}
         <div className="mt-[22px] mb-[64px] p-6 border-b border-black">
           <textarea
             name="content"
@@ -183,9 +204,6 @@ function MustWriteForm() {
         </div>
       </form>
       <div className="flex justify-center">
-        {/* <Button onClick={addMustPostBtn} className="w-[400px] py-3 text-[26px]">
-          포스팅 하기
-        </Button> */}
         <button
           onClick={addMustPostBtn}
           className="w-[400px] py-5 text-[26px] text-white font-bold px-4 focus:outline-none bg-black hover:bg-slate-800 rounded-full"

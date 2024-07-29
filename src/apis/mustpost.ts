@@ -86,3 +86,10 @@ export async function getMustPost(id: string) {
   const data = await response.json();
   return data;
 }
+
+export async function updateMustPost(newMustPost: TNewMustPost) {
+  await fetch(`/api/mustpost/${newMustPost.id}`, {
+    method: "PUT",
+    body: JSON.stringify(newMustPost),
+  });
+}

@@ -4,7 +4,7 @@ import { MustPost } from "@/types/types";
 import ReadPost from "./ReadPost";
 import ReadTopBtn from "./ReadTopBtn";
 import TopList from "./TopList";
-import MustDeleteBtn from "./MustDeleteBtn";
+import MustPostAction from "./MustPostAction";
 
 type Props = {
   params: { id: string };
@@ -39,6 +39,8 @@ async function Read({ params }: Props) {
     must_categories: { name },
   } = data as TMustPostDetail;
 
+  console.log("user_id:", user_id);
+
   return (
     <InnerLayout>
       <ReadPost
@@ -54,7 +56,8 @@ async function Read({ params }: Props) {
         name={name}
         postId={id}
       />
-      <MustDeleteBtn id={id} />
+      {/* <MustDeleteBtn id={id}  /> */}
+      <MustPostAction id={id} userId={user_id} />
       <ReadTopBtn />
       <TopList />
     </InnerLayout>
