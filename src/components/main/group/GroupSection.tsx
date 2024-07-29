@@ -19,7 +19,7 @@ type TMainGroupPost = Pick<
 
 function GroupSection() {
   const {
-    data: groupPosts,
+    data: groupPosts = [],
     isPending,
     isError,
   } = useQuery<TMainGroupPost[]>({
