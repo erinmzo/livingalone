@@ -6,10 +6,6 @@ import MustDeleteBtn from "./MustDeleteBtn";
 
 function MustPostAction({ userId, id }: { userId: string; id: string }) {
   const user = useAuthStore((state) => state.user);
-
-  console.log("id", id);
-  console.log("userId", userId);
-
   if (!user) {
     return null;
   }
