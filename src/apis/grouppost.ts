@@ -27,6 +27,14 @@ export async function getGroupPosts(page = 0, isFinished: boolean) {
   };
 }
 
+export async function getGroupPostsOnDetail() {
+  const response = await fetch("/api/grouppost/read", {
+    next: { revalidate: 60 },
+  });
+  const data = await response.json();
+  return data;
+}
+
 export async function getGroupPost(id: string) {
   const response = await fetch(`/api/grouppost/${id}`, {
     next: { revalidate: 60 },
