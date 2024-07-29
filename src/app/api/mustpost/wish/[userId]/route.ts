@@ -9,8 +9,8 @@ export async function GET(
   const supabase = createClient();
   console.log(userId);
   const { data, error } = await supabase
-    .from("must_posts")
-    .select("id, title, content, item, img_url")
+    .from("must_wishes")
+    .select("id,post_id, must_posts(title,item,img_url)")
     .eq("user_id", userId);
 
   if (error) {
