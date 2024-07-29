@@ -45,7 +45,19 @@ export async function editMyGroupApply(
 }
 
 export async function wishItem(id: string) {
+  const response = await fetch(`/api/mustpost/wish/${id}`);
+  const data = await response.json();
+  return data;
+}
+
+export async function myItemsPost(id: string) {
   const response = await fetch(`/api/mustpost/user/${id}`);
+  const data = await response.json();
+  return data;
+}
+
+export async function likeItemPage(id: string) {
+  const response = await fetch(`/api/grouppost/like/user/${id}`);
   const data = await response.json();
   return data;
 }

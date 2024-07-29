@@ -89,7 +89,7 @@ async function GroupDetail({ params }: Props) {
         <div className="mt-[56px] border-t border-black py-6 px-2">
           <GroupContent content={content} />
         </div>
-        <ChatForm postId={id} />
+        {is_finished ? "" : <ChatForm postId={id} />}
         <GroupEditBtnList userId={user_id} id={id} />
       </div>
     </div>

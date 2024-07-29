@@ -1,16 +1,16 @@
 "use client";
+import { getMustPost, insertMustImage, updateMustPost } from "@/apis/mustpost";
 import InnerLayout from "@/components/common/Page/InnerLayout";
+import { MustCategory, MustPost, TNewMustPost } from "@/types/types";
+import { postRevalidate } from "@/utils/revalidate";
+import { useAuthStore } from "@/zustand/authStore";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { Notify } from "notiflix";
 import React, { useEffect, useState } from "react";
 import InputField from "../write/InputField";
-import Image from "next/image";
-import { MustCategory, MustPost, TNewMustPost } from "@/types/types";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { getMustPost, insertMustImage, updateMustPost } from "@/apis/mustpost";
-import { Notify } from "notiflix";
 import SelectCategory from "../write/SelectCategory";
-import { useAuthStore } from "@/zustand/authStore";
-import { postRevalidate } from "@/utils/revalidate";
-import { useRouter } from "next/navigation";
 
 type TMustInputs = {
   title: string;
@@ -46,9 +46,7 @@ function MustEditForm({ params }: { params: { id: string } }) {
     content: "",
   });
 
-  const onChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
+  const onChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { value, name } = e.target;
     setInputs({
       ...inputs,
@@ -83,9 +81,7 @@ function MustEditForm({ params }: { params: { id: string } }) {
       const formData = new FormData();
       formData.append("file", newMustPostImage);
       const response = await insertMustImage(formData);
-      setImgUrl(
-        `https://nqqsefrllkqytkwxfshk.supabase.co/storage/v1/object/public/mustposts/${response.path}`
-      );
+      setImgUrl(`https://nqqsefrllkqytkwxfshk.supabase.co/storage/v1/object/public/mustposts/${response.path}`);
     },
   });
 
@@ -114,13 +110,7 @@ function MustEditForm({ params }: { params: { id: string } }) {
 
   const addMustPostBtn = () => {
     const { title, category, itemName, company, price, content } = inputs;
-    if (
-      !title.trim() ||
-      !category ||
-      !itemName.trim() ||
-      !company.trim() ||
-      !content.trim()
-    ) {
+    if (!title.trim() || !category || !itemName.trim() || !company.trim() || !content.trim()) {
       Notify.failure("모든 항목을 입력해주세요");
       return;
     }
@@ -140,15 +130,9 @@ function MustEditForm({ params }: { params: { id: string } }) {
     }
   };
 
-  if (isPending)
-    return <div className="flex justify-center items-center">로딩중...</div>;
+  if (isPending) return <div className="flex justify-center items-center">로딩중...</div>;
 
-  if (isError)
-    return (
-      <div className="flex justify-center items-center">
-        오류가 발생하였습니다!...
-      </div>
-    );
+  if (isError) return <div className="flex justify-center items-center">오류가 발생하였습니다!...</div>;
 
   return (
     <InnerLayout>
@@ -165,13 +149,7 @@ function MustEditForm({ params }: { params: { id: string } }) {
 
         <div className="flex flex-row justify-between gap-2">
           <div className="pr-[72px] flex-grow">
-            <InputField
-              labelName="작성일자"
-              name="date"
-              type="text"
-              value={startDate}
-              onchangeValue={onChange}
-            />
+            <InputField labelName="작성일자" name="date" type="text" value={startDate} onchangeValue={onChange} />
           </div>
           <SelectCategory selectCategoryName={selectCategoryName} />
         </div>
@@ -206,14 +184,8 @@ function MustEditForm({ params }: { params: { id: string } }) {
           onchangeValue={onChange}
         />
 
-        <InputField
-          labelName="이미지"
-          type="file"
-          onchangeValue={addImageHandler}
-        />
-        {imgUrl && (
-          <Image src={imgUrl} alt="포스팅한 이미지" width={200} height={200} />
-        )}
+        <InputField labelName="이미지" type="file" onchangeValue={addImageHandler} />
+        {imgUrl && <Image src={imgUrl} alt="포스팅한 이미지" width={200} height={200} />}
         <div className="mt-[22px] mb-[64px] p-6 border-b border-black">
           <textarea
             name="content"
