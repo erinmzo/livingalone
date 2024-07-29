@@ -10,9 +10,10 @@ import WriteButton from "./WriteButton";
 
 function Header() {
   const saveUser = useAuthStore((state) => state.saveUser);
+  const user = useAuthStore((state) => state.user);
 
   useEffect(() => {
-    getUser().then((res) => saveUser(res.user));
+    getUser().then((res) => saveUser(res.data.user));
   }, []);
 
   return (
@@ -24,7 +25,7 @@ function Header() {
         </h1>
         <div className="flex items-center">
           <GlobalNav />
-          <WriteButton />
+          {user && <WriteButton />}
         </div>
       </div>
       <MobileNav />

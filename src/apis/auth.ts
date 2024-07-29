@@ -1,7 +1,8 @@
 import { createClient } from "@/supabase/client";
+
 export async function getUser() {
   const supabase = createClient();
-  const { data } = await supabase.auth.getUser();
+  const { data, error } = await supabase.auth.getUser();
 
   if (data.user?.id) {
     const userId = data.user.id as string;
@@ -11,15 +12,14 @@ export async function getUser() {
       .eq("user_id", userId)
       .single();
 
-    if (profile) return data;
+    if (profile) return { data, error: profileError };
 
     if (profileError?.code === "PGRST116") {
-      const { error: insertError } = await supabase.from("profiles").insert([{ user_id: userId, nickname: "혼살러" }]);
-      if (insertError) return insertError.message;
+      await supabase.from("profiles").insert([{ user_id: userId, nickname: "혼살러" }]);
     }
   }
 
-  return data;
+  return { data, error };
 }
 
 export async function login(loginData: { email: string; password: string }) {

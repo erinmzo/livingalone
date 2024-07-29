@@ -1,4 +1,4 @@
-import { GroupApplication, TProfile } from "@/types/types";
+import { GroupApplication, MustPost, TProfile } from "@/types/types";
 
 export async function getMyProfile(id: string) {
   const response = await fetch(`/api/auth/profile/${id}`);
@@ -40,6 +40,24 @@ export async function editMyGroupApply(
     method: "PUT",
     body: JSON.stringify(newGroupApply),
   });
+  const data = await response.json();
+  return data;
+}
+
+export async function wishItem(id: string) {
+  const response = await fetch(`/api/mustpost/wish/${id}`);
+  const data = await response.json();
+  return data;
+}
+
+export async function myItemsPost(id: string) {
+  const response = await fetch(`/api/mustpost/user/${id}`);
+  const data = await response.json();
+  return data;
+}
+
+export async function likeItemPage(id: string) {
+  const response = await fetch(`/api/grouppost/like/user/${id}`);
   const data = await response.json();
   return data;
 }
