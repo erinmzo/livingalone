@@ -1,5 +1,7 @@
+import LikeItems from "@/components/auth/mypage/likeItem/LikeItems";
+
 function LikeGroupPage() {
-  return <div>좋아요 공구</div>;
+  return <LikeItems />;
 }
 
 export default LikeGroupPage;

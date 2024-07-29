@@ -1,4 +1,5 @@
 import { getGroupDetail } from "@/apis/grouppost";
+import ChatForm from "@/components/chat/ChatForm";
 import Like from "@/components/common/Like";
 import { GroupPost } from "@/types/types";
 import Image from "next/image";

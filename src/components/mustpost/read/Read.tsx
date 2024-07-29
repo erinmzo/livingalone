@@ -2,9 +2,9 @@ import { getMustPostDetail } from "@/apis/mustpost";
 import InnerLayout from "@/components/common/Page/InnerLayout";
 import { MustPost } from "@/types/types";
 import ReadPost from "./ReadPost";
-import ReadTopBtn from "./ReadTopBtn";
 import TopList from "./TopList";
-import MustDeleteBtn from "./MustDeleteBtn";
+import MustPostAction from "./MustPostAction";
+import MustTopBtn from "../TopButton/MustTopBtn";
 
 type Props = {
   params: { id: string };
@@ -54,8 +54,8 @@ async function Read({ params }: Props) {
         name={name}
         postId={id}
       />
-      <MustDeleteBtn id={id} />
-      <ReadTopBtn />
+      {/* <MustDeleteBtn id={id}  /> */}
+      <MustPostAction id={id} userId={user_id} />
       <TopList />
     </InnerLayout>
   );

@@ -2,7 +2,6 @@
 
 import Page from "@/components/common/Page/Page";
 import PortOne from "@portone/browser-sdk/v2";
-import React from "react";
 
 function PaymentPage() {
   // TEST page 입니다!!! 여기서 test하고 나중에 코드를 토대로 새롭게 제작할 예정입니다!
@@ -38,8 +37,7 @@ function PaymentPage() {
       method: "post",
       headers: {
         "Content-Type": "application/json",
-        Authorization:
-          "PortOne qtJ1xXWp1Tf5vcByQxwAKqeMYFlDp5OEzADIXjmucHzLUOK04Fap3SN7HhkG63uOpkafogsrikV62TWv",
+        Authorization: "PortOne qtJ1xXWp1Tf5vcByQxwAKqeMYFlDp5OEzADIXjmucHzLUOK04Fap3SN7HhkG63uOpkafogsrikV62TWv",
       },
       body: '{"reason":"실제 상품이 아니므로 환불댐니다... 사주셔서 감사행ㅇ"}',
     };
@@ -56,9 +54,7 @@ function PaymentPage() {
     //
     // 고객사 서버에서 /payment/complete 엔드포인트를 구현해야 합니다.
     // (다음 목차에서 설명합니다)
-    const notified = await fetch(
-      `/api/payment/complete?paymentId=${paymentId}`
-    );
+    const notified = await fetch(`/api/payment/complete?paymentId=${paymentId}`);
     const paymentData = await notified.json();
     console.log(paymentData);
   };
