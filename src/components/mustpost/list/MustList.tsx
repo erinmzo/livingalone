@@ -3,25 +3,50 @@
 import { getMustPostAll, getMustPostbyCategory } from "@/apis/mustpost";
 import { TMustPostList } from "@/types/types";
 import { useCategoryStore } from "@/zustand/mustStore";
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import SearchBar from "../search/SearchBar";
 import MustCategory from "./MustCategory";
 import MustPostCard from "./MustPostCard";
 import Title from "./Title";
+import { useMemo } from "react";
 
 function MustList() {
   const selectedCategory = useCategoryStore((state) => state.selectedCategory);
   const {
-    data: mustPosts = [],
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
     isPending,
     isError,
-  } = useQuery<TMustPostList[]>({
+    refetch,
+  } = useInfiniteQuery({
     queryKey: ["mustPosts", selectedCategory],
-    queryFn:
-      selectedCategory === "ALL"
-        ? getMustPostAll
-        : () => getMustPostbyCategory(selectedCategory),
+    queryFn: async ({ pageParam = 0 }) => {
+      const response =
+        selectedCategory === "ALL"
+          ? await getMustPostAll(pageParam)
+          : await getMustPostbyCategory(pageParam, selectedCategory);
+      return {
+        posts: response.posts,
+        total: response.total,
+      };
+    },
+    getNextPageParam: (lastPage, allPages) => {
+      const totalFetched = allPages.reduce(
+        (acc, page) => acc + page.posts.length,
+        0
+      );
+      if (totalFetched >= lastPage.total) return undefined;
+      return allPages.length;
+    },
+    initialPageParam: 0,
   });
+
+  const mustPosts = useMemo(
+    () => data?.pages?.flatMap((page) => page.posts) || [],
+    [data]
+  );
 
   if (isPending)
     return <div className="flex justify-center items-center">로딩중...</div>;
@@ -57,9 +82,15 @@ function MustList() {
             ))}
           </ul>
           <div className="flex justify-center items-center">
-            <button className="mt-[64px] border border-black py-4 px-8 rounded-full font-bold hover:bg-black hover:text-white">
-              더보기
-            </button>
+            {hasNextPage && (
+              <button
+                onClick={() => fetchNextPage()}
+                disabled={isFetchingNextPage}
+                className="mt-[64px] border border-black py-4 px-8 rounded-full font-bold hover:bg-black hover:text-white"
+              >
+                {isFetchingNextPage ? "로딩중..." : "더보기"}
+              </button>
+            )}
           </div>
         </div>
       ) : (

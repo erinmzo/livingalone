@@ -7,8 +7,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Notify, Report } from "notiflix";
-import React from "react";
+import React, { useState } from "react";
 import Input from "../../common/Input";
+import { createClient } from "@/supabase/client";
 
 const LoginForm = () => {
   const router = useRouter();
