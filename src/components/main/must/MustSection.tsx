@@ -15,8 +15,6 @@ function MustSection() {
     queryFn: getMustPostOnMain,
   });
 
-  console.log(mustPosts);
-
   if (isPending) return <div className="flex justify-center items-center">로딩중...</div>;
 
   if (isError) return <div className="flex justify-center items-center">에러...</div>;
