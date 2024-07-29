@@ -3,6 +3,7 @@
 import { useInputChange } from "@/hooks/useInput";
 import React, { useState } from "react";
 import DaumPostcode from "react-daum-postcode";
+import PaymentButton from "./PaymentButton";
 
 function PaymentForm() {
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
@@ -123,7 +124,7 @@ function PaymentForm() {
           이해하셨습니까?
         </label>
       </div>
-      <button>결제하기</button>
+      <PaymentButton input={input} />
       {isPostModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
           <div className="absolute z-20 border-black border">
