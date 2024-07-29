@@ -1,40 +1,57 @@
 "use client";
 
 import PortOne from "@portone/browser-sdk/v2";
+import { useRouter } from "next/navigation";
+import { Notify } from "notiflix";
 import React from "react";
+import { v4 as uuidv4 } from "uuid";
 
 type TPaymentInput = {
   purchaserName: string;
   purchaserPhone: string;
   purchaserEmail: string;
-  recipientName: string;
-  recipientPhone: string;
-  recipientDetailAddress: string;
-  message: string;
+  purchaserDetailAddress: string;
 };
 
-function PaymentButton({ input }: { input: TPaymentInput }) {
-  console.log(input);
-  console.log(process.env.NEXT_PUBLIC_PORTONE_API_KEY);
+function PaymentButton({
+  input,
+  purchaserAddress,
+  firstCheckBox,
+  secondCheckBox,
+}: {
+  input: TPaymentInput;
+  purchaserAddress: string;
+  firstCheckBox: boolean;
+  secondCheckBox: boolean;
+}) {
+  // console.log(input);
+  // console.log(purchaserAddress.trim());
+  // console.log(process.env.NEXT_PUBLIC_PORTONE_API_KEY);
+  // console.log(firstCheckBox);
+  // console.log(secondCheckBox);
   // 우선 구매자 유효성 검사 제작
   const {
     purchaserName,
     purchaserPhone,
     purchaserEmail,
-    recipientName,
-    recipientPhone,
-    recipientDetailAddress,
-    message,
+    purchaserDetailAddress,
   } = input;
+
+  const router = useRouter();
 
   const paymentHandler = async () => {
     if (
       !purchaserName.trim() ||
       !purchaserPhone.trim() ||
-      !purchaserEmail.trim()
+      !purchaserEmail.trim() ||
+      !purchaserAddress.trim() ||
+      !purchaserDetailAddress.trim()
     ) {
-      // TODO notiflix로 변경
-      alert("다 안채웠잔슴");
+      Notify.failure("빈 칸을 모두 채워주세요.");
+      return;
+    }
+    if (!firstCheckBox || !secondCheckBox) {
+      Notify.failure("체크박스를 모두 체크해주세요.");
       return;
     }
     const response = await PortOne.requestPayment({
@@ -42,20 +59,18 @@ function PaymentButton({ input }: { input: TPaymentInput }) {
       storeId: "store-1dde2d66-0b23-4480-9c18-cc7c666a63ff",
       // 채널 키 설정
       channelKey: "channel-key-4f07d679-cd8b-4143-8e64-ff67afba4b18",
-      paymentId: `${crypto.randomUUID()}`,
+      paymentId: uuidv4(),
       orderName: "혼자살때 럭키박스",
       totalAmount: 1000,
       currency: "CURRENCY_KRW",
       payMethod: "CARD",
       customer: {
-        // TODO 유저 정보 가져와서 넣어줘야함
         fullName: purchaserName,
         phoneNumber: purchaserPhone,
-        // TODO 이것도 유저 정보 가져와서 넣기
         email: purchaserEmail,
         address: {
-          addressLine1: "임시 주소",
-          addressLine2: "임시 상세 주소",
+          addressLine1: purchaserAddress,
+          addressLine2: purchaserDetailAddress,
         },
       },
     });
@@ -85,15 +100,14 @@ function PaymentButton({ input }: { input: TPaymentInput }) {
       console.error(error);
     }
     // -------------------------------------------------------------------------
-
-    //
+    router.push(`/payment/complete?paymentId=${paymentId}`);
     // 고객사 서버에서 /payment/complete 엔드포인트를 구현해야 합니다.
     // (다음 목차에서 설명합니다)
-    const notified = await fetch(
-      `/api/payment/complete?paymentId=${paymentId}`
-    );
-    const paymentData = await notified.json();
-    console.log(paymentData);
+    // const notified = await fetch(
+    //   `/api/payment/complete?paymentId=${paymentId}`
+    // );
+    // const paymentData = await notified.json();
+    // console.log(paymentData);
   };
 
   return <button onClick={paymentHandler}>결제하기</button>;
