@@ -135,7 +135,12 @@ function MustEditForm({ params }: { params: { id: string } }) {
     }
   };
 
-  if (isPending) return <div className="flex justify-center items-center">로딩중...</div>;
+  if (isPending)
+    return (
+      <div className="flex justify-center items-center">
+        <Image src="/img/loading-spinner.svg" alt="로딩중" width={200} height={200} />
+      </div>
+    );
 
   if (isError) return <div className="flex justify-center items-center">오류가 발생하였습니다!...</div>;
 
