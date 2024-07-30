@@ -24,12 +24,6 @@ function PaymentButton({
   firstCheckBox: boolean;
   secondCheckBox: boolean;
 }) {
-  // console.log(input);
-  // console.log(purchaserAddress.trim());
-  // console.log(process.env.NEXT_PUBLIC_PORTONE_API_KEY);
-  // console.log(firstCheckBox);
-  // console.log(secondCheckBox);
-  // 우선 구매자 유효성 검사 제작
   const {
     purchaserName,
     purchaserPhone,
@@ -74,40 +68,23 @@ function PaymentButton({
         },
       },
     });
-    console.log(response);
+
     if (response?.code != null) {
       // 오류 발생
       return alert(response.message);
     }
+
     const paymentId = response?.paymentId;
 
-    // 즉시 환불 로직입니다. 나중에 route handler 변경 예정 -------------------------
-    const url = `https://api.portone.io/payments/${paymentId}/cancel`;
-    const options = {
-      method: "post",
+    await fetch("/api/payment", {
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `PortOne ${process.env.NEXT_PUBLIC_PORTONE_API_KEY}`,
       },
-      body: '{"reason":"실제 상품이 아니므로 환불됩니다. 구매해주셔서 감사합니다!"}',
-    };
+      body: JSON.stringify({ paymentId }),
+    });
 
-    try {
-      const response = await fetch(url, options);
-      const data = await response.json();
-      console.log(data);
-    } catch (error) {
-      console.error(error);
-    }
-    // -------------------------------------------------------------------------
     router.push(`/payment/complete?paymentId=${paymentId}`);
-    // 고객사 서버에서 /payment/complete 엔드포인트를 구현해야 합니다.
-    // (다음 목차에서 설명합니다)
-    // const notified = await fetch(
-    //   `/api/payment/complete?paymentId=${paymentId}`
-    // );
-    // const paymentData = await notified.json();
-    // console.log(paymentData);
   };
 
   return <button onClick={paymentHandler}>결제하기</button>;

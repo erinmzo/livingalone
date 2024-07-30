@@ -5,21 +5,23 @@ export async function PUT(
   request: NextRequest,
   { params }: { params: { postId: string } }
 ) {
-  const { postId } = params;
-  const supabase = createClient();
+  try {
+    const { postId } = params;
+    const supabase = createClient();
 
-  const newGroupApply = await request.json();
+    const newGroupApply = await request.json();
+    console.log(newGroupApply);
+    console.log(postId);
 
-  const { data, error } = await supabase
-    .from("group_applications")
-    .update(newGroupApply)
-    .eq("id", postId)
-    .select();
+    const { data } = await supabase
+      .from("group_applications")
+      .update(newGroupApply)
+      .eq("id", postId)
+      .select();
 
-  console.log(error);
-  if (error) {
-    return NextResponse.json({ error: error.message });
+    console.log(data);
+    return NextResponse.json(data);
+  } catch (error) {
+    return NextResponse.json({ error: "데이터를 수정하는 데 실패했습니다." });
   }
-
-  return NextResponse.json(data);
 }

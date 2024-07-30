@@ -5,6 +5,7 @@ import { TNewGroupApplication } from "@/types/types";
 import { postRevalidate } from "@/utils/revalidate";
 import { useAuthStore } from "@/zustand/authStore";
 import { useMutation } from "@tanstack/react-query";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Notify } from "notiflix";
 import { useState } from "react";
@@ -81,72 +82,83 @@ function GroupApplyModal({ id, onClose }: PropsType) {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center ">
-      <div className="z-10 p-6 w-[500px] box-border bg-white rounded-[30px] shadow-modal-custom">
+      <div className="z-10 p-6 w-[500px] box-border bg-white rounded-2xl shadow-modal-custom">
         <div className="flex justify-end">
-          <button onClick={onClose}>임시 엑스버튼</button>
+          <button onClick={onClose}>
+            <Image
+              src="/img/icon-delete.png"
+              alt="모달 종료 버튼"
+              width={24}
+              height={24}
+            />
+          </button>
         </div>
         <h6 className="flex justify-center font-bold text-[32px] mb-[33px]">
           공구 신청하기
         </h6>
-        <input
-          className="w-full h-[47px] text-[24px] mb-[26px] border-b-2 border-black p-1"
-          placeholder="입금자명"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-        <input
-          className="w-full h-[47px] text-[24px] mb-[44px] border-b-2 border-black p-1"
-          placeholder="+82"
-          value={phone}
-          onChange={(e) => setPhone(e.target.value)}
-        />
-        <button
-          className="py-2 px-4 text-white bg-black rounded-full mb-3"
-          onClick={handleSearchAddress}
-        >
-          주소 검색
-        </button>
-        <input
-          className="w-full h-[47px] text-[24px] mb-2 border-b-2 border-black p-1"
-          placeholder="주소"
-          value={address}
-          readOnly
-        />
-        <input
-          className="w-full h-[47px] text-[24px] mb-[40px] border-b-2 border-black p-1"
-          placeholder="상세 주소"
-          value={detailAddress}
-          onChange={(e) => setDetailAddress(e.target.value)}
-        />
-        <input
-          type="checkbox"
-          onChange={() => {
-            setCheckBox(!checkBox);
-          }}
-        />
-        <label className="ml-2 font-bold">
-          공구 참여자 는 2024년 7월 22일 아래와 같이 서약합니다.
-        </label>
-        <div className="text-[14px] mt-2">
-          <p className="flex gap-1">
-            <span>1. </span> 공구 총대가 개인정보(이름, 주소, 전화번호)를
-            수집하는 것에 동의합니다.
-          </p>
-          <p className="flex gap-1">
-            <span>2. </span> 개인정보 기입 오류 시 물건에 대한 피해, 금전적
-            피해, 불이익 등 모두 감수하며, 환불받지 못하는 사실에 동의합니다.
-          </p>
-          <p className="flex gap-1">
-            <span>3. </span> 본인 실수로 인한 불이익 발생 시 어떠한 이의제기도
-            하지 않을 것을 서약합니다.
-          </p>
+        <div className="px-9">
+          <input
+            className="w-full h-[47px] text-[24px] mb-[26px] border-b-2 border-black p-1"
+            placeholder="입금자명"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+          <input
+            className="w-full h-[47px] text-[24px] mb-[44px] border-b-2 border-black p-1"
+            placeholder="+82"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+          />
+          <button
+            className="py-2 px-4 text-[12px] font-bold text-gray-3 border border-gray-3 rounded-full mb-3"
+            onClick={handleSearchAddress}
+          >
+            주소검색
+          </button>
+          <input
+            className="w-full h-[47px] text-[24px] mb-2 border-b-2 border-black p-1"
+            placeholder="주소"
+            value={address}
+            readOnly
+          />
+          <input
+            className="w-full h-[47px] text-[24px] mb-[40px] border-b-2 border-black p-1"
+            placeholder="상세 주소"
+            value={detailAddress}
+            onChange={(e) => setDetailAddress(e.target.value)}
+          />
         </div>
-        <button
-          className="bg-black mt-[32px] mb-[24px] text-white w-full py-4 text-[24px] rounded-full font-bold"
-          onClick={addGroupApplyHandler}
-        >
-          확인
-        </button>
+        <div className="px-[26px]">
+          <input
+            type="checkbox"
+            onChange={() => {
+              setCheckBox(!checkBox);
+            }}
+          />
+          <label className="ml-2 font-bold">
+            공구 참여자 는 2024년 7월 22일 아래와 같이 서약합니다.
+          </label>
+          <div className="text-[14px] mt-2">
+            <p className="flex gap-1">
+              <span>1. </span> 공구 총대가 개인정보(이름, 주소, 전화번호)를
+              수집하는 것에 동의합니다.
+            </p>
+            <p className="flex gap-1">
+              <span>2. </span> 개인정보 기입 오류 시 물건에 대한 피해, 금전적
+              피해, 불이익 등 모두 감수하며, 환불받지 못하는 사실에 동의합니다.
+            </p>
+            <p className="flex gap-1">
+              <span>3. </span> 본인 실수로 인한 불이익 발생 시 어떠한 이의제기도
+              하지 않을 것을 서약합니다.
+            </p>
+          </div>
+          <button
+            className="bg-main-8 mt-[32px] mb-[24px] text-white w-full py-4 text-[24px] rounded-full font-bold"
+            onClick={addGroupApplyHandler}
+          >
+            확인
+          </button>
+        </div>
       </div>
       {isPostModalOpen && (
         <div className="absolute z-20 border-black border">
