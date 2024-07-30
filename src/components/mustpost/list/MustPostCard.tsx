@@ -13,7 +13,7 @@ function MustPostCard({ postId, title, item, imgUrl }: MustPostCardProps) {
   return (
     <div className="relative">
       <Link href={`/mustpost/read/${postId}`}>
-        <div className="overflow-hidden relative aspect-square rounded-lg">
+        <div className="overflow-hidden relative aspect-square rounded-lg border border-gray-2">
           <Image
             src={imgUrl}
             alt={item}
@@ -32,9 +32,7 @@ function MustPostCard({ postId, title, item, imgUrl }: MustPostCardProps) {
         </div>
       </Link>
       <div className="absolute right-[20px] top-[20px]">
-        <div className="py-1 px-5 bg-white rounded-full">
-          <Wish postId={postId} />
-        </div>
+        <Wish postId={postId} />
       </div>
     </div>
   );

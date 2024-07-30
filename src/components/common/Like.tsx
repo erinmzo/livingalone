@@ -70,8 +70,8 @@ function Like({ postId }: LikeProps) {
 
   if (!user)
     return (
-      <div className="flex justify-center items-center">
-        <Image src="/img/icon-like.png" alt="좋아요 버튼" width={20} height={20} />
+      <div className="flex justify-center items-center border border-gray-3 bg-white rounded-full py-1 px-3">
+        <Image src="/img/icon-like.svg" alt="좋아요 버튼" width={20} height={20} />
         <span>{likesCount}</span>
       </div>
     );
@@ -80,14 +80,21 @@ function Like({ postId }: LikeProps) {
   if (isError) return <span>에러</span>;
 
   return (
-    <button onClick={handleToggleLike} className="flex justify-center items-center">
-      {isLike ? (
-        <Image src="/img/icon-like-on.png" alt="좋아요 버튼" width={18} height={18} />
-      ) : (
-        <Image src="/img/icon-like.png" alt="좋아요 버튼" width={18} height={18} />
-      )}
-      <span className="ml-1">{likesCount}</span>
-    </button>
+    <div>
+      <button onClick={handleToggleLike}>
+        {isLike ? (
+          <div className="flex justify-center items-center border border-main-8 bg-white rounded-full py-1 px-3">
+            <Image src="/img/icon-like-on.svg" alt="좋아요 버튼" width={18} height={18} />
+            <span className="ml-1 text-main-8">{likesCount}</span>
+          </div>
+        ) : (
+          <div className="flex justify-center items-center border border-gray-3 bg-white rounded-full py-1 px-3">
+            <Image src="/img/icon-like.svg" alt="좋아요 버튼" width={18} height={18} />
+            <span className="ml-1 text-gray-4">{likesCount}</span>
+          </div>
+        )}
+      </button>
+    </div>
   );
 }
 
