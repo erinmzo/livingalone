@@ -13,9 +13,9 @@ function MustPostAction({ userId, id }: { userId: string; id: string }) {
   return (
     <>
       {user.id === userId ? (
-        <div className="flex justify-center items-center gap-2 pt-[40px]">
+        <div className="flex justify-center items-center gap-3 pt-[40px]">
           <Link href={`/mustpost/edit/${id}`}>
-            <button className="w-[197px] py-[10px] text-[#fff] font-bold text-xl bg-black rounded-full">
+            <button className="w-[100px] py-[8px] px-[22px] text-[#fff] font-bold text-xl bg-main-8 rounded-full">
               글 수정
             </button>
           </Link>
