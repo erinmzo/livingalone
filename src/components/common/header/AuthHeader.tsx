@@ -31,7 +31,7 @@ function AuthHeader() {
               <button onClick={handleLogout}>로그아웃</button>
             </li>
             <li>
-              <Link href={`/mypage/${user.id}`}>마이페이지</Link>
+              <Link href={`/mypage`}>마이페이지</Link>
             </li>
           </>
         )}

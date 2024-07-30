@@ -5,18 +5,20 @@ import { useAuthStore } from "@/zustand/authStore";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 function SideBar() {
   const user = useAuthStore((state) => state.user);
   const userId = user?.id as string;
+  const pathname = usePathname();
 
   const links = [
-    { href: `/mypage/${userId}`, label: "나의 정보" },
-    { href: `/mypage/${userId}/wishmust`, label: "찜한 자취템" },
-    { href: `/mypage/${userId}/mymust`, label: "나의 자취템" },
-    { href: `/mypage/${userId}/likegroup`, label: "좋아요 공구" },
-    { href: `/mypage/${userId}/applygroup`, label: "신청한 공구" },
-    { href: `/mypage/${userId}/mygroup`, label: "내가 쓴 공구" },
+    { href: `/mypage`, label: "나의 정보" },
+    { href: `/mypage/wishmust`, label: "찜한 자취템" },
+    { href: `/mypage/mymust`, label: "나의 자취템" },
+    { href: `/mypage/likegroup`, label: "좋아요 공구" },
+    { href: `/mypage/applygroup`, label: "신청한 공구" },
+    { href: `/mypage/mygroup`, label: "내가 쓴 공구" },
   ];
 
   const { data: profile, isPending } = useQuery<Profile>({
@@ -38,15 +40,15 @@ function SideBar() {
             width={100}
             height={100}
           />
-          <div className="text-[16px] font-bold text-center w-full h-[19px]">
-            {profile?.nickname}
-          </div>
+          <div className="text-[16px] font-bold text-center w-full h-[19px]">{profile?.nickname}</div>
         </div>
-        <ul className="flex flex-col gap-[24px] mt-[40px]">
+        <ul className="flex flex-col gap-[24px] mt-[40px] items-center">
           {links.map((link) => (
             <li
               key={link.href}
-              className="text-[20px] font-medium text-[#BFC5C3] hover:text-black transition-all "
+              className={`text-[20px] hover:text-gray-5 transition-all ${
+                pathname === link.href ? " text-gray-5 font-bold" : "text-gray-2"
+              }`}
             >
               <Link href={link.href}>{link.label}</Link>
             </li>

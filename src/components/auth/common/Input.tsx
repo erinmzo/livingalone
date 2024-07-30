@@ -12,32 +12,24 @@ interface InputProps {
 
 const variantStyles = {
   default:
-    "border border-[#808080]  w-[319.5px] h-[48px] rounded-lg px-[16px] py-[8px] text-[16px] focus:outline-none focus:border-gray-950 transition",
+    "h-[48px] px-4 w-[288px] rounded-lg border border-gray-2 text-[18px] placeholder-gray-2 focus:outline-none focus:border-gray-3 transition",
   underline:
-    "border-b border-[#808080] px-[16px] py-[8px] text-[16px] focus:outline-none focus:border-gray-950 transition ",
+    "border-b border-gray-2 px-1 py-2 text-[20px] placeholder-gray-2 focus:outline-none focus:border-gray-3 transition ",
 };
 
-function Input({
-  name,
-  label,
-  variant = "default",
-  type = "text",
-  value,
-  placeholder,
-  onChange,
-}: InputProps) {
+function Input({ name, label, variant = "default", type = "text", value, placeholder, onChange }: InputProps) {
   const inputId = useId();
 
   return (
     <div className="flex flex-col">
       {label && (
-        <label className="ml-1 mb-[10px] font-bold" htmlFor={inputId}>
+        <label className="ml-1 mb-[12px] font-bold text-[18px]" htmlFor={inputId}>
           {label}
         </label>
       )}
       {(type === "text" || type === "password") && (
         <input
-          className="py-[9px] px-4 rounded-lg border border-[#808080] text-xl font-medium placeholder-[#999999]"
+          className={`${variantStyles[variant]}`}
           type={type}
           value={value}
           name={name}
@@ -48,7 +40,7 @@ function Input({
       {type === "file" && (
         <input
           type="file"
-          className={`${variantStyles[variant]}`}
+          className={`${variantStyles[variant]} text-[10px] py-[10px]`}
           placeholder={placeholder}
           onChange={onChange}
         />
