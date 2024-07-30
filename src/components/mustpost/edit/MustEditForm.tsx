@@ -32,6 +32,7 @@ function MustEditForm({ params }: { params: { id: string } }) {
   const user = useAuthStore((state) => state.user);
   const userId = user?.id;
   const router = useRouter();
+  const maxImageSize = 1 * 1024 * 1024;
 
   const editorRef = useRef<Editor | null>(null);
 
@@ -91,18 +92,17 @@ function MustEditForm({ params }: { params: { id: string } }) {
         `https://nqqsefrllkqytkwxfshk.supabase.co/storage/v1/object/public/mustposts/${response.path}`
       );
     },
-    onError: (error) => {
-      console.error("Image error:", error); // 에러 발생 시 로그
-    },
-    onSuccess: () => {
-      console.log("Image successful, imgUrl:", imgUrl); // 성공 시 상태 확인용 로그
-    },
   });
 
   const addImageHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     if (e.target.files) {
       const newMustPostImage = e.target.files[0];
+
+      if (newMustPostImage.size > maxImageSize) {
+        Notify.failure("1MB 이하의 이미지로 업로드해주세요");
+        return;
+      }
       addImage(newMustPostImage);
     }
   };
@@ -223,7 +223,7 @@ function MustEditForm({ params }: { params: { id: string } }) {
           minLength={2}
           onchangeValue={onChangeInput}
         />
-        <div className="flex gap-5 items-start">
+        <div className="flex gap-4 items-start">
           <input
             className="hidden"
             id="image-file"
@@ -237,12 +237,7 @@ function MustEditForm({ params }: { params: { id: string } }) {
             {imgUrl ? "이미지 수정" : "이미지 업로드"}
           </label>
           {imgUrl && (
-            <Image
-              src={imgUrl}
-              alt="포스팅한 이미지"
-              width={200}
-              height={200}
-            />
+            <Image src={imgUrl} alt="포스팅한 이미지" width={200} height={0} />
           )}
         </div>
         {/* <InputField labelName="이미지" type="file" onchangeValue={addImageHandler} />

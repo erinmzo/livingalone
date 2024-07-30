@@ -32,6 +32,7 @@ function MustWriteForm() {
   const user = useAuthStore((state) => state.user);
   const queryClient = useQueryClient();
   const selectedCategory = useCategoryStore((state) => state.selectedCategory);
+  const maxImageSize = 1 * 1024 * 1024;
 
   const [imgUrl, setImgUrl] = useState<string>("");
   const editorRef = useRef<Editor | null>(null);
@@ -79,6 +80,11 @@ function MustWriteForm() {
     e.preventDefault();
     if (e.target.files) {
       const newMustPostImage = e.target.files[0];
+
+      if (newMustPostImage.size > maxImageSize) {
+        Notify.failure("1MB 이하의 이미지로 업로드해주세요");
+        return;
+      }
       addImage(newMustPostImage);
     }
   };
