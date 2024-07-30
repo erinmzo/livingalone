@@ -9,10 +9,11 @@ export async function GET(
   const supabase = createClient();
   try {
     const { data } = await supabase
-      .from("must_posts")
-      .select("id, title, content, item, img_url")
-      .eq("user_id", userId)
-      .order("created_at", { ascending: false });
+      .from("group_applications")
+      .select(
+        "*, group_posts(id, title, is_finished, price, people_num , img_url, start_date, end_date)"
+      )
+      .eq("user_id", userId);
     return NextResponse.json(data);
   } catch (error) {
     return NextResponse.json({ error: "포스트를 가져오는 데 실패했습니다." });

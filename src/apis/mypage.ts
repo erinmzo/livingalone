@@ -61,3 +61,9 @@ export async function likeItemPage(id: string) {
   const data = await response.json();
   return data;
 }
+
+export async function applyItems(id: string) {
+  const response = await fetch(`/api/grouppost/apply/${id}`);
+  const data = await response.json();
+  return data;
+}

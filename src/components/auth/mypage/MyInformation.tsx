@@ -5,7 +5,6 @@ import { useInputChange } from "@/hooks/useInput";
 import { Profile, TProfile } from "@/types/types";
 import { useAuthStore } from "@/zustand/authStore";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import Image from "next/image";
 import { Report } from "notiflix";
 import { ChangeEvent, MouseEventHandler, useState } from "react";
 import DaumPostcode from "react-daum-postcode";
@@ -112,9 +111,9 @@ function MyInformation() {
   return (
     <div className="flex-col w-auto grow">
       <div className="flex flex-col justify-center items-start gap-8">
-        <h5 className="font-bold text-[20px]">나의 정보</h5>
-        <form className="w-[400px]">
-          <div className="flex flex-col gap-6">
+        <h5 className="font-bold text-[24px]">나의 정보</h5>
+        <form className="flex flex-col items-center">
+          <div className="flex w-full gap-[32px]">
             <Input
               variant="default"
               label="닉네임"
@@ -131,21 +130,20 @@ function MyInformation() {
               onChange={(e) => handleUploadImage(e)}
             />
           </div>
-          <div className="relative mt-6">
+          <div className="relative mt-16 flex flex-col w-full">
             <button
               type="button"
-              className="flex gap-3 py-[10px] px-[16px] bg-black hover:bg-slate-800 rounded-full mb-3"
+              className="flex gap-3 w-[73px] py-2 border border-gray-3 bg-white font-bold rounded-full mb-3 justify-center items-center "
               onClick={handleSearchAddress}
             >
-              <Image src="/img/icon-search-white.png" alt="검색 아이콘" width={20} height={20} />
-              <span className="text-white">주소변경</span>
+              <span className=" text-center text-[12px] text-gray-3">주소변경</span>
             </button>
             {isPostModalOpen && (
-              <div className="absolute left-0 top-[48px] border border-black ">
+              <div className="absolute left-0 top-[48px] border border-black  ">
                 <DaumPostcode onComplete={onCompleteAddress}></DaumPostcode>
               </div>
             )}
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-2 ">
               <Input variant="underline" value={address} onChange={() => {}} placeholder={profile?.address!} />
               <Input
                 variant="underline"
@@ -158,7 +156,7 @@ function MyInformation() {
           </div>
           <button
             type="submit"
-            className="bg-[#808080] text-white w-full py-2 mt-[50px] rounded-lg font-bold text-[18px]"
+            className="bg-[#008575] w-[500px] h-[52px] text-white  py-2 mt-[50px] rounded-full font-bold text-[18px]"
             onClick={handleProfileUpdate}
           >
             변경하기
