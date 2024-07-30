@@ -46,30 +46,18 @@ function GroupPostCard({
                 종료됨
               </span>
             ) : (
-              <span className="py-[4px] px-[12px] rounded-full bg-main-7 text-white text-[12px] font-bold">
-                진행중
-              </span>
+              <span className="py-[4px] px-[12px] rounded-full bg-main-7 text-white text-[12px] font-bold">진행중</span>
             )}
-            <div
-              className={`text-[14px] ${
-                isFinished ? "text-gray-2" : "text-gray-3"
-              }`}
-            >
+            <div className={`text-[14px] ${isFinished ? "text-gray-2" : "text-gray-3"}`}>
               <span>{startDate}</span> ~ <span>{endDate}</span>
             </div>
           </div>
-          <h4 className="text-[22px] font-medium truncate mt-[6px]">{title}</h4>
+          <h4 className="text-[20px] font-bold truncate mt-[6px]">{title}</h4>
           <div className="flex items-baseline gap-2 mt-[6px]">
-            <span
-              className={`${
-                isFinished ? "text-gray-2" : "text-red-3"
-              } text-[16px] font-bold`}
-            >
+            <span className={`${isFinished ? "text-gray-2" : "text-red-3"} text-[16px] font-bold`}>
               {peopleNum - application.length}명 남음!
             </span>
-            <span className="text-[20px] font-bold">
-              {price.toLocaleString()}원
-            </span>
+            <span className="text-[20px] font-bold">{price.toLocaleString()}원</span>
           </div>
         </div>
       </Link>

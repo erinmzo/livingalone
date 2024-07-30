@@ -5,6 +5,7 @@ import GroupPostCard from "@/components/grouppost/list/GroupPostCard";
 import { useAuthStore } from "@/zustand/authStore";
 import { useQuery } from "@tanstack/react-query";
 
+import Image from "next/image";
 function ApplyItems() {
   const user = useAuthStore((state) => state.user);
   const userId = user?.id as string;
@@ -18,7 +19,13 @@ function ApplyItems() {
     queryFn: () => applyItems(userId),
   });
 
-  if (isPending) return <div>로딩 중..</div>;
+  if (isPending)
+    return (
+      <div className="flex justify-center items-center">
+        <Image src="/img/loading-spinner.svg" alt="로딩중" width={200} height={200} />
+      </div>
+    );
+
   if (isError) return <div>에러..</div>;
 
   console.log(applyPosts);
