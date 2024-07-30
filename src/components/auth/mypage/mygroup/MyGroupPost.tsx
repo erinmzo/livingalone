@@ -9,7 +9,13 @@ import { Confirm } from "notiflix";
 import { useEffect, useState } from "react";
 import MyGroupApply from "./MyGroupApply";
 
-function MyGroupPost({ groupPost, refetch }: { groupPost: TMyGroupPost; refetch: () => void }) {
+function MyGroupPost({
+  groupPost,
+  refetch,
+}: {
+  groupPost: TMyGroupPost;
+  refetch: () => void;
+}) {
   const user = useAuthStore((state) => state.user);
   const queryClient = useQueryClient();
   const [isOpen, setIsOpen] = useState(false);
@@ -49,7 +55,11 @@ function MyGroupPost({ groupPost, refetch }: { groupPost: TMyGroupPost; refetch:
     if (groupPost) {
       Confirm.show(
         "혼자살때",
-        `${isFinished ? "종료된 상태를 진행 중으로 바꾸시겠습니까?" : "정말로 종료하시겠습니까?"}`,
+        `${
+          isFinished
+            ? "종료된 상태를 진행 중으로 바꾸시겠습니까?"
+            : "정말로 종료하시겠습니까?"
+        }`,
         "네",
         "아니오",
         () => {
@@ -65,17 +75,35 @@ function MyGroupPost({ groupPost, refetch }: { groupPost: TMyGroupPost; refetch:
 
   // 순서대로 sort
   const sortedApply = groupPost.group_applications.sort(
-    (a: any, b: any) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+    (a: any, b: any) =>
+      new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
   );
 
   return (
     <>
-      <div className="flex justify-between items-center py-3 border-b border-t border-black">
-        <span onClick={() => setIsOpen(!isOpen)} className="flex items-center mr-1 cursor-pointer">
+      <div
+        className={`flex justify-between items-center py-3 border-b border-t border-black ${
+          isFinished ? "text-gray-2" : "text-black"
+        }`}
+      >
+        <span
+          onClick={() => setIsOpen(!isOpen)}
+          className="flex items-center mr-1 cursor-pointer"
+        >
           {isOpen ? (
-            <Image src="/img/icon-toggle-up.png" alt="위" width={20} height={20} />
+            <Image
+              src="/img/icon-toggle-up.png"
+              alt="위"
+              width={20}
+              height={20}
+            />
           ) : (
-            <Image src="/img/icon-toggle-down.png" alt="" width={20} height={20} />
+            <Image
+              src="/img/icon-toggle-down.png"
+              alt=""
+              width={20}
+              height={20}
+            />
           )}
         </span>
         <Link href={`/grouppost/read/${groupPost.id}`}>
@@ -85,10 +113,29 @@ function MyGroupPost({ groupPost, refetch }: { groupPost: TMyGroupPost; refetch:
           {groupPost.start_date} ~ {groupPost.end_date}
         </span>
         <span>
-          {groupPost.group_applications.length}명/{groupPost.people_num}명
+          <span className="font-bold">
+            {groupPost.group_applications.length}명
+          </span>{" "}
+          / {groupPost.people_num}명
         </span>
         <div className="flex">
-          <button onClick={finishGroupPostHandler}>{isFinished ? "종료" : "진행중"}</button>
+          {isFinished ? (
+            <button
+              className="font-bold w-[70px] h-[25px] text-[14px] flex items-center justify-between p-[7.5px] gap-1 bg-gray-2 text-gray-3 rounded-full"
+              onClick={finishGroupPostHandler}
+            >
+              <div className="w-[10px] h-[10px] rounded-full bg-gray-3"></div>
+              <p>종료</p>
+            </button>
+          ) : (
+            <button
+              className="font-bold w-[70px] h-[25px] text-[14px] flex items-center justify-between p-[7.5px] gap-1 border border-main-8 text-main-8 rounded-full"
+              onClick={finishGroupPostHandler}
+            >
+              <p>진행중</p>
+              <div className="w-[10px] h-[10px] rounded-full bg-main-8"></div>
+            </button>
+          )}
         </div>
       </div>
       {isOpen && (
@@ -104,19 +151,23 @@ function MyGroupPost({ groupPost, refetch }: { groupPost: TMyGroupPost; refetch:
                   <col width="10%" />
                 </colgroup>
                 <thead>
-                  <tr className="text-sm text-gray-400">
-                    <th className="p-2">순서</th>
-                    <th className="p-2">이름</th>
-                    <th className="p-2">전화번호</th>
-                    <th className="p-2">주소</th>
-                    <th className="p-2 text-center">입금여부</th>
+                  <tr className="text-sm text-gray-3">
+                    <th className="p-2 font-normal">순서</th>
+                    <th className="p-2 font-normal">이름</th>
+                    <th className="p-2 font-normal">전화번호</th>
+                    <th className="p-2 font-normal">주소</th>
+                    <th className="p-2 font-normal text-center">입금여부</th>
                   </tr>
                 </thead>
                 <tbody>
                   {sortedApply.map((groupApply, idx: number) => {
                     return (
                       <tr className="text-sm" key={groupApply.id}>
-                        <MyGroupApply groupApply={groupApply} idx={idx} refetch={refetch} />
+                        <MyGroupApply
+                          groupApply={groupApply}
+                          idx={idx}
+                          refetch={refetch}
+                        />
                       </tr>
                     );
                   })}
@@ -124,7 +175,9 @@ function MyGroupPost({ groupPost, refetch }: { groupPost: TMyGroupPost; refetch:
               </table>
             </div>
           ) : (
-            <div className="flex justify-center my-2">아직 신청자가 없습니다.</div>
+            <div className="flex justify-center my-2">
+              아직 신청자가 없습니다.
+            </div>
           )}
         </>
       )}

@@ -4,6 +4,7 @@ import { editMyGroupApply } from "@/apis/mypage";
 import { GroupApplication } from "@/types/types";
 import { useAuthStore } from "@/zustand/authStore";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import Image from "next/image";
 import React, { useEffect, useState } from "react";
 
 function MyGroupApply({
@@ -18,6 +19,7 @@ function MyGroupApply({
   const user = useAuthStore((state) => state.user);
 
   useEffect(() => {
+    console.log(groupApply.is_paid);
     setIsPaid(groupApply.is_paid);
   }, [groupApply.is_paid]);
 
@@ -38,11 +40,12 @@ function MyGroupApply({
   });
 
   const paidGroupApplyHandler = async () => {
+    console.log("hahaha");
     const newGroupApply: GroupApplication = {
       ...groupApply,
       is_paid: !isPaid,
     };
-    setIsPaid(!isPaid);
+    // setIsPaid(!isPaid);
     updateMutation.mutate(newGroupApply);
   };
 
@@ -54,12 +57,22 @@ function MyGroupApply({
       <td className="p-2">
         {groupApply.user_address} {groupApply.user_detail_address}
       </td>
-      <td className="p-2 text-center">
+      <td className="p-2 text-center flex justify-center">
         <div onClick={paidGroupApplyHandler} className="w-6 h-6 cursor-pointer">
           {isPaid ? (
-            <div className="bg-red-1 w-full h-full"></div>
+            <Image
+              src="/img/icon-checkbox-checked.png"
+              alt="체크된 체크박스"
+              width={24}
+              height={24}
+            />
           ) : (
-            <div className="bg-black w-full h-full"></div>
+            <Image
+              src="/img/icon-checkbox.png"
+              alt="체크 전 체크박스"
+              width={24}
+              height={24}
+            />
           )}
         </div>
       </td>

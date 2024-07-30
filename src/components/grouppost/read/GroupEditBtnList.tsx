@@ -10,9 +10,9 @@ function GroupEditBtnList({ userId, id }: { userId: string; id: string }) {
   return (
     <>
       {user && user.id === userId ? (
-        <div className="flex justify-center gap-2 mt-[14px]">
+        <div className="flex justify-center gap-2 mt-[64px]">
           <Link href={`/grouppost/edit/${id}`}>
-            <button className="w-[197px] h-[48px] font-bold bg-black text-white text-[20px] rounded-full">
+            <button className="w-[100px] h-[44px] font-bold bg-main-8 text-white text-[20px] rounded-full">
               글 수정
             </button>
           </Link>
