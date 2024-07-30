@@ -4,6 +4,8 @@ import { MustPost } from "@/types/types";
 import Image from "next/image";
 import MorePost from "./MorePost";
 import MustPostAction from "./MustPostAction";
+import MustTopBtn from "../TopButton/MustTopBtn";
+import Link from "next/link";
 import ReadPost from "./ReadPost";
 
 type Props = {
@@ -26,7 +28,12 @@ async function Read({ params }: Props) {
   if (!data) {
     return (
       <div className="flex justify-center items-center">
-        <Image src="/img/loading-spinner.svg" alt="로딩중" width={200} height={200} />
+        <Image
+          src="/img/loading-spinner.svg"
+          alt="로딩중"
+          width={200}
+          height={200}
+        />
       </div>
     );
   }
@@ -61,12 +68,25 @@ async function Read({ params }: Props) {
             name={name}
             postId={id}
           />
-          {/* <MustDeleteBtn id={id}  /> */}
           <MustPostAction id={id} userId={user_id} />
-          {/* category_name={name} 이거 맞는지 몰겟넹,, */}
         </div>
       </InnerLayout>
       <MorePost category_id={category_id} category_name={name} id={id} />
+      <div className="flex flex-col justify-center items-center">
+        <Link
+          href={`/mustpost`}
+          className="inline-flex flex-row mt-[69px] px-[18px] py-[9px] border border-gray-4 rounded-full font-bold text-[16px] text-gray-4"
+        >
+          <Image
+            src="/img/icon-left.svg"
+            alt="목록으로 돌아가기 아이콘"
+            width={7}
+            height={12}
+            className="mr-[9px]"
+          />
+          목록으로 돌아가기
+        </Link>
+      </div>
     </>
   );
 }
