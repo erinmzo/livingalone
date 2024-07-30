@@ -79,8 +79,8 @@ function PostList() {
         <button
           className={`px-4 py-2 rounded-full ${
             isFinished === false
-              ? "bg-black text-white font-bold"
-              : "border border-black"
+              ? "bg-main-8 text-white font-bold"
+              : "border text-main-8 border-main-8"
           }`}
           onClick={() => {
             SetIsFinished(false);
@@ -91,8 +91,8 @@ function PostList() {
         <button
           className={`px-4 py-2 rounded-full ${
             isFinished === true
-              ? "bg-black text-white font-bold"
-              : "border border-black"
+              ? "bg-main-8 text-white font-bold"
+              : "border text-main-8 border-main-8"
           }`}
           onClick={() => {
             SetIsFinished(true);
@@ -135,7 +135,7 @@ function PostList() {
           <button
             onClick={() => fetchNextPage()}
             disabled={isFetchingNextPage}
-            className="py-4 px-8 border border-black rounded-full"
+            className="py-2 px-4 border border-gray-3 text-gray-3 rounded-full"
           >
             {isFetchingNextPage ? "로딩중..." : "더보기"}
           </button>

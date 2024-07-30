@@ -14,7 +14,14 @@ type TGroupApplicationsLikes = {
 
 type TPopularGroupPost = Pick<
   GroupPost,
-  "id" | "title" | "price" | "people_num" | "is_finished" | "img_url" | "start_date" | "end_date"
+  | "id"
+  | "title"
+  | "price"
+  | "people_num"
+  | "is_finished"
+  | "img_url"
+  | "start_date"
+  | "end_date"
 > &
   TGroupApplicationsLikes;
 
@@ -27,9 +34,11 @@ function GroupPopularList({ id }: { id: string }) {
     queryKey: ["popularGroupPosts"],
     queryFn: getGroupPostsOnDetail,
   });
-  if (isPending) return <div className="flex justify-center items-center">로딩중...</div>;
+  if (isPending)
+    return <div className="flex justify-center items-center">로딩중...</div>;
 
-  if (isError) return <div className="flex justify-center items-center">에러...</div>;
+  if (isError)
+    return <div className="flex justify-center items-center">에러...</div>;
 
   // a,b 타입 설정
   const sortedGroupPosts = groupPosts
@@ -43,7 +52,7 @@ function GroupPopularList({ id }: { id: string }) {
 
   return (
     <>
-      <h6>인기 공구템</h6>
+      <h6 className="text-[26px] font-bold mb-6">인기 공구템</h6>
       <ul className="grid grid-cols-1 sm:grid-cols-2 gap-8 px-[16px] lg:px-0">
         {sortedGroupPosts.map((post) => {
           return (
