@@ -125,7 +125,7 @@ function GroupWriteForm() {
             placeholder="제목을 입력하세요."
             value={title}
             onChange={onChangeInput}
-            className="border-b-[1px] w-full border-black"
+            className="border-b-[1px] w-full border-gray-3 py-2 px-[2px]"
           />
         </div>
         <div className="flex gap-[41px]">
@@ -140,11 +140,11 @@ function GroupWriteForm() {
                 type="date"
                 value={endDate}
                 onChange={onChangeInput}
-                className="border-b-[1px] border-black"
+                className="border-b-[1px] border-gray-3 py-2 px-[2px]"
               />
             </div>
           </div>
-          <div className="flex gap-2">
+          <div className="flex gap-2 items-center">
             <label className="w-[78px] text-[18px] text-gray-4 flex-none">
               공구인원
             </label>
@@ -154,12 +154,12 @@ function GroupWriteForm() {
               placeholder="숫자만 입력해주세요."
               value={peopleNum}
               onChange={onChangeInput}
-              className="w-[64px] border-b border-black text-center"
+              className="w-[64px] border-b border-gray-3 text-center py-2 px-[2px]"
             />
           </div>
         </div>
 
-        <div className="flex gap-2">
+        <div className="flex gap-2 items-center">
           <label className="w-[86px] text-[18px] text-gray-4 flex-none">
             상품이름
           </label>
@@ -168,7 +168,7 @@ function GroupWriteForm() {
             placeholder="제품명을 입력하세요."
             value={item}
             onChange={onChangeInput}
-            className="border-b-[1px] w-full border-black"
+            className="border-b-[1px] w-full border-gray-3 py-2 px-[2px]"
           />
         </div>
 
@@ -182,11 +182,11 @@ function GroupWriteForm() {
             placeholder="숫자만 입력해주세요."
             value={price}
             onChange={onChangeInput}
-            className="border-b-[1px] w-full border-black"
+            className="border-b-[1px] w-full border-gray-3 py-2 px-[2px]"
           />
         </div>
         <div className="flex gap-2 items-center">
-          <label className="w-[86px] text-[18px] text-gray-4 flex-none">
+          <label className="w-[80px] text-[18px] text-gray-4 flex-none">
             상품링크
           </label>
           <input
@@ -194,7 +194,7 @@ function GroupWriteForm() {
             placeholder="(선택사항) 상품소개 페이지 링크를 넣어주세요."
             value={link}
             onChange={onChangeInput}
-            className="border-b-[1px] w-full border-black"
+            className="border-b-[1px] w-full border-gray-3 py-2 px-[2px]"
           />
         </div>
         <div className="flex gap-5 items-start">
@@ -205,7 +205,7 @@ function GroupWriteForm() {
             onChange={addImageHandler}
           />
           <label
-            className="py-4 cursor-pointer font-bold rounded-full w-[160px] flex justify-center items-center bg-[#C2C2C2]"
+            className="ml-[82px] py-2 cursor-pointer text-[12px] text-gray-4 font-bold rounded-full w-[120px] flex justify-center items-center bg-[#C2C2C2]"
             htmlFor="image-file"
           >
             {imgUrl ? "이미지 수정" : "이미지 업로드"}
@@ -215,10 +215,10 @@ function GroupWriteForm() {
           )}
         </div>
       </div>
-      <div>
+      <div className="mt-[14px]">
         <Editor
           initialValue=" "
-          placeholder="여기에 글을 작성해주세요."
+          placeholder="※여기에 글을 작성해주세요."
           previewStyle="tab"
           height="400px"
           initialEditType="wysiwyg"
@@ -231,7 +231,7 @@ function GroupWriteForm() {
       </div>
       <div className="flex justify-center">
         <button
-          className="bg-main-8 w-[400px] py-4 text-white rounded-full font-bold text-[26px] mt-[64px]"
+          className="bg-main-8 w-[300px] py-[10px] text-white rounded-full font-bold text-[20px] mt-[64px]"
           onClick={addGroupPostHandler}
         >
           포스팅 하기
