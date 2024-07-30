@@ -108,12 +108,16 @@ export async function updateMustPost(newMustPost: TNewMustPost) {
   });
 }
 
-export async function NewMustCategoryPost(postCategoryId: string) {
+export async function NewMustCategoryPost(
+  postCategoryId: string,
+  postId: string
+) {
   const supabase = createClient();
   const { data } = await supabase
     .from("must_posts")
     .select("*")
     .eq("category_id", postCategoryId)
+    .neq("id", postId)
     .order("created_at", { ascending: false })
     .limit(3);
   return data;
