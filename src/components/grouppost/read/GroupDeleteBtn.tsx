@@ -32,7 +32,7 @@ function GroupDeleteBtn({ id }: { id: string }) {
 
   return (
     <button
-      className="w-[120px] border border-black text-[20px] rounded-full"
+      className="w-[100px] h-[44px] border-2 border-gray-3 text-[20px] text-gray-3 font-bold rounded-full box-border"
       onClick={deleteGroupPostHandler}
     >
       삭제

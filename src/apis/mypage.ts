@@ -36,11 +36,13 @@ export async function editMyGroupApply(
   id: string,
   newGroupApply: GroupApplication
 ) {
+  console.log(newGroupApply);
   const response = await fetch(`/api/applygroup/${id}`, {
     method: "PUT",
     body: JSON.stringify(newGroupApply),
   });
   const data = await response.json();
+  console.log(data);
   return data;
 }
 

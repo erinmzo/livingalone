@@ -12,7 +12,7 @@ function GroupApplyBtn({ id }: { id: string }) {
   return (
     <>
       <button
-        className="w-[330px] py-3 text-white font-bold text-[20px] bg-black rounded-full"
+        className="w-[330px] py-3 text-white font-bold text-[20px] bg-main-8 rounded-full"
         onClick={() => {
           if (!user) {
             Notify.failure("로그인한 사용자만 신청할 수 있습니다.");

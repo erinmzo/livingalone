@@ -1,11 +1,13 @@
 "use client";
 
 import { useInputChange } from "@/hooks/useInput";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import DaumPostcode from "react-daum-postcode";
 import PaymentButton from "./PaymentButton";
+import { useAuthStore } from "@/zustand/authStore";
 
 function PaymentForm() {
+  const user = useAuthStore((state) => state.user);
   const [isPostModalOpen, setIsPostModalOpen] = useState<boolean>(false);
   const [purchaserAddress, setPurchaserAddress] = useState<string>("");
   const [firstCheckBox, setFirstCheckBox] = useState<boolean>(false);
@@ -28,6 +30,10 @@ function PaymentForm() {
     setPurchaserAddress(data.address);
     setIsPostModalOpen(false);
   };
+
+  useEffect(() => {
+    console.log(user);
+  }, [user]);
 
   return (
     <div>
