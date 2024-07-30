@@ -4,22 +4,19 @@ import { likeItemPage } from "@/apis/mypage";
 import GroupPostCard from "@/components/grouppost/list/GroupPostCard";
 import { useAuthStore } from "@/zustand/authStore";
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
 
 function LikeItems() {
   const user = useAuthStore((state) => state.user);
   const userId = user?.id as string;
 
   const {
-    data: like = [],
+    data: likePosts = [],
     isPending,
     isError,
   } = useQuery({
     queryKey: ["like", userId],
     queryFn: () => likeItemPage(userId),
   });
-
-  console.log(like);
 
   if (isPending) return <div>로딩 중..</div>;
   if (isError) return <div>에러..</div>;
@@ -30,7 +27,7 @@ function LikeItems() {
         <div className="text-[24px] font-bold">좋아요 공구</div>
         <div>
           <ul className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {like.map((post: any) => {
+            {likePosts.map((post: any) => {
               return (
                 <li key={post.id}>
                   <GroupPostCard

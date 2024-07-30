@@ -1,13 +1,9 @@
-import { createClient } from "@/supabase/client";
+import { createClient } from "@/supabase/server";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(
-  request: NextRequest,
-  { params }: { params: { userId: string } }
-) {
+export async function GET(request: NextRequest, { params }: { params: { userId: string } }) {
   const { userId } = params;
   const supabase = createClient();
-  console.log(userId);
   const { data, error } = await supabase
     .from("group_likes")
     .select(
