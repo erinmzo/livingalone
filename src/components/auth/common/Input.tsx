@@ -12,7 +12,7 @@ interface InputProps {
 
 const variantStyles = {
   default:
-    "h-[48px] px-4 w-[288px] rounded-lg border border-gray-2 text-[18px] placeholder-gray-2 focus:outline-none focus:border-gray-3 transition",
+    "h-[48px] px-4 w-full rounded-lg border border-gray-2 text-[18px] placeholder-gray-2 focus:outline-none focus:border-gray-3 transition",
   underline:
     "border-b border-gray-2 px-1 py-2 text-[20px] placeholder-gray-2 focus:outline-none focus:border-gray-3 transition ",
 };

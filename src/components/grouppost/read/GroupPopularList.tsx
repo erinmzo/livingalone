@@ -3,6 +3,7 @@
 import { getGroupPostsOnDetail } from "@/apis/grouppost";
 import { GroupApplication, GroupLike, GroupPost } from "@/types/types";
 import { useQuery } from "@tanstack/react-query";
+import Image from "next/image";
 import GroupPostCard from "../list/GroupPostCard";
 
 type TGroupApplication = Pick<GroupApplication, "id">;
@@ -35,7 +36,16 @@ function GroupPopularList({ id }: { id: string }) {
     queryFn: getGroupPostsOnDetail,
   });
   if (isPending)
-    return <div className="flex justify-center items-center">로딩중...</div>;
+    return (
+      <div className="flex justify-center items-center">
+        <Image
+          src="/img/loading-spinner.svg"
+          alt="로딩중"
+          width={200}
+          height={200}
+        />
+      </div>
+    );
 
   if (isError)
     return <div className="flex justify-center items-center">에러...</div>;

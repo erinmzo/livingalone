@@ -26,7 +26,11 @@ async function GroupDetail({ params }: Props) {
   const { id } = params;
   const data = await getGroupDetail(id);
   if (!data) {
-    return <div>로딩 중입니다.</div>;
+    return (
+      <div className="flex justify-center items-center">
+        <Image src="/img/loading-spinner.svg" alt="로딩중" width={200} height={200} />
+      </div>
+    );
   }
   const {
     title,
