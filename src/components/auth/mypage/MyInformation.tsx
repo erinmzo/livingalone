@@ -114,21 +114,25 @@ function MyInformation() {
         <h5 className="font-bold text-[24px]">나의 정보</h5>
         <form className="flex flex-col items-center">
           <div className="flex w-full gap-[32px]">
-            <Input
-              variant="default"
-              label="닉네임"
-              placeholder={profile?.nickname}
-              value={nickname}
-              name="nickname"
-              onChange={onChangeInput}
-            />
-            <Input
-              variant="default"
-              type="file"
-              placeholder="사진변경"
-              label="프로필 사진 변경"
-              onChange={(e) => handleUploadImage(e)}
-            />
+            <div className="w-full">
+              <Input
+                variant="default"
+                label="닉네임"
+                placeholder={profile?.nickname}
+                value={nickname}
+                name="nickname"
+                onChange={onChangeInput}
+              />
+            </div>
+            <div className="w-full">
+              <Input
+                variant="default"
+                type="file"
+                placeholder="사진변경"
+                label="프로필 사진 변경"
+                onChange={(e) => handleUploadImage(e)}
+              />
+            </div>
           </div>
           <div className="relative mt-16 flex flex-col w-full">
             <button

@@ -3,6 +3,7 @@ import { getMustPostOnMain } from "@/apis/mustpost";
 import MustPostCard from "@/components/mustpost/list/MustPostCard";
 import { TMainMustPost } from "@/types/types";
 import { useQuery } from "@tanstack/react-query";
+import Image from "next/image";
 import MainSectionTitle from "../common/MainSectionTitle";
 
 function MustSection() {
@@ -15,7 +16,12 @@ function MustSection() {
     queryFn: getMustPostOnMain,
   });
 
-  if (isPending) return <div className="flex justify-center items-center">로딩중...</div>;
+  if (isPending)
+    return (
+      <div className="flex justify-center items-center">
+        <Image src="/img/loading-spinner.svg" alt="로딩중" width={200} height={200} />
+      </div>
+    );
 
   if (isError) return <div className="flex justify-center items-center">에러...</div>;
 
