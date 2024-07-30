@@ -110,7 +110,7 @@ function Like({ postId }: LikeProps) {
       </div>
     );
 
-  if (isPending) return <span>불러오는 중...</span>;
+  if (isPending) return <span>불러오는 중</span>;
   if (isError) return <span>에러</span>;
 
   return (

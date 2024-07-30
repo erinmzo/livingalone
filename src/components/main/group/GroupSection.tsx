@@ -4,6 +4,7 @@ import { getGroupPostOnMain } from "@/apis/grouppost";
 import GroupPostCard from "@/components/grouppost/list/GroupPostCard";
 import { GroupApplication, GroupPost } from "@/types/types";
 import { useQuery } from "@tanstack/react-query";
+import Image from "next/image";
 import MainSectionTitle from "../common/MainSectionTitle";
 
 type TGroupApplication = Pick<GroupApplication, "id">;
@@ -26,7 +27,12 @@ function GroupSection() {
     queryKey: ["groupPost"],
     queryFn: getGroupPostOnMain,
   });
-  if (isPending) return <div className="flex justify-center items-center">로딩중...</div>;
+  if (isPending)
+    return (
+      <div className="flex justify-center items-center">
+        <Image src="/img/loading-spinner.svg" alt="로딩중" width={200} height={200} />
+      </div>
+    );
 
   if (isError) return <div className="flex justify-center items-center">에러...</div>;
 

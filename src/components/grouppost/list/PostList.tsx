@@ -3,6 +3,7 @@
 import { getGroupPosts } from "@/apis/grouppost";
 import { GroupApplication, GroupPost } from "@/types/types";
 import { useInfiniteQuery } from "@tanstack/react-query";
+import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import GroupPostCard from "./GroupPostCard";
 
@@ -41,7 +42,12 @@ function PostList() {
     refetch(); // isFinished 상태가 변경될 때마다 refetch 실행
   }, [isFinished, refetch]);
 
-  if (isPending) return <div className="flex justify-center items-center">로딩중...</div>;
+  if (isPending)
+    return (
+      <div className="flex justify-center items-center">
+        <Image src="/img/loading-spinner.svg" alt="로딩중" width={200} height={200} />
+      </div>
+    );
 
   if (isError) return <div className="flex justify-center items-center">에러...</div>;
   return (
