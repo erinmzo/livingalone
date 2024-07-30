@@ -1,28 +1,19 @@
 "use client";
-import Image from "next/image";
-import React, { useEffect, useState } from "react";
-import MyGroupApply from "./MyGroupApply";
-import { TMyGroupPost, TNewGroupPost } from "@/types/types";
-import { Confirm } from "notiflix";
 import { updateGroupPost } from "@/apis/grouppost";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { postRevalidate } from "@/utils/revalidate";
-import { useRouter } from "next/navigation";
+import { TMyGroupPost, TNewGroupPost } from "@/types/types";
 import { useAuthStore } from "@/zustand/authStore";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import Image from "next/image";
 import Link from "next/link";
+import { Confirm } from "notiflix";
+import { useEffect, useState } from "react";
+import MyGroupApply from "./MyGroupApply";
 
-function MyGroupPost({
-  groupPost,
-  refetch,
-}: {
-  groupPost: TMyGroupPost;
-  refetch: () => void;
-}) {
+function MyGroupPost({ groupPost, refetch }: { groupPost: TMyGroupPost; refetch: () => void }) {
   const user = useAuthStore((state) => state.user);
   const queryClient = useQueryClient();
   const [isOpen, setIsOpen] = useState(false);
   const [isFinished, setIsFinished] = useState(groupPost.is_finished);
-  const router = useRouter();
 
   useEffect(() => {
     setIsFinished(groupPost.is_finished);
@@ -32,11 +23,11 @@ function MyGroupPost({
     mutationFn: async (finishGroupPost: TNewGroupPost) => {
       await updateGroupPost(finishGroupPost);
     },
-    onSuccess: async () => {
-      await queryClient.invalidateQueries({
+    onSuccess: () => {
+      queryClient.invalidateQueries({
         queryKey: ["myGroupPosts", user?.id],
       });
-      await refetch();
+      refetch();
     },
   });
 
@@ -58,11 +49,7 @@ function MyGroupPost({
     if (groupPost) {
       Confirm.show(
         "혼자살때",
-        `${
-          isFinished
-            ? "종료된 상태를 진행 중으로 바꾸시겠습니까?"
-            : "정말로 종료하시겠습니까?"
-        }`,
+        `${isFinished ? "종료된 상태를 진행 중으로 바꾸시겠습니까?" : "정말로 종료하시겠습니까?"}`,
         "네",
         "아니오",
         () => {
@@ -78,31 +65,17 @@ function MyGroupPost({
 
   // 순서대로 sort
   const sortedApply = groupPost.group_applications.sort(
-    (a: any, b: any) =>
-      new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+    (a: any, b: any) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
   );
 
   return (
     <>
       <div className="flex justify-between items-center py-3 border-b border-t border-black">
-        <span
-          onClick={() => setIsOpen(!isOpen)}
-          className="flex items-center mr-1 cursor-pointer"
-        >
+        <span onClick={() => setIsOpen(!isOpen)} className="flex items-center mr-1 cursor-pointer">
           {isOpen ? (
-            <Image
-              src="/img/icon-toggle-up.png"
-              alt="위"
-              width={20}
-              height={20}
-            />
+            <Image src="/img/icon-toggle-up.png" alt="위" width={20} height={20} />
           ) : (
-            <Image
-              src="/img/icon-toggle-down.png"
-              alt=""
-              width={20}
-              height={20}
-            />
+            <Image src="/img/icon-toggle-down.png" alt="" width={20} height={20} />
           )}
         </span>
         <Link href={`/grouppost/read/${groupPost.id}`}>
@@ -115,9 +88,7 @@ function MyGroupPost({
           {groupPost.group_applications.length}명/{groupPost.people_num}명
         </span>
         <div className="flex">
-          <button onClick={finishGroupPostHandler}>
-            {isFinished ? "종료" : "진행중"}
-          </button>
+          <button onClick={finishGroupPostHandler}>{isFinished ? "종료" : "진행중"}</button>
         </div>
       </div>
       {isOpen && (
@@ -145,11 +116,7 @@ function MyGroupPost({
                   {sortedApply.map((groupApply, idx: number) => {
                     return (
                       <tr className="text-sm" key={groupApply.id}>
-                        <MyGroupApply
-                          groupApply={groupApply}
-                          idx={idx}
-                          refetch={refetch}
-                        />
+                        <MyGroupApply groupApply={groupApply} idx={idx} refetch={refetch} />
                       </tr>
                     );
                   })}
@@ -157,9 +124,7 @@ function MyGroupPost({
               </table>
             </div>
           ) : (
-            <div className="flex justify-center my-2">
-              아직 신청자가 없습니다.
-            </div>
+            <div className="flex justify-center my-2">아직 신청자가 없습니다.</div>
           )}
         </>
       )}
