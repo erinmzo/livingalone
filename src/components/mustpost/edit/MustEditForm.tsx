@@ -13,7 +13,10 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import InputField from "../write/InputField";
 import SelectCategory from "../write/SelectCategory";
 
-import { colorSyntaxOptions, toolbarItems } from "@/components/common/editor/EditorModule";
+import {
+  colorSyntaxOptions,
+  toolbarItems,
+} from "@/components/common/editor/EditorModule";
 import colorSyntax from "@toast-ui/editor-plugin-color-syntax";
 import "@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css";
 import "@toast-ui/editor/dist/toastui-editor.css";
@@ -33,7 +36,9 @@ function MustEditForm({ params }: { params: { id: string } }) {
   const editorRef = useRef<Editor | null>(null);
 
   const [imgUrl, setImgUrl] = useState<string>("");
-  const [selectedCategoryName, setSelectedCategoryName] = useState<string>("카테고리 선택");
+  console.log(imgUrl);
+  const [selectedCategoryName, setSelectedCategoryName] =
+    useState<string>("카테고리 선택");
   const [selectedCategoryId, setSelectedCategoryId] = useState<string>("");
 
   const {
@@ -67,6 +72,7 @@ function MustEditForm({ params }: { params: { id: string } }) {
       });
       setSelectedCategoryName(mustPost.must_categories.name);
       setSelectedCategoryId(mustPost.must_categories.id);
+      setImgUrl(mustPost.img_url);
     }
   }, [mustPost]);
 
@@ -80,7 +86,16 @@ function MustEditForm({ params }: { params: { id: string } }) {
       const formData = new FormData();
       formData.append("file", newMustPostImage);
       const response = await insertMustImage(formData);
-      setImgUrl(`https://nqqsefrllkqytkwxfshk.supabase.co/storage/v1/object/public/mustposts/${response.path}`);
+      console.log("response:", response);
+      setImgUrl(
+        `https://nqqsefrllkqytkwxfshk.supabase.co/storage/v1/object/public/mustposts/${response.path}`
+      );
+    },
+    onError: (error) => {
+      console.error("Image error:", error); // 에러 발생 시 로그
+    },
+    onSuccess: () => {
+      console.log("Image successful, imgUrl:", imgUrl); // 성공 시 상태 확인용 로그
     },
   });
 
@@ -108,7 +123,12 @@ function MustEditForm({ params }: { params: { id: string } }) {
   const startDate = `${year}-${month}-${day}` as string;
 
   const addMustPostBtn = () => {
-    if (!title.trim() || !selectedCategoryId || !itemName.trim() || !company.trim()) {
+    if (
+      !title.trim() ||
+      !selectedCategoryId ||
+      !itemName.trim() ||
+      !company.trim()
+    ) {
       Notify.failure("모든 항목을 입력해주세요");
       return;
     }
@@ -126,7 +146,7 @@ function MustEditForm({ params }: { params: { id: string } }) {
         title,
         category_id: selectedCategoryId,
         content: editorContent,
-        img_url: imgUrl || (mustPost?.img_url as string),
+        img_url: imgUrl,
         item: itemName,
         location: company,
         price,
@@ -135,9 +155,15 @@ function MustEditForm({ params }: { params: { id: string } }) {
     }
   };
 
-  if (isPending) return <div className="flex justify-center items-center">로딩중...</div>;
+  if (isPending)
+    return <div className="flex justify-center items-center">로딩중...</div>;
 
-  if (isError) return <div className="flex justify-center items-center">오류가 발생하였습니다!...</div>;
+  if (isError)
+    return (
+      <div className="flex justify-center items-center">
+        오류가 발생하였습니다!...
+      </div>
+    );
 
   return (
     <InnerLayout>
@@ -154,9 +180,18 @@ function MustEditForm({ params }: { params: { id: string } }) {
 
         <div className="flex flex-row justify-between gap-2">
           <div className="pr-[72px] flex-grow">
-            <InputField labelName="작성일자" name="date" type="text" value={startDate} onchangeValue={onChangeInput} />
+            <InputField
+              labelName="작성일자"
+              name="date"
+              type="text"
+              value={startDate}
+              onchangeValue={onChangeInput}
+            />
           </div>
-          <SelectCategory selectCategory={selectCategory} initialCategoryName={selectedCategoryName} />
+          <SelectCategory
+            selectCategory={selectCategory}
+            initialCategoryName={selectedCategoryName}
+          />
         </div>
 
         <InputField
@@ -188,9 +223,30 @@ function MustEditForm({ params }: { params: { id: string } }) {
           minLength={2}
           onchangeValue={onChangeInput}
         />
-
-        <InputField labelName="이미지" type="file" onchangeValue={addImageHandler} />
-        {imgUrl && <Image src={imgUrl} alt="포스팅한 이미지" width={200} height={200} />}
+        <div className="flex gap-5 items-start">
+          <input
+            className="hidden"
+            id="image-file"
+            type="file"
+            onChange={addImageHandler}
+          />
+          <label
+            className="py-4 cursor-pointer font-bold rounded-full w-[160px] flex justify-center items-center bg-[#C2C2C2]"
+            htmlFor="image-file"
+          >
+            {imgUrl ? "이미지 수정" : "이미지 업로드"}
+          </label>
+          {imgUrl && (
+            <Image
+              src={imgUrl}
+              alt="포스팅한 이미지"
+              width={200}
+              height={200}
+            />
+          )}
+        </div>
+        {/* <InputField labelName="이미지" type="file" onchangeValue={addImageHandler} />
+        {imgUrl && <Image src={imgUrl} alt="포스팅한 이미지" width={200} height={200} />} */}
         <div>
           <Editor
             initialValue={mustPost.content}

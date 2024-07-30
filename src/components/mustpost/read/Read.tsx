@@ -59,9 +59,7 @@ async function Read({ params }: Props) {
             name={name}
             postId={id}
           />
-          {/* <MustDeleteBtn id={id}  /> */}
           <MustPostAction id={id} userId={user_id} />
-          {/* category_name={name} 이거 맞는지 몰겟넹,, */}
         </div>
       </InnerLayout>
       <MorePost category_id={category_id} category_name={name} id={id} />
