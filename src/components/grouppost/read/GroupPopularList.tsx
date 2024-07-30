@@ -1,9 +1,8 @@
 "use client";
 
-import { getGroupPostOnMain, getGroupPostsOnDetail } from "@/apis/grouppost";
+import { getGroupPostsOnDetail } from "@/apis/grouppost";
 import { GroupApplication, GroupLike, GroupPost } from "@/types/types";
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
 import GroupPostCard from "../list/GroupPostCard";
 
 type TGroupApplication = Pick<GroupApplication, "id">;
@@ -15,14 +14,7 @@ type TGroupApplicationsLikes = {
 
 type TPopularGroupPost = Pick<
   GroupPost,
-  | "id"
-  | "title"
-  | "price"
-  | "people_num"
-  | "is_finished"
-  | "img_url"
-  | "start_date"
-  | "end_date"
+  "id" | "title" | "price" | "people_num" | "is_finished" | "img_url" | "start_date" | "end_date"
 > &
   TGroupApplicationsLikes;
 
@@ -35,16 +27,13 @@ function GroupPopularList({ id }: { id: string }) {
     queryKey: ["popularGroupPosts"],
     queryFn: getGroupPostsOnDetail,
   });
-  if (isPending)
-    return <div className="flex justify-center items-center">로딩중...</div>;
+  if (isPending) return <div className="flex justify-center items-center">로딩중...</div>;
 
-  if (isError)
-    return <div className="flex justify-center items-center">에러...</div>;
+  if (isError) return <div className="flex justify-center items-center">에러...</div>;
 
   // a,b 타입 설정
   const sortedGroupPosts = groupPosts
     .filter((groupPost) => {
-      console.log(groupPost.id, id);
       return groupPost.id !== id;
     })
     .sort((a: TPopularGroupPost, b: TPopularGroupPost) => {

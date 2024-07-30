@@ -1,7 +1,7 @@
-import MyItems from "@/components/auth/mypage/myItem/MyItems";
+import MyMust from "@/components/auth/mypage/myMust/MyMust";
 
 function MyMustPage() {
-  return <MyItems />;
+  return <MyMust />;
 }
 
 export default MyMustPage;

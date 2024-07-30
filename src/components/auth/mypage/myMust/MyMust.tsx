@@ -4,14 +4,13 @@ import { myItemsPost } from "@/apis/mypage";
 import MustPostCard from "@/components/mustpost/list/MustPostCard";
 import { useAuthStore } from "@/zustand/authStore";
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
 
-function MyItems() {
+function MyMust() {
   const user = useAuthStore((state) => state.user);
   const userId = user?.id as string;
 
   const {
-    data: like = [],
+    data: myMustPosts = [],
     isPending,
     isError,
   } = useQuery({
@@ -28,14 +27,9 @@ function MyItems() {
         <div className="text-[24px] font-bold">나의 자취템</div>
         <div>
           <ul className="grid grid-cols-2 gap-[32px]">
-            {like.map((post: any) => (
+            {myMustPosts.map((post: any) => (
               <li key={post.id} className="mb-[64px]">
-                <MustPostCard
-                  postId={post.id}
-                  title={post.title}
-                  item={post.item}
-                  imgUrl={post.img_url}
-                />
+                <MustPostCard postId={post.id} title={post.title} item={post.item} imgUrl={post.img_url} />
               </li>
             ))}
           </ul>
@@ -45,4 +39,4 @@ function MyItems() {
   );
 }
 
-export default MyItems;
+export default MyMust;
