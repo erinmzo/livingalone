@@ -1,5 +1,7 @@
+import ApplyItems from "@/components/auth/mypage/applyGroup/ApplyItems";
+
 function ApplyGroup() {
-  return <div>신청한 공구</div>;
+  return <ApplyItems />;
 }
 
 export default ApplyGroup;
