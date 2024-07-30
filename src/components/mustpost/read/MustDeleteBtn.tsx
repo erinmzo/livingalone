@@ -13,7 +13,9 @@ function MustDeleteBtn({ id }: { id: string }) {
   const { mutate: deletePost } = useMutation({
     mutationFn: (id: string) => deleteMustPost(id),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["mustPosts", selectedCategory] });
+      queryClient.invalidateQueries({
+        queryKey: ["mustPosts", selectedCategory],
+      });
       router.push("/mustpost");
     },
   });
@@ -34,7 +36,7 @@ function MustDeleteBtn({ id }: { id: string }) {
   };
   return (
     <button
-      className="w-[120px] py-[9px] border border-black rounded-full text-xl font-medium"
+      className="w-[100px] py-[8px] px-[22px] border-2 border-gray-3 rounded-full font-bold text-xl text-gray-3"
       onClick={MustPostDeleteBtn}
     >
       삭제

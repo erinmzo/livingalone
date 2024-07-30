@@ -7,7 +7,7 @@ interface UserInfoProps {
 }
 function UserInfo({ profile_image_url, nickname, created_at }: UserInfoProps) {
   return (
-    <div className="flex flex-row items-center ml-2 mb-8">
+    <div className="flex flex-row items-center gap-2 ml-[2px] mb-[10px]">
       {/* 프로필부분 wrap */}
       <Image
         src={profile_image_url}
@@ -16,10 +16,10 @@ function UserInfo({ profile_image_url, nickname, created_at }: UserInfoProps) {
         height={40}
         className="rounded-full"
       />
-      <div className="flex flex-col ml-2">
+      <div className="flex flex-col">
         {/* 닉네임-생성날짜 */}
-        <span>{nickname}</span>
-        <span className="text-xs">2024.11.22</span>
+        <span className="text-[16px]">{nickname}</span>
+        <span className="text-[14px] text-gray-3">2024.11.22</span>
       </div>
     </div>
   );
