@@ -4,8 +4,8 @@ import { getMustPostOnSearch } from "@/apis/mustpost";
 import { TMustPostList } from "@/types/types";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
-import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 import MustPostCard from "../list/MustPostCard";
 import Title from "../list/Title";
 import ResetButton from "./ResetButton";
@@ -42,20 +42,20 @@ function SearchList() {
       <div className="flex flex-col items-center justify-center">
         <Title />
         <div className="flex flex-col justify-center items-center mb-[30px]">
-          <SearchBar />
+          <Suspense>
+            <SearchBar />
+          </Suspense>
         </div>
         <div className="flex justify-center items-center gap-4 mb-[70px]">
           <ResetButton />
         </div>
       </div>
       {searchedList.length > 0 ? (
-        <div className="min-h-screen flex-col items-center justify-center">
+        <div className="min-h-screen flex-col items-center justify-center w-full">
           <ul className="grid grid-cols-3 gap-[32px]">
             {searchedList.map((post) => (
               <li key={post.id}>
-                <Link href={`/mustpost/read/${post.id}`}>
-                  <MustPostCard postId={post.id} title={post.title} item={post.item} imgUrl={post.img_url} />
-                </Link>
+                <MustPostCard postId={post.id} title={post.title} item={post.item} imgUrl={post.img_url} />
               </li>
             ))}
           </ul>
