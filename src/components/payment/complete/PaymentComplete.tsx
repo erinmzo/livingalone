@@ -3,12 +3,9 @@
 import { insertPayment } from "@/apis/payment";
 import { useAuthStore } from "@/zustand/authStore";
 import { useMutation } from "@tanstack/react-query";
-import { useSearchParams } from "next/navigation";
 import React, { useEffect, useRef } from "react";
 
-function PaymentComplete() {
-  const searchParams = useSearchParams();
-  const paymentId = searchParams.get("paymentId");
+function PaymentComplete({ paymentId }: { paymentId: string }) {
   const user = useAuthStore((state) => state.user);
   const hasRun = useRef(false);
 
