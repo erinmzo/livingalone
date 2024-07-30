@@ -29,20 +29,25 @@ function SideBar() {
 
   if (profile)
     return (
-      <div className="top-0 left-0 flex flex-col justify-center w-[208px] px-[45px] py-[40px] items-center border border-gray-400 rounded-lg bg-white">
-        <div className="flex-col justify-center items-center">
+      <div className=" flex flex-col justify-center w-[208px] h-[575px] p-4 items-center border border-[#BFC5C3] rounded-lg bg-white">
+        <div className="flex-col justify-center items-center mb-8">
           <Image
-            className="bg-gray-200 rounded-full mb-6"
+            className="bg-gray-200 rounded-full mb-6 w-[100px] h-[100px]"
             src={profile?.profile_image_url}
             alt={profile?.nickname}
             width={100}
             height={100}
           />
-          <div className="text-[16px] font-semibold text-center">{profile?.nickname}</div>
+          <div className="text-[16px] font-bold text-center w-full h-[19px]">
+            {profile?.nickname}
+          </div>
         </div>
         <ul className="flex flex-col gap-[24px] mt-[40px]">
           {links.map((link) => (
-            <li key={link.href} className="text-[18px] font-medium text-[#b3b3b3] hover:text-blue-500 transition-all ">
+            <li
+              key={link.href}
+              className="text-[20px] font-medium text-[#BFC5C3] hover:text-black transition-all "
+            >
               <Link href={link.href}>{link.label}</Link>
             </li>
           ))}
