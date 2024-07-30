@@ -5,7 +5,6 @@ import { useInputChange } from "@/hooks/useInput";
 import { Profile, TProfile } from "@/types/types";
 import { useAuthStore } from "@/zustand/authStore";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import Image from "next/image";
 import { Report } from "notiflix";
 import { ChangeEvent, MouseEventHandler, useState } from "react";
 import DaumPostcode from "react-daum-postcode";
@@ -36,8 +35,7 @@ function MyInformation() {
 
   const { mutate: editProfile } = useMutation({
     mutationFn: (newProfile: TProfile) => editMyProfile(userId, newProfile),
-    onSuccess: () =>
-      queryClient.invalidateQueries({ queryKey: ["profile", userId] }),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["profile", userId] }),
   });
   // 이미지
   const { mutate: uploadImageProfile } = useMutation({
@@ -45,18 +43,13 @@ function MyInformation() {
       const formData = new FormData();
       formData.append("file", profileImage);
       const response = await uploadImage(formData);
-      setImgUrl(
-        `https://nqqsefrllkqytkwxfshk.supabase.co/storage/v1/object/public/${response.fullPath}`
-      );
+      setImgUrl(`https://nqqsefrllkqytkwxfshk.supabase.co/storage/v1/object/public/${response.fullPath}`);
       return `https://nqqsefrllkqytkwxfshk.supabase.co/storage/v1/object/public/${response.fullPath}`;
     },
     onMutate: async (profileImage: File) => {
       await queryClient.cancelQueries({ queryKey: ["profile", userId] });
 
-      const previousProfile = queryClient.getQueryData<Profile>([
-        "profile",
-        userId,
-      ]);
+      const previousProfile = queryClient.getQueryData<Profile>(["profile", userId]);
 
       if (previousProfile) {
         queryClient.setQueryData(["profile", userId], {
@@ -118,9 +111,9 @@ function MyInformation() {
   return (
     <div className="flex-col w-auto grow">
       <div className="flex flex-col justify-center items-start gap-8">
-        <h5 className="font-bold text-[20px]">나의 정보</h5>
-        <form className="w-[671px] h-[451px]">
-          <div className="flex w-full ">
+        <h5 className="font-bold text-[24px]">나의 정보</h5>
+        <form className="flex flex-col items-center">
+          <div className="flex w-full gap-[32px]">
             <Input
               variant="default"
               label="닉네임"
@@ -137,15 +130,13 @@ function MyInformation() {
               onChange={(e) => handleUploadImage(e)}
             />
           </div>
-          <div className="relative mt-16 flex flex-col ">
+          <div className="relative mt-16 flex flex-col w-full">
             <button
               type="button"
-              className="flex gap-3 w-[73px] h-[30px] border border-[#899490] bg-white  rounded-full mb-3 justify-center items-center "
+              className="flex gap-3 w-[73px] py-2 border border-gray-3 bg-white font-bold rounded-full mb-3 justify-center items-center "
               onClick={handleSearchAddress}
             >
-              <span className=" text-center text-[12px] text-[#899490]">
-                주소변경
-              </span>
+              <span className=" text-center text-[12px] text-gray-3">주소변경</span>
             </button>
             {isPostModalOpen && (
               <div className="absolute left-0 top-[48px] border border-black  ">
@@ -153,12 +144,7 @@ function MyInformation() {
               </div>
             )}
             <div className="flex flex-col gap-2 ">
-              <Input
-                variant="underline"
-                value={address}
-                onChange={() => {}}
-                placeholder={profile?.address!}
-              />
+              <Input variant="underline" value={address} onChange={() => {}} placeholder={profile?.address!} />
               <Input
                 variant="underline"
                 value={detailAddress}
@@ -167,14 +153,14 @@ function MyInformation() {
                 placeholder={profile?.detail_address!}
               />
             </div>
-            <button
-              type="submit"
-              className="bg-[#008575] w-[500px] h-[52px] text-white  py-2 mt-[50px] rounded-full font-bold text-[18px]"
-              onClick={handleProfileUpdate}
-            >
-              변경하기
-            </button>
           </div>
+          <button
+            type="submit"
+            className="bg-[#008575] w-[500px] h-[52px] text-white  py-2 mt-[50px] rounded-full font-bold text-[18px]"
+            onClick={handleProfileUpdate}
+          >
+            변경하기
+          </button>
         </form>
       </div>
     </div>

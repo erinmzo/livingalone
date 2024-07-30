@@ -24,15 +24,21 @@ function MyMust() {
   return (
     user && (
       <div>
-        <div className="text-[24px] font-bold">나의 자취템</div>
-        <div>
-          <ul className="grid grid-cols-2 gap-[32px]">
-            {myMustPosts.map((post: any) => (
-              <li key={post.id} className="mb-[64px]">
-                <MustPostCard postId={post.id} title={post.title} item={post.item} imgUrl={post.img_url} />
-              </li>
-            ))}
-          </ul>
+        <div className="text-[24px] font-bold ml-1">나의 자취템</div>
+        <div className="mt-8">
+          {myMustPosts.lenght > 0 ? (
+            <ul className="grid grid-cols-2 gap-[32px]">
+              {myMustPosts.map((post: any) => (
+                <li key={post.id} className="mb-[64px]">
+                  <MustPostCard postId={post.id} title={post.title} item={post.item} imgUrl={post.img_url} />
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <div className="flex justify-center items-center text-gray-4">
+              나의 자취템이 없습니다. 나만의 자취템을 자랑해주세요!
+            </div>
+          )}
         </div>
       </div>
     )
