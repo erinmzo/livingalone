@@ -1,4 +1,4 @@
-import { createClient } from "@/supabase/client";
+import { createClient } from "@/supabase/server";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest, { params }: { params: { postId: string } }) {
@@ -33,7 +33,8 @@ export async function DELETE(_: NextRequest, { params }: { params: { postId: str
   //삭제
   try {
     const supabase = createClient();
-    const { data } = await supabase.from("must_posts").delete().eq("id", postId);
+    const { data, error } = await supabase.from("must_posts").delete().eq("id", postId);
+
     return NextResponse.json(data);
   } catch (error) {
     return NextResponse.json({ error: "포스트를 삭제하는 데 실패했습니다." });

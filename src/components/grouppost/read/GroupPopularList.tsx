@@ -52,7 +52,7 @@ function GroupPopularList({ id }: { id: string }) {
 
   return (
     <>
-      <h6 className="text-[26px] font-bold mb-6">인기 공구템</h6>
+      <h6 className="text-[26px] font-bold mb-6 mt-[128px]">인기 공구템</h6>
       <ul className="grid grid-cols-1 sm:grid-cols-2 gap-8 px-[16px] lg:px-0">
         {sortedGroupPosts.map((post) => {
           return (

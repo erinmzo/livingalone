@@ -102,7 +102,7 @@ function PostList() {
         </button>
       </div>
       {groupPosts && groupPosts.length ? (
-        <ul className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <ul className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-[64px]">
           {groupPosts.map((post) => {
             return (
               <li key={post.id}>

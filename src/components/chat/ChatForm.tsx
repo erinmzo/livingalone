@@ -71,11 +71,11 @@ export default function ChatForm({ postId }: { postId: string }) {
 
   return (
     <div className="w-full min-w-full max-w-[682px] mx-auto">
-      <div className="rounded-lg p-[24px] border border-gray-5">
-        <div className="flex flex-col justify-end">
-          <div className="h-[100px] scroll-smooth overflow-x-scroll scrolling-touch">
+      <div className="rounded-lg p-[24px] border border-gray-2">
+        <div className="flex flex-col">
+          <div className="h-[100px] scroll-smooth overflow-x-scroll scrolling-touch flex flex-col justify-end gap-2">
             {messages.map((message) => (
-              <div key={message.id} className="grid grid-cols-[70px_1fr] text-gray-2 gap-[24px]">
+              <div key={message.id} className="grid grid-cols-[70px_1fr] text-gray-5 gap-[24px]">
                 <span className="font-bold mr-3 truncate">{message.profiles.nickname}</span>
                 <span className="grow">{message.text}</span>
               </div>
@@ -89,9 +89,9 @@ export default function ChatForm({ postId }: { postId: string }) {
           value={newMessage}
           onChange={(e) => setNewMessage(e.target.value)}
           placeholder="채팅을 입력하세요."
-          className="border border-gray-5 rounded-full py-[10px] px-[24px] grow"
+          className="border border-gray-2 rounded-full py-[10px] px-[24px] grow"
         />
-        <button type="submit" className="py-[10px] px-[24px] bg-gray-5 text-gray-3 rounded-full">
+        <button type="submit" className="py-[10px] px-[24px] bg-main-8 border-main-8 text-white rounded-full font-bold">
           보내기
         </button>
       </form>

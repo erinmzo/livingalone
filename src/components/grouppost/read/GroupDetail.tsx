@@ -1,13 +1,13 @@
 import { getGroupDetail } from "@/apis/grouppost";
 import ChatForm from "@/components/chat/ChatForm";
 import Like from "@/components/common/Like";
+import InnerLayout from "@/components/common/Page/InnerLayout";
 import { GroupPost } from "@/types/types";
 import Image from "next/image";
 import Link from "next/link";
 import GroupContent from "./GroupContent";
 import GroupDetailBtnList from "./GroupDetailBtnList";
 import GroupEditBtnList from "./GroupEditBtnList";
-import InnerLayout from "@/components/common/Page/InnerLayout";
 import GroupPopularList from "./GroupPopularList";
 
 type Props = {
@@ -46,7 +46,7 @@ async function GroupDetail({ params }: Props) {
   return (
     <>
       <InnerLayout>
-        <div className={`${is_finished ? "text-[#B3B3B3]" : ""}`}>
+        <div className={`${is_finished ? "text-gray-3" : ""}`}>
           <div className="relative overflow-hidden rounded-lg">
             <Image
               src={img_url}
@@ -85,11 +85,15 @@ async function GroupDetail({ params }: Props) {
               />
               <div>
                 <p>{nickname}</p>
-                <p className="text-[12px] text-[#757575]">{start_date}</p>
+                <p className="text-gray-3">{start_date}</p>
               </div>
             </div>
             <div className="flex">
-              <p className="font-bold text-[20px] text-red-3">
+              <p
+                className={`font-bold text-[20px] ${
+                  is_finished ? "text-gray-2" : "text-red-3"
+                }`}
+              >
                 달성률{" "}
                 <span className="text-[36px]">
                   {Math.round((group_applications.length / people_num) * 100)}%
@@ -113,10 +117,10 @@ async function GroupDetail({ params }: Props) {
                 <GroupDetailBtnList userId={user_id} id={id} />
               </>
             )}
-            {/* 보더 */}
-            <div className="mt-[56px] border-t border-black py-6 px-2">
+            <div className="mt-[56px] border-y border-gray-2 py-6 px-2 mb-[64px]">
               <GroupContent content={content} />
             </div>
+            {is_finished ? "" : <ChatForm postId={id} />}
             <GroupEditBtnList userId={user_id} id={id} />
           </div>
         </div>

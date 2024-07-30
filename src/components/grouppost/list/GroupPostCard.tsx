@@ -13,6 +13,7 @@ interface GroupPostCardProps {
   endDate: string;
   postId: string;
 }
+
 function GroupPostCard({
   application,
   title,
@@ -45,7 +46,7 @@ function GroupPostCard({
                 종료됨
               </span>
             ) : (
-              <span className="py-[4px] px-[12px] rounded-full bg-main-3 text-main-8 text-[12px] font-bold">
+              <span className="py-[4px] px-[12px] rounded-full bg-main-7 text-white text-[12px] font-bold">
                 진행중
               </span>
             )}

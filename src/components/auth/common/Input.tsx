@@ -12,12 +12,20 @@ interface InputProps {
 
 const variantStyles = {
   default:
-    "border border-[#808080] rounded-lg px-[16px] py-[8px] text-[16px] focus:outline-none focus:border-gray-950 transition",
+    "border border-[#808080]  w-[319.5px] h-[48px] rounded-lg px-[16px] py-[8px] text-[16px] focus:outline-none focus:border-gray-950 transition",
   underline:
-    "border-b border-[#808080] px-[16px] py-[8px] text-[16px] focus:outline-none focus:border-gray-950 transition",
+    "border-b border-[#808080] px-[16px] py-[8px] text-[16px] focus:outline-none focus:border-gray-950 transition ",
 };
 
-function Input({ name, label, variant = "default", type = "text", value, placeholder, onChange }: InputProps) {
+function Input({
+  name,
+  label,
+  variant = "default",
+  type = "text",
+  value,
+  placeholder,
+  onChange,
+}: InputProps) {
   const inputId = useId();
 
   return (
@@ -38,7 +46,12 @@ function Input({ name, label, variant = "default", type = "text", value, placeho
         />
       )}
       {type === "file" && (
-        <input type="file" className={`${variantStyles[variant]}`} placeholder={placeholder} onChange={onChange} />
+        <input
+          type="file"
+          className={`${variantStyles[variant]}`}
+          placeholder={placeholder}
+          onChange={onChange}
+        />
       )}
     </div>
   );
