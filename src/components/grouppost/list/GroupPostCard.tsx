@@ -41,11 +41,9 @@ function GroupPostCard({
         <div className="px-1 mt-[16px]">
           <div className="flex items-center gap-2">
             {isFinished ? (
-              <span className="py-[4px] px-[12px] rounded-full bg-main-3 text-main-8 text-[12px] font-bold">종료</span>
+              <span className="py-[4px] px-[12px] rounded-full bg-gray-2 text-gray-4 text-[12px] font-bold">종료</span>
             ) : (
-              <span className="py-[4px] px-[12px] rounded-full bg-main-3 text-main-8 text-[12px] font-bold">
-                진행중
-              </span>
+              <span className="py-[4px] px-[12px] rounded-full bg-main-7 text-white text-[12px] font-bold">진행중</span>
             )}
             <div className="text-[14px] text-gray-3">
               <span>{startDate}</span> ~ <span>{endDate}</span>
