@@ -70,18 +70,18 @@ const LoginForm = () => {
             onChange={onChangeInput}
           />
         </div>
-        <button className="py-3 text-xl bg-black text-white rounded-lg">
+        <button className="py-3 text-xl bg-main-8 text-white rounded-3xl">
           로그인
         </button>
       </form>
       <div className="flex flex-col items-center gap-6 w-[500px]">
         <Link href="/join">
-          <button className="w-[500px] py-[10px] text-xl border-2 border-[#000] rounded-lg font-medium ">
+          <button className="w-[500px] py-[10px] text-xl border-2 border-gray-2 rounded-3xl font-medium ">
             회원가입
           </button>
         </Link>
         <button
-          className="flex items-center justify-center w-[500px] py-2 text-xl border-2 border-[#000] rounded-lg font-medium"
+          className="flex items-center justify-center w-[500px] py-2 text-xl border-2 border-gray-2 rounded-3xl font-medium"
           onClick={handleGoogleLogin}
         >
           <Image
