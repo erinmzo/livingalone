@@ -1,47 +1,42 @@
-// import Wish from "@/components/common/Wish";
-// import Link from "next/link";
 import { NewMustCategoryPost } from "@/apis/mustpost";
-import Image from "next/image";
 import React from "react";
+import MustPostCard from "../list/MustPostCard";
 
 interface MorePostProps {
   category_id: string;
   category_name: string;
+  id: string;
 }
 
 async function MorePost({
   category_id: postCategoryId,
   category_name,
+  id: postId,
 }: MorePostProps) {
-  const data = await NewMustCategoryPost(postCategoryId);
-  if (!data) {
-    return <div>로딩중 ･･･</div>;
+  const latestPosts = await NewMustCategoryPost(postCategoryId, postId);
+
+  if (!latestPosts?.length) {
+    return (
+      <div className="flex flex-col justify-center items-center mt-[132px]">
+        <h3 className="pb-6 font-bold text-2xl">{category_name} 최신 게시글</h3>
+        <div>해당 카테고리에 맞는 최신 게시글이 없습니다 🥹</div>
+      </div>
+    );
   }
 
   return (
-    <div>
+    <div className="mt-[132px]">
       <h3 className="pb-6 font-bold text-2xl">{category_name} 최신 게시글</h3>
       <div>
-        <ul className="flex flex-row gap-8">
-          {data.map((newPost) => (
-            <li key={newPost.id}>
-              <div className="pt-4">
-                <Image
-                  src={newPost.img_url}
-                  alt={newPost.item}
-                  width={320}
-                  height={320}
-                />
-                {/* <div className="w-[320px] h-[320px] bg-black"></div> */}
-                <div className="pl-1">
-                  <span className="text-[14px] text-[#808080] truncate">
-                    {newPost.item}
-                  </span>
-                  <h4 className="text-[20px] font-bold truncate">
-                    {newPost.title}
-                  </h4>
-                </div>
-              </div>
+        <ul className="grid grid-cols-3 gap-[32px]">
+          {latestPosts.map((post) => (
+            <li key={post.id} className="mb-[64px]">
+              <MustPostCard
+                postId={post.id}
+                title={post.title}
+                item={post.item}
+                imgUrl={post.img_url}
+              />
             </li>
           ))}
         </ul>
@@ -49,9 +44,5 @@ async function MorePost({
     </div>
   );
 }
-
-// 제일 상단의 div에 크기를 정해놓지 않았고, li가 아직 한개여서 가운데에 있는 것 처럼 보이긴 하는데
-// 기본적으로 3개씩 들어갈꺼라 그렇게 되면 와이어프레임과 똑같아지긴 하거든요..!!
-// 따로 상단 div에 조정이 필요할까요?? 이 부분은 잘 모르겠어서 일단 두었습니다!
 
 export default MorePost;

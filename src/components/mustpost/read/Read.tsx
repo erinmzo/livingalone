@@ -41,27 +41,29 @@ async function Read({ params }: Props) {
   } = data as TMustPostDetail;
 
   return (
-    <InnerLayout>
-      <div className="flex flex-col justify-center items-center">
-        <ReadPost
-          created_at={created_at}
-          title={title}
-          content={content}
-          item={item}
-          price={price}
-          location={location}
-          img_url={img_url}
-          nickname={nickname}
-          profile_image_url={profile_image_url}
-          name={name}
-          postId={id}
-        />
-        {/* <MustDeleteBtn id={id}  /> */}
-        <MustPostAction id={id} userId={user_id} />
-        <MorePost category_id={category_id} category_name={name} />
-        {/* category_name={name} 이거 맞는지 몰겟넹,, */}
-      </div>
-    </InnerLayout>
+    <>
+      <InnerLayout>
+        <div className="flex flex-col justify-center items-center">
+          <ReadPost
+            created_at={created_at}
+            title={title}
+            content={content}
+            item={item}
+            price={price}
+            location={location}
+            img_url={img_url}
+            nickname={nickname}
+            profile_image_url={profile_image_url}
+            name={name}
+            postId={id}
+          />
+          {/* <MustDeleteBtn id={id}  /> */}
+          <MustPostAction id={id} userId={user_id} />
+          {/* category_name={name} 이거 맞는지 몰겟넹,, */}
+        </div>
+      </InnerLayout>
+      <MorePost category_id={category_id} category_name={name} id={id} />
+    </>
   );
 }
 
