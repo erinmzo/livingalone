@@ -4,17 +4,13 @@ import { getMustPostOnSearch } from "@/apis/mustpost";
 import { TMustPostList } from "@/types/types";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
-import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 import MustPostCard from "../list/MustPostCard";
 import Title from "../list/Title";
 import ResetButton from "./ResetButton";
 import SearchBar from "./SearchBar";
 
-function SearchList() {
-  const searchParams = useSearchParams();
-  const searchValue = searchParams.get("search") as string;
-
+function SearchList({ searchValue }: { searchValue: string }) {
   const {
     data: mustPosts = [],
     isPending,
