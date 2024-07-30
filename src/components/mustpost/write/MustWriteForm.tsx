@@ -15,7 +15,10 @@ import { useInputChange } from "@/hooks/useInput";
 import { useAuthStore } from "@/zustand/authStore";
 import { useRouter } from "next/navigation";
 
-import { colorSyntaxOptions, toolbarItems } from "@/components/common/editor/EditorModule";
+import {
+  colorSyntaxOptions,
+  toolbarItems,
+} from "@/components/common/editor/EditorModule";
 import { useCategoryStore } from "@/zustand/mustStore";
 import colorSyntax from "@toast-ui/editor-plugin-color-syntax";
 import "@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css";
@@ -29,10 +32,12 @@ function MustWriteForm() {
   const user = useAuthStore((state) => state.user);
   const queryClient = useQueryClient();
   const selectedCategory = useCategoryStore((state) => state.selectedCategory);
+  const maxImageSize = 1 * 1024 * 1024;
 
   const [imgUrl, setImgUrl] = useState<string>("");
   const editorRef = useRef<Editor | null>(null);
-  const [selectedCategoryName, setSelectedCategoryName] = useState<string>("카테고리 선택");
+  const [selectedCategoryName, setSelectedCategoryName] =
+    useState<string>("카테고리 선택");
   const [selectedCategoryId, setSelectedCategoryId] = useState<string>("");
 
   const { values: input, handler: onChangeInput } = useInputChange({
@@ -53,7 +58,9 @@ function MustWriteForm() {
   const { mutate: addMustPost } = useMutation({
     mutationFn: (newMustPost: TNewMustPost) => insertMustPost(newMustPost),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["mustPosts", selectedCategory] });
+      queryClient.invalidateQueries({
+        queryKey: ["mustPosts", selectedCategory],
+      });
       router.push("/mustpost");
     },
   });
@@ -63,7 +70,9 @@ function MustWriteForm() {
       const formData = new FormData();
       formData.append("file", newMustPostImage);
       const response = await insertMustImage(formData);
-      setImgUrl(`https://nqqsefrllkqytkwxfshk.supabase.co/storage/v1/object/public/mustposts/${response.path}`);
+      setImgUrl(
+        `https://nqqsefrllkqytkwxfshk.supabase.co/storage/v1/object/public/mustposts/${response.path}`
+      );
     },
   });
 
@@ -71,6 +80,11 @@ function MustWriteForm() {
     e.preventDefault();
     if (e.target.files) {
       const newMustPostImage = e.target.files[0];
+
+      if (newMustPostImage.size > maxImageSize) {
+        Notify.failure("1MB 이하의 이미지로 업로드해주세요");
+        return;
+      }
       addImage(newMustPostImage);
     }
   };
@@ -82,7 +96,12 @@ function MustWriteForm() {
   const startDate = `${year}-${month}-${day}` as string;
 
   const addMustPostBtn = () => {
-    if (!title.trim() || !selectedCategoryId || !itemName.trim() || !company.trim()) {
+    if (
+      !title.trim() ||
+      !selectedCategoryId ||
+      !itemName.trim() ||
+      !company.trim()
+    ) {
       Notify.failure("모든 항목을 입력해주세요");
       return;
     }
@@ -123,9 +142,18 @@ function MustWriteForm() {
 
         <div className="flex flex-row justify-between gap-2">
           <div className="pr-[72px] flex-grow">
-            <InputField labelName="작성일자" name="date" type="text" value={startDate} onchangeValue={onChangeInput} />
+            <InputField
+              labelName="작성일자"
+              name="date"
+              type="text"
+              value={startDate}
+              onchangeValue={onChangeInput}
+            />
           </div>
-          <SelectCategory selectCategory={selectCategory} initialCategoryName={selectedCategoryName} />
+          <SelectCategory
+            selectCategory={selectCategory}
+            initialCategoryName={selectedCategoryName}
+          />
         </div>
 
         <InputField
@@ -157,9 +185,28 @@ function MustWriteForm() {
           minLength={2}
           onchangeValue={onChangeInput}
         />
-
-        <InputField labelName="이미지" type="file" onchangeValue={addImageHandler} />
-        {imgUrl && <Image src={imgUrl} alt="포스팅한 이미지" width={200} height={200} />}
+        <div className="flex gap-5 items-start">
+          <input
+            className="hidden"
+            id="image-file"
+            type="file"
+            onChange={addImageHandler}
+          />
+          <label
+            className="py-4 cursor-pointer font-bold rounded-full w-[160px] flex justify-center items-center bg-[#C2C2C2]"
+            htmlFor="image-file"
+          >
+            {imgUrl ? "이미지 수정" : "이미지 업로드"}
+          </label>
+          {imgUrl && (
+            <Image
+              src={imgUrl}
+              alt="포스팅한 이미지"
+              width={200}
+              height={200}
+            />
+          )}
+        </div>
         <div>
           <Editor
             initialValue=" "
