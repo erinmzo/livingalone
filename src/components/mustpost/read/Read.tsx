@@ -1,12 +1,12 @@
 import { getMustPostDetail } from "@/apis/mustpost";
 import InnerLayout from "@/components/common/Page/InnerLayout";
 import { MustPost } from "@/types/types";
-import ReadPost from "./ReadPost";
+import Image from "next/image";
 import MorePost from "./MorePost";
 import MustPostAction from "./MustPostAction";
 import MustTopBtn from "../TopButton/MustTopBtn";
 import Link from "next/link";
-import Image from "next/image";
+import ReadPost from "./ReadPost";
 
 type Props = {
   params: { id: string };
@@ -26,7 +26,16 @@ async function Read({ params }: Props) {
   const { id } = params;
   const data = await getMustPostDetail(id);
   if (!data) {
-    return <div>로딩중 ･･･</div>;
+    return (
+      <div className="flex justify-center items-center">
+        <Image
+          src="/img/loading-spinner.svg"
+          alt="로딩중"
+          width={200}
+          height={200}
+        />
+      </div>
+    );
   }
   const {
     user_id,

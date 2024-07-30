@@ -24,7 +24,7 @@ function WriteButton() {
             </Link>
           </li>
           <li className="border-t border-white bg-main-8 text-white text-[16px] font-bold">
-            <Link href="/grouppost/write" className="block py-[8px] px-[18px]">
+            <Link href="/grouppost/write" className="block py-[10px] px-[22px]">
               공동구매 만들기
             </Link>
           </li>

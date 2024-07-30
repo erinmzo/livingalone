@@ -3,6 +3,7 @@
 import { getMustPostAll, getMustPostbyCategory } from "@/apis/mustpost";
 import { useCategoryStore } from "@/zustand/mustStore";
 import { useInfiniteQuery } from "@tanstack/react-query";
+import Image from "next/image";
 import { useMemo } from "react";
 import SearchBar from "../search/SearchBar";
 import MustCategory from "./MustCategory";
@@ -48,7 +49,16 @@ function MustList() {
   );
 
   if (isPending)
-    return <div className="flex justify-center items-center">로딩중...</div>;
+    return (
+      <div className="flex justify-center items-center">
+        <Image
+          src="/img/loading-spinner.svg"
+          alt="로딩중"
+          width={200}
+          height={200}
+        />
+      </div>
+    );
 
   if (isError)
     return (

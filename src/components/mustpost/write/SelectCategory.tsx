@@ -33,7 +33,7 @@ function SelectCategory({ initialCategoryName, selectCategory }: SelectCategoryP
     selectCategory(category);
   };
 
-  if (isPending) return <div>로딩중...</div>;
+  if (isPending) return <div>불러오는 중</div>;
   if (isError) return <div>에러 발생!</div>;
 
   return (
