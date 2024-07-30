@@ -2,10 +2,15 @@ import Page from "@/components/common/Page/Page";
 import PaymentComplete from "@/components/payment/complete/PaymentComplete";
 import React from "react";
 
-function PaymentCompletePage() {
+function PaymentCompletePage({
+  searchParams,
+}: {
+  searchParams: { paymentId: string };
+}) {
+  console.log(searchParams.paymentId);
   return (
     <Page>
-      <PaymentComplete />
+      <PaymentComplete paymentId={searchParams.paymentId as string} />
     </Page>
   );
 }
