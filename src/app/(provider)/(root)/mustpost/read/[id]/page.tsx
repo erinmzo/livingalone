@@ -4,6 +4,7 @@ import MustTopBtn from "@/components/mustpost/TopButton/MustTopBtn";
 type Props = {
   params: { id: string };
 };
+export const revalidate = 0;
 function MustReadPage({ params }: Props) {
   return (
     <Page>
