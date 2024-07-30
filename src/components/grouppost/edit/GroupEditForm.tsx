@@ -1,34 +1,26 @@
 "use client";
 
-import {
-  getGroupPost,
-  insertGroupImage,
-  updateGroupPost,
-} from "@/apis/grouppost";
+import { getGroupPost, insertGroupImage, updateGroupPost } from "@/apis/grouppost";
 import InnerLayout from "@/components/common/Page/InnerLayout";
+import { useInputChange } from "@/hooks/useInput";
 import { GroupPost, TNewGroupPost } from "@/types/types";
 import { postRevalidate } from "@/utils/revalidate";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { EditorProps } from "@toast-ui/react-editor";
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Notify } from "notiflix";
 import React, { useEffect, useRef, useState } from "react";
 
-import {
-  colorSyntaxOptions,
-  toolbarItems,
-} from "@/components/common/editor/EditorModule";
-import { useInputChange } from "@/hooks/useInput";
-import colorSyntax from "@toast-ui/editor-plugin-color-syntax";
-import "@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css";
-import "@toast-ui/editor/dist/toastui-editor.css";
-import { Editor } from "@toast-ui/react-editor";
-import "tui-color-picker/dist/tui-color-picker.css";
+const EditorModule = dynamic(() => import("@/components/common/editor/EditorModule"), {
+  ssr: false,
+});
 
 function GroupEditForm({ params }: { params: { id: string } }) {
   const { id } = params;
   const router = useRouter();
-  const editorRef = useRef<Editor | null>(null);
+  const editorRef = useRef<EditorProps>(null);
 
   const {
     data: groupPost,
@@ -56,18 +48,7 @@ function GroupEditForm({ params }: { params: { id: string } }) {
     userId: "",
     isFinished: false,
   });
-  const {
-    title,
-    startDate,
-    endDate,
-    content,
-    item,
-    link,
-    peopleNum,
-    price,
-    userId,
-    isFinished,
-  } = input;
+  const { title, startDate, endDate, content, item, link, peopleNum, price, userId, isFinished } = input;
   useEffect(() => {
     if (groupPost) {
       setValueInit({
@@ -91,9 +72,7 @@ function GroupEditForm({ params }: { params: { id: string } }) {
       const formData = new FormData();
       formData.append("file", newGroupImage);
       const response = await insertGroupImage(formData);
-      setImgUrl(
-        `https://nqqsefrllkqytkwxfshk.supabase.co/storage/v1/object/public/groupposts/${response.path}`
-      );
+      setImgUrl(`https://nqqsefrllkqytkwxfshk.supabase.co/storage/v1/object/public/groupposts/${response.path}`);
     },
   });
 
@@ -117,15 +96,7 @@ function GroupEditForm({ params }: { params: { id: string } }) {
   });
 
   const addGroupPostHandler = async () => {
-    // const { title, startDate, endDate, content, item, link, peopleNum, price, userId, isFinished } = inputs;
-    if (
-      !title.trim() ||
-      !startDate.trim() ||
-      !endDate.trim() ||
-      !imgUrl.trim() ||
-      !content.trim() ||
-      !item.trim()
-    ) {
+    if (!title.trim() || !startDate.trim() || !endDate.trim() || !imgUrl.trim() || !content.trim() || !item.trim()) {
       Notify.failure("관련 링크를 제외한 모든 값을 입력해주세요.");
       return;
     }
@@ -159,25 +130,17 @@ function GroupEditForm({ params }: { params: { id: string } }) {
   if (isPending)
     return (
       <div className="flex justify-center items-center">
-        <Image
-          src="/img/loading-spinner.svg"
-          alt="로딩중"
-          width={200}
-          height={200}
-        />
+        <Image src="/img/loading-spinner.svg" alt="로딩중" width={200} height={200} />
       </div>
     );
 
-  if (isError)
-    return <div className="flex justify-center items-center">에러...</div>;
+  if (isError) return <div className="flex justify-center items-center">에러...</div>;
 
   return (
     <InnerLayout>
       <div className="flex flex-col gap-5">
         <div className="flex gap-2">
-          <label className="w-[86px] text-[18px] text-gray-4 flex-none">
-            제목
-          </label>
+          <label className="w-[86px] text-[18px] text-gray-4 flex-none">제목</label>
           <input
             name="title"
             placeholder="제목을 입력하세요."
@@ -188,9 +151,7 @@ function GroupEditForm({ params }: { params: { id: string } }) {
         </div>
         <div className="flex gap-[41px]">
           <div className="flex gap-2 items-center">
-            <label className="w-[86px] text-[18px] text-gray-4 flex-none">
-              공구기간
-            </label>
+            <label className="w-[86px] text-[18px] text-gray-4 flex-none">공구기간</label>
             <div className=" flex gap-1 items-center">
               <label className="text-[12px]">마감일</label>
               <input
@@ -203,9 +164,7 @@ function GroupEditForm({ params }: { params: { id: string } }) {
             </div>
           </div>
           <div className="flex gap-2 items-center">
-            <label className="w-[78px] text-[18px] text-gray-4 flex-none">
-              공구인원
-            </label>
+            <label className="w-[78px] text-[18px] text-gray-4 flex-none">공구인원</label>
             <input
               name="peopleNum"
               type="number"
@@ -218,9 +177,7 @@ function GroupEditForm({ params }: { params: { id: string } }) {
         </div>
 
         <div className="flex gap-2 items-center">
-          <label className="w-[86px] text-[18px] text-gray-4 flex-none">
-            상품이름
-          </label>
+          <label className="w-[86px] text-[18px] text-gray-4 flex-none">상품이름</label>
           <input
             name="item"
             placeholder="제품명을 입력하세요."
@@ -231,9 +188,7 @@ function GroupEditForm({ params }: { params: { id: string } }) {
         </div>
 
         <div className="flex gap-2 items-center">
-          <label className="w-[86px] text-[18px] text-gray-4 flex-none">
-            공구가격
-          </label>
+          <label className="w-[86px] text-[18px] text-gray-4 flex-none">공구가격</label>
           <input
             name="price"
             type="number"
@@ -244,9 +199,7 @@ function GroupEditForm({ params }: { params: { id: string } }) {
           />
         </div>
         <div className="flex gap-2 items-center">
-          <label className="w-[80px] text-[18px] text-gray-4 flex-none">
-            상품링크
-          </label>
+          <label className="w-[80px] text-[18px] text-gray-4 flex-none">상품링크</label>
           <input
             name="link"
             placeholder="(선택사항) 상품소개 페이지 링크를 넣어주세요."
@@ -256,36 +209,18 @@ function GroupEditForm({ params }: { params: { id: string } }) {
           />
         </div>
         <div className="flex gap-5 items-start">
-          <input
-            className="hidden"
-            id="image-file"
-            type="file"
-            onChange={addImageHandler}
-          />
+          <input className="hidden" id="image-file" type="file" onChange={addImageHandler} />
           <label
             className="ml-[82px] py-2 cursor-pointer text-[12px] text-gray-4 font-bold rounded-full w-[120px] flex justify-center items-center bg-[#C2C2C2]"
             htmlFor="image-file"
           >
             {imgUrl ? "이미지 수정" : "이미지 업로드"}
           </label>
-          {imgUrl && (
-            <Image src={imgUrl} alt="선택한 이미지" width={200} height={200} />
-          )}
+          {imgUrl && <Image src={imgUrl} alt="선택한 이미지" width={200} height={200} />}
         </div>
       </div>
       <div className="mt-[14px]">
-        <Editor
-          initialValue=" "
-          placeholder="※여기에 글을 작성해주세요."
-          previewStyle="tab"
-          height="400px"
-          initialEditType="wysiwyg"
-          useCommandShortcut={true}
-          ref={editorRef}
-          plugins={[[colorSyntax, colorSyntaxOptions]]}
-          toolbarItems={toolbarItems}
-          usageStatistics={false} // 통계 수집 거부
-        />
+        <EditorModule editorRef={editorRef} initialValue={groupPost.content} />
       </div>
       <div className="flex justify-center">
         <button
