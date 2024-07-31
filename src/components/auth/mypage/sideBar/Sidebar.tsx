@@ -38,13 +38,15 @@ function SideBar() {
     return (
       <div className=" flex flex-col justify-center w-[208px] h-[575px] p-4 items-center border border-[#BFC5C3] rounded-lg bg-white">
         <div className="flex-col justify-center items-center mb-8">
-          <Image
-            className="bg-gray-200 rounded-full mb-6 w-[100px] h-[100px]"
-            src={profile?.profile_image_url}
-            alt={profile?.nickname}
-            width={100}
-            height={100}
-          />
+          <div className="w-full">
+            <Image
+              className="bg-gray-200 rounded-full mb-6 w-[100px] h-[100px]"
+              src={profile?.profile_image_url}
+              alt={profile?.nickname}
+              width={100}
+              height={100}
+            />
+          </div>
           <div className="text-[16px] font-bold text-center w-full h-[19px]">{profile?.nickname}</div>
         </div>
         <ul className="flex flex-col gap-[24px] mt-[40px] items-center">

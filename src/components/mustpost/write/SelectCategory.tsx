@@ -52,7 +52,6 @@ function SelectCategory({
           >
             {initialCategoryName}
             <Image
-              // selectedCategory
               src="/img/icon-input-must.png"
               alt="카테고리 아이콘"
               width={24}
