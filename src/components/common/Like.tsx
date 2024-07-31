@@ -104,10 +104,12 @@ function Like({ postId }: LikeProps) {
 
   if (!user)
     return (
-      <div className="flex justify-center items-center border border-gray-3 bg-white rounded-full py-1 px-3">
-        <Image src="/img/icon-like.svg" alt="좋아요 버튼" width={20} height={20} />
-        <span>{likesCount}</span>
-      </div>
+      <button onClick={handleToggleLike}>
+        <div className="flex justify-center items-center border border-gray-2 bg-white rounded-full py-1 px-3">
+          <Image src="/img/icon-like.svg" alt="좋아요 버튼" width={20} height={20} />
+          <span>{likesCount}</span>
+        </div>
+      </button>
     );
 
   if (isPending)
@@ -122,14 +124,14 @@ function Like({ postId }: LikeProps) {
     <div>
       <button onClick={handleToggleLike}>
         {isLike ? (
-          <div className="flex justify-center items-center border border-main-8 bg-white rounded-full py-1 px-3">
+          <div className="flex justify-center items-center border border-gray-2 bg-white rounded-full py-1 px-3">
             <Image src="/img/icon-like-on.svg" alt="좋아요 버튼" width={18} height={18} />
-            <span className="ml-1 text-main-8">{likesCount}</span>
+            <span className="ml-1 text-main-8 font-bold">{likesCount}</span>
           </div>
         ) : (
-          <div className="flex justify-center items-center border border-gray-3 bg-white rounded-full py-1 px-3">
+          <div className="flex justify-center items-center border border-gray-2 bg-white rounded-full py-1 px-3">
             <Image src="/img/icon-like.svg" alt="좋아요 버튼" width={18} height={18} />
-            <span className="ml-1 text-gray-4">{likesCount}</span>
+            <span className="ml-1 text-gray-4 font-bold">{likesCount}</span>
           </div>
         )}
       </button>

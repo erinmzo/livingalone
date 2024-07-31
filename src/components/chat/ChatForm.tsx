@@ -73,12 +73,18 @@ export default function ChatForm({ postId }: { postId: string }) {
     <div className="w-full min-w-full max-w-[682px] mx-auto">
       <div className="rounded-lg border border-gray-2 overflow-y-scroll h-[140px] scroll-smooth">
         <div className="flex p-[24px] flex-col justify-end gap-2">
-          {messages.map((message) => (
-            <div key={message.id} className="grid grid-cols-[100px_1fr] text-gray-5 gap-[10px]">
-              <span className="font-bold truncate">{message.profiles.nickname}</span>
-              <span className="grow">{message.text}</span>
+          {messages.length > 0 ? (
+            <div>
+              {messages.map((message) => (
+                <div key={message.id} className="grid grid-cols-[100px_1fr] text-gray-5 gap-[10px]">
+                  <span className="font-bold truncate">{message.profiles.nickname}</span>
+                  <span className="grow">{message.text}</span>
+                </div>
+              ))}
             </div>
-          ))}
+          ) : (
+            <div className="flex justify-center text-gray-2 py-[30px]">공구 채팅을 시작해보세요</div>
+          )}
         </div>
       </div>
       <form onSubmit={handleSendMessage} className="flex items-center gap-1 mt-4">
