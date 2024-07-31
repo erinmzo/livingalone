@@ -34,7 +34,7 @@ function InputField({
         minLength={minLength}
         max={max}
         onChange={(e) => onchangeValue(e)}
-        className="flex-1 pl-[2px] py-2 border-b border-gray-3 font-bold text-[18px] text-gray-5 outline-none placeholder:text-gray-2"
+        className="flex-1 pl-[2px] py-[6px] border-b border-gray-3 font-bold text-[18px] text-gray-5 outline-none placeholder:text-gray-2 leading-normal"
       />
     </div>
   );

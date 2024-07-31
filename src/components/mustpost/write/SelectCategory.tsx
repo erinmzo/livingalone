@@ -28,7 +28,7 @@ function SelectCategory({
 
   const handleIsOpen = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    setIsOpen(true);
+    setIsOpen((prev) => !prev);
   };
 
   const handleSelectCategory = (category: MustCategory) => {
@@ -47,7 +47,7 @@ function SelectCategory({
             카테고리
           </span>
           <button
-            className="w-[164px] pl-[2px] py-2 border-b border-gray-3 font-bold text-[18px] text-gray-2 text-left"
+            className="w-[100px] pl-[2px] py-2 border-b border-gray-3 font-bold text-[18px] text-gray-2 text-left"
             onClick={handleIsOpen}
           >
             {initialCategoryName}
@@ -62,16 +62,16 @@ function SelectCategory({
         </div>
       </div>
       {isOpen && (
-        <ul className="flex flex-col items-center justify-center absolute right-0 w-[164px] px-2 border-t-0 border border-gray-4 bg-white ">
+        <ul className="flex flex-col items-start justify-center absolute right-0 w-[100px] border-t-0 border border-gray-4 bg-white py-[4px]">
           {mustCategories?.map((category) => (
             <li
               key={category.id}
-              className="text-right font-medium text-gray-4"
+              className="w-full text-gray-4 text-[14px] hover:bg-main-2"
             >
               <button
                 // onClick={() => handleSelectCategory(category.name)}
                 onClick={() => handleSelectCategory(category)}
-                className="w-full py-2 text-right"
+                className="inline-flex w-full py-[5px] px-[16px]  hover:bg-main-2"
               >
                 {category.name}
               </button>

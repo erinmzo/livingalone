@@ -183,7 +183,7 @@ function MustWriteForm() {
           minLength={2}
           onchangeValue={onChangeInput}
         />
-        <div className="flex gap-5 items-start">
+        <div className="flex gap-4 items-start">
           <input
             className="hidden"
             id="image-file"
@@ -191,7 +191,7 @@ function MustWriteForm() {
             onChange={addImageHandler}
           />
           <label
-            className="py-4 cursor-pointer font-bold rounded-full w-[160px] flex justify-center items-center bg-[#C2C2C2]"
+            className="flex justify-center items-center ml-[78px] px-7 py-2 border border-gray-4 bg-gray-1 font-bold text-[12px] text-gray-4 rounded-full cursor-pointer"
             htmlFor="image-file"
           >
             {imgUrl ? "이미지 수정" : "이미지 업로드"}
@@ -209,10 +209,10 @@ function MustWriteForm() {
           <EditorModule editorRef={editorRef} />
         </div>
       </form>
-      <div className="flex justify-center">
+      <div className="flex justify-center mt-[64px]">
         <button
           onClick={addMustPostBtn}
-          className="w-[400px] py-5 text-[26px] text-white font-bold px-4 focus:outline-none bg-black hover:bg-slate-800 rounded-full"
+          className="px-[96px] py-4 text-[24px] text-white font-bold focus:outline-none bg-main-8 rounded-full"
         >
           포스팅 하기
         </button>

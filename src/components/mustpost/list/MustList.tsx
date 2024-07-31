@@ -71,7 +71,7 @@ function MustList() {
     <div className="flex flex-col items-center justify-center">
       <div className="flex flex-col items-center justify-center">
         <Title />
-        <div className="flex flex-col justify-center items-center mb-[70px]">
+        <div className="flex flex-col justify-center items-center mb-[64px]">
           <SearchBar />
           <MustCategory />
         </div>
@@ -90,12 +90,12 @@ function MustList() {
               </li>
             ))}
           </ul>
-          <div className="flex justify-center items-center">
+          <div className="flex justify-center items-center mt-[79px]">
             {hasNextPage && (
               <button
                 onClick={() => fetchNextPage()}
                 disabled={isFetchingNextPage}
-                className="mt-[79px] border border-gray-3 py-[7px] px-4 rounded-full font-bold text-gray-3"
+                className="border border-gray-3 py-[7px] px-4 rounded-full font-bold text-gray-3"
               >
                 {isFetchingNextPage ? "로딩중..." : "더보기"}
               </button>
