@@ -135,10 +135,18 @@ function GroupApplyModal({ id, onClose }: PropsType) {
               setCheckBox(!checkBox);
             }}
           />
-          <label className="ml-2 font-bold">
+          <label
+            className={`ml-2 font-bold ${
+              checkBox ? "text-gray-5" : "text-gray-4"
+            }`}
+          >
             공구 참여자 는 2024년 7월 22일 아래와 같이 서약합니다.
           </label>
-          <div className="text-[14px] mt-2">
+          <div
+            className={`text-[14px] mt-2 ${
+              checkBox ? "text-gray-5" : "text-gray-3"
+            }`}
+          >
             <p className="flex gap-1">
               <span>1. </span> 공구 총대가 개인정보(이름, 주소, 전화번호)를
               수집하는 것에 동의합니다.
@@ -153,7 +161,9 @@ function GroupApplyModal({ id, onClose }: PropsType) {
             </p>
           </div>
           <button
-            className="bg-main-8 mt-[32px] mb-[24px] text-white w-full py-4 text-[24px] rounded-full font-bold"
+            className={`${
+              checkBox ? "bg-main-8" : "bg-gray-2"
+            } mt-[32px] mb-[24px] text-white w-full py-4 text-[24px] rounded-full font-bold`}
             onClick={addGroupApplyHandler}
           >
             확인

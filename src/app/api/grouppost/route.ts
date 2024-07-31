@@ -7,7 +7,7 @@ export async function GET(request: NextRequest) {
   const isFinished = url.searchParams.get("isFinished") === "true";
   const page = parseInt(url.searchParams.get("page") || "0");
 
-  const itemsPerPage = 4;
+  const itemsPerPage = 6;
   const offset = page * itemsPerPage;
 
   try {
