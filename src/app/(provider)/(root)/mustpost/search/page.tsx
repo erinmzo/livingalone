@@ -1,10 +1,10 @@
 import Page from "@/components/common/Page/Page";
 import SearchList from "@/components/mustpost/search/SearchList";
 
-function MustListPage() {
+function MustListPage({ searchParams }: { searchParams: { search: string } }) {
   return (
     <Page>
-      <SearchList />
+      <SearchList searchValue={searchParams.search} />
     </Page>
   );
 }

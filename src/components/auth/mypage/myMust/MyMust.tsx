@@ -32,7 +32,7 @@ function MyMust() {
       <div>
         <div className="text-[24px] font-bold ml-1">나의 자취템</div>
         <div className="mt-8">
-          {myMustPosts.lenght > 0 ? (
+          {myMustPosts.length > 0 ? (
             <ul className="grid grid-cols-2 gap-[32px]">
               {myMustPosts.map((post: any) => (
                 <li key={post.id} className="mb-[64px]">

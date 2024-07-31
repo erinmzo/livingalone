@@ -2,10 +2,9 @@ import { getMustPostDetail } from "@/apis/mustpost";
 import InnerLayout from "@/components/common/Page/InnerLayout";
 import { MustPost } from "@/types/types";
 import Image from "next/image";
+import Link from "next/link";
 import MorePost from "./MorePost";
 import MustPostAction from "./MustPostAction";
-import MustTopBtn from "../TopButton/MustTopBtn";
-import Link from "next/link";
 import ReadPost from "./ReadPost";
 
 type Props = {
@@ -28,12 +27,7 @@ async function Read({ params }: Props) {
   if (!data) {
     return (
       <div className="flex justify-center items-center">
-        <Image
-          src="/img/loading-spinner.svg"
-          alt="로딩중"
-          width={200}
-          height={200}
-        />
+        <Image src="/img/loading-spinner.svg" alt="로딩중" width={200} height={200} />
       </div>
     );
   }
@@ -82,7 +76,7 @@ async function Read({ params }: Props) {
             alt="목록으로 돌아가기 아이콘"
             width={7}
             height={12}
-            className="mr-[9px]"
+            className="mr-[9px] w-auto h-auto"
           />
           목록으로 돌아가기
         </Link>

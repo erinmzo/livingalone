@@ -16,7 +16,7 @@ function MainSectionTitle({ title, content, link }: MainSectionTitleProps) {
       <div className="hidden md:block border border-main-8 rounded-full py-[8px] px-[18px] md:min-w-[108px]">
         <Link className="text-[16px] font-bold text-main-8 flex items-center" href={link}>
           전체보기
-          <Image src="/img/icon-right.svg" alt="" width={7} height={12} className="ml-2" />
+          <Image src="/img/icon-right.svg" alt="&gt;" width={7} height={12} className="ml-2" />
         </Link>
       </div>
     </div>
