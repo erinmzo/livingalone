@@ -35,14 +35,16 @@ function MyGroup() {
   return (
     <div className="flex-col">
       <h5 className="font-bold text-[24px] mb-[32px] w-full">나의 정보</h5>
-      {groupPosts.length ? (
-        groupPosts?.map((groupPost: TMyGroupPost) => {
-          return (
-            <div key={groupPost.id}>
-              <MyGroupPost groupPost={groupPost} refetch={refetch} />
-            </div>
-          );
-        })
+      {groupPosts.length > 0 ? (
+        <div className="border-t border-gray-2">
+          {groupPosts.map((groupPost: TMyGroupPost) => {
+            return (
+              <div key={groupPost.id}>
+                <MyGroupPost groupPost={groupPost} refetch={refetch} />
+              </div>
+            );
+          })}
+        </div>
       ) : (
         <div>등록된 공구템이 없습니다.</div>
       )}
