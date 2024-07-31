@@ -9,27 +9,24 @@ import { v4 as uuidv4 } from "uuid";
 type TPaymentInput = {
   purchaserName: string;
   purchaserPhone: string;
-  purchaserEmail: string;
-  purchaserDetailAddress: string;
 };
 
 function PaymentButton({
   input,
   purchaserAddress,
+  purchaserDetailAddress,
+  purchaserEmail,
   firstCheckBox,
   secondCheckBox,
 }: {
   input: TPaymentInput;
   purchaserAddress: string;
+  purchaserEmail: string;
+  purchaserDetailAddress: string;
   firstCheckBox: boolean;
   secondCheckBox: boolean;
 }) {
-  const {
-    purchaserName,
-    purchaserPhone,
-    purchaserEmail,
-    purchaserDetailAddress,
-  } = input;
+  const { purchaserName, purchaserPhone } = input;
 
   const router = useRouter();
 
@@ -42,6 +39,16 @@ function PaymentButton({
       !purchaserDetailAddress.trim()
     ) {
       Notify.failure("빈 칸을 모두 채워주세요.");
+      return;
+    }
+    const phone_regex = /^01([0|1|6|7|8|9])-([0-9]{3,4})-([0-9]{4})$/;
+    if (!phone_regex.test(purchaserPhone)) {
+      Notify.failure("전화번호는 01X-XXXX-XXXX 형식으로 작성해주세요.");
+      return;
+    }
+    const email_regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
+    if (!email_regex.test(purchaserEmail)) {
+      Notify.failure("이메일을 정확히 입력해주세요.");
       return;
     }
     if (!firstCheckBox || !secondCheckBox) {
