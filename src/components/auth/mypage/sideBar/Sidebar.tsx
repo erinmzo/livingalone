@@ -31,18 +31,13 @@ function SideBar() {
   if (isPending)
     return (
       <div className="flex justify-center items-center">
-        <Image
-          src="/img/loading-spinner.svg"
-          alt="로딩중"
-          width={200}
-          height={200}
-        />
+        <Image src="/img/loading-spinner.svg" alt="로딩중" width={200} height={200} />
       </div>
     );
 
   if (profile)
     return (
-      <div className=" flex flex-col justify-center w-[208px] h-[575px] p-4 items-center border border-[#BFC5C3] rounded-lg bg-white">
+      <div className=" flex flex-col justify-center w-[208px] h-[600px] items-center border border-gray-2 rounded-lg bg-white">
         <div className="flex-col justify-center items-center mb-8">
           <div className="w-full">
             <Image
@@ -53,18 +48,14 @@ function SideBar() {
               height={100}
             />
           </div>
-          <div className="text-[16px] font-bold text-center w-full h-[19px]">
-            {profile?.nickname}
-          </div>
+          <div className="text-[16px] font-bold text-center w-full h-[19px]">{profile?.nickname}</div>
         </div>
-        <ul className="flex flex-col gap-[24px] mt-[40px] items-center">
+        <ul className="flex flex-col gap-[24px] items-center">
           {links.map((link) => (
             <li
               key={link.href}
-              className={`text-[20px] hover:text-gray-5 transition-all ${
-                pathname === link.href
-                  ? " text-gray-5 font-bold"
-                  : "text-gray-2"
+              className={`text-[18px] hover:text-gray-5 hover:font-bold transition-all ${
+                pathname === link.href ? " text-gray-5 font-bold" : "text-gray-2"
               }`}
             >
               <Link href={link.href}>{link.label}</Link>

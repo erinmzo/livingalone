@@ -167,7 +167,7 @@ function MyInformation() {
           </div>
           <button
             type="submit"
-            className="bg-[#008575] w-[500px] h-[52px] text-white  py-2 mt-[50px] rounded-full font-bold text-[18px]"
+            className="bg-main-8 w-[500px] h-[52px] text-white  py-2 mt-[50px] rounded-full font-bold text-[18px]"
             onClick={handleProfileUpdate}
           >
             변경하기

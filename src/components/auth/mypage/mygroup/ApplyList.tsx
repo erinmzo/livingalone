@@ -10,7 +10,7 @@ function ApplyList() {
           <col width="10%" />
         </colgroup>
         <thead>
-          <tr className="text-sm text-gray-400">
+          <tr className="text-sm text-gray-3">
             <th className="p-2">순서</th>
             <th className="p-2">이름</th>
             <th className="p-2">전화번호</th>
