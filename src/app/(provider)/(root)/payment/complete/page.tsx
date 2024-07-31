@@ -7,7 +7,6 @@ function PaymentCompletePage({
 }: {
   searchParams: { paymentId: string };
 }) {
-  console.log(searchParams.paymentId);
   return (
     <Page>
       <PaymentComplete paymentId={searchParams.paymentId as string} />
