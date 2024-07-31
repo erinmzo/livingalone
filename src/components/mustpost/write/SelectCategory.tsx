@@ -41,10 +41,9 @@ function SelectCategory({ initialCategoryName, selectCategory }: SelectCategoryP
       <div>
         <div className="flex gap-2">
           <span className="w-[78px] m-auto py-1 text-xl font-bold">카테고리</span>
-          <button className="w-[164px] border-b border-black" onClick={handleIsOpen}>
+          <button className="relative w-[164px] border-b border-black" onClick={handleIsOpen}>
             {initialCategoryName}
             <Image
-              // selectedCategory
               src="/img/icon-input-must.png"
               alt="카테고리 아이콘"
               width={24}

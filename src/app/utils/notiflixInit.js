@@ -2,7 +2,7 @@ import Notiflix from "notiflix";
 export const notiflixInit = () => {
   Notiflix.Report.init({
     success: {
-      background: "#b32414",
+      background: "#00b8a2",
       textColor: "#fff",
     },
     failure: {
