@@ -12,9 +12,10 @@ const JoinForm = () => {
     nickname: "",
     email: "",
     password: "",
+    passwordConfirm: "",
   });
 
-  const { nickname, email, password } = input;
+  const { nickname, email, password, passwordConfirm } = input;
 
   const joinData = { nickname, email, password };
 
@@ -30,12 +31,24 @@ const JoinForm = () => {
     });
     const data = await response.json();
 
+    if (data.message === "Unable to validate email address: invalid format") {
+      return Notify.failure("이메일 형식으로 입력해주세요.");
+    }
+
+    if (data.message === "User already registered") {
+      return Notify.failure("이미 등록된 이메일 입니다.");
+    }
+
+    if (data.message === "Password should be at least 6 characters.") {
+      return Notify.failure("비밀번호는 6자리 이상되어야 합니다.");
+    }
+
+    if (password !== passwordConfirm) {
+      return Notify.failure("비밀번호가 일치하지 않습니다.");
+    }
+
     if (response.ok) {
       Notify.success("회원가입이 성공적으로 완료되었습니다.");
-    } else if (response.status === 401) {
-      return Notify.failure("이미 존재하는 아이디 입니다.");
-    } else {
-      return Notify.failure("회원가입에 실패하였습니다");
     }
 
     router.push("/login");
@@ -43,10 +56,7 @@ const JoinForm = () => {
 
   return (
     <div className="flex flex-col justify-center items-center">
-      <form
-        onSubmit={handleSubmitJoin}
-        className="flex flex-col justify-center gap-6 w-[500px] mb-6"
-      >
+      <form onSubmit={handleSubmitJoin} className="flex flex-col justify-center gap-6 w-[500px] mb-6">
         <Input
           label="닉네임"
           type="text"
@@ -71,10 +81,15 @@ const JoinForm = () => {
           placeholder="숫자와 영문 조합으로 입력해주세요"
           onChange={onChangeInput}
         />
-        <button
-          type="submit"
-          className="w-[500px] mt-4 py-3 text-xl bg-main-8 text-white rounded-3xl"
-        >
+        <Input
+          label="비밀번호 확인"
+          type="password"
+          value={passwordConfirm}
+          name="passwordConfirm"
+          placeholder="비밀번호를 한번 더 입력해주세요."
+          onChange={onChangeInput}
+        />
+        <button type="submit" className="w-[500px] mt-4 py-3 text-xl bg-main-8 text-white rounded-full">
           가입하기
         </button>
       </form>

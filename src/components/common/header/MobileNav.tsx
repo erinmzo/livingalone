@@ -3,7 +3,7 @@ import Link from "next/link";
 
 function MobileNav() {
   return (
-    <div className="sm:hidden z-[99] fixed bottom-0 left-0 flex justify-center w-full border-t border-slate-300 bg-white">
+    <div className="sm:hidden z-[99] fixed bottom-0 left-0 flex justify-center w-screen border-t border-slate-300 bg-white">
       <ul className="w-full max-w-[375px] min-w-[320px] py-[15px] grid grid-cols-5 ">
         <li>
           <Link href="">
@@ -38,7 +38,7 @@ function MobileNav() {
           </Link>
         </li>
         <li>
-          <Link href="">
+          <Link href="/mypage">
             <div className="flex flex-col justify-center items-center gap-[5px]">
               <Image src="/img/mo-icon-mypage.png" alt="마이페이지" width={20} height={20} />
               <span className="text-[10px] text-slate-500">마이페이지</span>

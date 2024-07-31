@@ -20,7 +20,7 @@ function Header() {
   return (
     <header>
       <AuthHeader />
-      <div className="container mx-auto max-w-[1024px] flex justify-center sm:justify-between items-center py-[18px]">
+      <div className="container mx-auto w-full max-w-[1024px] flex justify-center sm:justify-between items-center py-[18px] px-[16px] lg:px-0">
         <h1 className="text-[30px] font-extrabold">
           <Link href="/">
             <Image src="/img/logo.svg" alt="혼자살때" width={120} height={56} />

@@ -15,7 +15,7 @@ function AuthHeader() {
   };
   return (
     <div className="hidden sm:block">
-      <ul className="container mx-auto max-w-[1024px] flex items-center justify-end gap-5 py-[18px] text-[12px] text-gray-4 text-black">
+      <ul className="container mx-auto w-full max-w-[1024px] flex items-center justify-end gap-5 py-[18px] text-[12px] text-gray-4 text-black px-[16px] lg:px-0">
         {!user ? (
           <>
             <li>

@@ -9,7 +9,7 @@ function Title({ title, postId }: TitleProps) {
     <div className="flex flex-row items-center mb-6">
       {/* 제목부분 */}
       <Wish postId={postId} />
-      <h2 className="ml-2 font-bold text-2xl ">{title}</h2>
+      <h2 className="ml-2 font-bold text-2xl">{title}</h2>
     </div>
   );
 }

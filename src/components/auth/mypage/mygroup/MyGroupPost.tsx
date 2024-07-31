@@ -9,13 +9,7 @@ import { Confirm } from "notiflix";
 import { useEffect, useState } from "react";
 import MyGroupApply from "./MyGroupApply";
 
-function MyGroupPost({
-  groupPost,
-  refetch,
-}: {
-  groupPost: TMyGroupPost;
-  refetch: () => void;
-}) {
+function MyGroupPost({ groupPost, refetch }: { groupPost: TMyGroupPost; refetch: () => void }) {
   const user = useAuthStore((state) => state.user);
   const queryClient = useQueryClient();
   const [isOpen, setIsOpen] = useState(false);
@@ -55,11 +49,7 @@ function MyGroupPost({
     if (groupPost) {
       Confirm.show(
         "혼자살때",
-        `${
-          isFinished
-            ? "종료된 상태를 진행 중으로 바꾸시겠습니까?"
-            : "정말로 종료하시겠습니까?"
-        }`,
+        `${isFinished ? "종료된 상태를 진행 중으로 바꾸시겠습니까?" : "정말로 종료하시겠습니까?"}`,
         "네",
         "아니오",
         () => {
@@ -75,48 +65,33 @@ function MyGroupPost({
 
   // 순서대로 sort
   const sortedApply = groupPost.group_applications.sort(
-    (a: any, b: any) =>
-      new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+    (a: any, b: any) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
   );
 
   return (
     <>
       <div
-        className={`flex justify-between items-center py-3 border-b border-t border-black ${
+        className={`flex justify-between items-center py-[10px] border-b border-gray-2 ${
           isFinished ? "text-gray-2" : "text-black"
         }`}
       >
-        <span
-          onClick={() => setIsOpen(!isOpen)}
-          className="flex items-center mr-1 cursor-pointer"
-        >
-          {isOpen ? (
-            <Image
-              src="/img/icon-toggle-up.png"
-              alt="위"
-              width={20}
-              height={20}
-            />
-          ) : (
-            <Image
-              src="/img/icon-toggle-down.png"
-              alt=""
-              width={20}
-              height={20}
-            />
-          )}
-        </span>
-        <Link href={`/grouppost/read/${groupPost.id}`}>
-          <div className="font-bold w-[250px] truncate">{groupPost.title}</div>
-        </Link>
-        <span>
+        <div className="flex">
+          <span onClick={() => setIsOpen(!isOpen)} className="flex items-center px-1 cursor-pointer">
+            {isOpen ? (
+              <Image src="/img/icon-toggle-up.svg" alt="위" width={20} height={20} />
+            ) : (
+              <Image src="/img/icon-toggle-down.svg" alt="아래" width={20} height={20} />
+            )}
+          </span>
+          <Link href={`/grouppost/read/${groupPost.id}`}>
+            <div className="font-bold w-[250px] truncate w-[300px]">{groupPost.title}</div>
+          </Link>
+        </div>
+        <span className="text-[12px]">
           {groupPost.start_date} ~ {groupPost.end_date}
         </span>
-        <span>
-          <span className="font-bold">
-            {groupPost.group_applications.length}명
-          </span>{" "}
-          / {groupPost.people_num}명
+        <span className="text-[12px]">
+          <span className="font-bold">{groupPost.group_applications.length}명</span> / {groupPost.people_num}명
         </span>
         <div className="flex">
           {isFinished ? (
@@ -146,8 +121,8 @@ function MyGroupPost({
                 <colgroup>
                   <col width="10%" />
                   <col width="10%" />
-                  <col width="30%" />
-                  <col width="40%" />
+                  <col width="20%" />
+                  <col width="50%" />
                   <col width="10%" />
                 </colgroup>
                 <thead>
@@ -162,12 +137,8 @@ function MyGroupPost({
                 <tbody>
                   {sortedApply.map((groupApply, idx: number) => {
                     return (
-                      <tr className="text-sm" key={groupApply.id}>
-                        <MyGroupApply
-                          groupApply={groupApply}
-                          idx={idx}
-                          refetch={refetch}
-                        />
+                      <tr className="text-sm border-b border-gray-2" key={groupApply.id}>
+                        <MyGroupApply groupApply={groupApply} idx={idx} refetch={refetch} />
                       </tr>
                     );
                   })}
@@ -175,7 +146,7 @@ function MyGroupPost({
               </table>
             </div>
           ) : (
-            <div className="flex justify-center my-2">
+            <div className="flex justify-center py-3 text-gray-3 border-b border-gray-2 text-[14px]">
               아직 신청자가 없습니다.
             </div>
           )}
