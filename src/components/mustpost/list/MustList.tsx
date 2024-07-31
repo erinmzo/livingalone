@@ -95,7 +95,7 @@ function MustList() {
               <button
                 onClick={() => fetchNextPage()}
                 disabled={isFetchingNextPage}
-                className="mt-[79px] border border-gray-3 py-[7px] px-4 rounded-full font-bold text-gray-3 hover:bg-black hover:text-white"
+                className="mt-[79px] border border-gray-3 py-[7px] px-4 rounded-full font-bold text-gray-3"
               >
                 {isFetchingNextPage ? "로딩중..." : "더보기"}
               </button>

@@ -141,7 +141,11 @@ function MustWriteForm() {
         />
 
         <div className="flex flex-row justify-between gap-2">
-          <div className="pr-[72px] flex-grow">
+          <SelectCategory
+            selectCategory={selectCategory}
+            initialCategoryName={selectedCategoryName}
+          />
+          <div className="pl-[72px] flex-grow">
             <InputField
               labelName="작성일자"
               name="date"
@@ -150,10 +154,6 @@ function MustWriteForm() {
               onchangeValue={onChangeInput}
             />
           </div>
-          <SelectCategory
-            selectCategory={selectCategory}
-            initialCategoryName={selectedCategoryName}
-          />
         </div>
 
         <InputField

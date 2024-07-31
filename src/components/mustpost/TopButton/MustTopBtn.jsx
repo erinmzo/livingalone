@@ -12,8 +12,6 @@ function MustTopBtn() {
   return (
     <button
       onClick={topBtn}
-      // className="inline-flex justify-center items-center
-      //   sticky left-full p-[17px] border-2 border-[#899490] rounded-full"
       className="inline-flex justify-center items-center
         btn-fixed-right"
     >

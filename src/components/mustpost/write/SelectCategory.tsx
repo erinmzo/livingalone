@@ -11,7 +11,10 @@ interface SelectCategoryProps {
 }
 //선택된 카테고리를 MustWriteForm으로 전달
 
-function SelectCategory({ initialCategoryName, selectCategory }: SelectCategoryProps) {
+function SelectCategory({
+  initialCategoryName,
+  selectCategory,
+}: SelectCategoryProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const {
@@ -39,9 +42,14 @@ function SelectCategory({ initialCategoryName, selectCategory }: SelectCategoryP
   return (
     <div className="relative">
       <div>
-        <div className="flex gap-2">
-          <span className="w-[78px] m-auto py-1 text-xl font-bold">카테고리</span>
-          <button className="w-[164px] border-b border-black" onClick={handleIsOpen}>
+        <div className="flex gap-[2px]">
+          <span className="inline-block w-[78px] m-auto py-[5px] text-lg text-gray-4">
+            카테고리
+          </span>
+          <button
+            className="w-[164px] pl-[2px] py-2 border-b border-gray-3 font-bold text-[18px] text-gray-2 text-left"
+            onClick={handleIsOpen}
+          >
             {initialCategoryName}
             <Image
               // selectedCategory
@@ -55,9 +63,9 @@ function SelectCategory({ initialCategoryName, selectCategory }: SelectCategoryP
         </div>
       </div>
       {isOpen && (
-        <ul className="absolute right-0 px-2 bg-[#E6E6E6] w-[164px]">
+        <ul className="flex flex-col items-center justify-center absolute right-0 w-[164px] px-2 border-t-0 border border-gray-4 bg-white ">
           {mustCategories?.map((category) => (
-            <li key={category.id} className=" border-b border-black text-right font-medium">
+            <li key={category.id} className="text-right font-medium">
               <button
                 // onClick={() => handleSelectCategory(category.name)}
                 onClick={() => handleSelectCategory(category)}
@@ -74,8 +82,3 @@ function SelectCategory({ initialCategoryName, selectCategory }: SelectCategoryP
 }
 
 export default SelectCategory;
-
-// Input이 있음
-// 카테고리 리스트가 있음
-// Input을 눌렀을때 isOpen으로 카테고리 리스트가 열림 다시 누르면 닫힘
-// 선택한 카테고리가 Input의 값으로 들어갈 수 있게

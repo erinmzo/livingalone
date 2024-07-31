@@ -12,7 +12,7 @@ function PostImage({ img_url }: PostImageProps) {
         width={680}
         height={0}
         layout="responsive"
-        className="rounded-[16px]"
+        className="rounded-[16px] border border-gray-2"
       />
     </div>
   );
