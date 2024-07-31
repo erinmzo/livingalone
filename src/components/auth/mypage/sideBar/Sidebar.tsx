@@ -46,7 +46,7 @@ function SideBar() {
         <div className="flex-col justify-center items-center mb-8">
           <div className="w-full">
             <Image
-              className="bg-gray-200 rounded-full mb-6 w-[100px] h-[100px]"
+              className="border border-gray-2 bg-gray-200 rounded-full mb-6 w-[100px] h-[100px]"
               src={profile?.profile_image_url}
               alt={profile?.nickname}
               width={100}
