@@ -25,8 +25,10 @@ async function MorePost({
   }
 
   return (
-    <div className="mt-[132px]">
-      <h3 className="pb-6 font-bold text-2xl">{category_name} 최신 게시글</h3>
+    <div className="mt-[190px]">
+      <h3 className="mb-6 font-bold text-[26px] text-black">
+        {category_name} 관련 추천템
+      </h3>
       <div>
         <ul className="grid grid-cols-3 gap-[32px]">
           {latestPosts.map((post) => (

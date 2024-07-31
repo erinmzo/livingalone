@@ -4,9 +4,9 @@ function ResetButton() {
   return (
     <Link
       href="/mustpost"
-      className="py-[8px] px-[19px] rounded-full bg-gray-2 text-xl text-gray-4 font-bold"
+      className="w-[100px] py-[8px] px-[16px] rounded-full bg-main-7 text-[16px] text-gray-1 font-bold"
     >
-      검색 초기화
+      검색초기화
     </Link>
   );
 }

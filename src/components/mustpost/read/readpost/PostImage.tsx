@@ -9,7 +9,7 @@ function PostImage({ img_url }: PostImageProps) {
       <Image
         src={img_url}
         alt="상품이미지"
-        className="rounded-[16px]"
+        className="rounded-[16px] border border-gray-2"
         width={680}
         height={0}
         priority

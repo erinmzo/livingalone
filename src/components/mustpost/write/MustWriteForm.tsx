@@ -35,7 +35,7 @@ function MustWriteForm() {
   const [imgUrl, setImgUrl] = useState<string>("");
   const editorRef = useRef<EditorProps>(null);
   const [selectedCategoryName, setSelectedCategoryName] =
-    useState<string>("카테고리 선택");
+    useState<string>("선택");
   const [selectedCategoryId, setSelectedCategoryId] = useState<string>("");
 
   const { values: input, handler: onChangeInput } = useInputChange({
