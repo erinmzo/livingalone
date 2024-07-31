@@ -5,12 +5,12 @@ interface PostImageProps {
 }
 function PostImage({ img_url }: PostImageProps) {
   return (
-    <div className="relative mb-6 w-[680px]">
+    <div className="mb-6 w-full">
       <Image
         src={img_url}
         alt="상품이미지"
-        className="rounded-[16px] border border-gray-2"
-        width={680}
+        className="rounded-[16px] border border-gray-2 h-auto w-full"
+        width={0}
         height={0}
         priority
       />
