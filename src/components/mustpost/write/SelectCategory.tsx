@@ -47,7 +47,7 @@ function SelectCategory({
             카테고리
           </span>
           <button
-            className="w-[100px] pl-[2px] py-2 border-b border-gray-3 font-bold text-[18px] text-gray-2 text-left"
+            className="w-[100px] pl-[2px] py-2 border-b border-gray-3 font-bold text-[18px] text-left text-gray-5"
             onClick={handleIsOpen}
           >
             {initialCategoryName}

@@ -24,9 +24,9 @@ function MustCategory() {
       <ul className="flex flex-row gap-2">
         <li>
           <button
-            className={`w-[90px] py-2 px-4 border border-gray-3  rounded-full font-bold text-gray-3 hover:bg-main-8 hover:text-white ${
+            className={`w-[90px] py-2 px-4 border border-gray-3  rounded-full text-gray-3 hover:font-bold hover:bg-main-8 hover:text-white ${
               selectedCategory === "ALL"
-                ? "bg-main-8 text-white border-transparent"
+                ? "bg-main-8 font-bold text-white border-transparent"
                 : "hover:bg-main-8 hover:text-white hover:border-transparent"
             }`}
             onClick={() => handClickCategory("ALL")}
@@ -37,9 +37,9 @@ function MustCategory() {
         {mustCategories?.map((category) => (
           <li key={category.id}>
             <button
-              className={`w-[90px] py-2 px-4 border border-gray-3 rounded-full font-bold text-gray-3 hover:bg-main-8 hover:text-white  ${
+              className={`w-[90px] py-2 px-4 border border-gray-3 rounded-full text-gray-3 hover:font-bold hover:bg-main-8 hover:text-white  ${
                 selectedCategory === category.id
-                  ? "bg-main-8 text-white border-transparent"
+                  ? "bg-main-8 font-bold text-white border-transparent"
                   : "hover:bg-main-8 hover:text-white hover:border-transparent"
               }`}
               onClick={() => handClickCategory(category.id)}
