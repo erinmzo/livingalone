@@ -71,16 +71,14 @@ export default function ChatForm({ postId }: { postId: string }) {
 
   return (
     <div className="w-full min-w-full max-w-[682px] mx-auto">
-      <div className="rounded-lg p-[24px] border border-gray-2">
-        <div className="flex flex-col">
-          <div className="h-[100px] scroll-smooth overflow-y-scroll scrolling-touch flex flex-col justify-end gap-2">
-            {messages.map((message) => (
-              <div key={message.id} className="grid grid-cols-[70px_1fr] text-gray-5 gap-[24px]">
-                <span className="font-bold mr-3 truncate">{message.profiles.nickname}</span>
-                <span className="grow">{message.text}</span>
-              </div>
-            ))}
-          </div>
+      <div className="rounded-lg border border-gray-2 overflow-y-scroll h-[140px] scroll-smooth">
+        <div className="flex p-[24px] flex-col justify-end gap-2">
+          {messages.map((message) => (
+            <div key={message.id} className="grid grid-cols-[100px_1fr] text-gray-5 gap-[10px]">
+              <span className="font-bold truncate">{message.profiles.nickname}</span>
+              <span className="grow">{message.text}</span>
+            </div>
+          ))}
         </div>
       </div>
       <form onSubmit={handleSendMessage} className="flex items-center gap-1 mt-4">

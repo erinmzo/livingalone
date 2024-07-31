@@ -74,7 +74,7 @@ function Wish({ postId }: WishProps) {
 
   if (isPending)
     return (
-      <div className="flex justify-center items-center border border-gray-2 bg-white rounded-full p-[6px] w-3"></div>
+      <div className="flex justify-center items-center border border-gray-2 bg-gray-2 rounded-full p-[6px] w-3  w-5 h-5"></div>
     );
 
   if (isError) return <div>에러가 발생했습니다.</div>;

@@ -11,20 +11,20 @@ function WriteButton() {
   return (
     <div className="relative ml-[34px] hidden sm:block">
       <button
-        className="rounded-full py-[10px] px-[22px] border border-main-8 bg-main-8 text-[20px] text-white font-bold hover:bg-white hover:text-main-8"
+        className="rounded-full py-[10px] px-[22px] border border-main-7 bg-main-7 text-[20px] text-white font-bold hover:bg-white hover:text-main-8 hover:border-main-8"
         onClick={handleIsOpen}
       >
         글쓰기
       </button>
       {isOpen && (
-        <ul className="z-50 absolute right-[14px] top-[50px] overflow-hidden rounded-lg w-[145px]">
-          <li className="bg-main-8 text-white text-[16px] font-bold">
-            <Link href="/mustpost/write" className="block py-[10px] px-[22px]">
+        <ul className="z-50 absolute right-[14px] top-[50px] w-[120px] border border-main-7">
+          <li className="bg-white text-gray-3 text-[14px] hover:bg-main-7 hover:text-white text-center">
+            <Link href="/mustpost/write" className="block py-[10px] ">
               자취템 자랑하기
             </Link>
           </li>
-          <li className="border-t border-white bg-main-8 text-white text-[16px] font-bold">
-            <Link href="/grouppost/write" className="block py-[10px] px-[22px]">
+          <li className="bg-white text-gray-3 text-[14px] hover:bg-main-7 hover:text-white text-center">
+            <Link href="/grouppost/write" className="block py-[10px] ">
               공동구매 만들기
             </Link>
           </li>
