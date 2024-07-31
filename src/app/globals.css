@@ -10,6 +10,10 @@ li {
   letter-spacing: -0.4px;
   line-height: 120%;
 }
+.toastui-editor-contents p {
+  font-size: 16px;
+  line-height: 150%;
+}
 
 @layer utilities {
   a,

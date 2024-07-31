@@ -72,7 +72,10 @@ function Wish({ postId }: WishProps) {
       </button>
     );
 
-  if (isPending) return <div className="flex justify-center items-center">불러오는 중</div>;
+  if (isPending)
+    return (
+      <div className="flex justify-center items-center border border-gray-2 bg-white rounded-full p-[6px] w-3"></div>
+    );
 
   if (isError) return <div>에러가 발생했습니다.</div>;
 
