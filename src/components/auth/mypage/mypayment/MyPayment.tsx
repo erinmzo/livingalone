@@ -17,7 +17,6 @@ function MyPayment() {
   } = useQuery({
     queryKey: ["myPayment", userId],
     queryFn: () => getMyPayment(userId),
-    staleTime: 0,
   });
 
   if (isPending)
