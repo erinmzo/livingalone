@@ -17,7 +17,7 @@ function WriteButton() {
         글쓰기
       </button>
       {isOpen && (
-        <ul className="z-50 absolute right-[14px] top-[50px] w-[120px] border border-main-7">
+        <ul className="z-50 absolute right-[14px] top-[50px] w-[120px]">
           <li className="bg-white text-gray-3 text-[14px] hover:bg-main-7 hover:text-white text-center">
             <Link href="/mustpost/write" className="block py-[10px] ">
               자취템 자랑하기

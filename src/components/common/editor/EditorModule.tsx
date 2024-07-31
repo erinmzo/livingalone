@@ -8,22 +8,17 @@ import "tui-color-picker/dist/tui-color-picker.css";
 
 export const colorSyntaxOptions = {
   preset: [
-    "#333333",
-    "#666666",
-    "#FFFFFF",
-    "#EE2323",
-    "#F89009",
-    "#009A87",
-    "#006DD7",
-    "#8A3DB6",
-    "#781B33",
-    "#5733B1",
-    "#953B34",
-    "#FFC1C8",
-    "#FFC9AF",
-    "#9FEEC3",
-    "#99CEFA",
-    "#C1BEF9",
+    "#008575",
+    "#00B8A2",
+    "#c8f683",
+    "#ddfab3",
+    "#E9430C",
+    "#f9ae94",
+    "#ffec99",
+    "#fff6cc",
+    "#303634",
+    "#57605d",
+    "#899490",
   ],
 };
 export const toolbarItems = [

@@ -4,18 +4,20 @@ import FooterNav from "./FooterNav";
 
 function Footer() {
   return (
-    <footer className="hidden sm:block bg-[#CCCCCC] pt-[40px] pb-[80px]">
+    <footer className="hidden sm:block bg-[url('/img/bg-footer.svg')] bg-no-repeat bg-center bg-cover pt-[110px] pb-[90px]">
       <div className="container mx-auto max-w-[1024px]">
         <h1 className="text-[20px] font-bold">
-          <Link href="/">혼자살때</Link>
+          <Link href="/">
+            <Image src="/img/logo-footer.svg" alt="혼자살때" width={80} height={38} />
+          </Link>
         </h1>
         <div className="flex justify-between items-end">
           <FooterNav />
           <div className="flex flex-col justify-end">
-            <ul className="flex items-center justify-end text-[16px] gap-[10px]">
+            <ul className="flex items-center justify-end text-[16px] gap-1">
               <li>
                 <a href="https://github.com/erinmzo/livingalone" target="_blank" title="깃헙으로 이동">
-                  <Image src="/img/icon-github.png" alt="깃헙 아이콘" width={24} height={24} />
+                  <Image src="/img/icon-github.svg" alt="깃헙 아이콘" width={24} height={24} />
                 </a>
               </li>
               <li>
@@ -24,11 +26,11 @@ function Footer() {
                   target="_blank"
                   title="노션으로 이동"
                 >
-                  <Image src="/img/icon-notion.png" alt="깃헙 아이콘" width={24} height={24} />
+                  <Image src="/img/icon-notion.svg" alt="노션 아이콘" width={24} height={24} />
                 </a>
               </li>
             </ul>
-            <p className="mt-[10px]">Copyright©혼자살때</p>
+            <p className="mt-[10px] text-gray-3 text-[14px]">Copyright©혼자살때</p>
           </div>
         </div>
       </div>

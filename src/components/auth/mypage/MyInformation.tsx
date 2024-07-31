@@ -5,7 +5,7 @@ import { useInputChange } from "@/hooks/useInput";
 import { Profile, TProfile } from "@/types/types";
 import { useAuthStore } from "@/zustand/authStore";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Report } from "notiflix";
+import { Notify, Report } from "notiflix";
 import { ChangeEvent, MouseEventHandler, useState } from "react";
 import DaumPostcode from "react-daum-postcode";
 import Input from "../common/Input";
@@ -19,6 +19,8 @@ function MyInformation() {
   const [address, setAddress] = useState<string>("");
   const [imgFile, setImgFile] = useState<any>();
   const [imgUrl, setImgUrl] = useState<string>("");
+
+  const maxImageSize = 1 * 1024 * 1024;
 
   const { values: input, handler: onChangeInput } = useInputChange({
     nickname: "",
@@ -80,9 +82,14 @@ function MyInformation() {
   };
 
   const handleUploadImage = (e: ChangeEvent<HTMLInputElement>) => {
+    //  e.preventDefault();
     if (e.target.files) {
-      setImgFile(e.target.files[0]);
-      uploadImageProfile(e.target.files[0]);
+      const profileImage = e.target.files[0];
+      if (profileImage.size > maxImageSize) {
+        return Notify.failure("1MB 이하의 이미지로 업로드해주세요");
+      }
+      setImgFile(profileImage);
+      uploadImageProfile(profileImage);
     }
   };
 
