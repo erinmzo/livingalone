@@ -19,7 +19,6 @@ function MyGroupApply({
   const user = useAuthStore((state) => state.user);
 
   useEffect(() => {
-    console.log(groupApply.is_paid);
     setIsPaid(groupApply.is_paid);
   }, [groupApply.is_paid]);
 
@@ -40,12 +39,11 @@ function MyGroupApply({
   });
 
   const paidGroupApplyHandler = async () => {
-    console.log("hahaha");
     const newGroupApply: GroupApplication = {
       ...groupApply,
       is_paid: !isPaid,
     };
-    // setIsPaid(!isPaid);
+    setIsPaid(!isPaid);
     updateMutation.mutate(newGroupApply);
   };
 
