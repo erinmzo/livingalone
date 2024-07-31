@@ -145,7 +145,7 @@ function PostList() {
           <button
             onClick={() => fetchNextPage()}
             disabled={isFetchingNextPage}
-            className="py-2 px-4 border border-gray-3 text-gray-3 rounded-full"
+            className="py-2 px-4 border border-gray-4 text-gray-4 rounded-full font-bold"
           >
             {isFetchingNextPage ? "로딩중..." : "더보기"}
           </button>

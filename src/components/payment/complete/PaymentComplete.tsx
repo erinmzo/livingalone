@@ -3,6 +3,7 @@
 import { insertPayment } from "@/apis/payment";
 import { useAuthStore } from "@/zustand/authStore";
 import { useMutation } from "@tanstack/react-query";
+import Link from "next/link";
 import React, { useEffect, useRef } from "react";
 
 function PaymentComplete({ paymentId }: { paymentId: string }) {
@@ -51,7 +52,9 @@ function PaymentComplete({ paymentId }: { paymentId: string }) {
       <p>1000원 즉시 환불 될 것입니다...</p>
       <p>주문번호 : {paymentId}</p>
       {/* 마이페이지 주문 조회로 이동 */}
-      <button>주문정보 확인하기</button>
+      <Link href={"/mypage/mypayment"}>
+        <button>주문정보 확인하기</button>
+      </Link>
     </div>
   );
 }

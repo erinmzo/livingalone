@@ -29,11 +29,17 @@ function GroupFinishBtn({ id }: { id: string }) {
   if (isPending)
     return (
       <div className="flex justify-center items-center">
-        <Image src="/img/loading-spinner.svg" alt="로딩중" width={200} height={200} />
+        <Image
+          src="/img/loading-spinner.svg"
+          alt="로딩중"
+          width={200}
+          height={200}
+        />
       </div>
     );
 
-  if (isError) return <div className="flex justify-center items-center">에러...</div>;
+  if (isError)
+    return <div className="flex justify-center items-center">에러...</div>;
 
   const finishGroupPostHandler = async () => {
     const finishGroupPost: TNewGroupPost = {
@@ -69,7 +75,7 @@ function GroupFinishBtn({ id }: { id: string }) {
   return (
     <button
       onClick={finishGroupPostHandler}
-      className="w-[330px] py-3 font-bold text-[20px] border border-black rounded-full"
+      className="w-[300px] py-[10px] font-bold text-[20px] border text-main-8 border-main-8 box-border rounded-full"
     >
       공구 종료하기
     </button>

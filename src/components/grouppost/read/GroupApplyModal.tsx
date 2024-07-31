@@ -44,9 +44,8 @@ function GroupApplyModal({ id, onClose }: PropsType) {
   });
 
   const addGroupApplyHandler = async () => {
-    // var regExp = /^\d{3}-\d{4}-\d{4}$/;
-    var regExp = /^01([0|1|6|7|8|9])-([0-9]{3,4})-([0-9]{4})$/;
-    if (!regExp.test(phone)) {
+    const phoneCheck = /^01([0|1|6|7|8|9])-([0-9]{3,4})-([0-9]{4})$/;
+    if (!phoneCheck.test(phone)) {
       Notify.failure("전화번호는 01X-XXXX-XXXX 형식으로 작성해주세요.");
       return;
     }
