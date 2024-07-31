@@ -15,13 +15,13 @@ export async function POST(request: NextRequest) {
     },
   });
   if (error) {
-    return Response.json({ message: error.message }, { status: 401 });
+    return NextResponse.json({ message: error.message });
   }
 
   const { error: profileError } = await supabase.from("profiles").insert([{ user_id: user.user?.id, nickname }]);
 
   if (profileError) {
-    return NextResponse.json({ message: profileError.message }, { status: 401 });
+    return NextResponse.json({ message: profileError.message });
   }
 
   return NextResponse.json({

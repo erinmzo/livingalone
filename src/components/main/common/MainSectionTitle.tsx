@@ -13,8 +13,8 @@ function MainSectionTitle({ title, content, link }: MainSectionTitleProps) {
         <h3 className="text-[26px] font-bold">{title}</h3>
         <p className="text-[14px] text-gray-4 mt-1">{content}</p>
       </div>
-      <div className="hidden md:block border border-main-8 rounded-full py-[8px] px-[18px] md:min-w-[108px]">
-        <Link className="text-[16px] font-bold text-main-8 flex items-center" href={link}>
+      <div className="hidden md:block border border-main-8 rounded-full md:min-w-[108px]">
+        <Link className="block text-[16px] font-bold text-main-8 flex items-center py-[8px] px-[18px]" href={link}>
           전체보기
           <Image src="/img/icon-right.svg" alt="&gt;" width={7} height={12} className="ml-2" />
         </Link>
