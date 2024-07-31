@@ -11,7 +11,10 @@ interface SelectCategoryProps {
 }
 //선택된 카테고리를 MustWriteForm으로 전달
 
-function SelectCategory({ initialCategoryName, selectCategory }: SelectCategoryProps) {
+function SelectCategory({
+  initialCategoryName,
+  selectCategory,
+}: SelectCategoryProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const {
@@ -25,7 +28,7 @@ function SelectCategory({ initialCategoryName, selectCategory }: SelectCategoryP
 
   const handleIsOpen = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    setIsOpen(true);
+    setIsOpen((prev) => !prev);
   };
 
   const handleSelectCategory = (category: MustCategory) => {
@@ -39,9 +42,14 @@ function SelectCategory({ initialCategoryName, selectCategory }: SelectCategoryP
   return (
     <div className="relative">
       <div>
-        <div className="flex gap-2">
-          <span className="w-[78px] m-auto py-1 text-xl font-bold">카테고리</span>
-          <button className="relative w-[164px] border-b border-black" onClick={handleIsOpen}>
+        <div className="flex gap-[2px]">
+          <span className="inline-block w-[78px] m-auto py-[5px] text-lg text-gray-4">
+            카테고리
+          </span>
+          <button
+            className="w-[100px] pl-[2px] py-2 border-b border-gray-3 font-bold text-[18px] text-gray-2 text-left"
+            onClick={handleIsOpen}
+          >
             {initialCategoryName}
             <Image
               src="/img/icon-input-must.png"
@@ -54,13 +62,16 @@ function SelectCategory({ initialCategoryName, selectCategory }: SelectCategoryP
         </div>
       </div>
       {isOpen && (
-        <ul className="absolute right-0 px-2 bg-[#E6E6E6] w-[164px]">
+        <ul className="flex flex-col items-start justify-center absolute right-0 w-[100px] border-t-0 border border-gray-4 bg-white py-[4px]">
           {mustCategories?.map((category) => (
-            <li key={category.id} className=" border-b border-black text-right font-medium">
+            <li
+              key={category.id}
+              className="w-full text-gray-4 text-[14px] hover:bg-main-2"
+            >
               <button
                 // onClick={() => handleSelectCategory(category.name)}
                 onClick={() => handleSelectCategory(category)}
-                className="w-full py-2 text-right"
+                className="inline-flex w-full py-[5px] px-[16px]  hover:bg-main-2"
               >
                 {category.name}
               </button>
@@ -73,8 +84,3 @@ function SelectCategory({ initialCategoryName, selectCategory }: SelectCategoryP
 }
 
 export default SelectCategory;
-
-// Input이 있음
-// 카테고리 리스트가 있음
-// Input을 눌렀을때 isOpen으로 카테고리 리스트가 열림 다시 누르면 닫힘
-// 선택한 카테고리가 Input의 값으로 들어갈 수 있게

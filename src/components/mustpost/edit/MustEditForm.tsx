@@ -15,9 +15,12 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import InputField from "../write/InputField";
 import SelectCategory from "../write/SelectCategory";
 
-const EditorModule = dynamic(() => import("@/components/common/editor/EditorModule"), {
-  ssr: false,
-});
+const EditorModule = dynamic(
+  () => import("@/components/common/editor/EditorModule"),
+  {
+    ssr: false,
+  }
+);
 
 type TMustPost = MustPost & {
   must_categories: { id: string; name: string };
@@ -34,7 +37,8 @@ function MustEditForm({ params }: { params: { id: string } }) {
 
   const [imgUrl, setImgUrl] = useState<string>("");
   console.log(imgUrl);
-  const [selectedCategoryName, setSelectedCategoryName] = useState<string>("카테고리 선택");
+  const [selectedCategoryName, setSelectedCategoryName] =
+    useState<string>("선택");
   const [selectedCategoryId, setSelectedCategoryId] = useState<string>("");
 
   const {
@@ -83,7 +87,9 @@ function MustEditForm({ params }: { params: { id: string } }) {
       formData.append("file", newMustPostImage);
       const response = await insertMustImage(formData);
       console.log("response:", response);
-      setImgUrl(`https://nqqsefrllkqytkwxfshk.supabase.co/storage/v1/object/public/mustposts/${response.path}`);
+      setImgUrl(
+        `https://nqqsefrllkqytkwxfshk.supabase.co/storage/v1/object/public/mustposts/${response.path}`
+      );
     },
   });
 
@@ -116,7 +122,12 @@ function MustEditForm({ params }: { params: { id: string } }) {
   const startDate = `${year}-${month}-${day}` as string;
 
   const addMustPostBtn = () => {
-    if (!title.trim() || !selectedCategoryId || !itemName.trim() || !company.trim()) {
+    if (
+      !title.trim() ||
+      !selectedCategoryId ||
+      !itemName.trim() ||
+      !company.trim()
+    ) {
       Notify.failure("모든 항목을 입력해주세요");
       return;
     }
@@ -146,11 +157,21 @@ function MustEditForm({ params }: { params: { id: string } }) {
   if (isPending)
     return (
       <div className="flex justify-center items-center">
-        <Image src="/img/loading-spinner.svg" alt="로딩중" width={200} height={200} />
+        <Image
+          src="/img/loading-spinner.svg"
+          alt="로딩중"
+          width={200}
+          height={200}
+        />
       </div>
     );
 
-  if (isError) return <div className="flex justify-center items-center">오류가 발생하였습니다!...</div>;
+  if (isError)
+    return (
+      <div className="flex justify-center items-center">
+        오류가 발생하였습니다!...
+      </div>
+    );
 
   return (
     <InnerLayout>
@@ -166,10 +187,19 @@ function MustEditForm({ params }: { params: { id: string } }) {
         />
 
         <div className="flex flex-row justify-between gap-2">
-          <div className="pr-[72px] flex-grow">
-            <InputField labelName="작성일자" name="date" type="text" value={startDate} onchangeValue={onChangeInput} />
+          <SelectCategory
+            selectCategory={selectCategory}
+            initialCategoryName={selectedCategoryName}
+          />
+          <div className="pl-[72px] flex-grow">
+            <InputField
+              labelName="작성일자"
+              name="date"
+              type="text"
+              value={startDate}
+              onchangeValue={onChangeInput}
+            />
           </div>
-          <SelectCategory selectCategory={selectCategory} initialCategoryName={selectedCategoryName} />
         </div>
 
         <InputField
@@ -202,25 +232,35 @@ function MustEditForm({ params }: { params: { id: string } }) {
           onchangeValue={onChangeInput}
         />
         <div className="flex gap-4 items-start">
-          <input className="hidden" id="image-file" type="file" onChange={addImageHandler} />
+          <input
+            className="hidden"
+            id="image-file"
+            type="file"
+            onChange={addImageHandler}
+          />
           <label
-            className="py-4 cursor-pointer font-bold rounded-full w-[160px] flex justify-center items-center bg-[#C2C2C2]"
+            className="flex justify-center items-center ml-[78px] px-7 py-2 border border-gray-4 bg-gray-1 font-bold text-[12px] text-gray-4 rounded-full cursor-pointer"
             htmlFor="image-file"
           >
             {imgUrl ? "이미지 수정" : "이미지 업로드"}
           </label>
-          {imgUrl && <Image src={imgUrl} alt="포스팅한 이미지" width={200} height={0} />}
+          {imgUrl && (
+            <Image
+              src={imgUrl}
+              alt="포스팅한 이미지"
+              width={200}
+              height={200}
+            />
+          )}
         </div>
-        {/* <InputField labelName="이미지" type="file" onchangeValue={addImageHandler} />
-        {imgUrl && <Image src={imgUrl} alt="포스팅한 이미지" width={200} height={200} />} */}
         <div>
           <EditorModule editorRef={editorRef} initialValue={mustPost.content} />
         </div>
       </form>
-      <div className="flex justify-center">
+      <div className="flex justify-center mt-[64px]">
         <button
           onClick={addMustPostBtn}
-          className="w-[400px] py-5 text-[26px] text-white font-bold px-4 focus:outline-none bg-black hover:bg-slate-800 rounded-full"
+          className="px-[96px] py-4 text-[24px] text-white font-bold focus:outline-none bg-main-8 rounded-full"
         >
           수정 완료
         </button>
