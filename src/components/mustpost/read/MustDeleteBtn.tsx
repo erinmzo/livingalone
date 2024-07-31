@@ -20,7 +20,7 @@ function MustDeleteBtn({ id }: { id: string }) {
     },
   });
 
-  const MustPostDeleteBtn = () => {
+  const handlePostDelete = () => {
     Confirm.show(
       "혼자살때",
       "정말로 삭제하시겠습니까?",
@@ -36,8 +36,8 @@ function MustDeleteBtn({ id }: { id: string }) {
   };
   return (
     <button
-      className="w-[100px] py-[8px] px-[22px] border-2 border-gray-3 rounded-full font-bold text-xl text-gray-3"
-      onClick={MustPostDeleteBtn}
+      className="w-[100px] py-[6px] px-[22px] border-2 border-gray-3 rounded-full font-bold text-xl text-gray-3"
+      onClick={handlePostDelete}
     >
       삭제
     </button>

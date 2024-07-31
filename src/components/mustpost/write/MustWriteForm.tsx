@@ -18,9 +18,12 @@ import { EditorProps } from "@toast-ui/react-editor";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 
-const EditorModule = dynamic(() => import("@/components/common/editor/EditorModule"), {
-  ssr: false,
-});
+const EditorModule = dynamic(
+  () => import("@/components/common/editor/EditorModule"),
+  {
+    ssr: false,
+  }
+);
 
 function MustWriteForm() {
   const router = useRouter();
@@ -31,7 +34,8 @@ function MustWriteForm() {
 
   const [imgUrl, setImgUrl] = useState<string>("");
   const editorRef = useRef<EditorProps>(null);
-  const [selectedCategoryName, setSelectedCategoryName] = useState<string>("카테고리 선택");
+  const [selectedCategoryName, setSelectedCategoryName] =
+    useState<string>("선택");
   const [selectedCategoryId, setSelectedCategoryId] = useState<string>("");
 
   const { values: input, handler: onChangeInput } = useInputChange({
@@ -64,7 +68,9 @@ function MustWriteForm() {
       const formData = new FormData();
       formData.append("file", newMustPostImage);
       const response = await insertMustImage(formData);
-      setImgUrl(`https://nqqsefrllkqytkwxfshk.supabase.co/storage/v1/object/public/mustposts/${response.path}`);
+      setImgUrl(
+        `https://nqqsefrllkqytkwxfshk.supabase.co/storage/v1/object/public/mustposts/${response.path}`
+      );
     },
   });
 
@@ -88,7 +94,12 @@ function MustWriteForm() {
   const startDate = `${year}-${month}-${day}` as string;
 
   const addMustPostBtn = () => {
-    if (!title.trim() || !selectedCategoryId || !itemName.trim() || !company.trim()) {
+    if (
+      !title.trim() ||
+      !selectedCategoryId ||
+      !itemName.trim() ||
+      !company.trim()
+    ) {
       Notify.failure("모든 항목을 입력해주세요");
       return;
     }
@@ -128,10 +139,19 @@ function MustWriteForm() {
         />
 
         <div className="flex flex-row justify-between gap-2">
-          <div className="pr-[72px] flex-grow">
-            <InputField labelName="작성일자" name="date" type="text" value={startDate} onchangeValue={onChangeInput} />
+          <SelectCategory
+            selectCategory={selectCategory}
+            initialCategoryName={selectedCategoryName}
+          />
+          <div className="pl-[72px] flex-grow">
+            <InputField
+              labelName="작성일자"
+              name="date"
+              type="text"
+              value={startDate}
+              onchangeValue={onChangeInput}
+            />
           </div>
-          <SelectCategory selectCategory={selectCategory} initialCategoryName={selectedCategoryName} />
         </div>
 
         <InputField
@@ -163,24 +183,36 @@ function MustWriteForm() {
           minLength={2}
           onchangeValue={onChangeInput}
         />
-        <div className="flex gap-5 items-start">
-          <input className="hidden" id="image-file" type="file" onChange={addImageHandler} />
+        <div className="flex gap-4 items-start">
+          <input
+            className="hidden"
+            id="image-file"
+            type="file"
+            onChange={addImageHandler}
+          />
           <label
-            className="py-4 cursor-pointer font-bold rounded-full w-[160px] flex justify-center items-center bg-[#C2C2C2]"
+            className="flex justify-center items-center ml-[78px] px-7 py-2 border border-gray-4 bg-gray-1 font-bold text-[12px] text-gray-4 rounded-full cursor-pointer"
             htmlFor="image-file"
           >
             {imgUrl ? "이미지 수정" : "이미지 업로드"}
           </label>
-          {imgUrl && <Image src={imgUrl} alt="포스팅한 이미지" width={200} height={200} />}
+          {imgUrl && (
+            <Image
+              src={imgUrl}
+              alt="포스팅한 이미지"
+              width={200}
+              height={200}
+            />
+          )}
         </div>
         <div>
           <EditorModule editorRef={editorRef} />
         </div>
       </form>
-      <div className="flex justify-center">
+      <div className="flex justify-center mt-[64px]">
         <button
           onClick={addMustPostBtn}
-          className="w-[400px] py-5 text-[26px] text-white font-bold px-4 focus:outline-none bg-black hover:bg-slate-800 rounded-full"
+          className="px-[96px] py-4 text-[24px] text-white font-bold focus:outline-none bg-main-8 rounded-full"
         >
           포스팅 하기
         </button>
