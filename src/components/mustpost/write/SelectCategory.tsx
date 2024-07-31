@@ -64,7 +64,10 @@ function SelectCategory({
       {isOpen && (
         <ul className="flex flex-col items-center justify-center absolute right-0 w-[164px] px-2 border-t-0 border border-gray-4 bg-white ">
           {mustCategories?.map((category) => (
-            <li key={category.id} className="text-right font-medium">
+            <li
+              key={category.id}
+              className="text-right font-medium text-gray-4"
+            >
               <button
                 // onClick={() => handleSelectCategory(category.name)}
                 onClick={() => handleSelectCategory(category)}
