@@ -14,9 +14,12 @@ import { Notify } from "notiflix";
 import React, { useRef, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
-const EditorModule = dynamic(() => import("@/components/common/editor/EditorModule"), {
-  ssr: false,
-});
+const EditorModule = dynamic(
+  () => import("@/components/common/editor/EditorModule"),
+  {
+    ssr: false,
+  }
+);
 
 function GroupWriteForm() {
   const router = useRouter();
@@ -41,7 +44,9 @@ function GroupWriteForm() {
       const formData = new FormData();
       formData.append("file", newGroupImage);
       const response = await insertGroupImage(formData);
-      setImgUrl(`https://nqqsefrllkqytkwxfshk.supabase.co/storage/v1/object/public/groupposts/${response.path}`);
+      setImgUrl(
+        `https://nqqsefrllkqytkwxfshk.supabase.co/storage/v1/object/public/groupposts/${response.path}`
+      );
     },
   });
 
@@ -110,84 +115,104 @@ function GroupWriteForm() {
   return (
     <InnerLayout>
       <div className="flex flex-col gap-5">
-        <div className="flex gap-2">
-          <label className="w-[86px] text-[18px] text-gray-4 flex-none">제목</label>
+        <div className="flex items-center gap-[2px]">
+          <label className="flex-0 w-[78px] text-[18px] text-gray-3">
+            제목
+          </label>
           <input
             name="title"
             placeholder="제목을 입력하세요."
             value={title}
             onChange={onChangeInput}
-            className="border-b-[1px] w-full border-gray-3 py-2 px-[2px]"
+            className="flex-1 pl-[2px] px-[2px] py-[5px] border-b-[1px] border-gray-3 font-bold text-[18px] text-black leading-normal  placeholder:text-gray-2 outline-none"
           />
         </div>
         <div className="flex gap-[41px]">
-          <div className="flex gap-2 items-center">
-            <label className="w-[86px] text-[18px] text-gray-4 flex-none">공구기간</label>
-            <div className=" flex gap-1 items-center">
-              <label className="text-[12px]">마감일</label>
+          <div className="flex items-center gap-[2px]">
+            <label className="flex-0 w-[78px] text-[18px] text-gray-3">
+              공구기간
+            </label>
+            <div className="flex gap-2 items-center">
+              <label className="text-[14px] text-black">마감일</label>
               <input
                 name="endDate"
                 type="date"
                 value={endDate}
                 onChange={onChangeInput}
-                className="border-b-[1px] border-gray-3 py-2 px-[2px]"
+                className="border-b-[1px] border-gray-3 py-2 px-[2px] text-[18px] font-bold text-black outline-none"
               />
             </div>
           </div>
-          <div className="flex gap-2 items-center">
-            <label className="w-[78px] text-[18px] text-gray-4 flex-none">공구인원</label>
+
+          <div className="flex items-center gap-2">
+            <label className="flex-0 w-[78px] text-[18px] text-gray-3">
+              공구인원
+            </label>
             <input
               name="peopleNum"
               type="number"
               placeholder="숫자만 입력해주세요."
               value={peopleNum}
               onChange={onChangeInput}
-              className="w-[64px] border-b border-gray-3 text-center py-2 px-[2px]"
+              className="w-[100px] pl-[2px] px-[2px] py-2 border-b border-gray-3 text-[18px] font-bold text-black outline-none"
             />
           </div>
         </div>
 
-        <div className="flex gap-2 items-center">
-          <label className="w-[86px] text-[18px] text-gray-4 flex-none">상품이름</label>
+        <div className="flex items-center gap-[2px]">
+          <label className="flex-0 w-[78px] text-[18px] text-gray-3">
+            상품이름
+          </label>
           <input
             name="item"
             placeholder="제품명을 입력하세요."
             value={item}
             onChange={onChangeInput}
-            className="border-b-[1px] w-full border-gray-3 py-2 px-[2px]"
+            className="flex-1 pl-[2px] px-[2px] py-[5px] border-b-[1px] border-gray-3 font-bold text-[18px] text-black leading-normal placeholder:text-gray-2 outline-none"
           />
         </div>
 
-        <div className="flex gap-2 items-center">
-          <label className="w-[86px] text-[18px] text-gray-4 flex-none">공구가격</label>
+        <div className="flex items-center gap-[2px]">
+          <label className="flex-0 w-[78px] text-[18px] text-gray-3">
+            공구가격
+          </label>
           <input
             name="price"
             type="number"
             placeholder="숫자만 입력해주세요."
             value={price}
             onChange={onChangeInput}
-            className="border-b-[1px] w-full border-gray-3 py-2 px-[2px]"
+            className="flex-1 pl-[2px] px-[2px] py-[5px] border-b-[1px] border-gray-3 font-bold text-[18px] text-black leading-normal placeholder:text-gray-2 outline-none"
           />
         </div>
-        <div className="flex gap-2 items-center">
-          <label className="w-[80px] text-[18px] text-gray-4 flex-none">상품링크</label>
+        <div className="flex items-center gap-[2px]">
+          <label className="flex-0 w-[78px] text-[18px] text-gray-3">
+            상품링크
+          </label>
           <input
             name="link"
             placeholder="(선택사항) 상품소개 페이지 링크를 넣어주세요."
             value={link}
             onChange={onChangeInput}
-            className="border-b-[1px] w-full border-gray-3 py-2 px-[2px]"
+            className="flex-1 pl-[2px] px-[2px] py-[5px] border-b-[1px] border-gray-3 font-bold text-[18px] text-black leading-normal placeholder:text-gray-2 outline-none"
           />
         </div>
-        <div className="flex gap-5 items-start">
-          <input className="hidden" id="image-file" type="file" onChange={addImageHandler} />
+        <div className="flex gap-4 items-start mb-[6px]">
+          <input
+            className="hidden"
+            id="image-file"
+            type="file"
+            onChange={addImageHandler}
+          />
           <label
-            className="ml-[82px] py-2 cursor-pointer text-[12px] text-gray-4 font-bold rounded-full w-[120px] flex justify-center items-center bg-[#C2C2C2]"
+            className="flex justify-center items-center ml-[78px] px-7 py-[7px] border border-gray-4 bg-gray-1 font-bold text-[12px] text-gray-4 rounded-full cursor-pointer"
             htmlFor="image-file"
           >
             {imgUrl ? "이미지 수정" : "이미지 업로드"}
           </label>
-          {imgUrl && <Image src={imgUrl} alt="선택한 이미지" width={200} height={200} />}
+          {imgUrl && (
+            <Image src={imgUrl} alt="선택한 이미지" width={200} height={200} />
+          )}
         </div>
       </div>
       <div className="mt-[14px]">

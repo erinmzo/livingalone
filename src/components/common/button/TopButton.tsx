@@ -14,7 +14,12 @@ function TopButton() {
       className="inline-flex justify-center items-center
         btn-fixed-right"
     >
-      <Image src="/img/icon-top-button.png" alt="top 스크롤 버튼" width={27} height={27} />
+      <Image
+        src="/img/icon-top-button.svg"
+        alt="top 스크롤 버튼"
+        width={40}
+        height={40}
+      />
     </button>
   );
 }
