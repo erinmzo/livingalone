@@ -22,8 +22,8 @@ function InputField({
   name,
 }: InputFieldProps) {
   return (
-    <div className="flex gap-2 justify-between">
-      <label className="inline-block w-[78px] m-auto py-1 text-xl font-bold">
+    <div className="flex gap-[2px] justify-between">
+      <label className="inline-block w-[78px] m-auto py-[5px] text-lg text-gray-4">
         {labelName}
       </label>
       <input
@@ -34,7 +34,7 @@ function InputField({
         minLength={minLength}
         max={max}
         onChange={(e) => onchangeValue(e)}
-        className="flex-1 border-b border-black"
+        className="flex-1 pl-[2px] py-[6px] border-b border-gray-3 font-bold text-[18px] text-gray-5 outline-none placeholder:text-gray-2 leading-normal"
       />
     </div>
   );

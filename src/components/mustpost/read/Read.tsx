@@ -27,7 +27,12 @@ async function Read({ params }: Props) {
   if (!data) {
     return (
       <div className="flex justify-center items-center">
-        <Image src="/img/loading-spinner.svg" alt="로딩중" width={200} height={200} />
+        <Image
+          src="/img/loading-spinner.svg"
+          alt="로딩중"
+          width={200}
+          height={200}
+        />
       </div>
     );
   }
@@ -66,10 +71,10 @@ async function Read({ params }: Props) {
         </div>
       </InnerLayout>
       <MorePost category_id={category_id} category_name={name} id={id} />
-      <div className="flex flex-col justify-center items-center">
+      <div className="flex flex-col justify-center items-center mt-[69px] mb-[54px]">
         <Link
           href={`/mustpost`}
-          className="inline-flex flex-row mt-[69px] px-[18px] py-[9px] border border-gray-4 rounded-full font-bold text-[16px] text-gray-4"
+          className="inline-flex flex-row  px-[17px] py-[8px] border border-gray-4 rounded-full font-bold text-[16px] text-gray-4"
         >
           <Image
             src="/img/icon-left.svg"
