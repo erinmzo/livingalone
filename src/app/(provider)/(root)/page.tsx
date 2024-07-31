@@ -1,5 +1,6 @@
 "use client";
 
+import Banner from "@/components/main/common/Banner";
 import JoinMarketing from "@/components/main/common/JoinMarketing";
 import GroupSection from "@/components/main/group/GroupSection";
 import GroupVisual from "@/components/main/group/GroupVisual";
@@ -13,6 +14,7 @@ function HomePage() {
       <MustSection />
       <GroupVisual />
       <GroupSection />
+      <Banner />
       <JoinMarketing />
     </>
   );
