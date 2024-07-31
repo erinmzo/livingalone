@@ -3,7 +3,6 @@ import { createClient } from "@/supabase/client";
 import { useAuthStore } from "@/zustand/authStore";
 import { Report } from "notiflix";
 import { useEffect, useState } from "react";
-import { v4 as uuidv4 } from "uuid";
 
 type TChat = {
   created_at: string;
@@ -18,20 +17,19 @@ export default function ChatForm({ postId }: { postId: string }) {
   const user = useAuthStore((state) => state.user);
   const [messages, setMessages] = useState<TChat[]>([]);
   const [newMessage, setNewMessage] = useState("");
+  const fetchInitialMessages = async () => {
+    const { data } = await supabase
+      .from("chat")
+      .select("*, profiles!inner( user_id , nickname)")
+      .eq("post_id", postId)
+      .order("created_at", { ascending: true });
+
+    if (data) {
+      setMessages(data);
+    }
+  };
 
   useEffect(() => {
-    const fetchInitialMessages = async () => {
-      const { data } = await supabase
-        .from("chat")
-        .select("*, profiles!inner( user_id , nickname)")
-        .eq("post_id", postId)
-        .order("created_at", { ascending: true });
-
-      if (data) {
-        setMessages(data);
-      }
-    };
-
     fetchInitialMessages();
 
     const messageSubscription = supabase
@@ -52,10 +50,8 @@ export default function ChatForm({ postId }: { postId: string }) {
 
     if (user) {
       const chatInfo = {
-        id: uuidv4(),
         text: newMessage,
-        user_id: user?.id,
-        created_at: new Date().toISOString(),
+        user_id: user.id,
         post_id: postId,
       };
 
@@ -71,14 +67,19 @@ export default function ChatForm({ postId }: { postId: string }) {
 
   return (
     <div className="w-full min-w-full max-w-[682px] mx-auto">
-      <div className="rounded-lg border border-gray-2 overflow-y-scroll h-[140px] scroll-smooth">
+      <div className="rounded-lg border border-gray-2 overflow-y-scroll h-[140px] scroll-smooth snap-end">
         <div className="flex p-[24px] flex-col justify-end gap-2">
           {messages.length > 0 ? (
             <div>
               {messages.map((message) => (
-                <div key={message.id} className="grid grid-cols-[100px_1fr] text-gray-5 gap-[10px]">
+                <div key={message.id} className="grid grid-cols-[90px_1fr] text-gray-5 gap-[10px] mt-2">
                   <span className="font-bold truncate">{message.profiles.nickname}</span>
-                  <span className="grow">{message.text}</span>
+                  <div>
+                    <span>{message.text}</span>
+                    <span className="text-gray-3 text-[12px] ml-2">
+                      {message.created_at.split("T").join(" ").substring(0, 16)}
+                    </span>
+                  </div>
                 </div>
               ))}
             </div>
