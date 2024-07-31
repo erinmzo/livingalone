@@ -37,7 +37,7 @@ function GroupSection() {
   if (isError) return <div className="flex justify-center items-center">에러...</div>;
 
   return (
-    <div className="container mx-auto max-w-[1024px] pt-[58px] pb-[153px]">
+    <div className="container mx-auto max-w-[1024px] pt-[58px] pb-[80px]">
       <MainSectionTitle
         title="같이 사 공구템"
         content="공동구매를 통해 자취에 필요한 물품을 저렴한 금액에 구매해보세요"

@@ -13,22 +13,32 @@ export type Database = {
         Row: {
           created_at: string
           id: string
+          post_id: string
           text: string
           user_id: string
         }
         Insert: {
           created_at?: string
           id?: string
+          post_id: string
           text: string
           user_id: string
         }
         Update: {
           created_at?: string
           id?: string
+          post_id?: string
           text?: string
           user_id?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "chat_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "group_posts"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "chat_user_id_fkey"
             columns: ["user_id"]
@@ -325,6 +335,47 @@ export type Database = {
           },
         ]
       }
+      payments: {
+        Row: {
+          address: string
+          created_at: string
+          email: string
+          id: string
+          name: string
+          phone: string
+          status: string
+          user_id: string
+        }
+        Insert: {
+          address: string
+          created_at?: string
+          email: string
+          id?: string
+          name: string
+          phone: string
+          status: string
+          user_id: string
+        }
+        Update: {
+          address?: string
+          created_at?: string
+          email?: string
+          id?: string
+          name?: string
+          phone?: string
+          status?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payments_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           address: string | null
@@ -359,24 +410,6 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
-      }
-      test: {
-        Row: {
-          content: string | null
-          created_at: string
-          id: number
-        }
-        Insert: {
-          content?: string | null
-          created_at?: string
-          id?: number
-        }
-        Update: {
-          content?: string | null
-          created_at?: string
-          id?: number
-        }
-        Relationships: []
       }
     }
     Views: {
