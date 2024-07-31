@@ -18,5 +18,4 @@ export async function GET(
   } catch (error) {
     return NextResponse.json({ error: "포스트를 가져오는 데 실패했습니다." });
   }
-  // 유저가 쓴 글 가져오기
 }

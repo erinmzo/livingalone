@@ -5,33 +5,46 @@ import React, { useEffect, useState } from "react";
 import DaumPostcode from "react-daum-postcode";
 import PaymentButton from "./PaymentButton";
 import { useAuthStore } from "@/zustand/authStore";
+import { useQuery } from "@tanstack/react-query";
+import { Profile } from "@/types/types";
+import { getMyProfile } from "@/apis/mypage";
 
 function PaymentForm() {
   const user = useAuthStore((state) => state.user);
+  const userId = user?.id as string;
+  console.log(user);
+  const { data: profile, isPending } = useQuery<Profile>({
+    queryKey: ["myProfile", userId],
+    queryFn: () => getMyProfile(userId),
+    enabled: !!user,
+  });
+
   const [isPostModalOpen, setIsPostModalOpen] = useState<boolean>(false);
   const [purchaserAddress, setPurchaserAddress] = useState<string>("");
+  const [purchaserDetailAddress, setPurchaserDetailAddress] =
+    useState<string>("");
+  const [purchaserEmail, setPurchaserEmail] = useState<string>("");
   const [firstCheckBox, setFirstCheckBox] = useState<boolean>(false);
   const [secondCheckBox, setSecondCheckBox] = useState<boolean>(false);
   const { values: input, handler: onChangeInput } = useInputChange({
     purchaserName: "",
     purchaserPhone: "",
-    purchaserEmail: "",
-    purchaserDetailAddress: "",
   });
 
-  const {
-    purchaserName,
-    purchaserPhone,
-    purchaserEmail,
-    purchaserDetailAddress,
-  } = input;
+  const { purchaserName, purchaserPhone } = input;
 
   const onCompletePost = (data: { address: string }) => {
     setPurchaserAddress(data.address);
     setIsPostModalOpen(false);
   };
 
-  useEffect(() => {}, [user]);
+  useEffect(() => {
+    if (profile?.address && profile.detail_address && user?.email) {
+      setPurchaserAddress(profile.address);
+      setPurchaserDetailAddress(profile.detail_address);
+      setPurchaserEmail(user.email);
+    }
+  }, [profile, user]);
 
   return (
     <div>
@@ -73,14 +86,13 @@ function PaymentForm() {
           name="recipientAddress"
           placeholder="주소"
           value={purchaserAddress}
-          onChange={onChangeInput}
           readOnly
         />
         <input
           name="purchaserDetailAddress"
           placeholder="상세 주소"
           value={purchaserDetailAddress}
-          onChange={onChangeInput}
+          onChange={(e) => setPurchaserDetailAddress(e.target.value)}
         />
       </div>
       <div>
@@ -109,6 +121,8 @@ function PaymentForm() {
       <PaymentButton
         input={input}
         purchaserAddress={purchaserAddress}
+        purchaserDetailAddress={purchaserDetailAddress}
+        purchaserEmail={purchaserEmail}
         firstCheckBox={firstCheckBox}
         secondCheckBox={secondCheckBox}
       />
