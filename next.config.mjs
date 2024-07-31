@@ -6,6 +6,8 @@ const nextConfig = {
         hostname: "nqqsefrllkqytkwxfshk.supabase.co",
       },
     ],
+    loader: "custom",
+    loaderFile: "./src/utils/supabase-image-loader.js",
   },
 };
 export default nextConfig;

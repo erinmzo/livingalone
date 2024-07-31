@@ -18,7 +18,7 @@ function MustPostCard({ postId, title, item, imgUrl }: MustPostCardProps) {
             src={imgUrl}
             alt={item}
             fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            sizes="(max-width: 1024px) 70vw, 50vw"
             className="object-cover"
             loading="lazy"
             quality={75}
