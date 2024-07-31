@@ -7,9 +7,10 @@ export async function POST(request: NextRequest) {
   const newGroupImage: any = formData.get("file");
   try {
     const supabase = createClient();
-    const { data } = await supabase.storage
-      .from("groupposts")
-      .upload(`grouppost_${Date.now()}.png`, newGroupImage);
+    const { data } = await supabase.storage.from("groupposts").upload(`grouppost_${Date.now()}.png`, newGroupImage, {
+      cacheControl: "600",
+      upsert: false,
+    });
     return NextResponse.json(data);
   } catch (error) {
     return NextResponse.json({ error: "데이터를 등록하는 데 실패했습니다." });
