@@ -19,6 +19,7 @@ function SideBar() {
     { href: `/mypage/likegroup`, label: "좋아요 공구" },
     { href: `/mypage/applygroup`, label: "신청한 공구" },
     { href: `/mypage/mygroup`, label: "내가 쓴 공구" },
+    { href: `/mypage/mypayment`, label: "결제 내역" },
   ];
 
   const { data: profile, isPending } = useQuery<Profile>({
@@ -30,7 +31,12 @@ function SideBar() {
   if (isPending)
     return (
       <div className="flex justify-center items-center">
-        <Image src="/img/loading-spinner.svg" alt="로딩중" width={200} height={200} />
+        <Image
+          src="/img/loading-spinner.svg"
+          alt="로딩중"
+          width={200}
+          height={200}
+        />
       </div>
     );
 
@@ -47,14 +53,18 @@ function SideBar() {
               height={100}
             />
           </div>
-          <div className="text-[16px] font-bold text-center w-full h-[19px]">{profile?.nickname}</div>
+          <div className="text-[16px] font-bold text-center w-full h-[19px]">
+            {profile?.nickname}
+          </div>
         </div>
         <ul className="flex flex-col gap-[24px] mt-[40px] items-center">
           {links.map((link) => (
             <li
               key={link.href}
               className={`text-[20px] hover:text-gray-5 transition-all ${
-                pathname === link.href ? " text-gray-5 font-bold" : "text-gray-2"
+                pathname === link.href
+                  ? " text-gray-5 font-bold"
+                  : "text-gray-2"
               }`}
             >
               <Link href={link.href}>{link.label}</Link>

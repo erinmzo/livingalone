@@ -31,9 +31,7 @@ function PaymentForm() {
     setIsPostModalOpen(false);
   };
 
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
+  useEffect(() => {}, [user]);
 
   return (
     <div>
