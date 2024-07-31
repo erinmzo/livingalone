@@ -1,9 +1,11 @@
 "use client";
 
+import { useAuthStore } from "@/zustand/authStore";
 import { useRouter } from "next/navigation";
 import React from "react";
 
 function PaymentMain() {
+  const user = useAuthStore((state) => state.user);
   const router = useRouter();
 
   const onClickPaymentBtnHandler = () => {

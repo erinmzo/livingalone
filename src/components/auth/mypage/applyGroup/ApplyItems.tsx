@@ -22,7 +22,12 @@ function ApplyItems() {
   if (isPending)
     return (
       <div className="flex justify-center items-center">
-        <Image src="/img/loading-spinner.svg" alt="로딩중" width={200} height={200} />
+        <Image
+          src="/img/loading-spinner.svg"
+          alt="로딩중"
+          width={200}
+          height={200}
+        />
       </div>
     );
 
@@ -56,7 +61,8 @@ function ApplyItems() {
             </ul>
           ) : (
             <div className="flex justify-center items-center text-gray-4">
-              아직 신청한 공구가 없습니다. 마음에 드는 공구가 있다면 신청해보세요!
+              아직 신청한 공구가 없습니다. 마음에 드는 공구가 있다면
+              신청해보세요!
             </div>
           )}
         </div>

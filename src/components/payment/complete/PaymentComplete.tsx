@@ -32,6 +32,7 @@ function PaymentComplete({ paymentId }: { paymentId: string }) {
         phone: paymentData.customer.phoneNumber,
         email: paymentData.customer.email,
         user_id: user?.id,
+        status: paymentData.status,
       };
       addMutation.mutate(newPayment);
     }
