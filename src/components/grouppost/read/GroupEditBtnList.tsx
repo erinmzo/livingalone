@@ -2,7 +2,6 @@
 
 import { useAuthStore } from "@/zustand/authStore";
 import Link from "next/link";
-import React from "react";
 import GroupDeleteBtn from "./GroupDeleteBtn";
 
 function GroupEditBtnList({ userId, id }: { userId: string; id: string }) {

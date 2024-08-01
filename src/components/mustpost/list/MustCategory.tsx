@@ -5,12 +5,14 @@ import { useCategoryStore } from "@/zustand/mustStore";
 import { useQuery } from "@tanstack/react-query";
 
 function MustCategory() {
-  const setSelectedCategory = useCategoryStore(
-    (state) => state.setSelectedCategory
-  );
+  const setSelectedCategory = useCategoryStore((state) => state.setSelectedCategory);
   const selectedCategory = useCategoryStore((state) => state.selectedCategory);
 
-  const { data: mustCategories } = useQuery<MustCategory[]>({
+  const {
+    data: mustCategories,
+    isPending,
+    isError,
+  } = useQuery<MustCategory[]>({
     queryKey: ["mustCategory"],
     queryFn: getCategories,
   });
@@ -18,6 +20,19 @@ function MustCategory() {
   const handClickCategory = (category: string) => {
     setSelectedCategory(category);
   };
+
+  if (isPending)
+    return (
+      <ul className="flex flex-row gap-2">
+        <li className="w-[90px] h-[37px] py-2 px-4 border border-gray-2 bg-gray-2 rounded-full animate-pulse"></li>
+        <li className="w-[90px] h-[37px] py-2 px-4 border border-gray-2 bg-gray-2 rounded-full animate-pulse"></li>
+        <li className="w-[90px] h-[37px] py-2 px-4 border border-gray-2 bg-gray-2 rounded-full animate-pulse"></li>
+        <li className="w-[90px] h-[37px] py-2 px-4 border border-gray-2 bg-gray-2 rounded-full animate-pulse"></li>
+      </ul>
+    );
+
+  if (isError)
+    return <li className="w-[90px] py-2 px-4 border border-gray-2 bg-gray-2 rounded-full animate-pulse">에러</li>;
 
   return (
     <div>
