@@ -15,9 +15,6 @@ function PaymentComplete({ paymentId }: { paymentId: string }) {
     mutationFn: async (newPayment: any) => {
       await insertPayment(newPayment);
     },
-    onSuccess: () => {
-      // router.push("/grouppost");
-    },
   });
 
   const getPaymentInfo = async () => {
@@ -48,12 +45,15 @@ function PaymentComplete({ paymentId }: { paymentId: string }) {
 
   return (
     <div>
-      <p>주문이 완료되었습니다!</p>
-      <p>1000원 즉시 환불 될 것입니다...</p>
-      <p>주문번호 : {paymentId}</p>
-      {/* 마이페이지 주문 조회로 이동 */}
+      <h4>주문이 완료되었습니다!</h4>
+      <p>저희 프로젝트를 위해 결제해주신 1000원은 즉시 자동 환불됩니다</p>
+      <div>
+        <p>주문번호 : {paymentId}</p>
+        <p>[혼자살때 럭키박스]</p>
+        <p>결제금액: 1000원</p>
+      </div>
       <Link href={"/mypage/mypayment"}>
-        <button>주문정보 확인하기</button>
+        <button>주문내역 확인하기</button>
       </Link>
     </div>
   );

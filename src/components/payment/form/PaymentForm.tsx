@@ -8,12 +8,16 @@ import { useAuthStore } from "@/zustand/authStore";
 import { useQuery } from "@tanstack/react-query";
 import { Profile } from "@/types/types";
 import { getMyProfile } from "@/apis/mypage";
+import Image from "next/image";
 
 function PaymentForm() {
   const user = useAuthStore((state) => state.user);
   const userId = user?.id as string;
-  console.log(user);
-  const { data: profile, isPending } = useQuery<Profile>({
+  const {
+    data: profile,
+    isPending,
+    isError,
+  } = useQuery<Profile>({
     queryKey: ["myProfile", userId],
     queryFn: () => getMyProfile(userId),
     enabled: !!user,
@@ -45,12 +49,25 @@ function PaymentForm() {
       setPurchaserEmail(user.email);
     }
   }, [profile, user]);
+  if (isPending)
+    return (
+      <div className="flex justify-center items-center">
+        <Image
+          src="/img/loading-spinner.svg"
+          alt="로딩중"
+          width={200}
+          height={200}
+        />
+      </div>
+    );
 
+  if (isError)
+    return <div className="flex justify-center items-center">에러...</div>;
   return (
     <div>
-      결제 폼 페이지 제작중
+      <h3>주문서 작성</h3>
       <div>
-        <label>주문자 성함</label>
+        <label>성함</label>
         <input
           name="purchaserName"
           placeholder="주문자의 성함을 입력해주세요."
@@ -59,7 +76,7 @@ function PaymentForm() {
         />
       </div>
       <div>
-        <label>주문자 연락처</label>
+        <label>연락처</label>
         <input
           name="purchaserPhone"
           placeholder="주문자의 연락처를 입력해주세요."
@@ -68,7 +85,7 @@ function PaymentForm() {
         />
       </div>
       <div>
-        <label>주문자 이메일</label>
+        <label>이메일</label>
         <input
           name="purchaserEmail"
           placeholder="주문자의 이메일을 입력해주세요."
@@ -76,11 +93,9 @@ function PaymentForm() {
           onChange={onChangeInput}
         />
       </div>
-      {/* TODO 주소 넣는거 넣기. 주소는 기본적으로 기존에 유저 정보의 주소로 넣어야함 */}
       <div>
-        <label>주문자 주소</label>
         <button onClick={() => setIsPostModalOpen((prev) => !prev)}>
-          주소변경
+          주소검색
         </button>
         <input
           name="recipientAddress"
@@ -103,7 +118,7 @@ function PaymentForm() {
           }}
         />
         <label className="ml-2 font-bold">
-          개인정보 활용 동의 (워딩 재구성 필요)
+          개인정보(이름, 연락처, 이메일, 주소)를 수집하는 것에 동의합니다.
         </label>
       </div>
       <div>
