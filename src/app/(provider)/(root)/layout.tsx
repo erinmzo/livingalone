@@ -6,8 +6,10 @@ async function MainLayout({ children }: PropsWithChildren) {
   return (
     <div className="font-pretendard">
       <Header />
-      <main>{children}</main>
-      <Footer />
+      <div className="relative">
+        <main className="pb-[5%]">{children}</main>
+        <Footer />
+      </div>
     </div>
   );
 }

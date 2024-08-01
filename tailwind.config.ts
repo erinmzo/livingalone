@@ -61,6 +61,15 @@ const config: Config = {
           1: "#ffffff",
         },
       },
+      animation: {
+        spin: "spin 5s linear infinite",
+      },
+      keyframes: {
+        pulse: {
+          "0%, 100%": { opacity: "1" },
+          "50%": { opacity: "0.7" },
+        },
+      },
     },
   },
 };

@@ -1,17 +1,21 @@
 "use client";
 
-import { getMyPayment } from "@/apis/payment";
+import { getMyPayment, getPaymentAll } from "@/apis/payment";
 import { useAuthStore } from "@/zustand/authStore";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Notify } from "notiflix";
-import React from "react";
 
 function PaymentMain() {
   const user = useAuthStore((state) => state.user);
   const userId = user?.id as string;
   const router = useRouter();
+
+  const { data: paymentList = [] } = useQuery({
+    queryKey: ["payment"],
+    queryFn: getPaymentAll,
+  });
 
   const {
     data: payment,
@@ -32,21 +36,36 @@ function PaymentMain() {
   if (isPending)
     return (
       <div className="flex justify-center items-center">
-        <Image
-          src="/img/loading-spinner.svg"
-          alt="로딩중"
-          width={200}
-          height={200}
-        />
+        <Image src="/img/loading-spinner.svg" alt="로딩중" width={200} height={200} />
       </div>
     );
 
-  if (isError)
-    return <div className="flex justify-center items-center">에러...</div>;
+  if (isError) return <div className="flex justify-center items-center">에러...</div>;
   return (
-    <div>
-      PaymentMain
-      <button onClick={onClickPaymentBtnHandler}>구매하기!</button>
+    <div className="bg-green-1 pt-[130px] pb-[600px] text-center">
+      <div className="bg-green-1 mx-auto max-w-[660px] px-[16px] lg:px-0">
+        <div className="relative w-full">
+          <Image
+            src="/img/luckybox-landing/img-luckybox.jpg"
+            alt="선착순 단 100명! 단돈 1000원!"
+            width={0}
+            height={0}
+            className="w-full h-auto"
+          />
+        </div>
+
+        <div className="relative mt-[63px]">
+          <span className="absolute top-[-55px] left-[calc(50%-94px)] bg-white py-2 px-8 text-main-7 rounded-full text-[16px] after:pointer">
+            남은 럭키박스 {100 - paymentList.length}개!
+          </span>
+          <button
+            onClick={onClickPaymentBtnHandler}
+            className="font-bold text-[24px] text-white bg-main-8 py-[16px] px-[184px] rounded-full"
+          >
+            구매하기
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
