@@ -14,7 +14,6 @@ function PostImage({ img_url }: PostImageProps) {
         height={0}
         priority
       />
-      {/* className="rounded-[16px] border border-gray-2" */}
     </div>
   );
 }

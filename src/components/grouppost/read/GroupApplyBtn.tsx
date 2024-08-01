@@ -1,11 +1,11 @@
 "use client";
 
-import React, { useState } from "react";
-import GroupApplyModal from "./GroupApplyModal";
 import { useAuthStore } from "@/zustand/authStore";
-import Notiflix, { Notify } from "notiflix";
+import { Notify } from "notiflix";
+import { useState } from "react";
+import GroupApplyModal from "./GroupApplyModal";
 
-function GroupApplyBtn({ id }: { id: string }) {
+function GroupApplyBtn({ id, achievementRate }: { id: string; achievementRate: number }) {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const user = useAuthStore((state) => state.user);
 
@@ -18,14 +18,18 @@ function GroupApplyBtn({ id }: { id: string }) {
             Notify.failure("로그인한 사용자만 신청할 수 있습니다.");
             return;
           }
+
+          if (achievementRate === 100) {
+            Notify.failure("현재 모집이 완료되었습니다.");
+            return;
+          }
+
           setIsModalOpen(true);
         }}
       >
         공구 신청하기
       </button>
-      {isModalOpen && (
-        <GroupApplyModal id={id} onClose={() => setIsModalOpen(false)} />
-      )}
+      {isModalOpen && <GroupApplyModal id={id} onClose={() => setIsModalOpen(false)} />}
     </>
   );
 }
