@@ -9,6 +9,8 @@ import { useQuery } from "@tanstack/react-query";
 import { Profile } from "@/types/types";
 import { getMyProfile } from "@/apis/mypage";
 import Image from "next/image";
+import InnerLayout from "@/components/common/Page/InnerLayout";
+import Input from "@/components/auth/common/Input";
 
 function PaymentForm() {
   const user = useAuthStore((state) => state.user);
@@ -64,91 +66,107 @@ function PaymentForm() {
   if (isError)
     return <div className="flex justify-center items-center">에러...</div>;
   return (
-    <div>
-      <h3>주문서 작성</h3>
-      <div>
-        <label>성함</label>
-        <input
-          name="purchaserName"
-          placeholder="주문자의 성함을 입력해주세요."
-          value={purchaserName}
-          onChange={onChangeInput}
-        />
-      </div>
-      <div>
-        <label>연락처</label>
-        <input
-          name="purchaserPhone"
-          placeholder="주문자의 연락처를 입력해주세요."
-          value={purchaserPhone}
-          onChange={onChangeInput}
-        />
-      </div>
-      <div>
-        <label>이메일</label>
-        <input
-          name="purchaserEmail"
-          placeholder="주문자의 이메일을 입력해주세요."
-          value={purchaserEmail}
-          onChange={onChangeInput}
-        />
-      </div>
-      <div>
-        <button onClick={() => setIsPostModalOpen((prev) => !prev)}>
-          주소검색
-        </button>
-        <input
-          name="recipientAddress"
-          placeholder="주소"
-          value={purchaserAddress}
-          readOnly
-        />
-        <input
-          name="purchaserDetailAddress"
-          placeholder="상세 주소"
-          value={purchaserDetailAddress}
-          onChange={(e) => setPurchaserDetailAddress(e.target.value)}
-        />
-      </div>
-      <div>
-        <input
-          type="checkbox"
-          onChange={() => {
-            setFirstCheckBox(!firstCheckBox);
-          }}
-        />
-        <label className="ml-2 font-bold">
-          개인정보(이름, 연락처, 이메일, 주소)를 수집하는 것에 동의합니다.
-        </label>
-      </div>
-      <div>
-        <input
-          type="checkbox"
-          onChange={() => {
-            setSecondCheckBox(!secondCheckBox);
-          }}
-        />
-        <label className="ml-2 font-bold">
-          실제 판매 상품이 아니기에, 결제 시 즉시 환불처리 됩니다.
-          이해하셨습니까?
-        </label>
-      </div>
-      <PaymentButton
-        input={input}
-        purchaserAddress={purchaserAddress}
-        purchaserDetailAddress={purchaserDetailAddress}
-        purchaserEmail={purchaserEmail}
-        firstCheckBox={firstCheckBox}
-        secondCheckBox={secondCheckBox}
-      />
-      {isPostModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="absolute z-20 border-black border">
-            <DaumPostcode onComplete={onCompletePost}></DaumPostcode>
+    <InnerLayout>
+      <div className="flex flex-col justify-center items-center">
+        <h3 className="mb-[66px] font-bold text-[30px]">주문서 작성</h3>
+
+        <div className="flex flex-col w-[504px]"></div>
+        <div className="flex flex-col gap-[23px] w-[504px] mb-[48px]">
+          <Input
+            variant="default"
+            label="성함"
+            placeholder="주문자의 성함을 입력해주세요"
+            value={purchaserName}
+            name="purchaserName"
+            onChange={onChangeInput}
+          />
+
+          <Input
+            variant="default"
+            label="연락처"
+            placeholder="주문자의 연락처를 입력해주세요"
+            value={purchaserPhone}
+            name="purchaserPhone"
+            onChange={onChangeInput}
+          />
+
+          <Input
+            variant="default"
+            label="이메일"
+            placeholder="주문자의 이메일을 입력해주세요."
+            value={purchaserEmail}
+            name="purchaserEmail"
+            onChange={onChangeInput}
+          />
+        </div>
+
+        <div className="flex flex-col gap-2 w-[504px]">
+          <button
+            className="w-[73px] mb-1 py-[7px] border border-gray-4 bold text-[12px] rounded-full"
+            onClick={() => setIsPostModalOpen((prev) => !prev)}
+          >
+            주소검색
+          </button>
+          <Input
+            variant="underline"
+            placeholder="주소"
+            value={purchaserAddress}
+            name="recipientAddress"
+            readOnly={true}
+          />
+
+          <Input
+            variant="underline"
+            placeholder="상세 주소"
+            value={purchaserDetailAddress}
+            name="purchaserDetailAddress"
+            onChange={(e) => setPurchaserDetailAddress(e.target.value)}
+          />
+        </div>
+
+        <div className="flex flex-col gap-2 w-[504px] mt-[35px] mb-[46px] pl-[10px]">
+          <div>
+            <input
+              type="checkbox"
+              onChange={() => {
+                setFirstCheckBox(!firstCheckBox);
+              }}
+            />
+            <label className="ml-2 font-bold text-[16px]">
+              개인정보(이름, 연락처, 이메일, 주소)를 수집하는 것에 동의합니다.
+            </label>
+          </div>
+          <div>
+            <input
+              type="checkbox"
+              onChange={() => {
+                setSecondCheckBox(!secondCheckBox);
+              }}
+            />
+            <label className="ml-2 font-bold text-[16px] text-[#FF0000]">
+              실제 판매 상품이 아니기에, 결제 시 즉시 환불처리 됩니다.
+              이해하셨습니까?
+            </label>
           </div>
         </div>
-      )}
-    </div>
+
+        <PaymentButton
+          input={input}
+          purchaserAddress={purchaserAddress}
+          purchaserDetailAddress={purchaserDetailAddress}
+          purchaserEmail={purchaserEmail}
+          firstCheckBox={firstCheckBox}
+          secondCheckBox={secondCheckBox}
+        />
+        {isPostModalOpen && (
+          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+            <div className="absolute z-20 border-black border">
+              <DaumPostcode onComplete={onCompletePost}></DaumPostcode>
+            </div>
+          </div>
+        )}
+      </div>
+    </InnerLayout>
   );
 }
 

@@ -214,7 +214,7 @@ function MustWriteForm() {
           onClick={addMustPostBtn}
           className="px-[106px] py-[8px] text-xl text-white font-bold focus:outline-none bg-main-8 rounded-full"
         >
-          포스팅 하기
+          등록하기
         </button>
       </div>
     </InnerLayout>
