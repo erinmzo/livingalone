@@ -33,3 +33,7 @@ export async function getMyPayment(userId: string) {
   const data = await response.json();
   return data;
 }
+
+export async function getPaymentAll() {
+  await fetch("/api/payment");
+}

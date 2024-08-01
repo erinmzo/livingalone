@@ -4,7 +4,7 @@ import FooterNav from "./FooterNav";
 
 function Footer() {
   return (
-    <footer className="hidden sm:block bg-[url('/img/bg-footer.svg')] bg-no-repeat bg-center bg-cover pt-[110px] pb-[90px]">
+    <footer className="hidden sm:block bg-[url('/img/bg-footer.svg')] bg-no-repeat bg-center bg-cover pt-[110px] pb-[90px] absolute bottom-0 left-0 right-0">
       <div className="container mx-auto w-full max-w-[1024px] px-[16px] lg:px-0">
         <h1 className="text-[20px] font-bold">
           <Link href="/">

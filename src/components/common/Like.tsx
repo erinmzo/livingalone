@@ -112,12 +112,8 @@ function Like({ postId }: LikeProps) {
       </button>
     );
 
-  if (isPending)
-    return (
-      <div className="flex justify-center items-center border border-gray-2 bg-gray-2 rounded-full py-1 px-3">
-        <Image src="/img/icon-like.svg" alt="좋아요 버튼" width={18} height={18} />
-      </div>
-    );
+  if (isPending) return <div className="rounded-full w-[55px] h-[30px] animate-pulse"></div>;
+
   if (isError) return <span>에러</span>;
 
   return (

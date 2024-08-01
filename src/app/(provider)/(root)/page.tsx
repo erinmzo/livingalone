@@ -10,12 +10,14 @@ import MustVisual from "@/components/main/must/MustVisual";
 function HomePage() {
   return (
     <>
-      <MustVisual />
-      <MustSection />
-      <GroupVisual />
-      <GroupSection />
-      <Banner />
-      <JoinMarketing />
+      <div className="pb-[300px]">
+        <MustVisual />
+        <MustSection />
+        <GroupVisual />
+        <GroupSection />
+        <Banner />
+        <JoinMarketing />
+      </div>
     </>
   );
 }

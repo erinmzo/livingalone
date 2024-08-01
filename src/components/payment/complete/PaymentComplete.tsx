@@ -5,7 +5,7 @@ import { TNewPayment } from "@/types/types";
 import { useAuthStore } from "@/zustand/authStore";
 import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 
 function PaymentComplete({ paymentId }: { paymentId: string }) {
   const user = useAuthStore((state) => state.user);

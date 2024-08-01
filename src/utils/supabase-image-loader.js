@@ -1,5 +1,5 @@
-const projectId = "nqqsefrllkqytkwxfshk"; // your supabase project id
+const projectId = "nqqsefrllkqytkwxfshk"; // supabase project id
 
 export default function supabaseLoader({ src, width }) {
-  return `${src}?width=${width}&quality=${75}`;
+  return `${src}?width=${width}&quality=75`;
 }

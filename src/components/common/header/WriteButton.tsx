@@ -17,13 +17,13 @@ function WriteButton() {
         글쓰기
       </button>
       {isOpen && (
-        <ul className="z-50 absolute right-[14px] top-[50px] w-[120px]">
+        <ul className="z-50 absolute right-[14px] top-[50px] w-[120px] border border-main-7">
           <li className="bg-white text-gray-3 text-[14px] hover:bg-main-7 hover:text-white text-center">
             <Link href="/mustpost/write" className="block py-[10px] ">
               자취템 자랑하기
             </Link>
           </li>
-          <li className="bg-white text-gray-3 text-[14px] hover:bg-main-7 hover:text-white text-center">
+          <li className="bg-white text-gray-3 text-[14px] hover:bg-main-7 hover:text-white text-center border-t border-main-7">
             <Link href="/grouppost/write" className="block py-[10px] ">
               공동구매 만들기
             </Link>

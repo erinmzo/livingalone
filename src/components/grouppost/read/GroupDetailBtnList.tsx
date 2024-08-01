@@ -1,17 +1,16 @@
 "use client";
-import React from "react";
+import { useAuthStore } from "@/zustand/authStore";
 import GroupApplyBtn from "./GroupApplyBtn";
 import GroupFinishBtn from "./GroupFinishBtn";
-import { useAuthStore } from "@/zustand/authStore";
 
-function GroupDetailBtnList({ userId, id }: { userId: string; id: string }) {
+function GroupDetailBtnList({ userId, id, achievementRate }: { userId: string; id: string; achievementRate: number }) {
   const user = useAuthStore((state) => state.user);
   return (
     <div>
       {user && user.id === userId ? (
         <GroupFinishBtn id={id} />
       ) : (
-        <GroupApplyBtn id={id} />
+        <GroupApplyBtn id={id} achievementRate={achievementRate} />
       )}
     </div>
   );

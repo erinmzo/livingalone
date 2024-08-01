@@ -17,6 +17,7 @@ export default function ChatForm({ postId }: { postId: string }) {
   const user = useAuthStore((state) => state.user);
   const [messages, setMessages] = useState<TChat[]>([]);
   const [newMessage, setNewMessage] = useState("");
+
   const fetchInitialMessages = async () => {
     const { data } = await supabase
       .from("chat")
