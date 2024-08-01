@@ -1,5 +1,6 @@
 "use client";
 
+import { refundPayment } from "@/apis/payment";
 import PortOne from "@portone/browser-sdk/v2";
 import { useRouter } from "next/navigation";
 import { Notify } from "notiflix";
@@ -74,6 +75,7 @@ function PaymentButton({
           addressLine2: purchaserDetailAddress,
         },
       },
+      redirectUrl: `http://localhost:3000/payment/complete`,
     });
 
     if (response?.code != null) {
@@ -82,14 +84,6 @@ function PaymentButton({
     }
 
     const paymentId = response?.paymentId;
-
-    await fetch("/api/payment", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ paymentId }),
-    });
 
     router.push(`/payment/complete?paymentId=${paymentId}`);
   };

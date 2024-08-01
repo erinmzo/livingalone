@@ -34,3 +34,6 @@ export type TGroupApplications = {
 export type TMyGroupPost = GroupPost & TGroupApplications;
 
 export type Chat = Tables<"chat">;
+
+export type Payment = Tables<"payments">;
+export type TNewPayment = Omit<Payment, "created_at">;
