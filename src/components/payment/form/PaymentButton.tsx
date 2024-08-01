@@ -88,7 +88,14 @@ function PaymentButton({
     router.push(`/payment/complete?paymentId=${paymentId}`);
   };
 
-  return <button onClick={paymentHandler}>결제하기</button>;
+  return (
+    <button
+      className="w-[500px] py-[13px] bg-main-8 bold text-[22px] text-gray-1 rounded-full"
+      onClick={paymentHandler}
+    >
+      결제하기
+    </button>
+  );
 }
 
 export default PaymentButton;
