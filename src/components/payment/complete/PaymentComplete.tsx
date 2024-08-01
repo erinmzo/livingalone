@@ -1,6 +1,7 @@
 "use client";
 
-import { insertPayment } from "@/apis/payment";
+import { insertPayment, refundPayment } from "@/apis/payment";
+import { TNewPayment } from "@/types/types";
 import { useAuthStore } from "@/zustand/authStore";
 import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
@@ -12,18 +13,20 @@ function PaymentComplete({ paymentId }: { paymentId: string }) {
 
   const addMutation = useMutation({
     // TODO 나중에 타입 수정
-    mutationFn: async (newPayment: any) => {
+    mutationFn: async (newPayment: TNewPayment) => {
       await insertPayment(newPayment);
     },
   });
 
   const getPaymentInfo = async () => {
+    // 즉시 환불
+    await refundPayment(paymentId);
     const notified = await fetch(
       `/api/payment/complete?paymentId=${paymentId}`
     );
     const paymentData = await notified.json();
     if (paymentData && user) {
-      const newPayment = {
+      const newPayment: TNewPayment = {
         id: paymentId,
         name: paymentData.customer.name,
         address: paymentData.customer.address.oneLine,

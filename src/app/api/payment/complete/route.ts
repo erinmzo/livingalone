@@ -26,7 +26,6 @@ export const GET = async (request: NextRequest) => {
 };
 
 export async function POST(request: NextRequest) {
-  // 공구템 작성
   const newPayment = await request.json();
   try {
     const supabase = createClient();
@@ -34,5 +33,19 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(data);
   } catch (error) {
     return NextResponse.json({ error: "데이터를 등록하는 데 실패했습니다." });
+  }
+}
+
+export async function PUT(request: NextRequest) {
+  const updatePayment = await request.json();
+  try {
+    const supabase = createClient();
+    const { data } = await supabase
+      .from("payments")
+      .update(updatePayment)
+      .eq("id", updatePayment.id);
+    return NextResponse.json(data);
+  } catch (error) {
+    return NextResponse.json({ error: "데이터를 수정하는 데 실패했습니다." });
   }
 }
