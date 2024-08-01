@@ -42,7 +42,7 @@ function PaymentMain() {
 
   if (isError) return <div className="flex justify-center items-center">에러...</div>;
   return (
-    <div className="bg-green-1 pt-[130px] pb-[600px] text-center">
+    <div className="bg-green-1 pt-[130px] pb-[200px] sm:pb-[400px] md:pb-[300px] lg:pb-[600px] text-center">
       <div className="bg-green-1 mx-auto max-w-[660px] px-[16px] lg:px-0">
         <div className="relative w-full">
           <Image

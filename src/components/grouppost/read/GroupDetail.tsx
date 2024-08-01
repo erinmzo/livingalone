@@ -55,7 +55,7 @@ async function GroupDetail({ params }: Props) {
       <InnerLayout>
         <div className={`${is_finished ? "text-gray-3" : ""}`}>
           <div className="relative overflow-hidden rounded-lg">
-            <Image src={img_url} alt="공구템 이미지" width={680} height={500} className="border rounded-lg" />
+            <Image src={img_url} alt="공구템 이미지" width={680} height={500} className="border rounded-lg" priority />
             {link && (
               <Link href={link}>
                 <div className=" cursor-pointer flex justify-center items-center bg-black absolute w-full h-full top-0 left-0 opacity-0 hover:opacity-100 hover:bg-opacity-50">
