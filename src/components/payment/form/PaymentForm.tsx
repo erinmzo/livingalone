@@ -1,16 +1,16 @@
 "use client";
 
+import { getMyProfile } from "@/apis/mypage";
+import Input from "@/components/auth/common/Input";
+import InnerLayout from "@/components/common/Page/InnerLayout";
 import { useInputChange } from "@/hooks/useInput";
-import React, { useEffect, useState } from "react";
-import DaumPostcode from "react-daum-postcode";
-import PaymentButton from "./PaymentButton";
+import { Profile } from "@/types/types";
 import { useAuthStore } from "@/zustand/authStore";
 import { useQuery } from "@tanstack/react-query";
-import { Profile } from "@/types/types";
-import { getMyProfile } from "@/apis/mypage";
 import Image from "next/image";
-import InnerLayout from "@/components/common/Page/InnerLayout";
-import Input from "@/components/auth/common/Input";
+import { useEffect, useState } from "react";
+import DaumPostcode from "react-daum-postcode";
+import PaymentButton from "./PaymentButton";
 
 function PaymentForm() {
   const user = useAuthStore((state) => state.user);
@@ -27,8 +27,7 @@ function PaymentForm() {
 
   const [isPostModalOpen, setIsPostModalOpen] = useState<boolean>(false);
   const [purchaserAddress, setPurchaserAddress] = useState<string>("");
-  const [purchaserDetailAddress, setPurchaserDetailAddress] =
-    useState<string>("");
+  const [purchaserDetailAddress, setPurchaserDetailAddress] = useState<string>("");
   const [purchaserEmail, setPurchaserEmail] = useState<string>("");
   const [firstCheckBox, setFirstCheckBox] = useState<boolean>(false);
   const [secondCheckBox, setSecondCheckBox] = useState<boolean>(false);
@@ -54,17 +53,11 @@ function PaymentForm() {
   if (isPending)
     return (
       <div className="flex justify-center items-center">
-        <Image
-          src="/img/loading-spinner.svg"
-          alt="로딩중"
-          width={200}
-          height={200}
-        />
+        <Image src="/img/loading-spinner.svg" alt="로딩중" width={200} height={200} />
       </div>
     );
 
-  if (isError)
-    return <div className="flex justify-center items-center">에러...</div>;
+  if (isError) return <div className="flex justify-center items-center">에러...</div>;
   return (
     <InnerLayout>
       <div className="flex flex-col justify-center items-center">
@@ -144,8 +137,7 @@ function PaymentForm() {
               }}
             />
             <label className="ml-2 font-bold text-[16px] text-[#FF0000]">
-              실제 판매 상품이 아니기에, 결제 시 즉시 환불처리 됩니다.
-              이해하셨습니까?
+              실제 판매 상품이 아니기에, 결제 시 즉시 환불처리 됩니다. 이해하셨습니까?
             </label>
           </div>
         </div>
