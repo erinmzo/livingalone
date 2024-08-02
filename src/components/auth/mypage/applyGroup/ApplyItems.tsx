@@ -2,6 +2,7 @@
 
 import { applyItems } from "@/apis/mypage";
 import GroupPostCard from "@/components/grouppost/list/GroupPostCard";
+import { GroupApplication, GroupApplyItems } from "@/types/types";
 import { useAuthStore } from "@/zustand/authStore";
 import { useQuery } from "@tanstack/react-query";
 
@@ -14,7 +15,7 @@ function ApplyItems() {
     data: applyPosts = [],
     isPending,
     isError,
-  } = useQuery({
+  } = useQuery<GroupApplyItems[]>({
     queryKey: ["apply", userId],
     queryFn: () => applyItems(userId),
   });
@@ -22,22 +23,28 @@ function ApplyItems() {
   if (isPending)
     return (
       <div className="flex justify-center items-center">
-        <Image src="/img/loading-spinner.svg" alt="로딩중" width={200} height={200} />
+        <Image
+          src="/img/loading-spinner.svg"
+          alt="로딩중"
+          width={200}
+          height={200}
+        />
       </div>
     );
 
   if (isError) return <div>에러..</div>;
 
+  console.log(applyPosts);
   return (
     user && (
       <div>
         <div className="text-[24px] font-bold ml-1">신청한 공구</div>
         <div className="mt-8">
           {applyPosts.length ? (
-            <ul className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {applyPosts.map((apply: any) => {
+            <ul className="grid grid-cols-1  gap-8">
+              {applyPosts.map((apply) => {
                 return (
-                  <li key={apply.id}>
+                  <li className="flex mr-3" key={apply.id}>
                     <GroupPostCard
                       application={applyPosts}
                       title={apply.group_posts.title}
@@ -49,13 +56,20 @@ function ApplyItems() {
                       endDate={apply.group_posts.end_date}
                       postId={apply.group_posts.id}
                     />
+                    <div>
+                      <div>{apply.user_name}</div>
+                      <div>주소 : {apply.user_address}</div>
+                      <div>{apply.user_detail_address}</div>
+                      <div>{apply.user_phone}</div>
+                    </div>
                   </li>
                 );
               })}
             </ul>
           ) : (
             <div className="flex justify-center items-center text-gray-4">
-              아직 신청한 공구가 없습니다. 마음에 드는 공구가 있다면 신청해보세요!
+              아직 신청한 공구가 없습니다. 마음에 드는 공구가 있다면
+              신청해보세요!
             </div>
           )}
         </div>
