@@ -36,7 +36,6 @@ function MustEditForm({ params }: { params: { id: string } }) {
   const editorRef = useRef<EditorProps>(null);
 
   const [imgUrl, setImgUrl] = useState<string>("");
-
   const [selectedCategoryName, setSelectedCategoryName] =
     useState<string>("선택");
   const [selectedCategoryId, setSelectedCategoryId] = useState<string>("");

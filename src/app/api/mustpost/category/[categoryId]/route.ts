@@ -8,7 +8,7 @@ export async function GET(
   const { categoryId } = params;
   const url = new URL(request.url);
   const page = parseInt(url.searchParams.get("page") || "0");
-  const itemsPerPage = 3;
+  const itemsPerPage = 9;
   const offset = page * itemsPerPage;
 
   try {

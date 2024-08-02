@@ -27,6 +27,10 @@ function PaymentMain() {
   });
 
   const onClickPaymentBtnHandler = () => {
+    if (!user) {
+      Notify.failure("로그인된 사용자만 구매 가능합니다.");
+      return;
+    }
     if (payment) {
       Notify.failure("럭키박스를 이미 구매하셨습니다.");
       return;
@@ -36,11 +40,17 @@ function PaymentMain() {
   if (isPending)
     return (
       <div className="flex justify-center items-center">
-        <Image src="/img/loading-spinner.svg" alt="로딩중" width={200} height={200} />
+        <Image
+          src="/img/loading-spinner.svg"
+          alt="로딩중"
+          width={200}
+          height={200}
+        />
       </div>
     );
 
-  if (isError) return <div className="flex justify-center items-center">에러...</div>;
+  if (isError)
+    return <div className="flex justify-center items-center">에러...</div>;
   return (
     <div className="bg-green-1 pt-[130px] pb-[200px] sm:pb-[400px] md:pb-[300px] lg:pb-[600px] text-center">
       <div className="bg-green-1 mx-auto max-w-[660px] px-[16px] lg:px-0">

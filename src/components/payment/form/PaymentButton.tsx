@@ -75,6 +75,11 @@ function PaymentButton({
           addressLine2: purchaserDetailAddress,
         },
       },
+      bypass: {
+        inicis_v2: {
+          acceptmethod: ["SKIN(#00B8A2)"],
+        },
+      },
       redirectUrl: `http://localhost:3000/payment/complete`,
     });
 

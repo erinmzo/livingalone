@@ -27,7 +27,8 @@ function PaymentForm() {
 
   const [isPostModalOpen, setIsPostModalOpen] = useState<boolean>(false);
   const [purchaserAddress, setPurchaserAddress] = useState<string>("");
-  const [purchaserDetailAddress, setPurchaserDetailAddress] = useState<string>("");
+  const [purchaserDetailAddress, setPurchaserDetailAddress] =
+    useState<string>("");
   const [purchaserEmail, setPurchaserEmail] = useState<string>("");
   const [firstCheckBox, setFirstCheckBox] = useState<boolean>(false);
   const [secondCheckBox, setSecondCheckBox] = useState<boolean>(false);
@@ -53,11 +54,17 @@ function PaymentForm() {
   if (isPending)
     return (
       <div className="flex justify-center items-center">
-        <Image src="/img/loading-spinner.svg" alt="로딩중" width={200} height={200} />
+        <Image
+          src="/img/loading-spinner.svg"
+          alt="로딩중"
+          width={200}
+          height={200}
+        />
       </div>
     );
 
-  if (isError) return <div className="flex justify-center items-center">에러...</div>;
+  if (isError)
+    return <div className="flex justify-center items-center">에러...</div>;
   return (
     <InnerLayout>
       <div className="flex flex-col justify-center items-center">
@@ -89,7 +96,7 @@ function PaymentForm() {
             placeholder="주문자의 이메일을 입력해주세요."
             value={purchaserEmail}
             name="purchaserEmail"
-            onChange={onChangeInput}
+            onChange={(e) => setPurchaserEmail(e.target.value)}
           />
         </div>
 
@@ -137,7 +144,7 @@ function PaymentForm() {
               }}
             />
             <label className="ml-2 font-bold text-[16px] text-[#FF0000]">
-              실제 판매 상품이 아니기에, 결제 시 즉시 환불처리 됩니다. 이해하셨습니까?
+              실제 판매 상품이 아니기에, 결제 시 즉시 환불처리 됩니다.
             </label>
           </div>
         </div>

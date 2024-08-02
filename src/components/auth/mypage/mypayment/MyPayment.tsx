@@ -22,7 +22,6 @@ function MyPayment() {
   });
 
   const updateMutation = useMutation({
-    // TODO 나중에 타입 수정
     mutationFn: async (updatePayment: TNewPayment) => {
       await editPayment(updatePayment);
     },
@@ -59,7 +58,6 @@ function MyPayment() {
         user_id: myPayment.user_id,
         status: "CANCELLED",
       };
-      console.log(updatePayment);
       updateMutation.mutate(updatePayment);
     }
   };
@@ -70,21 +68,68 @@ function MyPayment() {
       <div className="flex-col">
         <h5 className="font-bold text-[24px] mb-[32px] w-full">결제 내역</h5>
         {myPayment ? (
-          <div>
-            <p>주문번호 : {myPayment.id}</p>
-            <p>상품명 : [혼자살때 럭키박스]</p>
-            <p>결제금액 : 1,000원</p>
-            <p>주문자 성함 : {myPayment.name}</p>
-            <p>주문자 연락처 : {myPayment.phone}</p>
-            <p>주문자 이메일 : {myPayment.email}</p>
-            <p>주문자 주소 : {myPayment.address}</p>
-            <p>
+          <div className="border border-gray-2 w-[330px] rounded-lg p-5">
+            <p className="text-[10px] text-gray-3 mb-2">
+              주문번호 {myPayment.id}
+            </p>
+            <div className="flex items-center gap-[10px] mb-2">
+              <Image
+                src="/img/luckybox-my.png"
+                alt="럭키박스"
+                width={58}
+                height={58}
+              />
+              <div
+                className={`${
+                  myPayment.status === "CANCELLED"
+                    ? "text-gray-3"
+                    : "text-black"
+                }`}
+              >
+                <p className="mb-1">혼자살때 럭키박스</p>
+                <p>
+                  <span className="font-bold">1,000</span>원
+                </p>
+              </div>
+            </div>
+
+            <h6
+              className={`text-[10px] font-bold mb-1 ${
+                myPayment.status === "CANCELLED" ? "text-gray-2" : "text-gray-4"
+              }`}
+            >
+              주문자 정보
+            </h6>
+            <div
+              className={`${
+                myPayment.status === "CANCELLED" ? "text-gray-2" : "text-gray-3"
+              } text-[10px] mb-2`}
+            >
+              <p className="mb-1">{myPayment.name}</p>
+              <p className="mb-1">
+                {myPayment.phone} | {myPayment.email}
+              </p>
+              <p>주문자 주소 : {myPayment.address}</p>
+            </div>
+            {/* 디자인에 해당 내용이 들어가지 않아 임시로 주석처리 했습니다. */}
+            {/* <p>
               상태 :{" "}
               {myPayment.status === "CANCELLED" ? "환불 완료" : "결제 완료"}
-            </p>
-            {myPayment.status === "PAID" && (
-              <button onClick={() => refundHandler(myPayment.id)}>
+            </p> */}
+
+            {myPayment.status === "PAID" ? (
+              <button
+                className="border border-main-8 text-main-8 text-[12px] font-bold rounded-full py-2 px-4"
+                onClick={() => refundHandler(myPayment.id)}
+              >
                 환불하기
+              </button>
+            ) : (
+              <button
+                className=" border bg-gray-2 text-gray-3 text-[12px] font-bold rounded-full py-2 px-4"
+                disabled
+              >
+                환불완료
               </button>
             )}
           </div>

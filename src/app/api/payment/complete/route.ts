@@ -6,7 +6,6 @@ export const GET = async (request: NextRequest) => {
   try {
     const url = new URL(request.url);
     const paymentId = url.searchParams.get("paymentId");
-    console.log(paymentId);
     const response = await fetch(
       `https://api.portone.io/payments/${paymentId}`,
       {
