@@ -1,4 +1,10 @@
-import { GroupApplication, MustPost, TProfile } from "@/types/types";
+import {
+  GroupApplication,
+  GroupApplyItems,
+  MustPost,
+  TProfile,
+} from "@/types/types";
+import { promises } from "dns";
 
 export async function getMyProfile(id: string) {
   const response = await fetch(`/api/auth/profile/${id}`);

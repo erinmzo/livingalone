@@ -5,7 +5,7 @@ import { useInputChange } from "@/hooks/useInput";
 import { Profile, TProfile } from "@/types/types";
 import { useAuthStore } from "@/zustand/authStore";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Notify, Report } from "notiflix";
+import { Report } from "notiflix";
 import { ChangeEvent, MouseEventHandler, useState } from "react";
 import DaumPostcode from "react-daum-postcode";
 import Input from "../common/Input";
@@ -19,8 +19,6 @@ function MyInformation() {
   const [address, setAddress] = useState<string>("");
   const [imgFile, setImgFile] = useState<any>();
   const [imgUrl, setImgUrl] = useState<string>("");
-
-  const maxImageSize = 1 * 1024 * 1024;
 
   const { values: input, handler: onChangeInput } = useInputChange({
     nickname: "",
@@ -37,7 +35,8 @@ function MyInformation() {
 
   const { mutate: editProfile } = useMutation({
     mutationFn: (newProfile: TProfile) => editMyProfile(userId, newProfile),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["profile", userId] }),
+    onSuccess: () =>
+      queryClient.invalidateQueries({ queryKey: ["profile", userId] }),
   });
   // 이미지
   const { mutate: uploadImageProfile } = useMutation({
@@ -45,13 +44,18 @@ function MyInformation() {
       const formData = new FormData();
       formData.append("file", profileImage);
       const response = await uploadImage(formData);
-      setImgUrl(`https://nqqsefrllkqytkwxfshk.supabase.co/storage/v1/object/public/${response.fullPath}`);
+      setImgUrl(
+        `https://nqqsefrllkqytkwxfshk.supabase.co/storage/v1/object/public/${response.fullPath}`
+      );
       return `https://nqqsefrllkqytkwxfshk.supabase.co/storage/v1/object/public/${response.fullPath}`;
     },
     onMutate: async (profileImage: File) => {
       await queryClient.cancelQueries({ queryKey: ["profile", userId] });
 
-      const previousProfile = queryClient.getQueryData<Profile>(["profile", userId]);
+      const previousProfile = queryClient.getQueryData<Profile>([
+        "profile",
+        userId,
+      ]);
 
       if (previousProfile) {
         queryClient.setQueryData(["profile", userId], {
@@ -82,14 +86,9 @@ function MyInformation() {
   };
 
   const handleUploadImage = (e: ChangeEvent<HTMLInputElement>) => {
-    //  e.preventDefault();
     if (e.target.files) {
-      const profileImage = e.target.files[0];
-      if (profileImage.size > maxImageSize) {
-        return Notify.failure("1MB 이하의 이미지로 업로드해주세요");
-      }
-      setImgFile(profileImage);
-      uploadImageProfile(profileImage);
+      setImgFile(e.target.files[0]);
+      uploadImageProfile(e.target.files[0]);
     }
   };
 
@@ -147,7 +146,9 @@ function MyInformation() {
               className="flex gap-3 w-[73px] py-2 border border-gray-3 bg-white font-bold rounded-full mb-3 justify-center items-center "
               onClick={handleSearchAddress}
             >
-              <span className=" text-center text-[12px] text-gray-3">주소변경</span>
+              <span className=" text-center text-[12px] text-gray-3">
+                주소변경
+              </span>
             </button>
             {isPostModalOpen && (
               <div className="absolute left-0 top-[48px] border border-black  ">
@@ -155,7 +156,12 @@ function MyInformation() {
               </div>
             )}
             <div className="flex flex-col gap-2 ">
-              <Input variant="underline" value={address} onChange={() => {}} placeholder={profile?.address!} />
+              <Input
+                variant="underline"
+                value={address}
+                onChange={() => {}}
+                placeholder={profile?.address!}
+              />
               <Input
                 variant="underline"
                 value={detailAddress}
@@ -167,7 +173,7 @@ function MyInformation() {
           </div>
           <button
             type="submit"
-            className="bg-main-8 w-[500px] h-[52px] text-white  py-2 mt-[50px] rounded-full font-bold text-[18px]"
+            className="bg-[#008575] w-[500px] h-[52px] text-white  py-2 mt-[50px] rounded-full font-bold text-[18px]"
             onClick={handleProfileUpdate}
           >
             변경하기

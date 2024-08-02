@@ -21,6 +21,7 @@ export type TMustWishData = Omit<MustWish, "created_at" | "id">;
 export type GroupPost = Tables<"group_posts">;
 export type GroupLike = Tables<"group_likes">;
 export type GroupApplication = Tables<"group_applications">;
+export type GroupApplyItems = GroupApplication & { group_posts: GroupPost };
 
 export type TNewGroupPost = Omit<GroupPost, "created_at">;
 export type TNewGroupApplication = Omit<GroupApplication, "created_at">;
