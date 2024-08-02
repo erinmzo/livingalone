@@ -102,6 +102,13 @@ async function GroupDetail({ params }: Props) {
             <div className="mt-[56px] border-y border-gray-2 py-6 px-2 mb-[64px]">
               <GroupContent content={content} />
             </div>
+            {/* 임시 공유 버튼 */}
+            {/* <ShareButton
+              postId={data.id}
+              title={title}
+              content={content}
+              imgUrl={img_url}
+            /> */}
             {is_finished ? "" : <ChatForm postId={id} userId={user_id} />}
             <GroupEditBtnList userId={user_id} id={id} />
           </div>
