@@ -12,15 +12,7 @@ import Title from "./Title";
 
 function MustList() {
   const selectedCategory = useCategoryStore((state) => state.selectedCategory);
-  const {
-    data,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-    isPending,
-    isError,
-    refetch,
-  } = useInfiniteQuery({
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isPending, isError, refetch } = useInfiniteQuery({
     queryKey: ["mustPosts", selectedCategory],
     queryFn: async ({ pageParam = 0 }) => {
       const response =
@@ -33,39 +25,23 @@ function MustList() {
       };
     },
     getNextPageParam: (lastPage, allPages) => {
-      const totalFetched = allPages.reduce(
-        (acc, page) => acc + page.posts.length,
-        0
-      );
+      const totalFetched = allPages.reduce((acc, page) => acc + page.posts.length, 0);
       if (totalFetched >= lastPage.total) return undefined;
       return allPages.length;
     },
     initialPageParam: 0,
   });
 
-  const mustPosts = useMemo(
-    () => data?.pages?.flatMap((page) => page.posts) || [],
-    [data]
-  );
+  const mustPosts = useMemo(() => data?.pages?.flatMap((page) => page.posts) || [], [data]);
 
   if (isPending)
     return (
       <div className="flex justify-center items-center">
-        <Image
-          src="/img/loading-spinner.svg"
-          alt="로딩중"
-          width={200}
-          height={200}
-        />
+        <Image src="/img/loading-spinner.svg" alt="로딩중" width={200} height={200} />
       </div>
     );
 
-  if (isError)
-    return (
-      <div className="flex justify-center items-center">
-        데이터를 불러오는데 실패했습니다!
-      </div>
-    );
+  if (isError) return <div className="flex justify-center items-center">데이터를 불러오는데 실패했습니다!</div>;
 
   return (
     <div className="flex flex-col items-center justify-center">
@@ -78,15 +54,10 @@ function MustList() {
       </div>
       {mustPosts.length > 0 ? (
         <div className="w-full min-h-screen flex-col items-center justify-center">
-          <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 px-[16px] lg:px-0">
+          <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {mustPosts.map((post) => (
               <li key={post.id} className="mb-[64px]">
-                <MustPostCard
-                  postId={post.id}
-                  title={post.title}
-                  item={post.item}
-                  imgUrl={post.img_url}
-                />
+                <MustPostCard postId={post.id} title={post.title} item={post.item} imgUrl={post.img_url} />
               </li>
             ))}
           </ul>

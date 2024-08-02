@@ -12,7 +12,7 @@ type TChat = {
   user_id: string;
 };
 
-export default function ChatForm({ postId }: { postId: string }) {
+export default function ChatForm({ postId, userId }: { postId: string; userId: string }) {
   const supabase = createClient();
   const user = useAuthStore((state) => state.user);
   const [messages, setMessages] = useState<TChat[]>([]);
@@ -86,7 +86,11 @@ export default function ChatForm({ postId }: { postId: string }) {
               <div>
                 {messages.map((message) => (
                   <div key={message.id} className="grid grid-cols-[90px_1fr] text-gray-5 gap-[10px] mt-2">
-                    <span className="font-bold truncate">{message.profiles.nickname}</span>
+                    {userId === message.user_id ? (
+                      <span className="font-bold truncate text-main-7">작성자</span>
+                    ) : (
+                      <span className="font-bold truncate">{message.profiles.nickname}</span>
+                    )}
                     <div>
                       <span>{message.text}</span>
                       <span className="text-gray-3 text-[12px] ml-2">
