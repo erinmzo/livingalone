@@ -50,7 +50,7 @@ function SideBar() {
           </div>
           <div className="text-[16px] font-bold text-center w-full h-[19px]">{profile?.nickname}</div>
         </div>
-        <ul className="flex flex-col gap-[24px] items-center">
+        <ul className="flex flex-col gap-[24px] items-start">
           {links.map((link) => (
             <li
               key={link.href}
