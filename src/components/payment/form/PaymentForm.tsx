@@ -96,7 +96,7 @@ function PaymentForm() {
             placeholder="주문자의 이메일을 입력해주세요."
             value={purchaserEmail}
             name="purchaserEmail"
-            onChange={onChangeInput}
+            onChange={(e) => setPurchaserEmail(e.target.value)}
           />
         </div>
 
@@ -145,7 +145,6 @@ function PaymentForm() {
             />
             <label className="ml-2 font-bold text-[16px] text-[#FF0000]">
               실제 판매 상품이 아니기에, 결제 시 즉시 환불처리 됩니다.
-              이해하셨습니까?
             </label>
           </div>
         </div>

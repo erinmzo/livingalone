@@ -36,7 +36,6 @@ function MustEditForm({ params }: { params: { id: string } }) {
   const editorRef = useRef<EditorProps>(null);
 
   const [imgUrl, setImgUrl] = useState<string>("");
-  console.log(imgUrl);
   const [selectedCategoryName, setSelectedCategoryName] =
     useState<string>("선택");
   const [selectedCategoryId, setSelectedCategoryId] = useState<string>("");
@@ -86,7 +85,6 @@ function MustEditForm({ params }: { params: { id: string } }) {
       const formData = new FormData();
       formData.append("file", newMustPostImage);
       const response = await insertMustImage(formData);
-      console.log("response:", response);
       setImgUrl(
         `https://nqqsefrllkqytkwxfshk.supabase.co/storage/v1/object/public/mustposts/${response.path}`
       );

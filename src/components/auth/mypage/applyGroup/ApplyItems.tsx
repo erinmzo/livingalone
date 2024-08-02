@@ -33,7 +33,6 @@ function ApplyItems() {
 
   if (isError) return <div>에러..</div>;
 
-  console.log(applyPosts);
   return (
     user && (
       <div>
