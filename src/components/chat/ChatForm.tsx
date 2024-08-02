@@ -1,8 +1,8 @@
 "use client";
 import { createClient } from "@/supabase/client";
 import { useAuthStore } from "@/zustand/authStore";
-import { Report } from "notiflix";
-import { useEffect, useState } from "react";
+import { Notify, Report } from "notiflix";
+import { useEffect, useRef, useState } from "react";
 
 type TChat = {
   created_at: string;
@@ -17,6 +17,8 @@ export default function ChatForm({ postId }: { postId: string }) {
   const user = useAuthStore((state) => state.user);
   const [messages, setMessages] = useState<TChat[]>([]);
   const [newMessage, setNewMessage] = useState("");
+  const messageEndRef = useRef<HTMLDivElement | null>(null);
+  //const [isLast, setIsLast] = useState(false);
 
   const fetchInitialMessages = async () => {
     const { data } = await supabase
@@ -45,6 +47,13 @@ export default function ChatForm({ postId }: { postId: string }) {
     };
   }, [messages]);
 
+  // useEffect(() => {
+  //   if (messageEndRef.current && isLast) {
+  //     messageEndRef.current.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  //     setIsLast(false);
+  //   }
+  // }, [isLast]);
+
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!user) return Report.failure("로그인 후 이용하실 수 있습니다.", "", "확인");
@@ -59,31 +68,36 @@ export default function ChatForm({ postId }: { postId: string }) {
       const { error } = await supabase.from("chat").insert(chatInfo);
 
       if (error) {
-        console.error("Error sending message:", error);
+        Notify.failure(`채팅 전송에 실패했습니다. ${error}`);
       } else {
         setNewMessage("");
       }
     }
+
+    //setIsLast(true);
   };
 
   return (
     <div className="w-full min-w-full max-w-[682px] mx-auto">
-      <div className="rounded-lg border border-gray-2 overflow-y-scroll h-[140px] scroll-smooth snap-end">
+      <div className="rounded-lg border border-gray-2 overflow-y-auto h-[140px] scroll-smooth snap-end">
         <div className="flex p-[24px] flex-col justify-end gap-2">
           {messages.length > 0 ? (
-            <div>
-              {messages.map((message) => (
-                <div key={message.id} className="grid grid-cols-[90px_1fr] text-gray-5 gap-[10px] mt-2">
-                  <span className="font-bold truncate">{message.profiles.nickname}</span>
-                  <div>
-                    <span>{message.text}</span>
-                    <span className="text-gray-3 text-[12px] ml-2">
-                      {message.created_at.split("T").join(" ").substring(0, 16)}
-                    </span>
+            <>
+              <div>
+                {messages.map((message) => (
+                  <div key={message.id} className="grid grid-cols-[90px_1fr] text-gray-5 gap-[10px] mt-2">
+                    <span className="font-bold truncate">{message.profiles.nickname}</span>
+                    <div>
+                      <span>{message.text}</span>
+                      <span className="text-gray-3 text-[12px] ml-2">
+                        {message.created_at.split("T").join(" ").substring(0, 16)}
+                      </span>
+                    </div>
                   </div>
-                </div>
-              ))}
-            </div>
+                ))}
+                <div ref={messageEndRef}></div>
+              </div>
+            </>
           ) : (
             <div className="flex justify-center text-gray-2 py-[30px]">공구 채팅을 시작해보세요</div>
           )}
