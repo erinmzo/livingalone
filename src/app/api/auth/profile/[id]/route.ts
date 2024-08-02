@@ -1,10 +1,7 @@
 import { createClient } from "@/supabase/server";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
   const { id } = params;
   const supabase = createClient();
 
@@ -20,22 +17,14 @@ export async function GET(
   return NextResponse.json(data);
 }
 
-export async function PUT(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
   const { id } = params;
   const supabase = createClient();
 
   const updateProfile = await request.json();
 
-  const { data, error } = await supabase
-    .from("profiles")
-    .update(updateProfile)
-    .eq("user_id", id)
-    .select();
+  const { data, error } = await supabase.from("profiles").update(updateProfile).eq("user_id", id).select();
 
-  console.log(error);
   if (error) {
     return NextResponse.json({ error: error.message });
   }

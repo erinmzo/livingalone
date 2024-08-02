@@ -1,16 +1,16 @@
 "use client";
 
+import { getMyProfile } from "@/apis/mypage";
+import Input from "@/components/auth/common/Input";
+import InnerLayout from "@/components/common/Page/InnerLayout";
 import { useInputChange } from "@/hooks/useInput";
-import React, { useEffect, useState } from "react";
-import DaumPostcode from "react-daum-postcode";
-import PaymentButton from "./PaymentButton";
+import { Profile } from "@/types/types";
 import { useAuthStore } from "@/zustand/authStore";
 import { useQuery } from "@tanstack/react-query";
-import { Profile } from "@/types/types";
-import { getMyProfile } from "@/apis/mypage";
 import Image from "next/image";
-import InnerLayout from "@/components/common/Page/InnerLayout";
-import Input from "@/components/auth/common/Input";
+import { useEffect, useState } from "react";
+import DaumPostcode from "react-daum-postcode";
+import PaymentButton from "./PaymentButton";
 
 function PaymentForm() {
   const user = useAuthStore((state) => state.user);
