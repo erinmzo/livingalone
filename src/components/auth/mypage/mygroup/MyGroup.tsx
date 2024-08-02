@@ -27,11 +27,17 @@ function MyGroup() {
   if (isPending)
     return (
       <div className="flex justify-center items-center">
-        <Image src="/img/loading-spinner.svg" alt="로딩중" width={200} height={200} />
+        <Image
+          src="/img/loading-spinner.svg"
+          alt="로딩중"
+          width={200}
+          height={200}
+        />
       </div>
     );
 
-  if (isError) return <div className="flex justify-center items-center">에러...</div>;
+  if (isError)
+    return <div className="flex justify-center items-center">에러...</div>;
   return (
     <div className="flex-col">
       <h5 className="font-bold text-[24px] mb-[32px] w-full">나의 정보</h5>
@@ -46,7 +52,18 @@ function MyGroup() {
           })}
         </div>
       ) : (
-        <div>등록된 공구템이 없습니다.</div>
+        <div className="flex flex-col justify-center items-center">
+          <Image
+            src="/img/icon-empty.png"
+            alt="empty"
+            width={100}
+            height={93.52}
+            className="mb-5"
+          />
+          <div className="flex justify-center items-center text-gray-4">
+            등록한 공구템이 없습니다
+          </div>
+        </div>
       )}
     </div>
   );
