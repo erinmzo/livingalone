@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import KakaoScript from "@/utils/KakaoScript";
 
 const pretendard = localFont({
   src: "../fonts/PretendardVariable.woff2",
@@ -9,9 +10,16 @@ const pretendard = localFont({
   variable: "--font-pretendard",
 });
 
+declare global {
+  interface Window {
+    Kakao: any;
+  }
+}
+
 export const metadata: Metadata = {
   title: "혼자살때",
-  description: "설레이는 첫 자취를 시작한 자취생의 걱정을 덜어주는 커뮤니티 웹서비스",
+  description:
+    "설레이는 첫 자취를 시작한 자취생의 걱정을 덜어주는 커뮤니티 웹서비스",
 };
 
 export default function RootLayout({
@@ -22,6 +30,7 @@ export default function RootLayout({
   return (
     <html lang="kr" className={`${pretendard.variable}`}>
       <body>{children}</body>
+      <KakaoScript />
     </html>
   );
 }
