@@ -22,7 +22,12 @@ function LikeItems() {
   if (isPending)
     return (
       <div className="flex justify-center items-center">
-        <Image src="/img/loading-spinner.svg" alt="로딩중" width={200} height={200} />
+        <Image
+          src="/img/loading-spinner.svg"
+          alt="로딩중"
+          width={200}
+          height={200}
+        />
       </div>
     );
 
@@ -54,7 +59,18 @@ function LikeItems() {
               })}
             </ul>
           ) : (
-            <div className="flex justify-center items-center text-gray-4">좋아요한 공구가 없습니다.</div>
+            <div className="flex flex-col justify-center items-center">
+              <Image
+                src="/img/icon-empty.png"
+                alt="empty"
+                width={100}
+                height={93.52}
+                className="mb-5"
+              />
+              <div className="flex justify-center items-center text-gray-4">
+                좋아요한 공구가 없습니다.
+              </div>
+            </div>
           )}
         </div>
       </div>
