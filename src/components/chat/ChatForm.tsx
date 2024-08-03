@@ -18,7 +18,6 @@ export default function ChatForm({ postId, userId }: { postId: string; userId: s
   const [messages, setMessages] = useState<TChat[]>([]);
   const [newMessage, setNewMessage] = useState("");
   const messageEndRef = useRef<HTMLDivElement | null>(null);
-  //const [isLast, setIsLast] = useState(false);
 
   const fetchInitialMessages = async () => {
     const { data } = await supabase
@@ -47,13 +46,6 @@ export default function ChatForm({ postId, userId }: { postId: string; userId: s
     };
   }, [messages]);
 
-  // useEffect(() => {
-  //   if (messageEndRef.current && isLast) {
-  //     messageEndRef.current.scrollIntoView({ behavior: "smooth", block: "nearest" });
-  //     setIsLast(false);
-  //   }
-  // }, [isLast]);
-
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!user) return Report.failure("로그인 후 이용하실 수 있습니다.", "", "확인");
@@ -66,6 +58,7 @@ export default function ChatForm({ postId, userId }: { postId: string; userId: s
       };
 
       const { error } = await supabase.from("chat").insert(chatInfo);
+      // 이때 알람에 insert type 'chat' user_id: user.id link:`~~/${postId}`
 
       if (error) {
         Notify.failure(`채팅 전송에 실패했습니다. ${error}`);
@@ -73,8 +66,6 @@ export default function ChatForm({ postId, userId }: { postId: string; userId: s
         setNewMessage("");
       }
     }
-
-    //setIsLast(true);
   };
 
   return (
@@ -99,7 +90,6 @@ export default function ChatForm({ postId, userId }: { postId: string; userId: s
                     </div>
                   </div>
                 ))}
-                <div ref={messageEndRef}></div>
               </div>
             </>
           ) : (

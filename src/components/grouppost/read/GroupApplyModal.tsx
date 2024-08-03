@@ -7,7 +7,7 @@ import { useAuthStore } from "@/zustand/authStore";
 import { useMutation } from "@tanstack/react-query";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { Notify } from "notiflix";
+import { Notify, Report } from "notiflix";
 import { useState } from "react";
 import DaumPostcode from "react-daum-postcode";
 import { v4 as uuidv4 } from "uuid";
@@ -38,6 +38,7 @@ function GroupApplyModal({ id, onClose }: PropsType) {
     },
     onSuccess: () => {
       onClose();
+      Report.success("신청이 완료되었습니다.", "", "확인");
       postRevalidate(`/grouppost/read/${id}`);
       router.refresh();
     },
@@ -79,21 +80,14 @@ function GroupApplyModal({ id, onClose }: PropsType) {
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center ">
+    <div className="fixed inset-0 flex items-center justify-center z-[999]">
       <div className="z-10 p-6 w-[500px] box-border bg-white rounded-2xl shadow-modal-custom">
         <div className="flex justify-end">
           <button onClick={onClose}>
-            <Image
-              src="/img/icon-delete.png"
-              alt="모달 종료 버튼"
-              width={24}
-              height={24}
-            />
+            <Image src="/img/icon-delete.png" alt="모달 종료 버튼" width={24} height={24} />
           </button>
         </div>
-        <h6 className="flex justify-center font-bold text-[32px] mb-[33px]">
-          공구 신청하기
-        </h6>
+        <h6 className="flex justify-center font-bold text-[32px] mb-[33px]">공구 신청하기</h6>
         <div className="px-9">
           <input
             className="w-full h-[47px] text-[24px] mb-[26px] border-b-2 border-black p-1"
@@ -133,29 +127,19 @@ function GroupApplyModal({ id, onClose }: PropsType) {
               setCheckBox(!checkBox);
             }}
           />
-          <label
-            className={`ml-2 font-bold ${
-              checkBox ? "text-gray-5" : "text-gray-4"
-            }`}
-          >
+          <label className={`ml-2 font-bold ${checkBox ? "text-gray-5" : "text-gray-4"}`}>
             공구 참여자 는 2024년 7월 22일 아래와 같이 서약합니다.
           </label>
-          <div
-            className={`text-[14px] mt-2 ${
-              checkBox ? "text-gray-5" : "text-gray-3"
-            }`}
-          >
+          <div className={`text-[14px] mt-2 ${checkBox ? "text-gray-5" : "text-gray-3"}`}>
             <p className="flex gap-1">
-              <span>1. </span> 공구 총대가 개인정보(이름, 주소, 전화번호)를
-              수집하는 것에 동의합니다.
+              <span>1. </span> 공구 총대가 개인정보(이름, 주소, 전화번호)를 수집하는 것에 동의합니다.
             </p>
             <p className="flex gap-1">
-              <span>2. </span> 개인정보 기입 오류 시 물건에 대한 피해, 금전적
-              피해, 불이익 등 모두 감수하며, 환불받지 못하는 사실에 동의합니다.
+              <span>2. </span> 개인정보 기입 오류 시 물건에 대한 피해, 금전적 피해, 불이익 등 모두 감수하며, 환불받지
+              못하는 사실에 동의합니다.
             </p>
             <p className="flex gap-1">
-              <span>3. </span> 본인 실수로 인한 불이익 발생 시 어떠한 이의제기도
-              하지 않을 것을 서약합니다.
+              <span>3. </span> 본인 실수로 인한 불이익 발생 시 어떠한 이의제기도 하지 않을 것을 서약합니다.
             </p>
           </div>
           <button
@@ -173,10 +157,7 @@ function GroupApplyModal({ id, onClose }: PropsType) {
           <DaumPostcode onComplete={onCompletePost}></DaumPostcode>
         </div>
       )}
-      <div
-        onClick={onClose}
-        className="fixed inset-0 bg-black bg-opacity-50"
-      ></div>
+      <div onClick={onClose} className="fixed inset-0 bg-black bg-opacity-50"></div>
     </div>
   );
 }

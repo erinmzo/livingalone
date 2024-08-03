@@ -91,9 +91,9 @@ async function GroupDetail({ params }: Props) {
             </p>
             <p className="mb-[20px] font-bold text-gray-3">{item}</p>
             {is_finished ? (
-              <button className="w-[330px] py-3 font-bold text-gray-4 text-[20px] bg-gray-2 rounded-full">
+              <div className="w-[330px] py-3 font-bold text-gray-4 text-[20px] bg-gray-2 rounded-full text-center">
                 종료된 공구템입니다.
-              </button>
+              </div>
             ) : (
               <>
                 <GroupDetailBtnList userId={user_id} id={id} achievementRate={achievementRate} />

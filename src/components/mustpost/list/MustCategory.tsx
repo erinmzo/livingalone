@@ -28,6 +28,7 @@ function MustCategory() {
         <li className="w-[90px] h-[37px] py-2 px-4 border border-gray-2 bg-gray-2 rounded-full animate-pulse"></li>
         <li className="w-[90px] h-[37px] py-2 px-4 border border-gray-2 bg-gray-2 rounded-full animate-pulse"></li>
         <li className="w-[90px] h-[37px] py-2 px-4 border border-gray-2 bg-gray-2 rounded-full animate-pulse"></li>
+        <li className="w-[90px] h-[37px] py-2 px-4 border border-gray-2 bg-gray-2 rounded-full animate-pulse"></li>
       </ul>
     );
 

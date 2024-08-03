@@ -21,7 +21,9 @@ async function MorePost({ category_id: postCategoryId, category_name, id: postId
 
   return (
     <div className="mt-[190px]">
-      <h3 className="mb-6 font-bold text-[26px] text-black">{category_name} 관련 추천템</h3>
+      <h3 className="mb-6 font-bold text-[26px] text-black">
+        <span className="text-main-7">{category_name}</span> 관련 추천템
+      </h3>
       <div>
         <ul className="grid grid-cols-1 sm:grid-cols-3 gap-[32px]">
           {latestPosts.map((post) => (
