@@ -14,12 +14,9 @@ import { Notify } from "notiflix";
 import React, { useRef, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
-const EditorModule = dynamic(
-  () => import("@/components/common/editor/EditorModule"),
-  {
-    ssr: false,
-  }
-);
+const EditorModule = dynamic(() => import("@/components/common/editor/EditorModule"), {
+  ssr: false,
+});
 
 function GroupWriteForm() {
   const router = useRouter();
@@ -44,9 +41,7 @@ function GroupWriteForm() {
       const formData = new FormData();
       formData.append("file", newGroupImage);
       const response = await insertGroupImage(formData);
-      setImgUrl(
-        `https://nqqsefrllkqytkwxfshk.supabase.co/storage/v1/object/public/groupposts/${response.path}`
-      );
+      setImgUrl(`https://nqqsefrllkqytkwxfshk.supabase.co/storage/v1/object/public/groupposts/${response.path}`);
     },
   });
 
@@ -116,9 +111,7 @@ function GroupWriteForm() {
     <InnerLayout>
       <div className="flex flex-col gap-5">
         <div className="flex items-center gap-[2px]">
-          <label className="flex-0 w-[78px] text-[18px] text-gray-3">
-            제목
-          </label>
+          <label className="flex-0 w-[78px] text-[18px] text-gray-3">제목</label>
           <input
             name="title"
             placeholder="제목을 입력하세요."
@@ -129,9 +122,7 @@ function GroupWriteForm() {
         </div>
         <div className="flex gap-[41px]">
           <div className="flex items-center gap-[2px]">
-            <label className="flex-0 w-[78px] text-[18px] text-gray-3">
-              공구기간
-            </label>
+            <label className="flex-0 w-[78px] text-[18px] text-gray-3">공구기간</label>
             <div className="flex gap-2 items-center">
               <label className="text-[14px] text-black">마감일</label>
               <input
@@ -145,9 +136,7 @@ function GroupWriteForm() {
           </div>
 
           <div className="flex items-center gap-2">
-            <label className="flex-0 w-[78px] text-[18px] text-gray-3">
-              공구인원
-            </label>
+            <label className="flex-0 w-[78px] text-[18px] text-gray-3">공구인원</label>
             <input
               name="peopleNum"
               type="number"
@@ -160,9 +149,7 @@ function GroupWriteForm() {
         </div>
 
         <div className="flex items-center gap-[2px]">
-          <label className="flex-0 w-[78px] text-[18px] text-gray-3">
-            상품이름
-          </label>
+          <label className="flex-0 w-[78px] text-[18px] text-gray-3">상품이름</label>
           <input
             name="item"
             placeholder="제품명을 입력하세요."
@@ -173,9 +160,7 @@ function GroupWriteForm() {
         </div>
 
         <div className="flex items-center gap-[2px]">
-          <label className="flex-0 w-[78px] text-[18px] text-gray-3">
-            공구가격
-          </label>
+          <label className="flex-0 w-[78px] text-[18px] text-gray-3">공구가격</label>
           <input
             name="price"
             type="number"
@@ -186,9 +171,7 @@ function GroupWriteForm() {
           />
         </div>
         <div className="flex items-center gap-[2px]">
-          <label className="flex-0 w-[78px] text-[18px] text-gray-3">
-            상품링크
-          </label>
+          <label className="flex-0 w-[78px] text-[18px] text-gray-3">상품링크</label>
           <input
             name="link"
             placeholder="(선택사항) 상품소개 페이지 링크를 넣어주세요."
@@ -198,21 +181,14 @@ function GroupWriteForm() {
           />
         </div>
         <div className="flex gap-4 items-start mb-[6px]">
-          <input
-            className="hidden"
-            id="image-file"
-            type="file"
-            onChange={addImageHandler}
-          />
+          <input className="hidden" id="image-file" type="file" onChange={addImageHandler} />
           <label
-            className="flex justify-center items-center w-[120px] ml-[78px] px-7 py-[7px] border border-gray-4 bg-gray-1 font-bold text-[12px] text-gray-4 rounded-full cursor-pointer"
+            className="flex justify-center items-center ml-[78px] px-7 py-[7px] border border-gray-4 bg-gray-1 font-bold text-[12px] text-gray-4 rounded-full cursor-pointer"
             htmlFor="image-file"
           >
             {imgUrl ? "이미지 수정" : "이미지 업로드"}
           </label>
-          {imgUrl && (
-            <Image src={imgUrl} alt="선택한 이미지" width={200} height={200} />
-          )}
+          {imgUrl && <Image src={imgUrl} alt="선택한 이미지" width={200} height={200} />}
         </div>
       </div>
       <div className="mt-[14px]">

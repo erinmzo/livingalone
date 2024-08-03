@@ -2,7 +2,7 @@
 
 import { applyItems } from "@/apis/mypage";
 import GroupPostCard from "@/components/grouppost/list/GroupPostCard";
-import { GroupApplication, GroupApplyItems } from "@/types/types";
+import { GroupApplyItems } from "@/types/types";
 import { useAuthStore } from "@/zustand/authStore";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
@@ -23,12 +23,7 @@ function ApplyItems() {
   if (isPending)
     return (
       <div className="flex justify-center items-center">
-        <Image
-          src="/img/loading-spinner.svg"
-          alt="로딩중"
-          width={200}
-          height={200}
-        />
+        <Image src="/img/loading-spinner.svg" alt="로딩중" width={200} height={200} />
       </div>
     );
 
@@ -66,17 +61,10 @@ function ApplyItems() {
               })}
             </ul>
           ) : (
-            <div className="flex flex-col justify-center items-center">
-              <Image
-                src="/img/icon-empty.png"
-                alt="empty"
-                width={100}
-                height={93.52}
-                className="mb-5"
-              />
+            <div className="flex flex-col py-[100px] justify-center items-center">
+              <Image src="/img/icon-empty.png" alt="empty" width={100} height={0} className="mb-5" />
               <div className="flex justify-center items-center text-gray-4">
-                아직 신청한 공구가 없습니다. 마음에 드는 공구가 있다면
-                신청해보세요!
+                아직 신청한 공구가 없습니다. 마음에 드는 공구가 있다면 신청해보세요!
               </div>
             </div>
           )}

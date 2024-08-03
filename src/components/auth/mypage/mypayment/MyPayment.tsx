@@ -6,7 +6,6 @@ import { useAuthStore } from "@/zustand/authStore";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
 
 function MyPayment() {
   const user = useAuthStore((state) => state.user);
@@ -35,17 +34,11 @@ function MyPayment() {
   if (isPending)
     return (
       <div className="flex justify-center items-center">
-        <Image
-          src="/img/loading-spinner.svg"
-          alt="로딩중"
-          width={200}
-          height={200}
-        />
+        <Image src="/img/loading-spinner.svg" alt="로딩중" width={200} height={200} />
       </div>
     );
 
-  if (isError)
-    return <div className="flex justify-center items-center">에러...</div>;
+  if (isError) return <div className="flex justify-center items-center">에러...</div>;
 
   const refundHandler = async (paymentId: string) => {
     const data = await refundPayment(paymentId);
@@ -76,21 +69,10 @@ function MyPayment() {
               </p>
               <div className="flex items-center gap-[10px]">
                 <Link href="/payment">
-                  <Image
-                    src="/img/luckybox-my.png"
-                    alt="럭키박스"
-                    width={62}
-                    height={62}
-                  />
+                  <Image src="/img/luckybox-my.png" alt="럭키박스" width={62} height={62} />
                 </Link>
                 <div className="flex gap-8">
-                  <div
-                    className={`text-[18px] ${
-                      myPayment.status === "CANCELLED"
-                        ? "text-gray-2"
-                        : "text-black"
-                    }`}
-                  >
+                  <div className={`text-[18px] ${myPayment.status === "CANCELLED" ? "text-gray-2" : "text-black"}`}>
                     <Link href="/payment">
                       <p className="mb-1">혼자살때 럭키박스</p>
                     </Link>
@@ -114,20 +96,12 @@ function MyPayment() {
             <div className="border-l border-gray-2 pl-8">
               <h6
                 className={`text-[12px] font-bold mb-1 ${
-                  myPayment.status === "CANCELLED"
-                    ? "text-gray-2"
-                    : "text-gray-4"
+                  myPayment.status === "CANCELLED" ? "text-gray-2" : "text-gray-4"
                 }`}
               >
                 주문자 정보
               </h6>
-              <div
-                className={`${
-                  myPayment.status === "CANCELLED"
-                    ? "text-gray-2"
-                    : "text-gray-4"
-                } text-[14px]`}
-              >
+              <div className={`${myPayment.status === "CANCELLED" ? "text-gray-2" : "text-gray-4"} text-[14px]`}>
                 <p className="mb-1">
                   {myPayment.name} | {myPayment.phone}
                 </p>
@@ -137,7 +111,10 @@ function MyPayment() {
             </div>
           </div>
         ) : (
-          <div>주문 내역이 없습니다.</div>
+          <div className="flex flex-col py-[100px] justify-center items-center">
+            <Image src="/img/icon-empty.png" alt="empty" width={100} height={0} className="mb-5" />
+            <div className="flex justify-center items-center text-gray-4">주문 내역이 없습니다.</div>
+          </div>
         )}
       </div>
     )
