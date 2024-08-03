@@ -34,7 +34,6 @@ function ApplyItems() {
 
   if (isError) return <div>에러..</div>;
 
-  console.log(applyPosts);
   return (
     user && (
       <div>
@@ -56,12 +55,12 @@ function ApplyItems() {
                       endDate={apply.group_posts.end_date}
                       postId={apply.group_posts.id}
                     />
-                    <div>
+                    {/* <div>
                       <div>{apply.user_name}</div>
                       <div>주소 : {apply.user_address}</div>
                       <div>{apply.user_detail_address}</div>
                       <div>{apply.user_phone}</div>
-                    </div>
+                    </div> */}
                   </li>
                 );
               })}
