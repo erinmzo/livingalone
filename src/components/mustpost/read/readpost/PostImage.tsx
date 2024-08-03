@@ -5,7 +5,7 @@ interface PostImageProps {
 }
 function PostImage({ img_url }: PostImageProps) {
   return (
-    <div className="mb-6 w-full">
+    <div className="mb-6 w-full lg:min-w-[680px]">
       <Image
         src={img_url}
         alt="상품이미지"
