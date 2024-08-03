@@ -12,7 +12,6 @@ function PaymentComplete({ paymentId }: { paymentId: string }) {
   const hasRun = useRef(false);
 
   const addMutation = useMutation({
-    // TODO 나중에 타입 수정
     mutationFn: async (newPayment: TNewPayment) => {
       await insertPayment(newPayment);
     },

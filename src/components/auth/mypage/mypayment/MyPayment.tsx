@@ -5,6 +5,7 @@ import { Payment, TNewPayment } from "@/types/types";
 import { useAuthStore } from "@/zustand/authStore";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 function MyPayment() {
@@ -74,12 +75,14 @@ function MyPayment() {
                 {myPayment.status === "CANCELLED" ? "환불 완료" : "결제 완료"}
               </p>
               <div className="flex items-center gap-[10px]">
-                <Image
-                  src="/img/luckybox-my.png"
-                  alt="럭키박스"
-                  width={62}
-                  height={62}
-                />
+                <Link href="/payment">
+                  <Image
+                    src="/img/luckybox-my.png"
+                    alt="럭키박스"
+                    width={62}
+                    height={62}
+                  />
+                </Link>
                 <div className="flex gap-8">
                   <div
                     className={`text-[18px] ${
@@ -88,7 +91,9 @@ function MyPayment() {
                         : "text-black"
                     }`}
                   >
-                    <p className="mb-1">혼자살때 럭키박스</p>
+                    <Link href="/payment">
+                      <p className="mb-1">혼자살때 럭키박스</p>
+                    </Link>
                     <p>
                       <span className="font-bold">1,000</span>원
                     </p>
@@ -130,11 +135,6 @@ function MyPayment() {
                 <p>{myPayment.email}</p>
               </div>
             </div>
-            {/* 디자인에 해당 내용이 들어가지 않아 임시로 주석처리 했습니다. */}
-            {/* <p>
-              상태 :{" "}
-              {myPayment.status === "CANCELLED" ? "환불 완료" : "결제 완료"}
-            </p> */}
           </div>
         ) : (
           <div>주문 내역이 없습니다.</div>
