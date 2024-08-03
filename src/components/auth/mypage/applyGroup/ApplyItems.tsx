@@ -35,10 +35,10 @@ function ApplyItems() {
         <div className="text-[24px] font-bold ml-1">신청한 공구</div>
         <div className="mt-8">
           {applyPosts.length ? (
-            <ul className="grid grid-cols-1  gap-8">
+            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-8">
               {applyPosts.map((apply) => {
                 return (
-                  <li className="flex mr-3" key={apply.id}>
+                  <li key={apply.id}>
                     <GroupPostCard
                       application={applyPosts}
                       title={apply.group_posts.title}

@@ -16,17 +16,6 @@ function Like({ postId }: LikeProps) {
   const [isLike, setIsLike] = useState<boolean>(false);
   const user = useAuthStore((state) => state.user);
   const userId = user?.id as string;
-  const {
-    data: likes = [],
-    isPending,
-    isError,
-  } = useQuery<GroupLike[]>({
-    queryKey: ["like", postId],
-    queryFn: () => getLikes(postId),
-    enabled: !!postId,
-  });
-
-  const likesCount = likes.length;
 
   const { data: myLike } = useQuery<GroupLike>({
     queryKey: ["like", userId, postId],
@@ -42,6 +31,18 @@ function Like({ postId }: LikeProps) {
     }
   }, [myLike, postId]);
 
+  const {
+    data: likes = [],
+    isPending,
+    isError,
+  } = useQuery<GroupLike[]>({
+    queryKey: ["like", postId],
+    queryFn: () => getLikes(postId),
+    enabled: !!postId,
+  });
+
+  const likesCount = likes.length;
+
   const { mutate: addLike } = useMutation({
     mutationFn: (likeData: TGroupLikeData) => insertLike(likeData),
     onMutate: async (likeData: TGroupLikeData) => {
@@ -53,7 +54,6 @@ function Like({ postId }: LikeProps) {
       queryClient.setQueryData<GroupLike[]>(["like", postId], (old) => [...(old || []), likeData as GroupLike]);
 
       setIsLike(true);
-
       return { previousLikes };
     },
     onError: (err, likeData, context) => {
@@ -61,7 +61,7 @@ function Like({ postId }: LikeProps) {
       setIsLike(false);
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["like", postId] });
+      queryClient.invalidateQueries({ queryKey: ["like", userId, postId] });
     },
   });
 
@@ -76,7 +76,6 @@ function Like({ postId }: LikeProps) {
       queryClient.setQueryData<GroupLike[]>(["like", postId], (old) =>
         old?.filter((like) => !(like.post_id === likeData.post_id && like.user_id === likeData.user_id))
       );
-
       setIsLike(false);
 
       return { previousLikes };
@@ -86,7 +85,7 @@ function Like({ postId }: LikeProps) {
       setIsLike(true);
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["like", postId] });
+      queryClient.invalidateQueries({ queryKey: ["like", userId, postId] });
     },
   });
 
