@@ -68,7 +68,6 @@ function GroupApplyModal({ id, onClose }: PropsType) {
       user_address: address,
       user_detail_address: detailAddress,
       is_paid: false,
-      // TODO 로그인 기능 완료 시 가져온 값 넣기
       user_id: user.id,
     };
     addMutation.mutate(newGroupApply);
