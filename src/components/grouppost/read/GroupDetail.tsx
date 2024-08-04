@@ -9,8 +9,8 @@ import GroupContent from "./GroupContent";
 import GroupDetailBtnList from "./GroupDetailBtnList";
 import GroupEditBtnList from "./GroupEditBtnList";
 import GroupPopularList from "./GroupPopularList";
-import KakaoShareButton from "./KakaoShareButton";
-import ShareButton from "./ShareButton";
+import KakaoShareButton from "../../common/share/KakaoShareButton";
+import ShareButton from "../../common/share/ShareButton";
 
 type Props = {
   params: { id: string };
@@ -146,16 +146,10 @@ async function GroupDetail({ params }: Props) {
               <GroupContent content={content} />
             </div>
             {/* 임시 공유 버튼 */}
-            {/* <KakaoShareButton
-              postId={data.id}
-              title={title}
-              content={content}
-              imgUrl={img_url}
-            /> */}
             <ShareButton
               postId={data.id}
               title={title}
-              content={content}
+              content={item}
               imgUrl={img_url}
             />
 

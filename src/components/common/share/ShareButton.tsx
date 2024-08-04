@@ -26,7 +26,6 @@ function ShareButton({
       </button>
       {isModalOpen && (
         <ShareModal
-          //  id={id}
           postId={postId}
           title={title}
           content={content}

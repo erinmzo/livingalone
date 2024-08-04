@@ -27,7 +27,7 @@ function ShareModal({ postId, title, content, imgUrl, onClose }: PropsType) {
         <button
           onClick={async () => {
             try {
-              navigator.clipboard.writeText(window.location.href);
+              await navigator.clipboard.writeText(window.location.href);
               Notify.success("링크가 복사되었습니다.");
             } catch (e) {
               Notify.failure("링크를 복사하지 못 했습니다.");
