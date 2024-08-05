@@ -108,7 +108,7 @@ function MyGroupPost({
             )}
           </span>
           <div
-            className="font-bold w-[250px] truncate w-[300px]"
+            className="font-bold w-[200px] truncate cursor-pointer "
             onClick={() => setIsOpen(!isOpen)}
           >
             {groupPost.title}
