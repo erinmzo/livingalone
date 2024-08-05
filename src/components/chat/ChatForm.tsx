@@ -58,7 +58,7 @@ export default function ChatForm({ postId, userId }: { postId: string; userId: s
       };
 
       const { error } = await supabase.from("chat").insert(chatInfo);
-      // 이때 알람에 insert type 'chat' user_id: user.id link:`~~/${postId}`
+      // 이때 "alarm"에 insert, type 'chat' user_id: user.id link:`~~/${postId}`
 
       if (error) {
         Notify.failure(`채팅 전송에 실패했습니다. ${error}`);
