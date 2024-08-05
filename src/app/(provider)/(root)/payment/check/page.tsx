@@ -1,11 +1,12 @@
+import Page from "@/components/common/Page/Page";
 import PaymentCheck from "@/components/payment/check/PaymentCheck";
 import React from "react";
 
 function PaymentCheckPage() {
   return (
-    <div>
+    <Page>
       <PaymentCheck />
-    </div>
+    </Page>
   );
 }
 

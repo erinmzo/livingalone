@@ -80,7 +80,7 @@ function PaymentButton({
           acceptmethod: ["SKIN(#00B8A2)"],
         },
       },
-      redirectUrl: `http://localhost:3000/payment/complete`,
+      redirectUrl: `http://localhost:3000/payment/check`,
     });
 
     if (response?.code != null) {
@@ -90,7 +90,8 @@ function PaymentButton({
 
     const paymentId = response?.paymentId;
 
-    router.push(`/payment/complete?paymentId=${paymentId}`);
+    // router.push(`/payment/complete?paymentId=${paymentId}`);
+    router.push(`/payment/check?paymentId=${paymentId}`);
   };
 
   return (
