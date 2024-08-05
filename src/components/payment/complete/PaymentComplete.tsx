@@ -40,7 +40,7 @@ function PaymentComplete({ paymentId }: { paymentId: string }) {
 
   useEffect(() => {
     if (user && !hasRun.current) {
-      getPaymentInfo();
+      // getPaymentInfo();
       hasRun.current = true;
     }
   }, [user]);

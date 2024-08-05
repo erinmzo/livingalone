@@ -4,9 +4,12 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(request: NextRequest) {
   // 공구 신청
   const newGroupApply = await request.json();
+
   try {
     const supabase = createClient();
     const { data } = await supabase.from("group_applications").insert(newGroupApply);
+
+    // 이때 "alarm"에 insert,  type 'apply' user_id: (applications 에 post_user_id 가 필요함) link:`~/mypage/mygroup/${post_user_id}`
 
     return NextResponse.json(data);
   } catch (error) {
