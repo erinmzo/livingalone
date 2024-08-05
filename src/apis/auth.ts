@@ -15,7 +15,9 @@ export async function getUser() {
     if (profile) return { data, error: profileError };
 
     if (profileError?.code === "PGRST116") {
-      await supabase.from("profiles").insert([{ user_id: userId, nickname: "혼살러" }]);
+      await supabase
+        .from("profiles")
+        .insert([{ user_id: userId, nickname: "혼살러" }]);
     }
   }
 
