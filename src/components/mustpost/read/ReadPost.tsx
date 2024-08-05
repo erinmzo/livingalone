@@ -1,3 +1,4 @@
+import ShareButton from "@/components/common/share/ShareButton";
 import Contents from "./readpost/Contents";
 import ItemInfo from "./readpost/ItemInfo";
 import PostImage from "./readpost/PostImage";
@@ -48,6 +49,12 @@ function ReadPost({
         {/* 포스팅부분 */}
         <ItemInfo item={item} location={location} price={price} name={name} />
         <Contents content={content} />
+        <ShareButton
+          postId={postId}
+          title={title}
+          content={item}
+          imgUrl={img_url}
+        />
       </div>
     </div>
   );

@@ -22,12 +22,7 @@ function WishMust() {
   if (isPending)
     return (
       <div className="flex justify-center items-center">
-        <Image
-          src="/img/loading-spinner.svg"
-          alt="로딩중"
-          width={200}
-          height={200}
-        />
+        <Image src="/img/loading-spinner.svg" alt="로딩중" width={200} height={200} />
       </div>
     );
   if (isError) return <div>에러.. </div>;
@@ -51,17 +46,9 @@ function WishMust() {
               ))}
             </ul>
           ) : (
-            <div className="flex flex-col justify-center items-center">
-              <Image
-                src="/img/icon-empty.png"
-                alt="empty"
-                width={100}
-                height={93.52}
-                className="mb-5"
-              />
-              <div className="flex justify-center items-center text-gray-4">
-                찜한 자취템이 없습니다.
-              </div>
+            <div className="flex flex-col py-[100px] justify-center items-center">
+              <Image src="/img/icon-empty.png" alt="empty" width={100} height={0} className="mb-5" />
+              <div className="flex justify-center items-center text-gray-4">찜한 자취템이 없습니다.</div>
             </div>
           )}
         </div>

@@ -35,8 +35,7 @@ function MyInformation() {
 
   const { mutate: editProfile } = useMutation({
     mutationFn: (newProfile: TProfile) => editMyProfile(userId, newProfile),
-    onSuccess: () =>
-      queryClient.invalidateQueries({ queryKey: ["profile", userId] }),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["profile", userId] }),
   });
   // 이미지
   const { mutate: uploadImageProfile } = useMutation({
@@ -44,18 +43,13 @@ function MyInformation() {
       const formData = new FormData();
       formData.append("file", profileImage);
       const response = await uploadImage(formData);
-      setImgUrl(
-        `https://nqqsefrllkqytkwxfshk.supabase.co/storage/v1/object/public/${response.fullPath}`
-      );
+      setImgUrl(`https://nqqsefrllkqytkwxfshk.supabase.co/storage/v1/object/public/${response.fullPath}`);
       return `https://nqqsefrllkqytkwxfshk.supabase.co/storage/v1/object/public/${response.fullPath}`;
     },
     onMutate: async (profileImage: File) => {
       await queryClient.cancelQueries({ queryKey: ["profile", userId] });
 
-      const previousProfile = queryClient.getQueryData<Profile>([
-        "profile",
-        userId,
-      ]);
+      const previousProfile = queryClient.getQueryData<Profile>(["profile", userId]);
 
       if (previousProfile) {
         queryClient.setQueryData(["profile", userId], {
@@ -146,9 +140,7 @@ function MyInformation() {
               className="flex gap-3 w-[73px] py-2 border border-gray-3 bg-white font-bold rounded-full mb-3 justify-center items-center "
               onClick={handleSearchAddress}
             >
-              <span className=" text-center text-[12px] text-gray-3">
-                주소변경
-              </span>
+              <span className=" text-center text-[12px] text-gray-3">주소변경</span>
             </button>
             {isPostModalOpen && (
               <div className="absolute left-0 top-[48px] border border-black  ">
@@ -156,12 +148,7 @@ function MyInformation() {
               </div>
             )}
             <div className="flex flex-col gap-2 ">
-              <Input
-                variant="underline"
-                value={address}
-                onChange={() => {}}
-                placeholder={profile?.address!}
-              />
+              <Input variant="underline" value={address} onChange={() => {}} placeholder={profile?.address!} />
               <Input
                 variant="underline"
                 value={detailAddress}
