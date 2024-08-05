@@ -2,6 +2,7 @@
 import { useAuthStore } from "@/zustand/authStore";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import Alarm from "../alarm/Alarm";
 
 function AuthHeader() {
   const router = useRouter();
@@ -13,6 +14,7 @@ function AuthHeader() {
     saveUser(null);
     router.push("/");
   };
+
   return (
     <div className="hidden sm:block">
       <ul className="container mx-auto w-full max-w-[1024px] flex items-center justify-end gap-5 py-[18px] text-[12px] text-gray-4 text-black px-[16px] lg:px-0">
@@ -33,6 +35,7 @@ function AuthHeader() {
             <li>
               <Link href="/mypage">마이페이지</Link>
             </li>
+            <Alarm />
           </>
         )}
       </ul>

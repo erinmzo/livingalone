@@ -13,7 +13,9 @@ async function MorePost({ category_id: postCategoryId, category_name, id: postId
   if (!latestPosts?.length) {
     return (
       <div className="flex flex-col justify-center items-center mt-[132px]">
-        <h3 className="pb-6 font-bold text-2xl">{category_name} 최신 게시글</h3>
+        <h3 className="pb-6 font-bold text-2xl">
+          <span className="text-main-7">{category_name} </span>최신 게시글
+        </h3>
         <div>해당 카테고리에 맞는 최신 게시글이 없습니다 🥹</div>
       </div>
     );
