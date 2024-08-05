@@ -107,18 +107,21 @@ function MyGroupPost({
               />
             )}
           </span>
-          <Link href={`/grouppost/read/${groupPost.id}`}>
-            <div className="font-bold w-[250px] truncate w-[300px]">
-              {groupPost.title}
-            </div>
-          </Link>
+          <div
+            className="font-bold w-[250px] truncate w-[300px]"
+            onClick={() => setIsOpen(!isOpen)}
+          >
+            {groupPost.title}
+          </div>
         </div>
-        <Image
-          src="/img/icon-Arrow up-black.png"
-          alt="공구템 가기"
-          width={20}
-          height={20}
-        />
+        <Link href={`/grouppost/read/${groupPost.id}`}>
+          <Image
+            src="/img/icon-Arrow up-black.png"
+            alt="공구템 가기"
+            width={20}
+            height={20}
+          />
+        </Link>
         <span className="text-[12px]">
           {groupPost.start_date} ~ {groupPost.end_date}
         </span>
