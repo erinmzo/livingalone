@@ -36,14 +36,17 @@ function ReadPost({
       <div>
         {/* 상단부분 묶기 */}
         <Title title={title} postId={postId} />
-        <UserInfo profile_image_url={profile_image_url} nickname={nickname} created_at={created_at} />
+        <UserInfo
+          profile_image_url={profile_image_url}
+          nickname={nickname}
+          created_at={created_at}
+        />
         <PostImage img_url={img_url} />
       </div>
 
       <div>
         {/* 포스팅부분 */}
         <ItemInfo item={item} location={location} price={price} name={name} />
-        <div>{/* 라인 넣기 이것도 div로 해야하나? 구분선 뭘로 하더라 */}</div>
         <Contents content={content} />
       </div>
     </div>
