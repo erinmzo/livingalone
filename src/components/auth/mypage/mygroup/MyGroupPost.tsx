@@ -113,6 +113,12 @@ function MyGroupPost({
             </div>
           </Link>
         </div>
+        <Image
+          src="/img/icon-Arrow up-black.png"
+          alt="공구템 가기"
+          width={20}
+          height={20}
+        />
         <span className="text-[12px]">
           {groupPost.start_date} ~ {groupPost.end_date}
         </span>
