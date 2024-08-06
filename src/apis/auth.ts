@@ -14,10 +14,10 @@ export async function getUser() {
 
     if (profile) return { data, error: profileError };
 
-    if (profileError?.code === "PGRST116") {
-      await supabase
-        .from("profiles")
-        .insert([{ user_id: userId, nickname: "혼살러" }]);
+    const noProfile = profileError?.code === "PGRST116";
+
+    if (noProfile) {
+      await supabase.from("profiles").insert([{ user_id: userId, nickname: "혼살러" }]);
     }
   }
 
@@ -38,7 +38,6 @@ export async function googleLogin() {
   const { error } = await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
-      redirectTo: "https://livingalone.vercel.app/",
       queryParams: {
         access_type: "offline",
         prompt: "consent",

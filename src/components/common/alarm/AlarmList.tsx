@@ -1,26 +1,53 @@
+"use client";
+import { getAlarms } from "@/apis/alarm";
+import { TAlarm } from "@/types/types";
+import { useAuthStore } from "@/zustand/authStore";
+import { useQuery } from "@tanstack/react-query";
+import AlarmItem from "./AlarmItem";
+
 function AlarmList() {
+  const user = useAuthStore((state) => state.user);
+  const userId = user?.id as string;
+
+  const {
+    data: alarms = [],
+    isPending,
+    isError,
+  } = useQuery<TAlarm[]>({
+    queryKey: ["alarm", userId],
+    queryFn: () => getAlarms(userId),
+    enabled: !!user,
+  });
+
+  if (isPending)
+    return (
+      <div className="overflow-hidden absolute right-0 top-6 border border-main-8 bg-white z-[99] text-[16px] rounded-lg w-[320px] h-[380px]">
+        <h4 className="p-2 font-bold">알림</h4>
+      </div>
+    );
+
+  if (isError)
+    return (
+      <div className="overflow-hidden absolute right-0 top-6 border border-main-8 bg-white z-[99]">
+        <ul className="flex flex-col">
+          <li className="text-[16px] w-[320px] py-5 px-8"> 에러</li>
+        </ul>
+      </div>
+    );
   return (
-    <div className="absolute right-0 top-6 border border-main-8 bg-white z-[99]">
-      <ul className="flex flex-col">
-        <li className="text-[16px] w-[320px] py-5 px-8 bg-yellow-1">
-          <span className="block font-bold text-main-7 w-[200px] truncate">
-            ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ
-          </span>
-          해당 게시글에 메세지가 왔습니다.
-        </li>
-        <li className="text-[16px]  w-[320px] py-5 px-8 bg-white">
-          <span className="block font-bold text-main-7 w-[200px] truncate">ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ</span>해당 게시글에
-          공구 신청이 왔습니다.
-        </li>
-        <li className="text-[16px]  w-[320px] py-5 px-8 bg-white">
-          <span className="block font-bold text-main-7 w-[200px] truncate">ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ</span>해당 게시글에
-          댓글이 달렸습니다.
-        </li>
-        <li className="text-[16px]  w-[320px] py-5 px-8 bg-white">
-          <span className="block font-bold text-main-7 w-[200px] truncate">ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ</span>해당 게시글에
-          공구 인원이 마감되었습니다.
-        </li>
-      </ul>
+    <div className="overflow-hidden absolute right-0 top-6 border border-main-8 bg-white z-[99] text-[16px] rounded-lg w-[320px] h-[380px] scroll-y-auto">
+      <h4 className="p-2 font-bold">알림</h4>
+      {alarms.length > 0 ? (
+        <ul className="flex flex-col justify-start">
+          {alarms.map((alarm) => (
+            <li key={alarm.id}>
+              <AlarmItem alarm={alarm} userId={userId} />
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <div className="flex w-[320px] h-[300px] justify-center items-center">알람이 없습니다.</div>
+      )}
     </div>
   );
 }

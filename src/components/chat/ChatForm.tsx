@@ -1,8 +1,11 @@
 "use client";
+import { insertAlarm } from "@/apis/alarm";
 import { createClient } from "@/supabase/client";
+import { TAddAlarm } from "@/types/types";
 import { useAuthStore } from "@/zustand/authStore";
+import { useMutation } from "@tanstack/react-query";
 import { Notify, Report } from "notiflix";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 type TChat = {
   created_at: string;
@@ -17,7 +20,6 @@ export default function ChatForm({ postId, userId }: { postId: string; userId: s
   const user = useAuthStore((state) => state.user);
   const [messages, setMessages] = useState<TChat[]>([]);
   const [newMessage, setNewMessage] = useState("");
-  const messageEndRef = useRef<HTMLDivElement | null>(null);
 
   const fetchInitialMessages = async () => {
     const { data } = await supabase
@@ -46,6 +48,10 @@ export default function ChatForm({ postId, userId }: { postId: string; userId: s
     };
   }, [messages]);
 
+  const { mutate: addAlarm } = useMutation({
+    mutationFn: (chatAlarmData: TAddAlarm) => insertAlarm(chatAlarmData),
+  });
+
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!user) return Report.failure("로그인 후 이용하실 수 있습니다.", "", "확인");
@@ -58,13 +64,22 @@ export default function ChatForm({ postId, userId }: { postId: string; userId: s
       };
 
       const { error } = await supabase.from("chat").insert(chatInfo);
-      // 이때 "alarm"에 insert, type 'chat' user_id: user.id link:`~~/${postId}`
 
       if (error) {
         Notify.failure(`채팅 전송에 실패했습니다. ${error}`);
       } else {
         setNewMessage("");
       }
+
+      const chatAlarmData = {
+        type: "chat",
+        user_id: userId,
+        group_post_id: postId,
+        must_post_id: null,
+        link: `/grouppost/read/${postId}`,
+        is_read: false,
+      };
+      addAlarm(chatAlarmData);
     }
   };
 

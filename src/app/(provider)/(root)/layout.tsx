@@ -1,5 +1,6 @@
 import Footer from "@/components/common/footer/Footer";
 import Header from "@/components/common/header/Header";
+import IsOpenProvider from "@/providers/IsOpenProvider";
 import { PropsWithChildren } from "react";
 
 async function MainLayout({ children }: PropsWithChildren) {
@@ -7,7 +8,9 @@ async function MainLayout({ children }: PropsWithChildren) {
     <div className="font-pretendard">
       <Header />
       <div className="relative">
-        <main className="pb-[5%]">{children}</main>
+        <IsOpenProvider>
+          <main className="pb-[5%]">{children}</main>
+        </IsOpenProvider>
         <Footer />
       </div>
     </div>

@@ -1,20 +1,19 @@
-import { useState } from "react";
+"use client";
+import { useIsAlarm } from "@/zustand/alarmStore";
+import { useIsOpen } from "@/zustand/isOpenStore";
 import AlarmList from "./AlarmList";
 
 function Alarm() {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [isNotice, setIsNotice] = useState<boolean>(false);
-  const handleIsOpen = () => {
-    setIsOpen((prev) => !prev);
-  };
+  const { isOpenAlarm, setIsOpenAlarm } = useIsOpen();
+  const isAlarm = useIsAlarm((state) => state.isAlarm);
 
   return (
     <li className="relative">
-      <button onClick={handleIsOpen} className="flex gap-1">
+      <button onClick={() => setIsOpenAlarm(!isOpenAlarm)} className="flex gap-1">
         알람
-        {isNotice && <span className="block w-1 h-1 bg-red-3 rounded-full"></span>}
+        {isAlarm && <span className="block w-1 h-1 bg-red-3 rounded-full"></span>}
       </button>
-      {isOpen && <AlarmList />}
+      {isOpenAlarm && <AlarmList />}
     </li>
   );
 }
