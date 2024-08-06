@@ -15,7 +15,9 @@ export async function getUser() {
     if (profile) return { data, error: profileError };
 
     if (profileError?.code === "PGRST116") {
-      await supabase.from("profiles").insert([{ user_id: userId, nickname: "혼살러" }]);
+      await supabase
+        .from("profiles")
+        .insert([{ user_id: userId, nickname: "혼살러" }]);
     }
   }
 
@@ -45,6 +47,23 @@ export async function googleLogin() {
   });
 
   if (error) return { error: "구글 로그인 실패" };
+
+  return { error };
+}
+
+export async function kakaoLogin() {
+  const supabase = createClient();
+  const { error } = await supabase.auth.signInWithOAuth({
+    provider: "kakao",
+    options: {
+      queryParams: {
+        access_type: "offline",
+        prompt: "consent",
+      },
+    },
+  });
+
+  if (error) return { error: "카카오 로그인 실패" };
 
   return { error };
 }
