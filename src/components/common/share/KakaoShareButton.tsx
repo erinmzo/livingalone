@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import React from "react";
 
 function KakaoShareButton({
@@ -38,8 +39,14 @@ function KakaoShareButton({
     });
   };
   return (
-    <button onClick={handleShareToKakao} className="p-5 bg-main-8">
-      카카오톡 공유하기
+    <button onClick={handleShareToKakao} className="">
+      <Image
+        src="/img/icon-kakao-share.png"
+        alt="카카오 공유 버튼"
+        width={56}
+        height={56}
+      />
+      <p className="text-[10px] text-black mt-1">카카오톡 공유</p>
     </button>
   );
 }
