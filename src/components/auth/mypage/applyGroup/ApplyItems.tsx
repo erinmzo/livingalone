@@ -6,6 +6,7 @@ import { GroupApplyItems } from "@/types/types";
 import { useAuthStore } from "@/zustand/authStore";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
+import Link from "next/link";
 
 function ApplyItems() {
   const user = useAuthStore((state) => state.user);
@@ -49,14 +50,16 @@ function ApplyItems() {
                   <li key={apply.id}>
                     <div className="w-[672px] h-[140px] border border-gray-2 rounded-lg flex items-center p-3">
                       <div className="flex w-[393px] h-[100px] gap-2 border-r-[1px] border-gray-2">
-                        <Image
-                          src={apply.group_posts.img_url}
-                          alt="이미지"
-                          width={100}
-                          height={100}
-                          className="rounded-lg border border-gray-2"
-                        />
-                        <div className="flex flex-col justify-center gap-1">
+                        <Link href={`/grouppost/read/${apply.post_id}`}>
+                          <Image
+                            src={apply.group_posts.img_url}
+                            alt="이미지"
+                            width={100}
+                            height={100}
+                            className="rounded-lg border border-gray-2"
+                          />
+                        </Link>
+                        <div className="flex flex-col justify-center gap-2">
                           <div className="flex gap-2">
                             <div>
                               {isFinished ? (
@@ -69,19 +72,25 @@ function ApplyItems() {
                                 </span>
                               )}
                             </div>
-                            <div>
+                            <div className="text-gray-4">
                               {apply.group_posts.start_date} ~{" "}
                               {apply.group_posts.end_date}
                             </div>
                           </div>
-                          <div>{apply.group_posts.title}</div>
-                          <div>
-                            {apply.group_posts.price.toLocaleString()}원
+                          <div className="text-black ">
+                            <div className="mb-1">
+                              {apply.group_posts.title}
+                            </div>
+                            <div>
+                              {apply.group_posts.price.toLocaleString()}원
+                            </div>
                           </div>
                         </div>
                       </div>
                       <div className="w-[227px] h-[94px] ml-5 flex flex-col justify-center">
-                        <div className="text-gray-4 mb-2">주문자 정보</div>
+                        <div className="text-gray-4 mb-2 font-bold ">
+                          주문자 정보
+                        </div>
                         <div className="text-gray-3 text-sm">
                           <div>{apply.user_name}</div>
                           <div>
