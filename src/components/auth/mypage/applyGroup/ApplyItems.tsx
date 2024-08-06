@@ -26,8 +26,6 @@ function ApplyItems() {
 
   if (isPending) return <SkeletonApplyItemsCard />;
 
-  if (isError) return <div>에러..</div>;
-
   console.log(applyPosts);
 
   return (
