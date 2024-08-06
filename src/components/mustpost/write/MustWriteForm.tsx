@@ -93,17 +93,25 @@ function MustWriteForm() {
   const day = String(today.getDate()).padStart(2, "0");
   const startDate = `${year}-${month}-${day}` as string;
 
-  const addMustPostBtn = () => {
+  const addMustPostBtn = async () => {
     if (
       !title.trim() ||
       !selectedCategoryId ||
       !itemName.trim() ||
-      !company.trim()
+      !company.trim() ||
+      !imgUrl.trim() ||
+      !price
     ) {
       Notify.failure("모든 항목을 입력해주세요");
       return;
     }
+    if (price <= 0) {
+      Notify.failure("가격을 올바른 단위로 입력해주세요.");
+    }
+
     if (!user) {
+      router.push("/login");
+      Notify.failure("로그인을 먼저 진행해주세요.");
       return;
     }
 

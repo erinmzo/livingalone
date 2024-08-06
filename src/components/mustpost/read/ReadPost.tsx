@@ -48,7 +48,6 @@ function ReadPost({
       <div>
         {/* 포스팅부분 */}
         <ItemInfo item={item} location={location} price={price} name={name} />
-        <div>{/* 라인 넣기 이것도 div로 해야하나? 구분선 뭘로 하더라 */}</div>
         <Contents content={content} />
         <ShareButton
           postId={postId}

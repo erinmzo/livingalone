@@ -122,3 +122,10 @@ export async function NewMustCategoryPost(
     .limit(3);
   return data;
 }
+
+export async function getComments(postId: string) {
+  const response = await fetch(`/api/mustpost/comments/${postId}`);
+  const data = await response.json();
+  // console.log("데이터", data);
+  return data;
+}

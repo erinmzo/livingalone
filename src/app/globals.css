@@ -27,7 +27,8 @@ li {
 
   .btn-fixed-right {
     @apply fixed bottom-8 z-50;
-    right: calc(50% - 512px);
+    right: 10%;
+    /* right: calc(50% - 512px); */
   }
 
   .pointer {
