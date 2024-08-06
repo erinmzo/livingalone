@@ -11,6 +11,7 @@ import React, { useEffect, useRef } from "react";
 
 function PaymentCheck() {
   const user = useAuthStore((state) => state.user);
+  console.log(user);
   const searchParams = useSearchParams();
   const paymentId = searchParams.get("paymentId");
   const code = searchParams.get("code");
@@ -22,11 +23,10 @@ function PaymentCheck() {
       await insertPayment(newPayment);
     },
   });
-
   useEffect(() => {
     if (user && !hasRun.current) {
       const handlePayment = async () => {
-        if (code === "FAILURE_TYPE_PG") {
+        if (code === "FAILURE_TYPE_PG" || code === "PORTONE_ERROR") {
           Notify.failure("결제가 취소되었습니다.");
           return router.push("/payment");
         }
@@ -82,7 +82,7 @@ function PaymentCheck() {
       handlePayment();
       hasRun.current = true;
     }
-  }, [code, paymentId, router]);
+  }, [user, code, paymentId, router]);
 
   return (
     <div className="flex justify-center items-center">
