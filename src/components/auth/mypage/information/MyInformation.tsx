@@ -8,7 +8,8 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Report } from "notiflix";
 import { ChangeEvent, MouseEventHandler, useState } from "react";
 import DaumPostcode from "react-daum-postcode";
-import Input from "../common/Input";
+import Input from "../../common/Input";
+import SkeletonProfile from "./SkeletonProfile";
 
 function MyInformation() {
   const queryClient = useQueryClient();
@@ -118,7 +119,7 @@ function MyInformation() {
     Report.success("변경이 완료되었습니다!", "", "확인");
   };
 
-  if (isPending) return <div>로딩 중..</div>;
+  if (isPending) return <SkeletonProfile />;
 
   return (
     <div className="flex-col w-auto grow">
