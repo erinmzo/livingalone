@@ -9,8 +9,6 @@ export async function POST(request: NextRequest) {
     const supabase = createClient();
     const { data } = await supabase.from("group_applications").insert(newGroupApply);
 
-    // 이때 "alarm"에 insert,  type 'apply' user_id: (applications 에 post_user_id 가 필요함) link:`~/mypage/mygroup/${post_user_id}`
-
     return NextResponse.json(data);
   } catch (error) {
     return NextResponse.json({ error: "데이터를 등록하는 데 실패했습니다." });

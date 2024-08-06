@@ -9,6 +9,61 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      alarm: {
+        Row: {
+          created_at: string
+          group_post_id: string | null
+          id: string
+          is_read: boolean
+          link: string
+          must_post_id: string | null
+          type: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          group_post_id?: string | null
+          id?: string
+          is_read: boolean
+          link: string
+          must_post_id?: string | null
+          type: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          group_post_id?: string | null
+          id?: string
+          is_read?: boolean
+          link?: string
+          must_post_id?: string | null
+          type?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "alarm_group_post_id_fkey"
+            columns: ["group_post_id"]
+            isOneToOne: false
+            referencedRelation: "group_posts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "alarm_must_post_id_fkey"
+            columns: ["must_post_id"]
+            isOneToOne: false
+            referencedRelation: "must_posts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "alarm_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
       chat: {
         Row: {
           created_at: string
@@ -210,34 +265,34 @@ export type Database = {
         Row: {
           content: string
           created_at: string
-          id: number
+          id: string
           post_id: string
           user_id: string
         }
         Insert: {
           content: string
           created_at?: string
-          id?: number
+          id?: string
           post_id: string
           user_id: string
         }
         Update: {
           content?: string
           created_at?: string
-          id?: number
+          id?: string
           post_id?: string
           user_id?: string
         }
         Relationships: [
           {
-            foreignKeyName: "must_comments_post_id_fkey"
+            foreignKeyName: "must_comments2_post_id_fkey"
             columns: ["post_id"]
             isOneToOne: false
             referencedRelation: "must_posts"
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "must_comments_user_id_fkey"
+            foreignKeyName: "must_comments2_user_id_fkey"
             columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "profiles"
