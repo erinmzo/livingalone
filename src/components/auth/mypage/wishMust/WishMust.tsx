@@ -5,6 +5,7 @@ import MustPostCard from "@/components/mustpost/list/MustPostCard";
 import { useAuthStore } from "@/zustand/authStore";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
+import SkeletonMust from "./SkeletonMust";
 
 function WishMust() {
   const user = useAuthStore((state) => state.user);
@@ -19,12 +20,7 @@ function WishMust() {
     queryFn: () => wishItem(userId),
   });
 
-  if (isPending)
-    return (
-      <div className="flex justify-center items-center">
-        <Image src="/img/loading-spinner.svg" alt="로딩중" width={200} height={200} />
-      </div>
-    );
+  if (isPending) return <SkeletonMust />;
   if (isError) return <div>에러.. </div>;
 
   return (
@@ -47,8 +43,16 @@ function WishMust() {
             </ul>
           ) : (
             <div className="flex flex-col py-[100px] justify-center items-center">
-              <Image src="/img/icon-empty.png" alt="empty" width={100} height={0} className="mb-5" />
-              <div className="flex justify-center items-center text-gray-4">찜한 자취템이 없습니다.</div>
+              <Image
+                src="/img/icon-empty.png"
+                alt="empty"
+                width={100}
+                height={0}
+                className="mb-5"
+              />
+              <div className="flex justify-center items-center text-gray-4">
+                찜한 자취템이 없습니다.
+              </div>
             </div>
           )}
         </div>
