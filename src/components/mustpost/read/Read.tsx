@@ -6,6 +6,7 @@ import Link from "next/link";
 import MorePost from "./MorePost";
 import MustPostAction from "./MustPostAction";
 import ReadPost from "./ReadPost";
+import Comments from "../comments/Comments";
 
 type Props = {
   params: { id: string };
@@ -27,7 +28,12 @@ async function Read({ params }: Props) {
   if (!data) {
     return (
       <div className="flex justify-center items-center">
-        <Image src="/img/loading-spinner.svg" alt="로딩중" width={200} height={200} />
+        <Image
+          src="/img/loading-spinner.svg"
+          alt="로딩중"
+          width={200}
+          height={200}
+        />
       </div>
     );
   }
@@ -62,6 +68,7 @@ async function Read({ params }: Props) {
             name={name}
             postId={id}
           />
+          <Comments postId={id} />
           <MustPostAction id={id} userId={user_id} />
         </div>
       </InnerLayout>

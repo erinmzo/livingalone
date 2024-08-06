@@ -8,6 +8,12 @@ export type MustWish = Tables<"must_wishes">;
 export type MustComment = Tables<"must_comments">;
 export type MustCategory = Tables<"must_categories">;
 
+export type MustComments = Tables<"must_comments"> & {
+  profiles: Pick<Profile, "nickname" | "profile_image_url">;
+} & {
+  must_post: Pick<MustPost, "id" | "user_id">;
+};
+
 export type TNewMustPost = Omit<MustPost, "created_at">;
 
 export type TMainMustPost = Pick<MustPost, "id" | "title" | "item" | "img_url">;
