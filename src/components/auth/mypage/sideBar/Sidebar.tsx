@@ -6,6 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import SkeletonSideBar from "./SkeletonSideBar";
 
 function SideBar() {
   const user = useAuthStore((state) => state.user);
@@ -28,12 +29,7 @@ function SideBar() {
     enabled: !!user,
   });
 
-  if (isPending)
-    return (
-      <div className="flex justify-center items-center">
-        <Image src="/img/loading-spinner.svg" alt="로딩중" width={200} height={200} />
-      </div>
-    );
+  if (isPending) return <SkeletonSideBar />;
 
   if (profile)
     return (
@@ -48,14 +44,18 @@ function SideBar() {
               height={100}
             />
           </div>
-          <div className="text-[16px] font-bold text-center w-full h-[19px]">{profile?.nickname}</div>
+          <div className="text-[16px] font-bold text-center w-full h-[19px]">
+            {profile?.nickname}
+          </div>
         </div>
         <ul className="flex flex-col gap-[24px] items-start">
           {links.map((link) => (
             <li
               key={link.href}
               className={`text-[18px] hover:text-gray-5 hover:font-bold transition-all ${
-                pathname === link.href ? " text-gray-5 font-bold" : "text-gray-2"
+                pathname === link.href
+                  ? " text-gray-5 font-bold"
+                  : "text-gray-2"
               }`}
             >
               <Link href={link.href}>{link.label}</Link>
