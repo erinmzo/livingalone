@@ -5,15 +5,18 @@ import { TNewPayment } from "@/types/types";
 import { useAuthStore } from "@/zustand/authStore";
 import { useMutation } from "@tanstack/react-query";
 import Image from "next/image";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { Notify } from "notiflix";
 import React, { useEffect, useRef } from "react";
 
-function PaymentCheck() {
+function PaymentCheck({
+  paymentId,
+  code,
+}: {
+  paymentId: string;
+  code: string;
+}) {
   const user = useAuthStore((state) => state.user);
-  const searchParams = useSearchParams();
-  const paymentId = searchParams.get("paymentId");
-  const code = searchParams.get("code");
   const router = useRouter();
   const hasRun = useRef(false);
 
@@ -22,11 +25,10 @@ function PaymentCheck() {
       await insertPayment(newPayment);
     },
   });
-
   useEffect(() => {
     if (user && !hasRun.current) {
       const handlePayment = async () => {
-        if (code === "FAILURE_TYPE_PG") {
+        if (code === "FAILURE_TYPE_PG" || code === "PORTONE_ERROR") {
           Notify.failure("결제가 취소되었습니다.");
           return router.push("/payment");
         }
@@ -82,7 +84,7 @@ function PaymentCheck() {
       handlePayment();
       hasRun.current = true;
     }
-  }, [code, paymentId, router]);
+  }, [user, code, paymentId, router]);
 
   return (
     <div className="flex justify-center items-center">

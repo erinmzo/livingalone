@@ -14,6 +14,7 @@ import PaymentButton from "./PaymentButton";
 
 function PaymentForm() {
   const user = useAuthStore((state) => state.user);
+  console.log(user);
   const userId = user?.id as string;
   const {
     data: profile,
