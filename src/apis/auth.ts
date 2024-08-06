@@ -56,7 +56,6 @@ export async function kakaoLogin() {
   const { error } = await supabase.auth.signInWithOAuth({
     provider: "kakao",
     options: {
-      redirectTo: "https://livingalone.vercel.app/",
       queryParams: {
         access_type: "offline",
         prompt: "consent",
@@ -65,5 +64,6 @@ export async function kakaoLogin() {
   });
 
   if (error) return { error: "카카오 로그인 실패" };
+
   return { error };
 }

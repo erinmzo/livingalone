@@ -46,7 +46,8 @@ const LoginForm = () => {
 
   const handleKakaoLogin = async () => {
     const { error } = await kakaoLogin();
-    if (error) return Report.failure("카카오 로그인 실패", "", "확인");
+    if (error)
+      return Report.failure("카카오 로그인에 실패했습니다.", "", "확인");
   };
 
   return (
@@ -98,7 +99,12 @@ const LoginForm = () => {
           />
           구글 간편로그인
         </button>
-        <button onClick={handleKakaoLogin}>카카오 간편로그인</button>
+        <button
+          className="flex items-center justify-center w-[500px] py-2 text-xl border border-gray-2 rounded-3xl font-medium"
+          onClick={handleKakaoLogin}
+        >
+          카카오 간편로그인
+        </button>
       </div>
     </div>
   );
