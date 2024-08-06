@@ -1,18 +1,25 @@
-import { createClient } from "@/supabase/client";
+import { createClient } from "@/supabase/server";
 import { NextRequest, NextResponse } from "next/server";
 
+// 댓글 가져오기
 export async function GET(
   request: NextRequest,
-  { params }: { params: { commentId: string } }
+  // 상세 페이지가 있는 경우..만 사용
+  { params }: { params: { postId: string } }
 ) {
   //상세 가져오기
-  const { commentId } = params;
+  const { postId } = params;
   const supabase = createClient();
   try {
     const { data } = await supabase
       .from("must_comments")
-      .select(`*, profiles(nickname, profile_img_url), must_post(id)`)
-      .eq("id", commentId);
+      .select("*, must_posts(*), profiles(*)")
+      // must_posts(id, user_id), profiles(nickname, profile_img_url)
+      .eq("post_id", postId);
+
+    // console.log(postId);
+
+    // console.log("라우트 핸들러 데이터", data);
     return NextResponse.json(data);
   } catch (error) {
     return NextResponse.json({ error: "댓글을 가져오는데 실패했습니다." });
