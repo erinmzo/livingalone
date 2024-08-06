@@ -53,13 +53,13 @@ function GroupPostCard({
             )}
             <div
               className={`text-[14px] ${
-                isFinished ? "text-gray-2" : "text-gray-4"
+                isFinished ? "text-gray-2" : "text-gray-3"
               }`}
             >
               <span>{startDate}</span> ~ <span>{endDate}</span>
             </div>
           </div>
-          <h4 className="text-[20px] truncate mt-[6px]">{title}</h4>
+          <h4 className="text-[24px] font-bold truncate mt-[6px]">{title}</h4>
           <div className="flex items-baseline gap-2 mt-[6px]">
             <span
               className={`${

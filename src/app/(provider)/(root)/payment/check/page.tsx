@@ -2,10 +2,17 @@ import Page from "@/components/common/Page/Page";
 import PaymentCheck from "@/components/payment/check/PaymentCheck";
 import React from "react";
 
-function PaymentCheckPage() {
+function PaymentCheckPage({
+  searchParams,
+}: {
+  searchParams: { paymentId: string; code: string };
+}) {
   return (
     <Page>
-      <PaymentCheck />
+      <PaymentCheck
+        paymentId={searchParams.paymentId as string}
+        code={searchParams.code as string}
+      />
     </Page>
   );
 }
