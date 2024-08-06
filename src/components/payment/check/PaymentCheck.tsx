@@ -5,16 +5,18 @@ import { TNewPayment } from "@/types/types";
 import { useAuthStore } from "@/zustand/authStore";
 import { useMutation } from "@tanstack/react-query";
 import Image from "next/image";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { Notify } from "notiflix";
 import React, { useEffect, useRef } from "react";
 
-function PaymentCheck() {
+function PaymentCheck({
+  paymentId,
+  code,
+}: {
+  paymentId: string;
+  code: string;
+}) {
   const user = useAuthStore((state) => state.user);
-  console.log(user);
-  const searchParams = useSearchParams();
-  const paymentId = searchParams.get("paymentId");
-  const code = searchParams.get("code");
   const router = useRouter();
   const hasRun = useRef(false);
 
