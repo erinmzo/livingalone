@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import ShareModal from "./ShareModal";
+import Image from "next/image";
 
 function ShareButton({
   postId,
@@ -21,8 +22,15 @@ function ShareButton({
         onClick={() => {
           setIsModalOpen(true);
         }}
+        className="w-[120px] py-[10px] flex items-center justify-center gap-[6px] border border-main-8 rounded-full"
       >
-        공유하기 버튼
+        <Image
+          src="/img/icon-share.png"
+          alt="공유 이미지"
+          width={16}
+          height={22}
+        />
+        <p className="text-main-8 text-[20px]">공유</p>
       </button>
       {isModalOpen && (
         <ShareModal
