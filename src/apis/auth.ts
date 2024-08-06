@@ -38,7 +38,6 @@ export async function googleLogin() {
   const { error } = await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
-      redirectTo: "https://livingalone.vercel.app/",
       queryParams: {
         access_type: "offline",
         prompt: "consent",
@@ -47,6 +46,23 @@ export async function googleLogin() {
   });
 
   if (error) return { error: "구글 로그인 실패" };
+
+  return { error };
+}
+
+export async function kakaoLogin() {
+  const supabase = createClient();
+  const { error } = await supabase.auth.signInWithOAuth({
+    provider: "kakao",
+    options: {
+      queryParams: {
+        access_type: "offline",
+        prompt: "consent",
+      },
+    },
+  });
+
+  if (error) return { error: "카카오 로그인 실패" };
 
   return { error };
 }
