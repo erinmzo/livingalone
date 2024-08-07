@@ -1,6 +1,6 @@
 import React from "react";
 
-const SkeletonMust: React.FC = () => {
+const SkeletonMust = () => {
   return (
     <div className="relative animate-pulse">
       <div className="w-32 h-8 bg-gray-2 rounded mb-6"></div>
