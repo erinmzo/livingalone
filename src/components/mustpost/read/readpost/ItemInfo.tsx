@@ -9,9 +9,9 @@ interface ItemInfoProps {
 
 function ItemInfo({ item, price, location, name }: ItemInfoProps) {
   return (
-    <div className="flex flex-col gap-3 px-2 py-4 border-b-[1px] border-gray-2">
+    <div className="flex flex-col gap-3 px-2 py-3">
       <div>
-        <span className="inline-flex justify-center w-[73px] py-[6px] px-[15px] border border-main-8 rounded-full font-bold text-xs text-main-8">
+        <span className="inline-flex justify-center w-[73px] py-[8px] px-[16px] bg-main-7 rounded-full font-bold text-xs text-gray-1">
           {name}
         </span>
       </div>
