@@ -7,11 +7,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import SkeletonSideBar from "./SkeletonSideBar";
+import { useState } from "react";
 
 function SideBar() {
   const user = useAuthStore((state) => state.user);
   const userId = user?.id as string;
   const pathname = usePathname();
+  const [isOpen, setIsOpen] = useState(false);
 
   const links = [
     { href: `/mypage`, label: "나의 정보" },

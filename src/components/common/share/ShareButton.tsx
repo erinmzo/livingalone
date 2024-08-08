@@ -22,11 +22,7 @@ function ShareButton({
         onClick={() => {
           setIsModalOpen(true);
         }}
-<<<<<<< HEAD
         className="w-[120px] py-[10px] flex items-center justify-center gap-[6px] bg-main-1 border border-main-8 rounded-full"
-=======
-        className="w-[120px] py-[9px] flex items-center justify-center gap-[6px] border border-main-8 rounded-full"
->>>>>>> 7b80bb298a6dabdb18081b1961ce140eb25a0c59
       >
         <Image
           src="/img/icon-share.png"

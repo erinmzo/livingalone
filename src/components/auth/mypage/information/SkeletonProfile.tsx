@@ -1,6 +1,6 @@
 import React from "react";
 
-const SkeletonProfile: React.FC = () => {
+const SkeletonProfile = () => {
   return (
     <div className="animate-pulse flex flex-col gap-8">
       <div className="w-32 h-8 bg-gray-2 rounded"></div>
