@@ -118,23 +118,40 @@ function MyInformation() {
     e.preventDefault();
     const newProfile = {
       nickname: nickname.trim() ? nickname : profile?.nickname,
-      profile_image_url: imgUrl || profile?.profile_image_url,
+      profile_image_url: imgUrl ?? profile?.profile_image_url,
       address: address || profile?.address,
       detail_address: detailAddress || profile?.detail_address,
     };
 
-    const isChanged =
-      !!nickname.trim() || !!imgFile || !!address || !!detailAddress;
+    // !imgUrl => 기존 이미지를 씀
+    const isEmpty = !imgFile || !address;
+    // (nickname.trim() && nickname !== profile?.nickname) ||
+    // (imgFile && imgUrl !== profile?.profile_image_url) ||
+    // (address && address !== profile?.address) ||
+    // (detailAddress && detailAddress !== profile?.detail_address);
 
-    if (!isChanged) {
-      if (!nickname.trim()) {
-        return Report.warning("닉네임 공백", "닉네임을 적어주세요!", "확인");
-      } else if (nickname.length > 8) {
-        return Report.warning("닉네임 길이", "8자 이하로 적어주세요", "확인");
-      }
-      Report.info("변경된 내용이 없습니다.", "", "확인");
-      return;
+    // console.log(imgFile, imgUrl, imgUrl !== profile?.profile_image_url);
+    // if (isEmpty) {
+    if (isEmpty && (nickname.trim() === "" || nickname === profile?.nickname)) {
+      return Report.info("변경된 내용이 없습니다.", "", "확인");
+    } else if (nickname !== profile?.nickname && nickname.trim() === "") {
+      return Report.warning("닉네임 공백", "닉네임을 적어주세요!", "확인");
     }
+    // }
+
+    // if (isEmpty) {
+    //   console.log(1);
+    //   return Report.info("변경된 내용이 없습니다.", "", "확인");
+    // } else if (nickname !== profile?.nickname && !nickname) {
+    //   console.log(2);
+    //   return Report.info("변경된 내용이 없습니다.", "", "확인");
+    // } else if (nickname !== profile?.nickname && nickname.trim() === "") {
+    //   console.log(3, nickname.trim(), nickname);
+    //   return Report.warning("닉네임 공백", "닉네임을 적어주세요!", "확인");
+    // } else if (nickname.length > 8) {
+    //   console.log(4);
+    //   return Report.warning("닉네임 길이", "8자 이하로 적어주세요", "확인");
+    // }
 
     editProfile(newProfile);
   };
@@ -152,7 +169,7 @@ function MyInformation() {
                 variant="default"
                 label="닉네임"
                 placeholder={profile?.nickname}
-                value={nickname}
+                value={nickname ?? profile?.nickname}
                 name="nickname"
                 onChange={onChangeInput}
               />
