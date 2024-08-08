@@ -7,7 +7,7 @@ function GlobalNav() {
       <ul className="flex gap-[34px] items-center text-[20px] font-bold">
         <li>
           <Link href="/mustpost" className="hover:text-main-7">
-            구해줘 자취템
+            자랑해 자취템
           </Link>
         </li>
         <li>
