@@ -139,3 +139,13 @@ export async function insertComment(newComment: TComment) {
   const data = await response.json();
   return data;
 }
+
+export async function deleteMustComment(commentId: string) {
+  await fetch(`/api/mustpost/comments`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json", // 헤더 추가
+    },
+    body: JSON.stringify(commentId),
+  });
+}

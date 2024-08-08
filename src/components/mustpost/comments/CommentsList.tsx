@@ -4,6 +4,7 @@ import { MustComments } from "@/types/types";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import React from "react";
+import CommentDeleteBtn from "./CommentDeleteBtn";
 
 function CommentsList({ postId }: { postId: string }) {
   const {
@@ -72,6 +73,7 @@ function CommentsList({ postId }: { postId: string }) {
               </div>
               <div>
                 <span>{comment.content}</span>
+                <CommentDeleteBtn commentId={comment.id} postId={postId} />
               </div>
             </div>
           </div>
