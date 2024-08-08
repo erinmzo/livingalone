@@ -1,11 +1,12 @@
 "use client";
 
+import { ElementRef } from "react";
 import { editMyProfile, getMyProfile, uploadImage } from "@/apis/mypage";
 import { useInputChange } from "@/hooks/useInput";
 import { useAuthStore } from "@/zustand/authStore";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Report } from "notiflix";
-import { ChangeEvent, MouseEventHandler, useState } from "react";
+import { ChangeEvent, MouseEventHandler, useRef, useState } from "react";
 import DaumPostcode from "react-daum-postcode";
 import Input from "../../common/Input";
 import SkeletonProfile from "./SkeletonProfile";
@@ -20,6 +21,8 @@ function MyInformation() {
   const [address, setAddress] = useState<string>("");
   const [imgFile, setImgFile] = useState<File | null>();
   const [imgUrl, setImgUrl] = useState<string>("");
+  // ref 선언
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const {
     values: input,
@@ -47,6 +50,10 @@ function MyInformation() {
     onSettled: () => {
       reset();
       setImgFile(null);
+      // 5. null이 아니면 원래 들어있던 값을 비운다
+      if (inputRef.current) {
+        inputRef.current.value = "";
+      }
     },
   });
 
@@ -180,6 +187,8 @@ function MyInformation() {
                 placeholder="사진변경"
                 label="프로필 사진 변경"
                 onChange={(e) => handleUploadImage(e)}
+                // 2. ref 전달
+                ref={inputRef}
               />
             </div>
           </div>
