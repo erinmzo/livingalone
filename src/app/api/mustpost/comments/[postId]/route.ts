@@ -4,10 +4,8 @@ import { NextRequest, NextResponse } from "next/server";
 // 댓글 가져오기
 export async function GET(
   request: NextRequest,
-  // 상세 페이지가 있는 경우..만 사용
   { params }: { params: { postId: string } }
 ) {
-  //상세 가져오기
   const { postId } = params;
   const supabase = createClient();
   try {

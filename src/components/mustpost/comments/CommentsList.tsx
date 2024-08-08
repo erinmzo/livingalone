@@ -14,7 +14,7 @@ function CommentsList({ postId }: { postId: string }) {
     queryKey: ["comments", postId],
     queryFn: () => getComments(postId),
   });
-  console.log(comments);
+  // console.log(comments);
 
   if (isPending) {
     return (
@@ -29,28 +29,28 @@ function CommentsList({ postId }: { postId: string }) {
     );
   }
 
-  if (!comments || comments.length === 0) {
-    <div className="flex flex-col py-[100px] justify-center items-center">
-      <Image
-        src="/img/icon-empty.png"
-        alt="empty"
-        width={100}
-        height={0}
-        className="mb-5"
-      />
-      <div className="flex justify-center items-center text-gray-4">
-        아직 작성된 댓글이 없습니다. 첫 댓글을 작성해보세요!
-      </div>
-    </div>;
-  }
+  // if (!comments || comments.length === 0) {
+  //   <div className="flex flex-col py-[100px] justify-center items-center">
+  //     <Image
+  //       src="/img/icon-empty.png"
+  //       alt="empty"
+  //       width={100}
+  //       height={0}
+  //       className="mb-5"
+  //     />
+  //     <div className="flex justify-center items-center text-gray-4">
+  //       아직 작성된 댓글이 없습니다. 첫 댓글을 작성해보세요!
+  //     </div>
+  //   </div>;
+  // }
 
-  if (isError) {
-    return (
-      <div className="flex justify-center items-center">
-        데이터를 불러오는데 실패했습니다!
-      </div>
-    );
-  }
+  // if (isError) {
+  //   return (
+  //     <div className="flex justify-center items-center">
+  //       데이터를 불러오는데 실패했습니다!
+  //     </div>
+  //   );
+  // }
 
   return (
     <div>
@@ -66,7 +66,9 @@ function CommentsList({ postId }: { postId: string }) {
             <div>
               <div>
                 <span>{comment.profiles.nickname}</span>
-                <span>{comment.created_at}</span>
+                <span>
+                  {comment.created_at.split("T").join(" ").substring(0, 16)}
+                </span>
               </div>
               <div>
                 <span>{comment.content}</span>

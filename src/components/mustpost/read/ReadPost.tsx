@@ -48,13 +48,16 @@ function ReadPost({
       <div>
         {/* 포스팅부분 */}
         <ItemInfo item={item} location={location} price={price} name={name} />
+        <div className="pl-2 pb-4 border-b-[1px] border-gray-2">
+          <ShareButton
+            postId={postId}
+            title={title}
+            content={item}
+            imgUrl={img_url}
+          />
+        </div>
+
         <Contents content={content} />
-        <ShareButton
-          postId={postId}
-          title={title}
-          content={item}
-          imgUrl={img_url}
-        />
       </div>
     </div>
   );
