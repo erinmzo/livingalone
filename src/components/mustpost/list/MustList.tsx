@@ -59,7 +59,7 @@ function MustList() {
       </div>
       {mustPosts.length > 0 ? (
         <div className="w-full min-h-screen flex-col items-center justify-center">
-          <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {mustPosts.map((post) => (
               <li key={post.id} className="mb-[64px]">
                 <MustPostCard postId={post.id} title={post.title} item={post.item} imgUrl={post.img_url} />

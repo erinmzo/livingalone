@@ -1,6 +1,6 @@
-"use client";
-
 import TopButton from "@/components/common/button/TopButton";
+import MobileHeader from "@/components/common/header/MobileHeader";
+import MobileNav from "@/components/common/header/MobileNav";
 import Banner from "@/components/main/common/Banner";
 import JoinMarketing from "@/components/main/common/JoinMarketing";
 import GroupSection from "@/components/main/group/GroupSection";
@@ -11,7 +11,8 @@ import MustVisual from "@/components/main/must/MustVisual";
 function HomePage() {
   return (
     <>
-      <div className="pb-[300px]">
+      <MobileHeader />
+      <main className="pb-[300px]">
         <MustVisual />
         <MustSection />
         <GroupVisual />
@@ -19,7 +20,8 @@ function HomePage() {
         <Banner />
         <JoinMarketing />
         <TopButton />
-      </div>
+      </main>
+      <MobileNav />
     </>
   );
 }
