@@ -1,6 +1,6 @@
 import React from "react";
 
-const GroupPostCardSkeleton: React.FC = () => {
+const GroupPostCardSkeleton = () => {
   return (
     <div className="relative text-gray-2 animate-pulse">
       <div className="w-32 h-8 bg-gray-2 rounded mb-6"></div>

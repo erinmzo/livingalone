@@ -1,6 +1,6 @@
 import React from "react";
 
-const SkeletonApplyItemsCard: React.FC = () => {
+const SkeletonApplyItemsCard = () => {
   return (
     <div className="w-[672px] h-[140px] border border-gray-2 rounded-lg flex items-center p-3 animate-pulse">
       <div className="flex w-[393px] h-[100px] gap-2 border-r-[1px] border-gray-2">
