@@ -58,13 +58,10 @@ export async function kakaoLogin() {
   const { error } = await supabase.auth.signInWithOAuth({
     provider: "kakao",
     options: {
-      redirectTo: "http://localhost:3000/",
-      queryParams: {
-        access_type: "offline",
-        prompt: "consent",
-      },
+      redirectTo: process.env.NEXT_PUBLIC_SITE_URL,
     },
   });
+  console.log({ error });
 
   if (error) return { error: "카카오 로그인 실패" };
 
