@@ -4,7 +4,7 @@ import { getMustPostAll, getMustPostbyCategory } from "@/apis/mustpost";
 import { useCategoryStore } from "@/zustand/mustStore";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import Image from "next/image";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import SearchBar from "../search/SearchBar";
 import MustCategory from "./MustCategory";
 import MustPostCard from "./MustPostCard";
@@ -12,6 +12,7 @@ import Title from "./Title";
 
 function MustList() {
   const selectedCategory = useCategoryStore((state) => state.selectedCategory);
+  const setSelectedCategory = useCategoryStore((state) => state.setSelectedCategory);
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isPending, isError, refetch } = useInfiniteQuery({
     queryKey: ["mustPosts", selectedCategory],
     queryFn: async ({ pageParam = 0 }) => {
@@ -33,6 +34,10 @@ function MustList() {
   });
 
   const mustPosts = useMemo(() => data?.pages?.flatMap((page) => page.posts) || [], [data]);
+
+  useEffect(() => {
+    return setSelectedCategory("ALL");
+  }, []);
 
   if (isPending)
     return (

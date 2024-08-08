@@ -1,22 +1,19 @@
 "use client";
+import { useIsOpen } from "@/zustand/isOpenStore";
 import Link from "next/link";
-import { useState } from "react";
 
 function WriteButton() {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-  const handleIsOpen = () => {
-    setIsOpen((prev) => !prev);
-  };
+  const { isOpenWriteButton, setIsOpenWriteButton } = useIsOpen();
 
   return (
     <div className="relative ml-[34px] hidden sm:block">
       <button
         className="rounded-full py-[10px] px-[22px] border border-main-7 bg-main-7 text-[20px] text-white font-bold hover:bg-white hover:text-main-8 hover:border-main-8"
-        onClick={handleIsOpen}
+        onClick={() => setIsOpenWriteButton(!isOpenWriteButton)}
       >
         글쓰기
       </button>
-      {isOpen && (
+      {isOpenWriteButton && (
         <ul className="z-50 absolute right-[14px] top-[50px] w-[120px] border border-main-7">
           <li className="bg-white text-gray-3 text-[14px] hover:bg-main-7 hover:text-white text-center">
             <Link href="/mustpost/write" className="block py-[10px] ">
