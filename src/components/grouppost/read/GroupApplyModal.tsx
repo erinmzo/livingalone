@@ -28,6 +28,13 @@ function GroupApplyModal({ id, onClose }: PropsType) {
   const [detailAddress, setDetailAddress] = useState<string>("");
   const [checkBox, setCheckBox] = useState<boolean>(false);
 
+  // 유효성 검사 useState
+  const [error, setError] = useState({
+    phoneError: "",
+    nameError: "",
+    addressError: "",
+  });
+
   const handleSearchAddress = () => {
     setIsPostModalOpen((prev) => !prev);
   };
@@ -45,13 +52,32 @@ function GroupApplyModal({ id, onClose }: PropsType) {
   });
 
   const addGroupApplyHandler = async () => {
-    const phoneCheck = /^01([0|1|6|7|8|9])-([0-9]{3,4})-([0-9]{4})$/;
-    if (!phoneCheck.test(phone)) {
-      Notify.failure("전화번호는 01X-XXXX-XXXX 형식으로 작성해주세요.");
+    setError({
+      phoneError: "",
+      nameError: "",
+      addressError: "",
+    });
+
+    if (!name.trim()) {
+      setError((prev) => ({
+        ...prev,
+        nameError: "이름을 입력해주세요.",
+      }));
       return;
     }
-    if (!name.trim() || !phone.trim() || !address.trim()) {
-      Notify.failure("상세 주소를 제외한 입력창을 모두 채워주세요.");
+    const phoneCheck = /^01([0|1|6|7|8|9])-([0-9]{3,4})-([0-9]{4})$/;
+    if (!phoneCheck.test(phone)) {
+      setError((prev) => ({
+        ...prev,
+        phoneError: "010-XXXX-XXXX 형식으로 입력해주세요.",
+      }));
+      return;
+    }
+    if (!address.trim()) {
+      setError((prev) => ({
+        ...prev,
+        addressError: "주소를 검색하고 등록해주세요.",
+      }));
       return;
     }
     if (!checkBox) {
@@ -84,23 +110,37 @@ function GroupApplyModal({ id, onClose }: PropsType) {
       <div className="z-10 p-6 w-[500px] box-border bg-white rounded-2xl shadow-modal-custom">
         <div className="flex justify-end">
           <button onClick={onClose}>
-            <Image src="/img/icon-delete.png" alt="모달 종료 버튼" width={24} height={24} />
+            <Image
+              src="/img/icon-delete.png"
+              alt="모달 종료 버튼"
+              width={24}
+              height={24}
+            />
           </button>
         </div>
-        <h6 className="flex justify-center font-bold text-[32px] mb-[33px]">공구 신청하기</h6>
+        <h6 className="flex justify-center font-bold text-[32px] mb-[33px]">
+          공구 신청하기
+        </h6>
         <div className="px-9">
+          <div className="mb-[26px]">
+            <input
+              className="w-full h-[47px] text-[24px] border-b-2 border-black p-1"
+              placeholder="입금자명"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+            {error.nameError !== "" && (
+              <p className={`text-red-3 mt-1`}>{error.nameError}</p>
+            )}
+          </div>
+
           <input
-            className="w-full h-[47px] text-[24px] mb-[26px] border-b-2 border-black p-1"
-            placeholder="입금자명"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-          <input
-            className="w-full h-[47px] text-[24px] mb-[44px] border-b-2 border-black p-1"
-            placeholder="+82"
+            className="w-full h-[47px] text-[24px] border-b-2 border-black p-1"
+            placeholder="010-0000-0000"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
           />
+          <div className={`text-red-3 mb-[44px]`}>{error.phoneError}</div>
           <button
             className="py-2 px-4 text-[12px] font-bold text-gray-3 border border-gray-3 rounded-full mb-3"
             onClick={handleSearchAddress}
@@ -108,11 +148,12 @@ function GroupApplyModal({ id, onClose }: PropsType) {
             주소검색
           </button>
           <input
-            className="w-full h-[47px] text-[24px] mb-2 border-b-2 border-black p-1"
+            className="w-full h-[47px] text-[24px] border-b-2 border-black p-1"
             placeholder="주소"
             value={address}
             readOnly
           />
+          <div className={`text-red-3 mb-2`}>{error.addressError}</div>
           <input
             className="w-full h-[47px] text-[24px] mb-[40px] border-b-2 border-black p-1"
             placeholder="상세 주소"
@@ -127,19 +168,29 @@ function GroupApplyModal({ id, onClose }: PropsType) {
               setCheckBox(!checkBox);
             }}
           />
-          <label className={`ml-2 font-bold ${checkBox ? "text-gray-5" : "text-gray-4"}`}>
+          <label
+            className={`ml-2 font-bold ${
+              checkBox ? "text-gray-5" : "text-gray-4"
+            }`}
+          >
             공구 참여자 는 2024년 7월 22일 아래와 같이 서약합니다.
           </label>
-          <div className={`text-[14px] mt-2 ${checkBox ? "text-gray-5" : "text-gray-3"}`}>
+          <div
+            className={`text-[14px] mt-2 ${
+              checkBox ? "text-gray-5" : "text-gray-3"
+            }`}
+          >
             <p className="flex gap-1">
-              <span>1. </span> 공구 총대가 개인정보(이름, 주소, 전화번호)를 수집하는 것에 동의합니다.
+              <span>1. </span> 공구 총대가 개인정보(이름, 주소, 전화번호)를
+              수집하는 것에 동의합니다.
             </p>
             <p className="flex gap-1">
-              <span>2. </span> 개인정보 기입 오류 시 물건에 대한 피해, 금전적 피해, 불이익 등 모두 감수하며, 환불받지
-              못하는 사실에 동의합니다.
+              <span>2. </span> 개인정보 기입 오류 시 물건에 대한 피해, 금전적
+              피해, 불이익 등 모두 감수하며, 환불받지 못하는 사실에 동의합니다.
             </p>
             <p className="flex gap-1">
-              <span>3. </span> 본인 실수로 인한 불이익 발생 시 어떠한 이의제기도 하지 않을 것을 서약합니다.
+              <span>3. </span> 본인 실수로 인한 불이익 발생 시 어떠한 이의제기도
+              하지 않을 것을 서약합니다.
             </p>
           </div>
           <button
@@ -157,7 +208,10 @@ function GroupApplyModal({ id, onClose }: PropsType) {
           <DaumPostcode onComplete={onCompletePost}></DaumPostcode>
         </div>
       )}
-      <div onClick={onClose} className="fixed inset-0 bg-black bg-opacity-50"></div>
+      <div
+        onClick={onClose}
+        className="fixed inset-0 bg-black bg-opacity-50"
+      ></div>
     </div>
   );
 }

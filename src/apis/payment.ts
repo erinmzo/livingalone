@@ -35,5 +35,7 @@ export async function getMyPayment(userId: string) {
 }
 
 export async function getPaymentAll() {
-  await fetch("/api/payment");
+  const response = await fetch("/api/payment");
+  const data = await response.json();
+  return data;
 }
