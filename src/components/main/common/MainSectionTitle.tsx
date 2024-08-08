@@ -8,7 +8,7 @@ type MainSectionTitleProps = {
 };
 function MainSectionTitle({ title, content, link }: MainSectionTitleProps) {
   return (
-    <div className="flex justify-center md:justify-between items-end pb-[24px] sm:px-[16px] lg:px-0">
+    <div className="flex justify-center md:justify-between items-end pb-[24px] md:px-[16px] lg:px-0">
       <div className="md:ml-[4px] w-[200px] md:w-full text-center md:text-left">
         <h3 className="text-[26px] font-bold">{title}</h3>
         <p className="text-[14px] text-gray-4 mt-1">{content}</p>

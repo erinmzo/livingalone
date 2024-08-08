@@ -4,7 +4,7 @@ import AlarmItem from "./AlarmItem";
 
 function AlarmList({ alarms, userId }: { alarms: TAlarm[]; userId: string }) {
   return (
-    <div className="overflow-hidden absolute right-0 top-6 border border-main-8 bg-white z-[99] text-[16px] rounded-lg w-[320px] h-[380px] scroll-y-auto">
+    <div className="overflow-hidden absolute right-0 top-6 border border-main-8 bg-white text-[16px] rounded-lg w-[320px] h-[380px] scroll-y-auto z-[99]">
       <h4 className="p-2 font-bold">알림</h4>
       {alarms.length > 0 ? (
         <ul className="flex flex-col justify-start">

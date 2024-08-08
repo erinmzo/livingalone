@@ -6,7 +6,7 @@ function WriteButton() {
   const { isOpenWriteButton, setIsOpenWriteButton } = useIsOpen();
 
   return (
-    <div className="relative ml-[34px] hidden sm:block">
+    <div className="relative ml-[34px] hidden md:block">
       <button
         className="rounded-full py-[10px] px-[22px] border border-main-7 bg-main-7 text-[20px] text-white font-bold hover:bg-white hover:text-main-8 hover:border-main-8"
         onClick={() => setIsOpenWriteButton(!isOpenWriteButton)}
