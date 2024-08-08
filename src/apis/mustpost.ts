@@ -1,5 +1,5 @@
 import { createClient } from "@/supabase/client";
-import { MustPost, TMustWishData, TNewMustPost } from "@/types/types";
+import { MustPost, TComment, TMustWishData, TNewMustPost } from "@/types/types";
 
 export async function getMustPostOnMain() {
   const response = await fetch("/api/main/must", {
@@ -127,5 +127,15 @@ export async function getComments(postId: string) {
   const response = await fetch(`/api/mustpost/comments/${postId}`);
   const data = await response.json();
   // console.log("데이터", data);
+  return data;
+}
+
+export async function insertComment(newComment: TComment) {
+  const response = await fetch(`/api/mustpost/comments`, {
+    method: "POST",
+    body: JSON.stringify(newComment),
+  });
+
+  const data = await response.json();
   return data;
 }
