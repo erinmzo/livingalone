@@ -18,10 +18,14 @@ function MyInformation() {
 
   const [isPostModalOpen, setIsPostModalOpen] = useState<boolean>(false);
   const [address, setAddress] = useState<string>("");
-  const [imgFile, setImgFile] = useState<any>();
+  const [imgFile, setImgFile] = useState<File | null>();
   const [imgUrl, setImgUrl] = useState<string>("");
 
-  const { values: input, handler: onChangeInput } = useInputChange({
+  const {
+    values: input,
+    handler: onChangeInput,
+    reset,
+  } = useInputChange({
     nickname: "",
     detailAddress: "",
   });
@@ -39,6 +43,10 @@ function MyInformation() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["profile", userId] });
       Report.success("변경이 완료되었습니다!", "", "확인");
+    },
+    onSettled: () => {
+      reset();
+      setImgFile(null);
     },
   });
 
@@ -90,27 +98,29 @@ function MyInformation() {
   const handleUploadImage = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const file = e.target.files[0];
-      const fileType = file.type;
-      const fileSize = file.size;
+      if (file) {
+        const fileType = file.type;
+        const fileSize = file.size;
 
-      if (fileType !== "image/jpeg" && fileType !== "image/png") {
-        Report.warning(
-          "유효하지 않은 파일 형식",
-          "JPG 또는 PNG 파일만 업로드 가능합니다.",
-          "확인"
-        );
-        return;
-      } else if (fileSize > 2 * 1024 * 1024) {
-        Report.warning(
-          "파일 용량 초과",
-          "파일 용량은 2MB 이하로 제한됩니다.",
-          "확인"
-        );
-        return;
+        if (fileType !== "image/jpeg" && fileType !== "image/png") {
+          Report.warning(
+            "유효하지 않은 파일 형식",
+            "JPG 또는 PNG 파일만 업로드 가능합니다.",
+            "확인"
+          );
+          return;
+        } else if (fileSize > 2 * 1024 * 1024) {
+          Report.warning(
+            "파일 용량 초과",
+            "파일 용량은 2MB 이하로 제한됩니다.",
+            "확인"
+          );
+          return;
+        }
+
+        setImgFile(file);
+        uploadImageProfile(file);
       }
-
-      setImgFile(file);
-      uploadImageProfile(file);
     }
   };
 
@@ -118,40 +128,29 @@ function MyInformation() {
     e.preventDefault();
     const newProfile = {
       nickname: nickname.trim() ? nickname : profile?.nickname,
-      profile_image_url: imgUrl ?? profile?.profile_image_url,
+      profile_image_url: !imgUrl ? profile?.profile_image_url : imgUrl,
       address: address || profile?.address,
-      detail_address: detailAddress || profile?.detail_address,
+      detail_address: !detailAddress ? profile?.detail_address : detailAddress,
     };
 
-    // !imgUrl => 기존 이미지를 씀
-    const isEmpty = !imgFile || !address;
-    // (nickname.trim() && nickname !== profile?.nickname) ||
-    // (imgFile && imgUrl !== profile?.profile_image_url) ||
-    // (address && address !== profile?.address) ||
-    // (detailAddress && detailAddress !== profile?.detail_address);
+    const isEmpty = !imgFile && !detailAddress && !nickname;
 
-    // console.log(imgFile, imgUrl, imgUrl !== profile?.profile_image_url);
-    // if (isEmpty) {
-    if (isEmpty && (nickname.trim() === "" || nickname === profile?.nickname)) {
+    if (isEmpty) {
       return Report.info("변경된 내용이 없습니다.", "", "확인");
-    } else if (nickname !== profile?.nickname && nickname.trim() === "") {
+    }
+
+    if (nickname === profile?.nickname) {
+      return Report.info("변경된 내용이 없습니다.", "", "확인");
+    }
+
+    if (
+      nickname !== profile?.nickname &&
+      nickname.trim() === "" &&
+      !imgFile &&
+      !detailAddress
+    ) {
       return Report.warning("닉네임 공백", "닉네임을 적어주세요!", "확인");
     }
-    // }
-
-    // if (isEmpty) {
-    //   console.log(1);
-    //   return Report.info("변경된 내용이 없습니다.", "", "확인");
-    // } else if (nickname !== profile?.nickname && !nickname) {
-    //   console.log(2);
-    //   return Report.info("변경된 내용이 없습니다.", "", "확인");
-    // } else if (nickname !== profile?.nickname && nickname.trim() === "") {
-    //   console.log(3, nickname.trim(), nickname);
-    //   return Report.warning("닉네임 공백", "닉네임을 적어주세요!", "확인");
-    // } else if (nickname.length > 8) {
-    //   console.log(4);
-    //   return Report.warning("닉네임 길이", "8자 이하로 적어주세요", "확인");
-    // }
 
     editProfile(newProfile);
   };
