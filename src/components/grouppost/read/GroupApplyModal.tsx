@@ -122,27 +122,27 @@ function GroupApplyModal({ id, onClose }: PropsType) {
           공구 신청하기
         </h6>
         <div className="px-9">
-          <div className="mb-[26px]">
-            <input
-              className="w-full h-[47px] text-[24px] border-b-2 border-black p-1"
-              placeholder="입금자명"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-            {error.nameError !== "" && (
-              <p className={`text-red-3 mt-1`}>{error.nameError}</p>
-            )}
-          </div>
-
           <input
             className="w-full h-[47px] text-[24px] border-b-2 border-black p-1"
+            placeholder="입금자명"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+          {error.nameError && (
+            <p className={`text-red-3 mt-2`}>{error.nameError}</p>
+          )}
+
+          <input
+            className="w-full h-[47px] mt-[26px] text-[24px] border-b-2 border-black p-1"
             placeholder="010-0000-0000"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
           />
-          <div className={`text-red-3 mb-[44px]`}>{error.phoneError}</div>
+          {error.phoneError && (
+            <p className={`text-red-3 mt-2`}>{error.phoneError}</p>
+          )}
           <button
-            className="py-2 px-4 text-[12px] font-bold text-gray-3 border border-gray-3 rounded-full mb-3"
+            className="py-2 px-4 mt-[44px] text-[12px] font-bold text-gray-3 border border-gray-3 rounded-full mb-3"
             onClick={handleSearchAddress}
           >
             주소검색
@@ -153,9 +153,11 @@ function GroupApplyModal({ id, onClose }: PropsType) {
             value={address}
             readOnly
           />
-          <div className={`text-red-3 mb-2`}>{error.addressError}</div>
+          {error.addressError && (
+            <p className={`text-red-3 mt-2`}>{error.addressError}</p>
+          )}
           <input
-            className="w-full h-[47px] text-[24px] mb-[40px] border-b-2 border-black p-1"
+            className="w-full h-[47px] text-[24px] mt-2 mb-[40px] border-b-2 border-black p-1"
             placeholder="상세 주소"
             value={detailAddress}
             onChange={(e) => setDetailAddress(e.target.value)}
