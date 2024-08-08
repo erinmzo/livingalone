@@ -17,7 +17,9 @@ export async function getUser() {
     const noProfile = profileError?.code === "PGRST116";
 
     if (noProfile) {
-      await supabase.from("profiles").insert([{ user_id: userId, nickname: "혼살러" }]);
+      await supabase
+        .from("profiles")
+        .insert([{ user_id: userId, nickname: "혼살러" }]);
     }
   }
 
@@ -56,13 +58,10 @@ export async function kakaoLogin() {
   const { error } = await supabase.auth.signInWithOAuth({
     provider: "kakao",
     options: {
-      redirectTo: "https://nqqsefrllkqytkwxfshk.supabase.co/auth/v1/callback",
-      queryParams: {
-        access_type: "offline",
-        prompt: "consent",
-      },
+      redirectTo: process.env.NEXT_PUBLIC_SITE_URL,
     },
   });
+  console.log({ error });
 
   if (error) return { error: "카카오 로그인 실패" };
 
