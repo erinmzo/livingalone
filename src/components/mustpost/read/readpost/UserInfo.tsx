@@ -6,10 +6,6 @@ interface UserInfoProps {
   created_at: string;
 }
 function UserInfo({ profile_image_url, nickname, created_at }: UserInfoProps) {
-  const offset = new Date().getTimezoneOffset() * 60000;
-  const date = new Date(new Date(created_at).getTime() - offset);
-  const formattedDate = date.toISOString().split("T")[0];
-
   return (
     <div className="flex flex-row items-center gap-2 ml-[2px] mb-[10px]">
       <Image
@@ -21,7 +17,9 @@ function UserInfo({ profile_image_url, nickname, created_at }: UserInfoProps) {
       />
       <div className="flex flex-col">
         <span className="text-[16px] text-black">{nickname}</span>
-        <span className="text-[14px] text-gray-3">{formattedDate}</span>
+        <span className="text-[14px] text-gray-3">
+          {created_at.split("T").join(" ").substring(0, 10)}
+        </span>
       </div>
     </div>
   );
