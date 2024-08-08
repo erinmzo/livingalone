@@ -65,6 +65,13 @@ function GroupApplyModal({ id, onClose }: PropsType) {
       }));
       return;
     }
+    if (name.length === 1) {
+      setError((prev) => ({
+        ...prev,
+        nameError: "이름을 두 글자 이상 입력해주세요.",
+      }));
+      return;
+    }
     const phoneCheck = /^01([0|1|6|7|8|9])-([0-9]{3,4})-([0-9]{4})$/;
     if (!phoneCheck.test(phone)) {
       setError((prev) => ({
@@ -134,7 +141,7 @@ function GroupApplyModal({ id, onClose }: PropsType) {
 
           <input
             className="w-full h-[47px] mt-[26px] text-[24px] border-b-2 border-black p-1"
-            placeholder="010-0000-0000"
+            placeholder="010-XXXX-XXXX"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
           />

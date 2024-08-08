@@ -17,6 +17,7 @@ import { useCategoryStore } from "@/zustand/mustStore";
 import { EditorProps } from "@toast-ui/react-editor";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
+import { mustValidation } from "../common/MustValidation";
 
 const EditorModule = dynamic(
   () => import("@/components/common/editor/EditorModule"),
@@ -37,6 +38,15 @@ function MustWriteForm() {
   const [selectedCategoryName, setSelectedCategoryName] =
     useState<string>("선택");
   const [selectedCategoryId, setSelectedCategoryId] = useState<string>("");
+
+  const [error, setError] = useState({
+    titleError: "",
+    categoryError: "",
+    itemNameError: "",
+    companyError: "",
+    priceError: "",
+    imageUrlError: "",
+  });
 
   const { values: input, handler: onChangeInput } = useInputChange({
     title: "",
@@ -76,6 +86,11 @@ function MustWriteForm() {
 
   const addImageHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
+    setError((prev) => ({
+      ...prev,
+      imageUrlError: "",
+    }));
+
     if (e.target.files) {
       const newMustPostImage = e.target.files[0];
 
@@ -94,21 +109,18 @@ function MustWriteForm() {
   const startDate = `${year}-${month}-${day}` as string;
 
   const addMustPostBtn = async () => {
-    if (
-      !title.trim() ||
-      !selectedCategoryId ||
-      !itemName.trim() ||
-      !company.trim() ||
-      !imgUrl.trim() ||
-      !price
-    ) {
-      Notify.failure("모든 항목을 입력해주세요");
+    const isValid = mustValidation(
+      setError,
+      title,
+      selectedCategoryId,
+      itemName,
+      company,
+      price,
+      imgUrl
+    );
+    if (!isValid) {
       return;
     }
-    if (price <= 0) {
-      Notify.failure("가격을 올바른 단위로 입력해주세요.");
-    }
-
     if (!user) {
       router.push("/login");
       Notify.failure("로그인을 먼저 진행해주세요.");
@@ -144,12 +156,15 @@ function MustWriteForm() {
           placeHolder="제목을 입력해주세요"
           minLength={2}
           onchangeValue={onChangeInput}
+          error={error.titleError}
         />
+        {/* <p className={`text-red-3 text-[12px] mt-2`}>d에러메세지</p> */}
 
         <div className="flex flex-row justify-between gap-2">
           <SelectCategory
             selectCategory={selectCategory}
             initialCategoryName={selectedCategoryName}
+            error={error.categoryError}
           />
           <div className="pl-[72px] flex-grow">
             <InputField
@@ -170,6 +185,7 @@ function MustWriteForm() {
           placeHolder="상품 이름을 입력해주세요."
           minLength={2}
           onchangeValue={onChangeInput}
+          error={error.itemNameError}
         />
 
         <InputField
@@ -180,6 +196,7 @@ function MustWriteForm() {
           placeHolder="구매처를 입력해주세요."
           minLength={1}
           onchangeValue={onChangeInput}
+          error={error.companyError}
         />
 
         <InputField
@@ -190,6 +207,7 @@ function MustWriteForm() {
           placeHolder="숫자만 입력해주세요"
           minLength={2}
           onchangeValue={onChangeInput}
+          error={error.priceError}
         />
         <div className="flex gap-4 items-start">
           <input
@@ -204,6 +222,12 @@ function MustWriteForm() {
           >
             {imgUrl ? "이미지 수정" : "이미지 업로드"}
           </label>
+          {error.imageUrlError && (
+            <p className={`text-red-3 text-[12px] mt-2`}>
+              {error.imageUrlError}
+            </p>
+          )}
+
           {imgUrl && (
             <Image
               src={imgUrl}
