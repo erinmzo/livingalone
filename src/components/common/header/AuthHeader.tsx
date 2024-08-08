@@ -2,6 +2,7 @@
 import { useAuthStore } from "@/zustand/authStore";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { Notify } from "notiflix";
 import Alarm from "../alarm/Alarm";
 
 function AuthHeader() {
@@ -12,6 +13,7 @@ function AuthHeader() {
   const handleLogout = async () => {
     await fetch("/api/auth/logout", { method: "DELETE" });
     saveUser(null);
+    Notify.success("로그아웃이 되었습니다.");
     router.push("/");
   };
 

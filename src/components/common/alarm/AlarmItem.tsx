@@ -1,20 +1,11 @@
 "use client";
 import { updateIsRead } from "@/apis/alarm";
 import { TAlarm, TEditAlarm } from "@/types/types";
-import { useIsAlarm } from "@/zustand/alarmStore";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Link from "next/link";
-import { useEffect } from "react";
 
 function AlarmItem({ alarm, userId }: { alarm: TAlarm; userId: string }) {
   const queryClient = useQueryClient();
-  const setIsAlarm = useIsAlarm((state) => state.setIsAlarm);
-
-  useEffect(() => {
-    if (alarm.is_read === false) {
-      setIsAlarm(true);
-    }
-  }, [alarm.is_read]);
 
   const { mutate: setIsRead } = useMutation({
     mutationFn: (editAlarm: TEditAlarm) => updateIsRead(editAlarm),
@@ -31,6 +22,7 @@ function AlarmItem({ alarm, userId }: { alarm: TAlarm; userId: string }) {
       setIsRead(editAlarm);
     }
   };
+  
   return (
     <button
       className={`block w-full py-5 px-8 ${alarm.is_read ? " bg-white" : " bg-yellow-1"} text-left`}
