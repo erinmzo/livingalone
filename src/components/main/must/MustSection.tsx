@@ -28,7 +28,7 @@ function MustSection() {
   return (
     <div className="container mx-auto max-w-[1024px] pt-[58px] pb-[153px]">
       <MainSectionTitle
-        title="구해줘 자취템"
+        title="자랑해 자취템"
         content="자취에 필요한 다양한 아이템을 자랑하고 추천해보세요"
         link="/mustpost"
       />
