@@ -16,6 +16,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Notify } from "notiflix";
 import React, { useEffect, useRef, useState } from "react";
+import { groupValidation } from "../common/GroupValidation";
 
 const EditorModule = dynamic(
   () => import("@/components/common/editor/EditorModule"),
@@ -28,6 +29,14 @@ function GroupEditForm({ params }: { params: { id: string } }) {
   const { id } = params;
   const router = useRouter();
   const editorRef = useRef<EditorProps>(null);
+
+  const [error, setError] = useState({
+    titleError: "",
+    endDateError: "",
+    peopleNumError: "",
+    itemError: "",
+    imageUrlError: "",
+  });
 
   const {
     data: groupPost,
@@ -115,20 +124,16 @@ function GroupEditForm({ params }: { params: { id: string } }) {
     },
   });
 
-  const addGroupPostHandler = async () => {
-    if (
-      !title.trim() ||
-      !startDate.trim() ||
-      !endDate.trim() ||
-      !imgUrl.trim() ||
-      !content.trim() ||
-      !item.trim()
-    ) {
-      Notify.failure("관련 링크를 제외한 모든 값을 입력해주세요.");
-      return;
-    }
-    if (peopleNum > 30) {
-      Notify.failure("최대 공구 인원은 30명까지입니다.");
+  const editGroupPostHandler = async () => {
+    const isValid = groupValidation(
+      setError,
+      title,
+      endDate,
+      peopleNum,
+      item,
+      imgUrl
+    );
+    if (!isValid) {
       return;
     }
 
@@ -172,64 +177,93 @@ function GroupEditForm({ params }: { params: { id: string } }) {
   return (
     <InnerLayout>
       <div className="flex flex-col gap-5">
-        <div className="flex items-center gap-[2px]">
-          <label className="flex-0 w-[78px] text-[18px] text-gray-3">
+        <div className="flex gap-[2px]">
+          <label className="flex-0 w-[78px] h-[38px] flex items-center text-[18px] text-gray-3">
             제목
           </label>
-          <input
-            name="title"
-            placeholder="제목을 입력하세요."
-            value={title}
-            onChange={onChangeInput}
-            className="flex-1 pl-[2px] px-[2px] py-[5px] border-b-[1px] border-gray-3 font-bold text-[18px] text-black leading-normal  placeholder:text-gray-2 outline-none"
-          />
+          <div className="flex-1 w-full">
+            <input
+              name="title"
+              placeholder="제목을 입력하세요."
+              value={title}
+              onChange={onChangeInput}
+              className="w-full pl-[2px] px-[2px] py-[5px] border-b-[1px] border-gray-3 font-bold text-[18px] text-black leading-normal  placeholder:text-gray-2 outline-none"
+            />
+            {error.titleError && (
+              <p className={`text-red-3 text-[12px] mt-2`}>
+                {error.titleError}
+              </p>
+            )}
+          </div>
         </div>
         <div className="flex gap-[41px]">
-          <div className="flex items-center gap-[2px]">
-            <label className="flex-0 w-[78px] text-[18px] text-gray-3">
+          <div className="flex gap-[2px]">
+            <label className="flex-0 w-[78px]  h-[38px] flex items-center text-[18px] text-gray-3">
               공구기간
             </label>
-            <div className="flex gap-2 items-center">
-              <label className="text-[14px] text-black">마감일</label>
-              <input
-                name="endDate"
-                type="date"
-                value={endDate}
-                onChange={onChangeInput}
-                className="border-b-[1px] border-gray-3 py-2 px-[2px] text-[18px] font-bold text-black outline-none"
-              />
+            <div className="flex gap-2">
+              <label className="h-[38px] flex items-center text-[14px] text-black">
+                마감일
+              </label>
+              <div>
+                <input
+                  name="endDate"
+                  type="date"
+                  value={endDate}
+                  onChange={onChangeInput}
+                  className="border-b-[1px] border-gray-3 py-2 px-[2px] text-[18px] font-bold text-black outline-none"
+                />
+                {error.endDateError && (
+                  <p className={`text-red-3 text-[12px] mt-2`}>
+                    {error.endDateError}
+                  </p>
+                )}
+              </div>
             </div>
           </div>
-          <div className="flex items-center gap-2">
-            <label className="flex-0 w-[78px] text-[18px] text-gray-3">
+
+          <div className="flex gap-2">
+            <label className="flex-0 w-[78px]  h-[38px] flex items-center text-[18px] text-gray-3">
               공구인원
             </label>
-            <input
-              name="peopleNum"
-              type="number"
-              placeholder="숫자만 입력해주세요."
-              value={peopleNum}
-              onChange={onChangeInput}
-              className="w-[100px] pl-[2px] px-[2px] py-2 border-b border-gray-3 text-[18px] font-bold text-black outline-none"
-            />
+            <div>
+              <input
+                name="peopleNum"
+                type="number"
+                placeholder="숫자만 입력해주세요."
+                value={peopleNum}
+                onChange={onChangeInput}
+                className="w-[100px] pl-[2px] px-[2px] py-2 border-b border-gray-3 text-[18px] font-bold text-black outline-none"
+              />
+              {error.peopleNumError && (
+                <p className={`text-red-3 text-[12px] mt-2`}>
+                  {error.peopleNumError}
+                </p>
+              )}
+            </div>
           </div>
         </div>
 
-        <div className="flex items-center gap-[2px]">
-          <label className="flex-0 w-[78px] text-[18px] text-gray-3">
+        <div className="flex gap-[2px]">
+          <label className="flex-0 w-[78px] h-[38px] flex items-center text-[18px] text-gray-3">
             상품이름
           </label>
-          <input
-            name="item"
-            placeholder="제품명을 입력하세요."
-            value={item}
-            onChange={onChangeInput}
-            className="flex-1 pl-[2px] px-[2px] py-[5px] border-b-[1px] border-gray-3 font-bold text-[18px] text-black leading-normal placeholder:text-gray-2 outline-none"
-          />
+          <div className="flex-1 w-full">
+            <input
+              name="item"
+              placeholder="제품명을 입력하세요."
+              value={item}
+              onChange={onChangeInput}
+              className="w-full pl-[2px] px-[2px] py-[5px] border-b-[1px] border-gray-3 font-bold text-[18px] text-black leading-normal placeholder:text-gray-2 outline-none"
+            />
+            {error.itemError && (
+              <p className={`text-red-3 text-[12px] mt-2`}>{error.itemError}</p>
+            )}
+          </div>
         </div>
 
-        <div className="flex items-center gap-[2px]">
-          <label className="flex-0 w-[78px] text-[18px] text-gray-3">
+        <div className="flex gap-[2px]">
+          <label className="flex-0 w-[78px] h-[38px] flex items-center text-[18px] text-gray-3">
             공구가격
           </label>
           <input
@@ -241,8 +275,8 @@ function GroupEditForm({ params }: { params: { id: string } }) {
             className="flex-1 pl-[2px] px-[2px] py-[5px] border-b-[1px] border-gray-3 font-bold text-[18px] text-black leading-normal placeholder:text-gray-2 outline-none"
           />
         </div>
-        <div className="flex items-center gap-[2px]">
-          <label className="flex-0 w-[78px] text-[18px] text-gray-3">
+        <div className="flex gap-[2px]">
+          <label className="flex-0 w-[78px] h-[38px] flex items-center text-[18px] text-gray-3">
             상품링크
           </label>
           <input
@@ -266,20 +300,25 @@ function GroupEditForm({ params }: { params: { id: string } }) {
           >
             {imgUrl ? "이미지 수정" : "이미지 업로드"}
           </label>
+          {error.imageUrlError && (
+            <p className={`text-red-3 text-[12px] mt-2`}>
+              {error.imageUrlError}
+            </p>
+          )}
           {imgUrl && (
             <Image src={imgUrl} alt="선택한 이미지" width={200} height={200} />
           )}
         </div>
       </div>
       <div className="mt-[14px]">
-        <EditorModule editorRef={editorRef} initialValue={groupPost.content} />
+        <EditorModule editorRef={editorRef} />
       </div>
       <div className="flex justify-center">
         <button
           className="bg-main-8 w-[300px] py-[10px] text-white rounded-full font-bold text-[20px] mt-[64px]"
-          onClick={addGroupPostHandler}
+          onClick={editGroupPostHandler}
         >
-          수정 완료
+          포스팅 하기
         </button>
       </div>
     </InnerLayout>
