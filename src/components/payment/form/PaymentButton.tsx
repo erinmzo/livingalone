@@ -4,7 +4,7 @@ import { refundPayment } from "@/apis/payment";
 import PortOne from "@portone/browser-sdk/v2";
 import { useRouter } from "next/navigation";
 import { Notify } from "notiflix";
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 type TPaymentInput = {
@@ -19,6 +19,7 @@ function PaymentButton({
   purchaserEmail,
   firstCheckBox,
   secondCheckBox,
+  setError,
 }: {
   input: TPaymentInput;
   purchaserAddress: string;
@@ -26,32 +27,64 @@ function PaymentButton({
   purchaserDetailAddress: string;
   firstCheckBox: boolean;
   secondCheckBox: boolean;
+  setError: Dispatch<
+    SetStateAction<{
+      nameError: string;
+      phoneError: string;
+      emailError: string;
+      addressError: string;
+    }>
+  >;
 }) {
   const { purchaserName, purchaserPhone } = input;
 
   const router = useRouter();
 
   const paymentHandler = async () => {
-    if (
-      !purchaserName.trim() ||
-      !purchaserPhone.trim() ||
-      !purchaserEmail.trim() ||
-      !purchaserAddress.trim() ||
-      !purchaserDetailAddress.trim()
-    ) {
-      Notify.failure("빈 칸을 모두 채워주세요.");
+    setError({
+      nameError: "",
+      phoneError: "",
+      emailError: "",
+      addressError: "",
+    });
+    if (!purchaserName.trim()) {
+      setError((prev) => ({
+        ...prev,
+        nameError: "성함은 필수 입력입니다.",
+      }));
+      return;
+    }
+    if (!purchaserPhone.trim()) {
+      setError((prev) => ({
+        ...prev,
+        phoneError: "연락처는 필수 입력입니다.",
+      }));
       return;
     }
     const phone_regex = /^01([0|1|6|7|8|9])-([0-9]{3,4})-([0-9]{4})$/;
     if (!phone_regex.test(purchaserPhone)) {
-      Notify.failure("전화번호는 01X-XXXX-XXXX 형식으로 작성해주세요.");
+      setError((prev) => ({
+        ...prev,
+        phoneError: "전화번호는 01X-XXXX-XXXX 형식으로 작성해주세요.",
+      }));
+      return;
+    }
+    if (!purchaserEmail.trim()) {
+      setError((prev) => ({
+        ...prev,
+        emailError: "이메일은 필수 입력입니다.",
+      }));
       return;
     }
     const email_regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
     if (!email_regex.test(purchaserEmail)) {
-      Notify.failure("이메일을 정확히 입력해주세요.");
+      setError((prev) => ({
+        ...prev,
+        emailError: "이메일을 정확히 입력해주세요.",
+      }));
       return;
     }
+
     if (!firstCheckBox || !secondCheckBox) {
       Notify.failure("체크박스를 모두 체크해주세요.");
       return;
@@ -90,7 +123,6 @@ function PaymentButton({
 
     const paymentId = response?.paymentId;
 
-    // router.push(`/payment/complete?paymentId=${paymentId}`);
     router.push(`/payment/check?paymentId=${paymentId}`);
   };
 

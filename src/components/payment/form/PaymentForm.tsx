@@ -38,6 +38,13 @@ function PaymentForm() {
     purchaserPhone: "",
   });
 
+  const [error, setError] = useState({
+    nameError: "",
+    phoneError: "",
+    emailError: "",
+    addressError: "",
+  });
+
   const { purchaserName, purchaserPhone } = input;
 
   const onCompletePost = (data: { address: string }) => {
@@ -80,15 +87,17 @@ function PaymentForm() {
             value={purchaserName}
             name="purchaserName"
             onChange={onChangeInput}
+            error={error.nameError}
           />
 
           <Input
             variant="default"
             label="연락처"
-            placeholder="주문자의 연락처를 입력해주세요"
+            placeholder="010-XXXX-XXXX"
             value={purchaserPhone}
             name="purchaserPhone"
             onChange={onChangeInput}
+            error={error.phoneError}
           />
 
           <Input
@@ -98,6 +107,7 @@ function PaymentForm() {
             value={purchaserEmail}
             name="purchaserEmail"
             onChange={(e) => setPurchaserEmail(e.target.value)}
+            error={error.emailError}
           />
         </div>
 
@@ -114,6 +124,7 @@ function PaymentForm() {
             value={purchaserAddress}
             name="recipientAddress"
             readOnly={true}
+            error={error.emailError}
           />
 
           <Input
@@ -157,6 +168,7 @@ function PaymentForm() {
           purchaserEmail={purchaserEmail}
           firstCheckBox={firstCheckBox}
           secondCheckBox={secondCheckBox}
+          setError={setError}
         />
         {isPostModalOpen && (
           <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
