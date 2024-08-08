@@ -2,7 +2,7 @@
 import { useInputChange } from "@/hooks/useInput";
 import { useRouter } from "next/navigation";
 import { Notify } from "notiflix";
-import React from "react";
+import React, { useState } from "react";
 import Input from "../../common/Input";
 
 const JoinForm = () => {
@@ -14,13 +14,22 @@ const JoinForm = () => {
     password: "",
     passwordConfirm: "",
   });
-
+  const [error, setError] = useState({
+    emailError: "",
+    passwordError: "",
+    passwordConfirmError: "",
+  });
   const { nickname, email, password, passwordConfirm } = input;
 
   const joinData = { nickname, email, password };
 
   const handleSubmitJoin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setError({
+      emailError: "",
+      passwordError: "",
+      passwordConfirmError: "",
+    });
 
     const response = await fetch("/api/auth/join", {
       method: "POST",
@@ -32,19 +41,38 @@ const JoinForm = () => {
     const data = await response.json();
 
     if (data.message === "Unable to validate email address: invalid format") {
-      return Notify.failure("이메일 형식으로 입력해주세요.");
+      setError((prev) => ({
+        ...prev,
+        emailError: "이메일 형식으로 입력해주세요.",
+      }));
+      return;
     }
 
     if (data.message === "User already registered") {
-      return Notify.failure("이미 등록된 이메일 입니다.");
+      setError((prev) => ({
+        ...prev,
+        emailError: "이미 등록된 이메일 입니다.",
+      }));
+      return;
     }
 
-    if (data.message === "Password should be at least 6 characters.") {
-      return Notify.failure("비밀번호는 6자리 이상되어야 합니다.");
+    if (
+      data.message === "Password should be at least 6 characters." ||
+      password.length === 0
+    ) {
+      setError((prev) => ({
+        ...prev,
+        passwordError: "비밀번호는 6자리 이상되어야 합니다.",
+      }));
+      return;
     }
 
     if (password !== passwordConfirm) {
-      return Notify.failure("비밀번호가 일치하지 않습니다.");
+      setError((prev) => ({
+        ...prev,
+        passwordConfirmError: "비밀번호가 일치하지 않습니다.",
+      }));
+      return;
     }
 
     if (response.ok) {
@@ -56,7 +84,10 @@ const JoinForm = () => {
 
   return (
     <div className="flex flex-col justify-center items-center">
-      <form onSubmit={handleSubmitJoin} className="flex flex-col justify-center gap-6 w-[500px] mb-6">
+      <form
+        onSubmit={handleSubmitJoin}
+        className="flex flex-col justify-center gap-6 w-[500px] mb-6"
+      >
         <Input
           label="닉네임"
           type="text"
@@ -72,7 +103,9 @@ const JoinForm = () => {
           name="email"
           placeholder="이메일 주소를 입력해주세요"
           onChange={onChangeInput}
+          error={error.emailError}
         />
+
         <Input
           label="비밀번호"
           type="password"
@@ -80,6 +113,7 @@ const JoinForm = () => {
           name="password"
           placeholder="숫자와 영문 조합으로 입력해주세요"
           onChange={onChangeInput}
+          error={error.passwordError}
         />
         <Input
           label="비밀번호 확인"
@@ -88,8 +122,12 @@ const JoinForm = () => {
           name="passwordConfirm"
           placeholder="비밀번호를 한번 더 입력해주세요."
           onChange={onChangeInput}
+          error={error.passwordConfirmError}
         />
-        <button type="submit" className="w-[500px] mt-4 py-3 text-xl bg-main-8 text-white rounded-full">
+        <button
+          type="submit"
+          className="w-[500px] mt-4 py-3 text-xl bg-main-8 text-white rounded-full"
+        >
           가입하기
         </button>
       </form>

@@ -14,6 +14,7 @@ import { Notify } from "notiflix";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import InputField from "../write/InputField";
 import SelectCategory from "../write/SelectCategory";
+import { mustValidation } from "../common/MustValidation";
 
 const EditorModule = dynamic(
   () => import("@/components/common/editor/EditorModule"),
@@ -39,6 +40,15 @@ function MustEditForm({ params }: { params: { id: string } }) {
   const [selectedCategoryName, setSelectedCategoryName] =
     useState<string>("선택");
   const [selectedCategoryId, setSelectedCategoryId] = useState<string>("");
+
+  const [error, setError] = useState({
+    titleError: "",
+    categoryError: "",
+    itemNameError: "",
+    companyError: "",
+    priceError: "",
+    imageUrlError: "",
+  });
 
   const {
     values: input,
@@ -120,19 +130,16 @@ function MustEditForm({ params }: { params: { id: string } }) {
   const startDate = `${year}-${month}-${day}` as string;
 
   const addMustPostBtn = () => {
-    if (
-      !title.trim() ||
-      !selectedCategoryId ||
-      !itemName.trim() ||
-      !company.trim() ||
-      !imgUrl.trim() ||
-      !price
-    ) {
-      Notify.failure("모든 항목을 입력해주세요");
-      return;
-    }
-    if (price <= 0) {
-      Notify.failure("가격을 올바른 단위로 입력해주세요.");
+    const isValid = mustValidation(
+      setError,
+      title,
+      selectedCategoryId,
+      itemName,
+      company,
+      price,
+      imgUrl
+    );
+    if (!isValid) {
       return;
     }
 
@@ -191,12 +198,15 @@ function MustEditForm({ params }: { params: { id: string } }) {
           placeHolder="제목을 입력해주세요"
           minLength={2}
           onchangeValue={onChangeInput}
+          error={error.titleError}
         />
+        {/* <p className={`text-red-3 text-[12px] mt-2`}>d에러메세지</p> */}
 
         <div className="flex flex-row justify-between gap-2">
           <SelectCategory
             selectCategory={selectCategory}
             initialCategoryName={selectedCategoryName}
+            error={error.categoryError}
           />
           <div className="pl-[72px] flex-grow">
             <InputField
@@ -217,6 +227,7 @@ function MustEditForm({ params }: { params: { id: string } }) {
           placeHolder="상품 이름을 입력해주세요."
           minLength={2}
           onchangeValue={onChangeInput}
+          error={error.itemNameError}
         />
 
         <InputField
@@ -224,9 +235,10 @@ function MustEditForm({ params }: { params: { id: string } }) {
           name="company"
           type="text"
           value={company}
-          placeHolder="구매처룰 입력해주세요."
+          placeHolder="구매처를 입력해주세요."
           minLength={1}
           onchangeValue={onChangeInput}
+          error={error.companyError}
         />
 
         <InputField
@@ -237,6 +249,7 @@ function MustEditForm({ params }: { params: { id: string } }) {
           placeHolder="숫자만 입력해주세요"
           minLength={2}
           onchangeValue={onChangeInput}
+          error={error.priceError}
         />
         <div className="flex gap-4 items-start">
           <input
@@ -246,11 +259,17 @@ function MustEditForm({ params }: { params: { id: string } }) {
             onChange={addImageHandler}
           />
           <label
-            className="flex justify-center items-center ml-[78px] px-7 py-2 border border-gray-4 bg-gray-1 font-bold text-[12px] text-gray-4 rounded-full cursor-pointer"
+            className="flex justify-center items-center ml-[78px] px-7 py-[7px] border border-gray-4 bg-gray-1 font-bold text-[12px] text-gray-4 rounded-full cursor-pointer"
             htmlFor="image-file"
           >
             {imgUrl ? "이미지 수정" : "이미지 업로드"}
           </label>
+          {error.imageUrlError && (
+            <p className={`text-red-3 text-[12px] mt-2`}>
+              {error.imageUrlError}
+            </p>
+          )}
+
           {imgUrl && (
             <Image
               src={imgUrl}
@@ -261,15 +280,15 @@ function MustEditForm({ params }: { params: { id: string } }) {
           )}
         </div>
         <div>
-          <EditorModule editorRef={editorRef} initialValue={mustPost.content} />
+          <EditorModule editorRef={editorRef} />
         </div>
       </form>
       <div className="flex justify-center mt-[64px]">
         <button
           onClick={addMustPostBtn}
-          className="px-[96px] py-4 text-[24px] text-white font-bold focus:outline-none bg-main-8 rounded-full"
+          className="px-[106px] py-[8px] text-xl text-white font-bold focus:outline-none bg-main-8 rounded-full"
         >
-          수정 완료
+          등록하기
         </button>
       </div>
     </InnerLayout>
