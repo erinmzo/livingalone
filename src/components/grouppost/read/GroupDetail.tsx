@@ -140,15 +140,14 @@ async function GroupDetail({ params }: Props) {
                     id={id}
                     achievementRate={achievementRate}
                   />
+                  <ShareButton
+                    postId={data.id}
+                    title={title}
+                    content={item}
+                    imgUrl={img_url}
+                  />
                 </>
               )}
-              {/* 임시 공유 버튼 */}
-              <ShareButton
-                postId={data.id}
-                title={title}
-                content={item}
-                imgUrl={img_url}
-              />
             </div>
             <div className="mt-[56px] border-y border-gray-2 py-6 px-2 mb-[64px]">
               <GroupContent content={content} />
