@@ -16,6 +16,7 @@ function MobileHeader({ title, hamburger = false, alarm = true }: MobileHeaderPr
       <div className="absolute left-[16px] top-[18px]">
         {hamburger && (
           <button>
+            {/* 여기에요 */}
             <Image src="/img/icon-hamburger.svg" alt="마이페이지 메뉴" width={24} height={24} />
           </button>
         )}
