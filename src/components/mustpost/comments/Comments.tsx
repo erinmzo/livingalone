@@ -3,7 +3,6 @@ import CommentsList from "./CommentsList";
 import CommentForm from "./CommentForm";
 
 function Comments({ postId }: { postId: string }) {
-  console.log(postId);
   return (
     <div>
       <CommentsList postId={postId} />
