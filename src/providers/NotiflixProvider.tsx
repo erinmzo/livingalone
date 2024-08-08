@@ -6,6 +6,8 @@ import { PropsWithChildren, useEffect } from "react";
 function NotiflixProvider({ children }: PropsWithChildren) {
   useEffect(() => {
     Notiflix.Notify.init({
+      distance: "35px",
+      timeout: 1500,
       success: {
         background: "#00B8A2",
         textColor: "#fff",
