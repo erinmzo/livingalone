@@ -1,4 +1,4 @@
-import { useId } from "react";
+import { useId, forwardRef } from "react";
 
 interface InputProps {
   variant?: "default" | "underline";
@@ -19,17 +19,21 @@ const variantStyles = {
     "border-b border-gray-2 px-1 py-2 text-[20px] placeholder-gray-2 focus:outline-none focus:border-black transition ",
 };
 
-function Input({
-  name,
-  label,
-  variant = "default",
-  type = "text",
-  value,
-  placeholder,
-  onChange,
-  readOnly = false,
-  error,
-}: InputProps) {
+// 3. forwardRef로 전달 받음
+const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
+  {
+    name,
+    label,
+    variant = "default",
+    type = "text",
+    value,
+    placeholder,
+    onChange,
+    readOnly = false,
+    error,
+  },
+  ref
+) {
   const inputId = useId();
 
   return (
@@ -55,6 +59,8 @@ function Input({
       )}
       {type === "file" && (
         <input
+          // 4. ref 담기
+          ref={ref}
           type="file"
           className={`${variantStyles[variant]} text-[10px] py-[10px]`}
           placeholder={placeholder}
@@ -64,6 +70,6 @@ function Input({
       {error && <p className={`text-red-3 text-[12px] mt-2`}>{error}</p>}
     </div>
   );
-}
+});
 
 export default Input;
