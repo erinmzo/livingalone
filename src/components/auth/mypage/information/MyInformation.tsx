@@ -2,7 +2,6 @@
 
 import { editMyProfile, getMyProfile, uploadImage } from "@/apis/mypage";
 import { useInputChange } from "@/hooks/useInput";
-import { Profile, TProfile } from "@/types/types";
 import { useAuthStore } from "@/zustand/authStore";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Report } from "notiflix";
@@ -10,6 +9,7 @@ import { ChangeEvent, MouseEventHandler, useState } from "react";
 import DaumPostcode from "react-daum-postcode";
 import Input from "../../common/Input";
 import SkeletonProfile from "./SkeletonProfile";
+import { Profile, TProfile } from "@/types/types";
 
 function MyInformation() {
   const queryClient = useQueryClient();
@@ -36,19 +36,20 @@ function MyInformation() {
 
   const { mutate: editProfile } = useMutation({
     mutationFn: (newProfile: TProfile) => editMyProfile(userId, newProfile),
-    onSuccess: () =>
-      queryClient.invalidateQueries({ queryKey: ["profile", userId] }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["profile", userId] });
+      Report.success("변경이 완료되었습니다!", "", "확인");
+    },
   });
-  // 이미지
+
   const { mutate: uploadImageProfile } = useMutation({
     mutationFn: async (profileImage: File) => {
       const formData = new FormData();
       formData.append("file", profileImage);
       const response = await uploadImage(formData);
-      setImgUrl(
-        `https://nqqsefrllkqytkwxfshk.supabase.co/storage/v1/object/public/${response.fullPath}`
-      );
-      return `https://nqqsefrllkqytkwxfshk.supabase.co/storage/v1/object/public/${response.fullPath}`;
+      const imageUrl = `https://nqqsefrllkqytkwxfshk.supabase.co/storage/v1/object/public/${response.fullPath}`;
+      setImgUrl(imageUrl);
+      return imageUrl;
     },
     onMutate: async (profileImage: File) => {
       await queryClient.cancelQueries({ queryKey: ["profile", userId] });
@@ -61,7 +62,7 @@ function MyInformation() {
       if (previousProfile) {
         queryClient.setQueryData(["profile", userId], {
           ...previousProfile,
-          profile_image_url: `https://nqqsefrllkqytkwxfshk.supabase.co/storage/v1/object/public/${profileImage}`,
+          profile_image_url: URL.createObjectURL(profileImage),
         });
       }
 
@@ -88,51 +89,87 @@ function MyInformation() {
 
   const handleUploadImage = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      setImgFile(e.target.files[0]);
-      uploadImageProfile(e.target.files[0]);
+      const file = e.target.files[0];
+      const fileType = file.type;
+      const fileSize = file.size;
+
+      if (fileType !== "image/jpeg" && fileType !== "image/png") {
+        Report.warning(
+          "유효하지 않은 파일 형식",
+          "JPG 또는 PNG 파일만 업로드 가능합니다.",
+          "확인"
+        );
+        return;
+      } else if (fileSize > 2 * 1024 * 1024) {
+        Report.warning(
+          "파일 용량 초과",
+          "파일 용량은 2MB 이하로 제한됩니다.",
+          "확인"
+        );
+        return;
+      }
+
+      setImgFile(file);
+      uploadImageProfile(file);
     }
   };
 
   const handleProfileUpdate: MouseEventHandler<HTMLButtonElement> = (e) => {
     e.preventDefault();
     const newProfile = {
-      nickname: nickname || profile?.nickname,
-      profile_image_url: imgUrl || profile?.profile_image_url,
+      nickname: nickname.trim() ? nickname : profile?.nickname,
+      profile_image_url: imgUrl ?? profile?.profile_image_url,
       address: address || profile?.address,
       detail_address: detailAddress || profile?.detail_address,
     };
 
-    const isChanged = !!nickname || !!imgFile || !!address || !!detailAddress;
+    // !imgUrl => 기존 이미지를 씀
+    const isEmpty = !imgFile || !address;
+    // (nickname.trim() && nickname !== profile?.nickname) ||
+    // (imgFile && imgUrl !== profile?.profile_image_url) ||
+    // (address && address !== profile?.address) ||
+    // (detailAddress && detailAddress !== profile?.detail_address);
 
-    if (!isChanged) {
-      Report.info("변경된 내용이 없습니다.", "", "확인");
-      return;
+    // console.log(imgFile, imgUrl, imgUrl !== profile?.profile_image_url);
+    // if (isEmpty) {
+    if (isEmpty && (nickname.trim() === "" || nickname === profile?.nickname)) {
+      return Report.info("변경된 내용이 없습니다.", "", "확인");
+    } else if (nickname !== profile?.nickname && nickname.trim() === "") {
+      return Report.warning("닉네임 공백", "닉네임을 적어주세요!", "확인");
     }
+    // }
 
-    if (!nickname.trim()) {
-      return Report.warning("닉네임 공백", "닉네임을 적어주세요 !", "확인");
-    } else if (nickname.length > 8) {
-      return Report.warning("닉네임 길이", "8자 이하로 적어주세요", "확인");
-    }
+    // if (isEmpty) {
+    //   console.log(1);
+    //   return Report.info("변경된 내용이 없습니다.", "", "확인");
+    // } else if (nickname !== profile?.nickname && !nickname) {
+    //   console.log(2);
+    //   return Report.info("변경된 내용이 없습니다.", "", "확인");
+    // } else if (nickname !== profile?.nickname && nickname.trim() === "") {
+    //   console.log(3, nickname.trim(), nickname);
+    //   return Report.warning("닉네임 공백", "닉네임을 적어주세요!", "확인");
+    // } else if (nickname.length > 8) {
+    //   console.log(4);
+    //   return Report.warning("닉네임 길이", "8자 이하로 적어주세요", "확인");
+    // }
 
     editProfile(newProfile);
-    Report.success("변경이 완료되었습니다!", "", "확인");
   };
 
   if (isPending) return <SkeletonProfile />;
 
   return (
-    <div className="flex-col w-auto grow">
+    <div className="flex-col w-full lg:w-auto grow px-4 lg:px-0">
       <div className="flex flex-col justify-center items-start gap-8">
         <h5 className="font-bold text-[24px]">나의 정보</h5>
-        <form className="flex flex-col items-center">
-          <div className="flex w-full gap-[32px]">
+        <form className="flex flex-col items-center w-full">
+          <div className="flex flex-col lg:flex-row w-full gap-4 lg:gap-[32px]">
             <div className="w-full">
               <Input
                 variant="default"
                 label="닉네임"
                 placeholder={profile?.nickname}
-                value={nickname}
+                value={nickname ?? profile?.nickname}
                 name="nickname"
                 onChange={onChangeInput}
               />
@@ -150,19 +187,19 @@ function MyInformation() {
           <div className="relative mt-16 flex flex-col w-full">
             <button
               type="button"
-              className="flex gap-3 w-[73px] py-2 border border-gray-3 bg-white font-bold rounded-full mb-3 justify-center items-center "
+              className="flex gap-3 w-[73px] py-2 border border-gray-3 bg-white font-bold rounded-full mb-3 justify-center items-center"
               onClick={handleSearchAddress}
             >
-              <span className=" text-center text-[12px] text-gray-3">
+              <span className="text-center text-[12px] text-gray-3">
                 주소변경
               </span>
             </button>
             {isPostModalOpen && (
-              <div className="absolute left-0 top-[48px] border border-black  ">
+              <div className="absolute left-0 top-[48px] border border-black">
                 <DaumPostcode onComplete={onCompleteAddress}></DaumPostcode>
               </div>
             )}
-            <div className="flex flex-col gap-2 ">
+            <div className="flex flex-col gap-2">
               <Input
                 variant="underline"
                 value={address}
@@ -180,7 +217,7 @@ function MyInformation() {
           </div>
           <button
             type="submit"
-            className="bg-main-8 w-[500px] h-[52px] text-white  py-2 mt-[50px] rounded-full font-bold text-[18px]"
+            className="bg-main-8 w-full lg:w-[500px] h-[52px] text-white py-2 mt-[50px] rounded-full font-bold text-[18px]"
             onClick={handleProfileUpdate}
           >
             변경하기

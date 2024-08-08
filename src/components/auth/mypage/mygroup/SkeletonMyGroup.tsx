@@ -1,6 +1,6 @@
 import React from "react";
 
-const SkeletonMyGroupPost: React.FC = () => {
+const SkeletonMyGroupPost = () => {
   return (
     <div className="w-full animate-pulse">
       <div className="flex justify-between items-center py-[10px] border-t border-b border-gray-2">
