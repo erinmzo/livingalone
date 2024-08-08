@@ -103,6 +103,13 @@ const LoginForm = () => {
           className="flex items-center justify-center w-[500px] py-2 text-xl border border-gray-2 rounded-3xl font-medium"
           onClick={handleKakaoLogin}
         >
+          <Image
+            src="/img/kakaotalk-icon.png"
+            alt="카카오 로그인 아이콘"
+            width={32}
+            height={32}
+            className="mr-2"
+          />
           카카오 간편로그인
         </button>
       </div>
