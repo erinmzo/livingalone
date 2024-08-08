@@ -9,6 +9,7 @@ interface InputProps {
   placeholder?: string;
   readOnly?: boolean;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  error?: string;
 }
 
 const variantStyles = {
@@ -27,6 +28,7 @@ function Input({
   placeholder,
   onChange,
   readOnly = false,
+  error,
 }: InputProps) {
   const inputId = useId();
 
@@ -59,6 +61,7 @@ function Input({
           onChange={onChange}
         />
       )}
+      {error && <p className={`text-red-3 text-[12px] mt-2`}>{error}</p>}
     </div>
   );
 }
