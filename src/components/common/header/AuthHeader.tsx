@@ -18,7 +18,7 @@ function AuthHeader() {
   };
 
   return (
-    <div className="hidden sm:block">
+    <div className="hidden md:block">
       <ul className="container mx-auto w-full max-w-[1024px] flex items-center justify-end gap-5 py-[18px] text-[12px] text-gray-4 text-black px-[16px] lg:px-0">
         {!user ? (
           <>
@@ -37,7 +37,9 @@ function AuthHeader() {
             <li>
               <Link href="/mypage">마이페이지</Link>
             </li>
-            <Alarm />
+            <li>
+              <Alarm />
+            </li>
           </>
         )}
       </ul>

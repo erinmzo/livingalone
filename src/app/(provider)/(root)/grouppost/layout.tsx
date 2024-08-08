@@ -1,22 +1,18 @@
-"use client";
-
 import MobileHeader from "@/components/common/header/MobileHeader";
 import MobileNav from "@/components/common/header/MobileNav";
-import PaymentMain from "@/components/payment/PaymentMain";
 import IsOpenProvider from "@/providers/IsOpenProvider";
+import { PropsWithChildren } from "react";
 
-function PaymentPage() {
+function GroupPostLayout({ children }: PropsWithChildren) {
   return (
     <>
-      <MobileHeader />
+      <MobileHeader title="같이 사 공구템" />
       <IsOpenProvider>
-        <main>
-          <PaymentMain />
-        </main>
+        <main>{children}</main>
       </IsOpenProvider>
       <MobileNav />
     </>
   );
 }
 
-export default PaymentPage;
+export default GroupPostLayout;

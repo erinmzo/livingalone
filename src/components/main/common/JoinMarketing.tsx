@@ -1,3 +1,4 @@
+"use client";
 import { useAuthStore } from "@/zustand/authStore";
 import Link from "next/link";
 
