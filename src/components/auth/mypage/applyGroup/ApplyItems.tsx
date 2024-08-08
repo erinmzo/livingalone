@@ -5,8 +5,6 @@ import { applyItems } from "@/apis/mypage";
 import { GroupApplyItems } from "@/types/types";
 import { useAuthStore } from "@/zustand/authStore";
 import { useQuery } from "@tanstack/react-query";
-import Image from "next/image";
-import Link from "next/link";
 import ApplyItemsCard from "./ApplyItemsCard";
 import EmptyState from "./EmptyState";
 import SkeletonApplyItemsCard from "./SkeletonApplyItems";
@@ -26,15 +24,13 @@ function ApplyItems() {
 
   if (isPending) return <SkeletonApplyItemsCard />;
 
-  console.log(applyPosts);
-
   return (
     user && (
       <div>
         <div className="text-[24px] font-bold ml-1">신청한 공구</div>
         <div className="mt-8">
           {applyPosts.length ? (
-            <ul className="grid grid-cols-1 sm:grid-cols-1 gap-8">
+            <ul className="grid grid-cols-1 gap-8">
               {applyPosts.map((apply) => (
                 <ApplyItemsCard key={apply.id} apply={apply} />
               ))}

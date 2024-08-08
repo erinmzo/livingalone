@@ -5,6 +5,7 @@ import { useIsAlarm } from "@/zustand/alarmStore";
 import { useAuthStore } from "@/zustand/authStore";
 import { useIsOpen } from "@/zustand/isOpenStore";
 import { useQuery } from "@tanstack/react-query";
+import Image from "next/image";
 import { useEffect } from "react";
 import AlarmList from "./AlarmList";
 
@@ -35,18 +36,25 @@ function Alarm() {
     }
   }, [alarms, isAlarm]);
 
-  if (isPending) return <li>알람</li>;
+  console.log(alarms);
 
-  if (isError) return <li>오류</li>;
+  if (isPending)
+    return (
+      <div>
+        <Image src="/img/icon-alarm.svg" alt="알람" width={24} height={24} />
+      </div>
+    );
+
+  if (isError) return <div>오류</div>;
 
   return (
-    <li className="relative">
+    <div className="relative">
       <button onClick={() => setIsOpenAlarm(!isOpenAlarm)} className="flex gap-1">
-        알람
+        <Image src="/img/icon-alarm.svg" alt="알람" width={24} height={24} />
         {isAlarm && <span className="block w-1 h-1 bg-red-3 rounded-full"></span>}
       </button>
       {isOpenAlarm && <AlarmList alarms={alarms} userId={userId} />}
-    </li>
+    </div>
   );
 }
 

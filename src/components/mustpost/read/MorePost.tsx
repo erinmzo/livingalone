@@ -27,7 +27,7 @@ async function MorePost({ category_id: postCategoryId, category_name, id: postId
         <span className="text-main-7">{category_name}</span> 관련 추천템
       </h3>
       <div>
-        <ul className="grid grid-cols-1 sm:grid-cols-3 gap-[32px]">
+        <ul className="grid grid-cols-1 md:grid-cols-3 gap-[32px]">
           {latestPosts.map((post) => (
             <li key={post.id} className="mb-[64px]">
               <MustPostCard postId={post.id} title={post.title} item={post.item} imgUrl={post.img_url} />
