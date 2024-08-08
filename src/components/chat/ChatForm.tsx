@@ -1,5 +1,6 @@
 "use client";
 import { insertAlarm } from "@/apis/alarm";
+import { getMyProfile } from "@/apis/mypage";
 import { createClient } from "@/supabase/client";
 import { TAddAlarm } from "@/types/types";
 import { useAuthStore } from "@/zustand/authStore";
@@ -18,6 +19,7 @@ type TChat = {
 export default function ChatForm({ postId, userId }: { postId: string; userId: string }) {
   const supabase = createClient();
   const user = useAuthStore((state) => state.user);
+  const id = user?.id as string;
   const [messages, setMessages] = useState<TChat[]>([]);
   const [newMessage, setNewMessage] = useState("");
 
@@ -32,21 +34,24 @@ export default function ChatForm({ postId, userId }: { postId: string; userId: s
       setMessages(data);
     }
   };
-
   useEffect(() => {
     fetchInitialMessages();
 
     const messageSubscription = supabase
       .channel("chat1")
-      .on("postgres_changes", { event: "INSERT", schema: "public", table: "chat" }, (payload: any) => {
-        setMessages((currentMessages) => [...currentMessages, payload.new]);
+      .on("postgres_changes", { event: "INSERT", schema: "public", table: "chat" }, async (payload: any) => {
+        const profile = await getMyProfile(payload.new.user_id);
+
+        setMessages((currentMessages) => [
+          ...currentMessages,
+          { ...payload.new, profiles: { nickname: profile.nickname } },
+        ]);
       })
       .subscribe();
-
     return () => {
       supabase.removeChannel(messageSubscription);
     };
-  }, [messages]);
+  }, []);
 
   const { mutate: addAlarm } = useMutation({
     mutationFn: (chatAlarmData: TAddAlarm) => insertAlarm(chatAlarmData),
@@ -71,15 +76,17 @@ export default function ChatForm({ postId, userId }: { postId: string; userId: s
         setNewMessage("");
       }
 
-      const chatAlarmData = {
-        type: "chat",
-        user_id: userId,
-        group_post_id: postId,
-        must_post_id: null,
-        link: `/grouppost/read/${postId}`,
-        is_read: false,
-      };
-      addAlarm(chatAlarmData);
+      if (id !== userId) {
+        const chatAlarmData = {
+          type: "chat",
+          user_id: userId,
+          group_post_id: postId,
+          must_post_id: null,
+          link: `/grouppost/read/${postId}`,
+          is_read: false,
+        };
+        addAlarm(chatAlarmData);
+      }
     }
   };
 
