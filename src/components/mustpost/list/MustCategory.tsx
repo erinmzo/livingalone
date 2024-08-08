@@ -5,7 +5,9 @@ import { useCategoryStore } from "@/zustand/mustStore";
 import { useQuery } from "@tanstack/react-query";
 
 function MustCategory() {
-  const setSelectedCategory = useCategoryStore((state) => state.setSelectedCategory);
+  const setSelectedCategory = useCategoryStore(
+    (state) => state.setSelectedCategory
+  );
   const selectedCategory = useCategoryStore((state) => state.selectedCategory);
 
   const {
@@ -33,14 +35,18 @@ function MustCategory() {
     );
 
   if (isError)
-    return <li className="w-[90px] py-2 px-4 border border-gray-2 bg-gray-2 rounded-full animate-pulse">에러</li>;
+    return (
+      <li className="w-[90px] py-2 px-4 border border-gray-2 bg-gray-2 rounded-full animate-pulse">
+        에러
+      </li>
+    );
 
   return (
     <div>
       <ul className="flex flex-row gap-2">
         <li>
           <button
-            className={`w-[90px] py-2 px-4 border border-gray-3  rounded-full text-gray-3 hover:font-bold hover:bg-main-8 hover:text-white ${
+            className={`w-[90px] py-2 px-4 border border-gray-3  rounded-full text-gray-3 font-bold hover:bg-main-8 hover:text-white ${
               selectedCategory === "ALL"
                 ? "bg-main-8 font-bold text-white border-transparent"
                 : "hover:bg-main-8 hover:text-white hover:border-transparent"
@@ -53,7 +59,7 @@ function MustCategory() {
         {mustCategories?.map((category) => (
           <li key={category.id}>
             <button
-              className={`w-[90px] py-2 px-4 border border-gray-3 rounded-full text-gray-3 hover:font-bold hover:bg-main-8 hover:text-white  ${
+              className={`w-[90px] py-2 px-4 border border-gray-3 rounded-full text-gray-3 font-bold hover:bg-main-8 hover:text-white  ${
                 selectedCategory === category.id
                   ? "bg-main-8 font-bold text-white border-transparent"
                   : "hover:bg-main-8 hover:text-white hover:border-transparent"

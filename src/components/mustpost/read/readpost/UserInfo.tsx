@@ -17,7 +17,9 @@ function UserInfo({ profile_image_url, nickname, created_at }: UserInfoProps) {
       />
       <div className="flex flex-col">
         <span className="text-[16px] text-black">{nickname}</span>
-        <span className="text-[14px] text-gray-3">2024.11.22</span>
+        <span className="text-[14px] text-gray-3">
+          {created_at.split("T").join(" ").substring(0, 10)}
+        </span>
       </div>
     </div>
   );

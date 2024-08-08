@@ -25,8 +25,10 @@ function MustPostCard({ postId, title, item, imgUrl }: MustPostCardProps) {
           />
         </div>
         <div className="px-1 mt-4">
-          <span className="block text-[14px] text-gray-4 truncate">{item}</span>
-          <h4 className="text-[20px] text-black mt-[6px] truncate">{title}</h4>
+          <span className="block text-[14px] text-gray-3 truncate">{item}</span>
+          <h4 className="font-bold text-[20px] text-black mt-[6px] truncate">
+            {title}
+          </h4>
         </div>
       </Link>
       <div className="absolute right-[20px] top-[20px] rounded-full">
