@@ -17,9 +17,7 @@ export async function getUser() {
     const noProfile = profileError?.code === "PGRST116";
 
     if (noProfile) {
-      await supabase
-        .from("profiles")
-        .insert([{ user_id: userId, nickname: "혼살러" }]);
+      await supabase.from("profiles").insert([{ user_id: userId, nickname: "혼살러" }]);
     }
   }
 
@@ -40,7 +38,7 @@ export async function googleLogin() {
   const { error } = await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
-      redirectTo: "https://livingalone.vercel.app/",
+      redirectTo: "https://nqqsefrllkqytkwxfshk.supabase.co/auth/v1/callback",
       queryParams: {
         access_type: "offline",
         prompt: "consent",
@@ -58,7 +56,7 @@ export async function kakaoLogin() {
   const { error } = await supabase.auth.signInWithOAuth({
     provider: "kakao",
     options: {
-      redirectTo: "http://localhost:3000/",
+      redirectTo: "https://nqqsefrllkqytkwxfshk.supabase.co/auth/v1/callback",
       queryParams: {
         access_type: "offline",
         prompt: "consent",
