@@ -11,6 +11,7 @@ import DaumPostcode from "react-daum-postcode";
 import Input from "../../common/Input";
 import SkeletonProfile from "./SkeletonProfile";
 import { Profile, TProfile } from "@/types/types";
+import Image from "next/image";
 
 function MyInformation() {
   const queryClient = useQueryClient();
@@ -165,11 +166,33 @@ function MyInformation() {
   if (isPending) return <SkeletonProfile />;
 
   return (
-    <div className="flex-col w-full lg:w-auto grow px-4 lg:px-0">
-      <div className="flex flex-col justify-center items-start gap-8">
-        <h5 className="font-bold text-[24px]">나의 정보</h5>
+    <div className="flex-col w-full md:w-auto grow px-4 md:px-0">
+      <div className="flex flex-col justify-center md:items-start items-center ">
+        <div className="flex flex-col ">
+          <h5
+            className="
+        font-bold text-[12px] flex items-center justify-center border-2 border-main-8 rounded-full w-[76px] h-[30px] text-main-8 
+          md:border-none md:rounded-none md:text-left md:text-black md:text-[24px] md:w-[115px] md:h-[29px] md:block "
+          >
+            나의 정보
+          </h5>
+          <div className="flex-col justify-center  items-center mb-8">
+            <div className="w-full">
+              <Image
+                className="border border-gray-2 bg-gray-200 rounded-full md:hidden mb-6 w-[100px] h-[100px]"
+                src={profile?.profile_image_url}
+                alt={profile?.nickname}
+                width={100}
+                height={100}
+              />
+            </div>
+            <div className="text-[16px] font-bold md:hidden text-center w-full h-[19px]">
+              {profile?.nickname}
+            </div>
+          </div>
+        </div>
         <form className="flex flex-col items-center w-full">
-          <div className="flex flex-col lg:flex-row w-full gap-4 lg:gap-[32px]">
+          <div className="flex flex-col md:flex-row w-full gap-4 md:gap-[32px]">
             <div className="w-full">
               <Input
                 variant="default"
@@ -225,7 +248,7 @@ function MyInformation() {
           </div>
           <button
             type="submit"
-            className="bg-main-8 w-full lg:w-[500px] h-[52px] text-white py-2 mt-[50px] rounded-full font-bold text-[18px]"
+            className="bg-main-8 w-full md:w-[500px] h-[52px] text-white py-2 mt-[50px] rounded-full font-bold text-[18px]"
             onClick={handleProfileUpdate}
           >
             변경하기

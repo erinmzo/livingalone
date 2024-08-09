@@ -22,8 +22,8 @@ function MobileHeader({
   };
 
   return (
-    <div className="relative md:hidden flex justify-center py-[18px] px-[16px]">
-      <div className="absolute left-[16px] top-[18px]">
+    <div className="relative md:hidden z-[999] bg-white border flex justify-center py-[18px] px-[16px]">
+      <div className="absolute left-[16px] top-[18px] ">
         {hamburger && (
           <button onClick={handleOpenSideBar}>
             <Image
