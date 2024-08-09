@@ -5,6 +5,7 @@ import GroupPostCard from "@/components/grouppost/list/GroupPostCard";
 import { GroupApplication, GroupPost } from "@/types/types";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
+import Link from "next/link";
 import MainSectionTitle from "../common/MainSectionTitle";
 
 type TGroupApplication = Pick<GroupApplication, "id">;
@@ -37,7 +38,7 @@ function GroupSection() {
   if (isError) return <div className="flex justify-center items-center">에러...</div>;
 
   return (
-    <div className="container mx-auto max-w-[1024px] pt-[58px] pb-[80px]">
+    <div className="container mx-auto lg:max-w-[1024px] pt-[42px] pb-[90px] lg:pt-[58px] lg:pb-[153px]">
       <MainSectionTitle
         title="같이 사 공구템"
         content="공동구매를 통해 자취에 필요한 물품을 저렴한 금액에 구매해보세요"
@@ -62,6 +63,17 @@ function GroupSection() {
           );
         })}
       </ul>
+      <div className="md:hidden w-full flex justify-center mt-[40px]">
+        <div className="border border-main-8 rounded-full w-[108px]">
+          <Link
+            className="block text-[16px] font-bold text-main-8 flex items-center py-[8px] px-[18px]"
+            href="/grouppost/list"
+          >
+            전체보기
+            <Image src="/img/icon-right.svg" alt="&gt;" width={7} height={12} className="ml-2" />
+          </Link>
+        </div>
+      </div>
     </div>
   );
 }
