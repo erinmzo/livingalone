@@ -51,4 +51,4 @@ export type TAlarm = Tables<"alarm"> & {
 export type TEditAlarm = Pick<Alarm, "user_id" | "id" | "is_read">;
 
 export type Comment = Tables<"must_comments">;
-export type TComment = Omit<Comment, "id" | "created_at">;
+// export type TComment = Omit<Comment, "id">;

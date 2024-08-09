@@ -1,12 +1,20 @@
 "use client";
 import { insertAlarm } from "@/apis/alarm";
 import { insertComment } from "@/apis/mustpost";
-import { TAddAlarm, TComment } from "@/types/types";
+import { TAddAlarm } from "@/types/types";
 import { useAuthStore } from "@/zustand/authStore";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Notify } from "notiflix";
 import React, { useState } from "react";
+
+export type TComment = {
+  post_id: string;
+  user_id: string;
+  created_at: string | Date;
+  content: string;
+};
 
 function CommentForm({ postId, userId }: { postId: string; userId: string }) {
   const router = useRouter();
@@ -14,7 +22,7 @@ function CommentForm({ postId, userId }: { postId: string; userId: string }) {
   const queryClient = useQueryClient();
   const [content, setContent] = useState("");
 
-  const setContentHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const setContentHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value);
   };
 
@@ -37,14 +45,19 @@ function CommentForm({ postId, userId }: { postId: string; userId: string }) {
       return;
     }
     if (!user) {
-      router.push("/login");
       Notify.failure("로그인을 먼저 진행해주세요.");
+      router.push("/login");
       return;
     }
-    const today = new Date();
+
+    // 한국 시간으로 넣기
+    const offset = new Date().getTimezoneOffset() * 60000;
+    const today = new Date(Date.now() - offset);
+
     const newComment = {
       post_id: postId,
       user_id: user.id,
+      created_at: today,
       content,
     };
 
@@ -65,8 +78,15 @@ function CommentForm({ postId, userId }: { postId: string; userId: string }) {
   return (
     <div>
       <form onSubmit={submitHandler}>
-        <input type="text" value={content} onChange={setContentHandler} className="border border-black" />
-        <button>등록하기</button>
+        <textarea
+          value={content}
+          placeholder="댓글을 입력해주세요."
+          onChange={(e) => setContentHandler(e)}
+          className="border border-black whitespace-pre-wrap break-words"
+        ></textarea>
+        <button className="">
+          <Image src="/img/icon-send.svg" alt="등록하기" width={32} height={32} />
+        </button>
       </form>
     </div>
   );

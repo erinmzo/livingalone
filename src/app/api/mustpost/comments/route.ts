@@ -13,27 +13,26 @@ export async function POST(request: NextRequest) {
   }
 }
 
-// export async function DELETE(request: NextRequest) {
-//   try {
-//     const commentId = await request.json();
-//     const supabase = createClient();
-//     const { data } = await supabase
-//       .from("must_comments")
-//       .delete()
-//       .eq("id", commentId);
-//     return NextResponse.json(data);
-//   } catch (error) {
-//     return NextResponse.json({ error: "댓글 삭제에 실패하였습니다!" });
-//   }
-// }
-
 export async function DELETE(request: NextRequest) {
+  const commentId = await request.json();
+  const supabase = createClient();
   try {
-    const commentId = await request.json();
-    const supabase = createClient();
     const { data } = await supabase.from("must_comments").delete().eq("id", commentId);
     return NextResponse.json(data);
   } catch (error) {
     return NextResponse.json({ error: "댓글 삭제에 실패하였습니다!" });
+  }
+}
+
+export async function PUT(request: NextRequest) {
+  const newEditComment = await request.json();
+  const { commentId, content } = newEditComment;
+  const supabase = createClient();
+  try {
+    const { data } = await supabase.from("must_comments").update({ content }).eq("id", commentId);
+
+    return NextResponse.json(data);
+  } catch (error) {
+    return NextResponse.json({ error: "포스트를 수정하는 데 실패했습니다." });
   }
 }
