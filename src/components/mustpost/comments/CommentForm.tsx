@@ -1,6 +1,5 @@
 "use client";
 import { insertComment } from "@/apis/mustpost";
-// import { TComment } from "@/types/types";
 import { useAuthStore } from "@/zustand/authStore";
 import {
   QueryClient,
@@ -66,14 +65,14 @@ function CommentForm({ postId }: { postId: string }) {
 
   return (
     <div>
-      <form onSubmit={submitHandler}>
+      <form onSubmit={submitHandler} className="flex w-[635px] pt-4">
         <textarea
           value={content}
-          placeholder="댓글을 입력해주세요."
+          placeholder="댓글 게시하기"
           onChange={(e) => setContentHandler(e)}
-          className="border border-black whitespace-pre-wrap break-words"
+          className="flex-grow-1 border border-gray-4"
         ></textarea>
-        <button className="">
+        <button className="flex-grow-0 w-8 aspect-square">
           <Image
             src="/img/icon-send.svg"
             alt="등록하기"

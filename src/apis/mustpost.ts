@@ -1,7 +1,7 @@
 import { TComment } from "@/components/mustpost/comments/CommentForm";
 import { TEditComment } from "@/components/mustpost/comments/CommentsList";
 import { createClient } from "@/supabase/client";
-import { MustPost, TMustWishData, TNewMustPost } from "@/types/types";
+import { TMustWishData, TNewMustPost } from "@/types/types";
 
 export async function getMustPostOnMain() {
   const response = await fetch("/api/main/must", {
