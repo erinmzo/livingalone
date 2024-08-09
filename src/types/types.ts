@@ -17,10 +17,7 @@ export type MustComments = Tables<"must_comments"> & {
 export type TNewMustPost = Omit<MustPost, "created_at">;
 
 export type TMainMustPost = Pick<MustPost, "id" | "title" | "item" | "img_url">;
-export type TMustPostList = Pick<
-  MustPost,
-  "id" | "title" | "content" | "item" | "img_url"
->;
+export type TMustPostList = Pick<MustPost, "id" | "title" | "content" | "item" | "img_url">;
 
 export type TMustWishData = Omit<MustWish, "created_at" | "id">;
 
@@ -48,8 +45,8 @@ export type TNewPayment = Omit<Payment, "created_at">;
 export type Alarm = Tables<"alarm">;
 export type TAddAlarm = Omit<Alarm, "id" | "created_at">;
 export type TAlarm = Tables<"alarm"> & {
-  group_posts: { title: string };
-  must_posts: { title: string };
+  group_posts: { title: string; img_url: string };
+  must_posts: { title: string; img_url: string };
 };
 export type TEditAlarm = Pick<Alarm, "user_id" | "id" | "is_read">;
 

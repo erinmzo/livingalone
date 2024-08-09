@@ -1,21 +1,22 @@
 "use client";
+import { insertAlarm } from "@/apis/alarm";
 import { insertComment } from "@/apis/mustpost";
-import { TComment } from "@/types/types";
+import { TAddAlarm, TComment } from "@/types/types";
 import { useAuthStore } from "@/zustand/authStore";
-import {
-  QueryClient,
-  useMutation,
-  useQueryClient,
-} from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { Notify } from "notiflix";
 import React, { useState } from "react";
 
-function CommentForm({ postId }: { postId: string }) {
+function CommentForm({ postId, userId }: { postId: string; userId: string }) {
   const router = useRouter();
   const user = useAuthStore((state) => state.user);
   const queryClient = useQueryClient();
   const [content, setContent] = useState("");
+
+  const setContentHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setContent(e.target.value);
+  };
 
   const { mutate: addComment } = useMutation({
     mutationFn: (newComment: TComment) => insertComment(newComment),
@@ -25,9 +26,9 @@ function CommentForm({ postId }: { postId: string }) {
     },
   });
 
-  const setContentHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setContent(e.target.value);
-  };
+  const { mutate: addAlarm } = useMutation({
+    mutationFn: (chatAlarmData: TAddAlarm) => insertAlarm(chatAlarmData),
+  });
 
   const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -49,17 +50,22 @@ function CommentForm({ postId }: { postId: string }) {
 
     addComment(newComment);
     setContent("");
+
+    const chatAlarmData = {
+      type: "comment",
+      user_id: userId,
+      group_post_id: postId,
+      must_post_id: null,
+      link: `/grouppost/read/${postId}`,
+      is_read: false,
+    };
+    addAlarm(chatAlarmData);
   };
 
   return (
     <div>
       <form onSubmit={submitHandler}>
-        <input
-          type="text"
-          value={content}
-          onChange={setContentHandler}
-          className="border border-black"
-        />
+        <input type="text" value={content} onChange={setContentHandler} className="border border-black" />
         <button>등록하기</button>
       </form>
     </div>

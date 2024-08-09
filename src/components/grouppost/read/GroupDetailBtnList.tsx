@@ -10,7 +10,7 @@ function GroupDetailBtnList({ userId, id, achievementRate }: { userId: string; i
       {user && user.id === userId ? (
         <GroupFinishBtn id={id} />
       ) : (
-        <GroupApplyBtn id={id} achievementRate={achievementRate} />
+        <GroupApplyBtn id={id} achievementRate={achievementRate} userId={userId} />
       )}
     </div>
   );
