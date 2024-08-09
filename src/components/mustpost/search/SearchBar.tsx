@@ -18,7 +18,7 @@ function SearchBar() {
       <Image src="/img/icon-search.svg" alt="검색버튼" width={36} height={24} />
       <input
         type="text"
-        placeholder="여름필수템"
+        placeholder="자취 꿀템"
         className="ml-3 w-[340px] text-xl text-gray-4 placeholder:text-gray-2 outline-none"
         value={searchValue}
         onChange={(e) => setSearchValue(e.target.value)}

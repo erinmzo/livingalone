@@ -25,11 +25,15 @@ function InputField({
 }: InputFieldProps) {
   return (
     <div className="flex gap-[2px] justify-between items-start">
-      <label className=" w-[78px] h-[38px] flex items-center py-[5px] text-lg text-gray-4">
+      <label
+        htmlFor={name}
+        className=" w-[78px] h-[38px] flex items-center py-[5px] text-lg text-gray-4"
+      >
         {labelName}
       </label>
       <div className="flex-1">
         <input
+          id={name}
           type={type}
           name={name}
           value={value}

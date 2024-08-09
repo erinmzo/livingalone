@@ -14,7 +14,7 @@ import PaymentButton from "./PaymentButton";
 
 function PaymentForm() {
   const user = useAuthStore((state) => state.user);
-  console.log(user);
+
   const userId = user?.id as string;
   const {
     data: profile,
@@ -28,8 +28,7 @@ function PaymentForm() {
 
   const [isPostModalOpen, setIsPostModalOpen] = useState<boolean>(false);
   const [purchaserAddress, setPurchaserAddress] = useState<string>("");
-  const [purchaserDetailAddress, setPurchaserDetailAddress] =
-    useState<string>("");
+  const [purchaserDetailAddress, setPurchaserDetailAddress] = useState<string>("");
   const [purchaserEmail, setPurchaserEmail] = useState<string>("");
   const [firstCheckBox, setFirstCheckBox] = useState<boolean>(false);
   const [secondCheckBox, setSecondCheckBox] = useState<boolean>(false);
@@ -55,17 +54,11 @@ function PaymentForm() {
   if (isPending)
     return (
       <div className="flex justify-center items-center">
-        <Image
-          src="/img/loading-spinner.svg"
-          alt="로딩중"
-          width={200}
-          height={200}
-        />
+        <Image src="/img/loading-spinner.svg" alt="로딩중" width={200} height={200} />
       </div>
     );
 
-  if (isError)
-    return <div className="flex justify-center items-center">에러...</div>;
+  if (isError) return <div className="flex justify-center items-center">에러...</div>;
   return (
     <InnerLayout>
       <div className="flex flex-col justify-center items-center">
