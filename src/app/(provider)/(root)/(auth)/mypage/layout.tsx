@@ -11,6 +11,7 @@ import { PropsWithChildren } from "react";
 
 function MyPageLayout({ children }: PropsWithChildren) {
   const isOpenSideBar = useIsOpen((state) => state.isOpenSideBar);
+  console.log(isOpenSideBar);
 
   return (
     <>
@@ -20,10 +21,10 @@ function MyPageLayout({ children }: PropsWithChildren) {
           <h1 className="text-[32px] text-center font-bold hidden md:block">
             마이페이지
           </h1>
-          <div className="flex py-[100px] px-[50px]">
+          <div className="flex md:py-[100px] md:px-[50px]">
             <SideBar />
             {isOpenSideBar && <MobileSideBar />}
-            <main className="ml-[50px] w-auto grow">{children}</main>
+            <main className="ml-0 md:ml-[50px] w-auto grow">{children}</main>
           </div>
         </Page>
       </IsOpenProvider>
