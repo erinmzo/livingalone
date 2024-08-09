@@ -12,7 +12,7 @@ function HomePage() {
   return (
     <>
       <MobileHeader />
-      <main className="pb-[300px]">
+      <main className="lg:pb-[300px]">
         <MustVisual />
         <MustSection />
         <GroupVisual />

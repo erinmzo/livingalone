@@ -3,7 +3,7 @@ import Link from "next/link";
 
 function Banner() {
   return (
-    <div className="pt-[120px] pb-[190px] px-[16px] lg:px-0">
+    <div className="pb-[80px] md:pt-[120px] md:pb-[190px] px-[16px] lg:px-0">
       <div className="relative w-full lg:max-w-[1024px] mx-auto">
         <Link href="/payment">
           <Image
