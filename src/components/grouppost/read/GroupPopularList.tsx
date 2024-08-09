@@ -15,7 +15,14 @@ type TGroupApplicationsLikes = {
 
 type TPopularGroupPost = Pick<
   GroupPost,
-  "id" | "title" | "price" | "people_num" | "is_finished" | "img_url" | "start_date" | "end_date"
+  | "id"
+  | "title"
+  | "price"
+  | "people_num"
+  | "is_finished"
+  | "img_url"
+  | "start_date"
+  | "end_date"
 > &
   TGroupApplicationsLikes;
 
@@ -31,11 +38,17 @@ function GroupPopularList({ id }: { id: string }) {
   if (isPending)
     return (
       <div className="flex justify-center items-center">
-        <Image src="/img/loading-spinner.svg" alt="로딩중" width={200} height={200} />
+        <Image
+          src="/img/loading-spinner.svg"
+          alt="로딩중"
+          width={200}
+          height={200}
+        />
       </div>
     );
 
-  if (isError) return <div className="flex justify-center items-center">에러...</div>;
+  if (isError)
+    return <div className="flex justify-center items-center">에러...</div>;
 
   // a,b 타입 설정
   const sortedGroupPosts = groupPosts
@@ -49,8 +62,10 @@ function GroupPopularList({ id }: { id: string }) {
 
   return (
     <>
-      <h6 className="text-[26px] font-bold mb-6 mt-[128px]">인기 공구템</h6>
-      <ul className="grid grid-cols-1 md:grid-cols-2 gap-8 px-[16px] lg:px-0">
+      <h6 className="text-[18px] md:text-[26px] font-bold mb-6 mt-[64px] md:mt-[128px]">
+        인기 공구템
+      </h6>
+      <ul className="grid grid-cols-1 md:grid-cols-2 gap-8 px-[16px] lg:px-0 z-[10]">
         {sortedGroupPosts.map((post) => {
           return (
             <li key={post.id}>

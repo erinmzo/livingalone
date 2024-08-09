@@ -7,12 +7,7 @@ import GlobalNav from "./GlobalNav";
 import WriteButton from "./WriteButton";
 
 function Header() {
-  // const saveUser = useAuthStore((state) => state.saveUser);
   const user = useAuthStore((state) => state.user);
-
-  // useEffect(() => {
-  //   getUser().then((res) => saveUser(res.data.user));
-  // }, []);
 
   return (
     <header>

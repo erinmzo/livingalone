@@ -1,7 +1,8 @@
 "use client";
 
+import { insertAlarm } from "@/apis/alarm";
 import { insertGroupApply } from "@/apis/grouppost";
-import { TNewGroupApplication } from "@/types/types";
+import { TAddAlarm, TNewGroupApplication } from "@/types/types";
 import { postRevalidate } from "@/utils/revalidate";
 import { useAuthStore } from "@/zustand/authStore";
 import { useMutation } from "@tanstack/react-query";
@@ -14,10 +15,11 @@ import { v4 as uuidv4 } from "uuid";
 
 interface PropsType {
   id: string;
+  userId: string;
   onClose: () => void;
 }
 
-function GroupApplyModal({ id, onClose }: PropsType) {
+function GroupApplyModal({ id, onClose, userId }: PropsType) {
   const router = useRouter();
   const user = useAuthStore((state) => state.user);
 
@@ -49,6 +51,10 @@ function GroupApplyModal({ id, onClose }: PropsType) {
       postRevalidate(`/grouppost/read/${id}`);
       router.refresh();
     },
+  });
+
+  const { mutate: addAlarm } = useMutation({
+    mutationFn: (chatAlarmData: TAddAlarm) => insertAlarm(chatAlarmData),
   });
 
   const addGroupApplyHandler = async () => {
@@ -105,6 +111,16 @@ function GroupApplyModal({ id, onClose }: PropsType) {
       user_id: user.id,
     };
     addMutation.mutate(newGroupApply);
+
+    const chatAlarmData = {
+      type: "apply",
+      user_id: userId,
+      group_post_id: id,
+      must_post_id: null,
+      link: `/grouppost/read/${id}`,
+      is_read: false,
+    };
+    addAlarm(chatAlarmData);
   };
 
   const onCompletePost = (data: { address: string }) => {
@@ -114,7 +130,7 @@ function GroupApplyModal({ id, onClose }: PropsType) {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-[999]">
-      <div className="z-10 p-6 w-[500px] box-border bg-white rounded-2xl shadow-modal-custom">
+      <div className="z-10 p-6 w-[324px] md:w-[500px] box-border bg-white rounded-2xl shadow-modal-custom">
         <div className="flex justify-end">
           <button onClick={onClose}>
             <Image
@@ -125,12 +141,12 @@ function GroupApplyModal({ id, onClose }: PropsType) {
             />
           </button>
         </div>
-        <h6 className="flex justify-center font-bold text-[32px] mb-[33px]">
+        <h6 className="flex justify-center font-bold text-[18px] md:text-[32px] mb-[33px]">
           공구 신청하기
         </h6>
-        <div className="px-9">
+        <div className="md:px-9">
           <input
-            className="w-full h-[47px] text-[24px] border-b-2 border-black p-1"
+            className="w-full h-[38px] md:h-[47px] text-[18px] md:text-[24px] border-b-2 border-black p-1"
             placeholder="입금자명"
             value={name}
             onChange={(e) => setName(e.target.value)}
@@ -140,7 +156,7 @@ function GroupApplyModal({ id, onClose }: PropsType) {
           )}
 
           <input
-            className="w-full h-[47px] mt-[26px] text-[24px] border-b-2 border-black p-1"
+            className="w-full h-[38px] md:h-[47px] mt-[26px] text-[18px] md:text-[24px] border-b-2 border-black p-1"
             placeholder="010-XXXX-XXXX"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
@@ -149,13 +165,13 @@ function GroupApplyModal({ id, onClose }: PropsType) {
             <p className={`text-red-3 mt-2`}>{error.phoneError}</p>
           )}
           <button
-            className="py-2 px-4 mt-[44px] text-[12px] font-bold text-gray-3 border border-gray-3 rounded-full mb-3"
+            className="py-2 px-4 mt-[32px] md:mt-[44px] text-[12px] font-bold text-gray-4 md:text-gray-3 border border-gray-3 rounded-full mb-1 md:mb-3"
             onClick={handleSearchAddress}
           >
             주소검색
           </button>
           <input
-            className="w-full h-[47px] text-[24px] border-b-2 border-black p-1"
+            className="w-full h-[38px] md:h-[47px] text-[18px] md:text-[24px] border-b-2 border-black p-1"
             placeholder="주소"
             value={address}
             readOnly
@@ -164,13 +180,13 @@ function GroupApplyModal({ id, onClose }: PropsType) {
             <p className={`text-red-3 mt-2`}>{error.addressError}</p>
           )}
           <input
-            className="w-full h-[47px] text-[24px] mt-2 mb-[40px] border-b-2 border-black p-1"
+            className="w-full h-[38px] md:h-[47px] text-[18px] md:text-[24px] mt-2 mb-[40px] border-b-2 border-black p-1"
             placeholder="상세 주소"
             value={detailAddress}
             onChange={(e) => setDetailAddress(e.target.value)}
           />
         </div>
-        <div className="px-[26px]">
+        <div className="md:px-[26px]">
           <input
             type="checkbox"
             onChange={() => {
@@ -179,14 +195,14 @@ function GroupApplyModal({ id, onClose }: PropsType) {
           />
           <label
             className={`ml-2 font-bold ${
-              checkBox ? "text-gray-5" : "text-gray-4"
+              checkBox ? "text-gray-4 md:text-gray-5" : "text-gray-4"
             }`}
           >
             공구 참여자 는 2024년 7월 22일 아래와 같이 서약합니다.
           </label>
           <div
             className={`text-[14px] mt-2 ${
-              checkBox ? "text-gray-5" : "text-gray-3"
+              checkBox ? "text-gray-3 md:text-gray-5" : "text-gray-3"
             }`}
           >
             <p className="flex gap-1">
@@ -204,8 +220,8 @@ function GroupApplyModal({ id, onClose }: PropsType) {
           </div>
           <button
             className={`${
-              checkBox ? "bg-main-8" : "bg-gray-2"
-            } mt-[32px] mb-[24px] text-white w-full py-4 text-[24px] rounded-full font-bold`}
+              checkBox ? "bg-main-8 text-white" : "bg-gray-2 text-gray-3"
+            } mt-[32px] mb-2 md:mb-[24px] text-gray-3 md:text-white w-full py-[10px] md:py-4 text-[20px] md:text-[24px] rounded-full font-bold`}
             onClick={addGroupApplyHandler}
           >
             확인

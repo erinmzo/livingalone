@@ -1,5 +1,7 @@
+import { TComment } from "@/components/mustpost/comments/CommentForm";
+import { TEditComment } from "@/components/mustpost/comments/CommentsList";
 import { createClient } from "@/supabase/client";
-import { MustPost, TComment, TMustWishData, TNewMustPost } from "@/types/types";
+import { TMustWishData, TNewMustPost } from "@/types/types";
 
 export async function getMustPostOnMain() {
   const response = await fetch("/api/main/must", {
@@ -31,9 +33,7 @@ export async function getCategories() {
 }
 
 export async function getMustPostbyCategory(page = 0, categoryId: string) {
-  const response = await fetch(
-    `/api/mustpost/category/${categoryId}?page=${page}`
-  );
+  const response = await fetch(`/api/mustpost/category/${categoryId}?page=${page}`);
   const data = await response.json();
   return {
     posts: data.data,
@@ -108,10 +108,7 @@ export async function updateMustPost(newMustPost: TNewMustPost) {
   });
 }
 
-export async function NewMustCategoryPost(
-  postCategoryId: string,
-  postId: string
-) {
+export async function NewMustCategoryPost(postCategoryId: string, postId: string) {
   const supabase = createClient();
   const { data } = await supabase
     .from("must_posts")
@@ -126,7 +123,6 @@ export async function NewMustCategoryPost(
 export async function getComments(postId: string) {
   const response = await fetch(`/api/mustpost/comments/${postId}`);
   const data = await response.json();
-  // console.log("데이터", data);
   return data;
 }
 
@@ -144,5 +140,12 @@ export async function deleteMustComment(commentId: string) {
   await fetch(`/api/mustpost/comments`, {
     method: "DELETE",
     body: JSON.stringify(commentId),
+  });
+}
+
+export async function updatenewComment(newEditComment: TEditComment) {
+  await fetch(`/api/mustpost/comments`, {
+    method: "PUT",
+    body: JSON.stringify(newEditComment),
   });
 }

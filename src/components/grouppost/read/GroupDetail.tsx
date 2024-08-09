@@ -1,5 +1,5 @@
 import { getGroupDetail } from "@/apis/grouppost";
-import ChatForm from "@/components/chat/ChatForm";
+import Chat from "@/components/chat/Chat";
 import Like from "@/components/common/Like";
 import InnerLayout from "@/components/common/Page/InnerLayout";
 import { GroupPost } from "@/types/types";
@@ -108,7 +108,7 @@ async function GroupDetail({ params }: Props) {
             <div className="flex">
               <p
                 className={`text-[14px] md:text-[20px] ${
-                  is_finished ? "text-gray-2" : "text-red-3"
+                  is_finished ? "text-gray-3 md:text-gray-2" : "text-red-3"
                 }`}
               >
                 달성률{" "}
@@ -135,9 +135,9 @@ async function GroupDetail({ params }: Props) {
             <p className="mb-[20px] text-[14px] md:text-[16px] font-bold text-gray-3">
               {item}
             </p>
-            <div className="flex gap-2">
+            <div className="flex gap-2 justify-between md:justify-normal w-full md:w-auto">
               {is_finished ? (
-                <div className="w-[330px] py-3 font-bold text-gray-4 text-[20px] bg-gray-2 rounded-full text-center">
+                <div className="w-full md:w-[330px] py-[10px] md:py-3 font-bold text-gray-3 md:text-gray-4 text-[20px] bg-gray-2 rounded-full text-center">
                   종료된 공구템입니다.
                 </div>
               ) : (
@@ -156,18 +156,18 @@ async function GroupDetail({ params }: Props) {
                 </>
               )}
             </div>
-            <div className="mt-[56px] border-y border-gray-2 py-6 px-2 mb-[64px]">
+            <div className="mt-[24px] md:mt-[56px] border-y border-gray-2 py-6 px-2 mb-[58px] md:mb-[64px]">
               <GroupContent content={content} />
             </div>
 
-            {is_finished ? "" : <ChatForm postId={id} userId={user_id} />}
+            {!is_finished && <Chat postId={id} userId={user_id} />}
           </div>
         </div>
       </InnerLayout>
       <GroupPopularList id={id} />
       <div className="flex justify-center mt-[69px]">
         <Link href={"/grouppost"}>
-          <button className="border-gray-4 border-[1px] rounded-full text-gray-4 font-bold py-[8.5px] flex items-center pl-[10px] pr-[18px]">
+          <button className="border-gray-4 border-[1px] rounded-full text-gray-4 font-bold py-[7.5px] flex items-center pl-[10px] pr-[18px] h-[36px]">
             <Image
               src="/img/icon-back.png"
               alt="돌아가기 버튼"
