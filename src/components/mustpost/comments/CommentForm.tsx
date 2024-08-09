@@ -1,12 +1,9 @@
 "use client";
+import { insertAlarm } from "@/apis/alarm";
 import { insertComment } from "@/apis/mustpost";
-// import { TComment } from "@/types/types";
+import { TAddAlarm } from "@/types/types";
 import { useAuthStore } from "@/zustand/authStore";
-import {
-  QueryClient,
-  useMutation,
-  useQueryClient,
-} from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Notify } from "notiflix";
@@ -19,11 +16,15 @@ export type TComment = {
   content: string;
 };
 
-function CommentForm({ postId }: { postId: string }) {
+function CommentForm({ postId, userId }: { postId: string; userId: string }) {
   const router = useRouter();
   const user = useAuthStore((state) => state.user);
   const queryClient = useQueryClient();
   const [content, setContent] = useState("");
+
+  const setContentHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setContent(e.target.value);
+  };
 
   const { mutate: addComment } = useMutation({
     mutationFn: (newComment: TComment) => insertComment(newComment),
@@ -33,9 +34,9 @@ function CommentForm({ postId }: { postId: string }) {
     },
   });
 
-  const setContentHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setContent(e.target.value);
-  };
+  const { mutate: addAlarm } = useMutation({
+    mutationFn: (chatAlarmData: TAddAlarm) => insertAlarm(chatAlarmData),
+  });
 
   const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -62,6 +63,16 @@ function CommentForm({ postId }: { postId: string }) {
 
     addComment(newComment);
     setContent("");
+
+    const chatAlarmData = {
+      type: "comment",
+      user_id: userId,
+      group_post_id: postId,
+      must_post_id: null,
+      link: `/grouppost/read/${postId}`,
+      is_read: false,
+    };
+    addAlarm(chatAlarmData);
   };
 
   return (
@@ -74,12 +85,7 @@ function CommentForm({ postId }: { postId: string }) {
           className="border border-black whitespace-pre-wrap break-words"
         ></textarea>
         <button className="">
-          <Image
-            src="/img/icon-send.svg"
-            alt="등록하기"
-            width={32}
-            height={32}
-          />
+          <Image src="/img/icon-send.svg" alt="등록하기" width={32} height={32} />
         </button>
       </form>
     </div>

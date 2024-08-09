@@ -38,7 +38,7 @@ export async function googleLogin() {
   const { error } = await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
-      redirectTo: "https://nqqsefrllkqytkwxfshk.supabase.co/auth/v1/callback",
+      redirectTo: process.env.NEXT_PUBLIC_SITE_URL,
       queryParams: {
         access_type: "offline",
         prompt: "consent",

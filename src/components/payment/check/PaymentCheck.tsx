@@ -7,15 +7,9 @@ import { useMutation } from "@tanstack/react-query";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Notify } from "notiflix";
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 
-function PaymentCheck({
-  paymentId,
-  code,
-}: {
-  paymentId: string;
-  code: string;
-}) {
+function PaymentCheck({ paymentId, code }: { paymentId: string; code: string }) {
   const user = useAuthStore((state) => state.user);
   const router = useRouter();
   const hasRun = useRef(false);
@@ -36,21 +30,14 @@ function PaymentCheck({
           try {
             const postPaymentHistory = async () => {
               const cancelResponse = await refundPayment(paymentId);
-              console.log(cancelResponse);
               if (cancelResponse.data.cancellation.status !== "SUCCEEDED") {
                 Notify.failure("마이페이지 > 결제 내역에서 환불해주세요.");
-                throw new Error(
-                  `Cancellation failed: ${cancelResponse.statusText}`
-                );
+                throw new Error(`Cancellation failed: ${cancelResponse.statusText}`);
               }
-              const notified = await fetch(
-                `/api/payment/complete?paymentId=${paymentId}`
-              );
+              const notified = await fetch(`/api/payment/complete?paymentId=${paymentId}`);
               const paymentData = await notified.json();
               if (paymentData.status === "PAID") {
-                Notify.failure(
-                  "즉시 환불에 실패했습니다. 마이페이지 > 결제 내역에서 환불해주세요."
-                );
+                Notify.failure("즉시 환불에 실패했습니다. 마이페이지 > 결제 내역에서 환불해주세요.");
               }
               if (paymentData.status === "FAILED") {
                 Notify.failure("결제에 실패했습니다. 다시 시도해주세요.");
@@ -74,10 +61,7 @@ function PaymentCheck({
             };
             postPaymentHistory();
           } catch (error) {
-            console.log(error);
-            Notify.failure(
-              "즉시 환불에 실패했습니다. 마이페이지 > 결제 내역에서 환불해주세요."
-            );
+            Notify.failure("즉시 환불에 실패했습니다. 마이페이지 > 결제 내역에서 환불해주세요.");
           }
         }
       };
@@ -88,12 +72,7 @@ function PaymentCheck({
 
   return (
     <div className="flex justify-center items-center">
-      <Image
-        src="/img/loading-spinner.svg"
-        alt="로딩중"
-        width={200}
-        height={200}
-      />
+      <Image src="/img/loading-spinner.svg" alt="로딩중" width={200} height={200} />
     </div>
   );
 }

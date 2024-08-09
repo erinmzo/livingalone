@@ -6,36 +6,18 @@ export async function POST(request: NextRequest) {
   try {
     const supabase = createClient();
     const { data } = await supabase.from("must_comments").insert(newComment);
-    // console.log("data:", data);
-    // console.log(newComment);
+
     return NextResponse.json(data);
   } catch (error) {
     return NextResponse.json({ error: "데이터를 등록하는 데 실패했습니다." });
   }
 }
 
-// export async function DELETE(request: NextRequest) {
-//   try {
-//     const commentId = await request.json();
-//     const supabase = createClient();
-//     const { data } = await supabase
-//       .from("must_comments")
-//       .delete()
-//       .eq("id", commentId);
-//     return NextResponse.json(data);
-//   } catch (error) {
-//     return NextResponse.json({ error: "댓글 삭제에 실패하였습니다!" });
-//   }
-// }
-
 export async function DELETE(request: NextRequest) {
   const commentId = await request.json();
   const supabase = createClient();
   try {
-    const { data } = await supabase
-      .from("must_comments")
-      .delete()
-      .eq("id", commentId);
+    const { data } = await supabase.from("must_comments").delete().eq("id", commentId);
     return NextResponse.json(data);
   } catch (error) {
     return NextResponse.json({ error: "댓글 삭제에 실패하였습니다!" });
@@ -47,10 +29,7 @@ export async function PUT(request: NextRequest) {
   const { commentId, content } = newEditComment;
   const supabase = createClient();
   try {
-    const { data } = await supabase
-      .from("must_comments")
-      .update({ content })
-      .eq("id", commentId);
+    const { data } = await supabase.from("must_comments").update({ content }).eq("id", commentId);
 
     return NextResponse.json(data);
   } catch (error) {
