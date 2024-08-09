@@ -7,6 +7,7 @@ import {
   useMutation,
   useQueryClient,
 } from "@tanstack/react-query";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Notify } from "notiflix";
 import React, { useState } from "react";
@@ -68,10 +69,18 @@ function CommentForm({ postId }: { postId: string }) {
       <form onSubmit={submitHandler}>
         <textarea
           value={content}
+          placeholder="댓글을 입력해주세요."
           onChange={(e) => setContentHandler(e)}
           className="border border-black whitespace-pre-wrap break-words"
         ></textarea>
-        <button>등록하기</button>
+        <button className="">
+          <Image
+            src="/img/icon-send.svg"
+            alt="등록하기"
+            width={32}
+            height={32}
+          />
+        </button>
       </form>
     </div>
   );

@@ -4,7 +4,7 @@ import CommentForm from "./CommentForm";
 
 function Comments({ postId }: { postId: string }) {
   return (
-    <div>
+    <div className="w-[680px] py-[13px] px-[23px] bg-gray-6 rounded-[8px]">
       <CommentsList postId={postId} />
       <CommentForm postId={postId} />
     </div>
