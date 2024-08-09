@@ -1,10 +1,7 @@
 "use client";
 import { insertAlarm } from "@/apis/alarm";
 import { insertComment } from "@/apis/mustpost";
-<<<<<<< HEAD
-=======
 import { TAddAlarm } from "@/types/types";
->>>>>>> 317377e858084227f535dbae8dd7c44cc02a706a
 import { useAuthStore } from "@/zustand/authStore";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
@@ -80,25 +77,20 @@ function CommentForm({ postId, userId }: { postId: string; userId: string }) {
 
   return (
     <div>
-      <form onSubmit={submitHandler} className="flex w-[635px] pt-4">
+      <form onSubmit={submitHandler} className="flex flex-row w-[635px] pt-4">
         <textarea
           value={content}
           placeholder="댓글 게시하기"
           onChange={(e) => setContentHandler(e)}
-          className="flex-grow-1 border border-gray-4"
+          className="flex-grow px-4 py-[9px] h-[32px] border border-gray-4 text-xs rounded-[8px] resize-none"
         ></textarea>
-<<<<<<< HEAD
-        <button className="flex-grow-0 w-8 aspect-square">
+        <button className="flex-grow-0 pl-1">
           <Image
             src="/img/icon-send.svg"
             alt="등록하기"
             width={32}
             height={32}
           />
-=======
-        <button className="">
-          <Image src="/img/icon-send.svg" alt="등록하기" width={32} height={32} />
->>>>>>> 317377e858084227f535dbae8dd7c44cc02a706a
         </button>
       </form>
     </div>

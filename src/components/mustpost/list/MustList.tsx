@@ -12,8 +12,18 @@ import Title from "./Title";
 
 function MustList() {
   const selectedCategory = useCategoryStore((state) => state.selectedCategory);
-  const setSelectedCategory = useCategoryStore((state) => state.setSelectedCategory);
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isPending, isError, refetch } = useInfiniteQuery({
+  const setSelectedCategory = useCategoryStore(
+    (state) => state.setSelectedCategory
+  );
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isPending,
+    isError,
+    refetch,
+  } = useInfiniteQuery({
     queryKey: ["mustPosts", selectedCategory],
     queryFn: async ({ pageParam = 0 }) => {
       const response =
@@ -26,14 +36,20 @@ function MustList() {
       };
     },
     getNextPageParam: (lastPage, allPages) => {
-      const totalFetched = allPages.reduce((acc, page) => acc + page.posts.length, 0);
+      const totalFetched = allPages.reduce(
+        (acc, page) => acc + page.posts.length,
+        0
+      );
       if (totalFetched >= lastPage.total) return undefined;
       return allPages.length;
     },
     initialPageParam: 0,
   });
 
-  const mustPosts = useMemo(() => data?.pages?.flatMap((page) => page.posts) || [], [data]);
+  const mustPosts = useMemo(
+    () => data?.pages?.flatMap((page) => page.posts) || [],
+    [data]
+  );
 
   useEffect(() => {
     return setSelectedCategory("ALL");
@@ -42,31 +58,44 @@ function MustList() {
   if (isPending)
     return (
       <div className="flex justify-center items-center">
-        <Image src="/img/loading-spinner.svg" alt="로딩중" width={200} height={200} />
+        <Image
+          src="/img/loading-spinner.svg"
+          alt="로딩중"
+          width={200}
+          height={200}
+        />
       </div>
     );
 
-  if (isError) return <div className="flex justify-center items-center">데이터를 불러오는데 실패했습니다!</div>;
+  if (isError)
+    return (
+      <div className="flex justify-center items-center">
+        데이터를 불러오는데 실패했습니다!
+      </div>
+    );
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <div className="flex flex-col items-center justify-center">
-        <Title />
-        <div className="flex flex-col justify-center items-center mb-[64px]">
-          <SearchBar />
-          <MustCategory />
-        </div>
+      <Title />
+      <div className="flex flex-col justify-center items-center mt-4 md:mb-[64px]">
+        <SearchBar />
+        <MustCategory />
       </div>
       {mustPosts.length > 0 ? (
         <div className="w-full min-h-screen flex-col items-center justify-center">
-          <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <ul className="grid grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
             {mustPosts.map((post) => (
-              <li key={post.id} className="mb-[64px]">
-                <MustPostCard postId={post.id} title={post.title} item={post.item} imgUrl={post.img_url} />
+              <li key={post.id} className="mb-[34px] md:mb-[64px]">
+                <MustPostCard
+                  postId={post.id}
+                  title={post.title}
+                  item={post.item}
+                  imgUrl={post.img_url}
+                />
               </li>
             ))}
           </ul>
-          <div className="flex justify-center items-center mt-[79px]">
+          <div className="flex justify-center items-center mt-[48px] mb-[137px] md:mt-[79px]">
             {hasNextPage && (
               <button
                 onClick={() => fetchNextPage()}
