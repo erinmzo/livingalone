@@ -113,6 +113,7 @@ function PaymentButton({
           acceptmethod: ["SKIN(#00B8A2)"],
         },
       },
+
       redirectUrl: `http://localhost:3000/payment/check`,
     });
 

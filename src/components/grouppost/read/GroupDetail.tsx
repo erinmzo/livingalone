@@ -62,6 +62,7 @@ async function GroupDetail({ params }: Props) {
     <>
       <InnerLayout>
         <div className={`${is_finished ? "text-gray-3" : ""}`}>
+          <GroupEditBtnList userId={user_id} id={id} />
           <div className="relative overflow-hidden rounded-lg">
             <Image
               src={img_url}
@@ -97,7 +98,7 @@ async function GroupDetail({ params }: Props) {
                 alt="프로필 사진"
                 width={40}
                 height={40}
-                className="rounded-full"
+                className="rounded-full h-10"
               />
               <div>
                 <p>{nickname}</p>
@@ -106,28 +107,34 @@ async function GroupDetail({ params }: Props) {
             </div>
             <div className="flex">
               <p
-                className={`text-[20px] ${
+                className={`text-[14px] md:text-[20px] ${
                   is_finished ? "text-gray-2" : "text-red-3"
                 }`}
               >
                 달성률{" "}
-                <span className="font-bold text-[36px]">
+                <span className="font-bold text-[28px] md:text-[36px]">
                   {achievementRate}%
                 </span>
               </p>
             </div>
           </div>
           <div className="mt-5">
-            <p className="text-gray-3">마감일 {end_date} 까지</p>
-            <h5 className="font-bold text-[28px] mt-1">{title}</h5>
+            <p className="text-[14px] md:text-[16px] text-gray-3">
+              마감일 {end_date} 까지
+            </p>
+            <h5 className="font-bold text-[22px] md:text-[28px] mt-1">
+              {title}
+            </h5>
             <p
-              className={`font-bold text-[24px] mt-3 mb-[4px]  ${
+              className={`font-bold text-[18px] md:text-[24px] mt-3 mb-[4px]  ${
                 is_finished ? "text-gray-3" : "text-black"
               }`}
             >
               {price.toLocaleString()}원
             </p>
-            <p className="mb-[20px] font-bold text-gray-3">{item}</p>
+            <p className="mb-[20px] text-[14px] md:text-[16px] font-bold text-gray-3">
+              {item}
+            </p>
             <div className="flex gap-2">
               {is_finished ? (
                 <div className="w-[330px] py-3 font-bold text-gray-4 text-[20px] bg-gray-2 rounded-full text-center">
@@ -154,7 +161,6 @@ async function GroupDetail({ params }: Props) {
             </div>
 
             {is_finished ? "" : <ChatForm postId={id} userId={user_id} />}
-            <GroupEditBtnList userId={user_id} id={id} />
           </div>
         </div>
       </InnerLayout>
