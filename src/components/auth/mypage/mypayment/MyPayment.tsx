@@ -34,11 +34,17 @@ function MyPayment() {
   if (isPending)
     return (
       <div className="flex justify-center items-center">
-        <Image src="/img/loading-spinner.svg" alt="로딩중" width={200} height={200} />
+        <Image
+          src="/img/loading-spinner.svg"
+          alt="로딩중"
+          width={200}
+          height={200}
+        />
       </div>
     );
 
-  if (isError) return <div className="flex justify-center items-center">에러...</div>;
+  if (isError)
+    return <div className="flex justify-center items-center">에러...</div>;
 
   const refundHandler = async (paymentId: string) => {
     const data = await refundPayment(paymentId);
@@ -60,19 +66,43 @@ function MyPayment() {
     user &&
     user.id && (
       <div className="flex-col">
-        <h5 className="font-bold text-[24px] mb-[32px] w-full">결제 내역</h5>
+        <h5 className="hidden md:block font-bold text-[24px] mb-[32px] w-full">
+          결제 내역
+        </h5>
+        <div className="md:hidden flex justify-center mb-[32px]">
+          <div className="flex justify-center items-center font-bold text-xs text-main-8 border border-main-8 bg-gray-1 w-[73px] h-[30px] rounded-full">
+            결제내역
+          </div>
+        </div>
         {myPayment ? (
-          <div className="border border-gray-2 w-full rounded-lg py-5 px-8 flex justify-between">
+          <div className="border border-gray-2 w-full rounded-lg py-5 px-5 md:px-8 flex flex-col md:flex-row gap-3 md:gap-0 justify-between">
             <div>
-              <p className="text-[14px] font-bold text-gray-4 mb-1">
+              <p
+                className={`text-[14px] font-bold  mb-1 ${
+                  myPayment.status === "CANCELLED"
+                    ? "text-gray-2 md:text-gray-4"
+                    : "text-gray-4"
+                }`}
+              >
                 {myPayment.status === "CANCELLED" ? "환불 완료" : "결제 완료"}
               </p>
-              <div className="flex items-center gap-[10px]">
-                <Link href="/payment">
-                  <Image src="/img/luckybox-my.png" alt="럭키박스" width={62} height={62} />
+              <div className="flex items-center gap-3 md:gap-[10px]">
+                <Link href="/payment" className="shrink-0">
+                  <Image
+                    src="/img/luckybox-my.png"
+                    alt="럭키박스"
+                    width={62}
+                    height={62}
+                  />
                 </Link>
-                <div className="flex gap-8">
-                  <div className={`text-[18px] ${myPayment.status === "CANCELLED" ? "text-gray-2" : "text-black"}`}>
+                <div className="w-full md:w-auto flex justify-between md:justify-normal md:gap-8">
+                  <div
+                    className={`text-[18px] ${
+                      myPayment.status === "CANCELLED"
+                        ? "text-gray-2"
+                        : "text-black"
+                    }`}
+                  >
                     <Link href="/payment">
                       <p className="mb-1">혼자살때 럭키박스</p>
                     </Link>
@@ -82,7 +112,7 @@ function MyPayment() {
                   </div>
                   {myPayment.status === "PAID" ? (
                     <button
-                      className="w-[120px] border mt-auto border-main-8 text-main-8 text-[12px] font-bold rounded-full py-2"
+                      className="w-[92px] md:w-[120px] border mt-auto border-main-8 text-main-8 text-[12px] font-bold rounded-full py-2"
                       onClick={() => refundHandler(myPayment.id)}
                     >
                       환불하기
@@ -93,15 +123,23 @@ function MyPayment() {
                 </div>
               </div>
             </div>
-            <div className="border-l border-gray-2 pl-8">
+            <div className="md:border-l md:border-gray-2 md:pl-8">
               <h6
-                className={`text-[12px] font-bold mb-1 ${
-                  myPayment.status === "CANCELLED" ? "text-gray-2" : "text-gray-4"
+                className={`text-[14px] md:text-[12px] font-bold mb-1 ${
+                  myPayment.status === "CANCELLED"
+                    ? "text-gray-2"
+                    : "text-gray-4"
                 }`}
               >
                 주문자 정보
               </h6>
-              <div className={`${myPayment.status === "CANCELLED" ? "text-gray-2" : "text-gray-4"} text-[14px]`}>
+              <div
+                className={`${
+                  myPayment.status === "CANCELLED"
+                    ? "text-gray-2"
+                    : "text-gray-4"
+                } text-[14px]`}
+              >
                 <p className="mb-1">
                   {myPayment.name} | {myPayment.phone}
                 </p>
@@ -112,8 +150,16 @@ function MyPayment() {
           </div>
         ) : (
           <div className="flex flex-col py-[100px] justify-center items-center">
-            <Image src="/img/icon-empty.png" alt="empty" width={100} height={0} className="mb-5" />
-            <div className="flex justify-center items-center text-gray-4">주문 내역이 없습니다.</div>
+            <Image
+              src="/img/icon-empty.png"
+              alt="empty"
+              width={100}
+              height={0}
+              className="mb-5"
+            />
+            <div className="flex justify-center items-center text-gray-4">
+              주문 내역이 없습니다.
+            </div>
           </div>
         )}
       </div>

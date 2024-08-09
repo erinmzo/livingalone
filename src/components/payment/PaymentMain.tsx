@@ -70,7 +70,7 @@ function PaymentMain() {
           </span>
           <button
             onClick={onClickPaymentBtnHandler}
-            className="font-bold text-[24px] text-white bg-main-8 py-[16px] px-[184px] rounded-full"
+            className="font-bold text-[20px] md:text-[24px] text-white bg-main-8 py-[10px] md:py-[16px] w-full max-w-[300px] md:w-auto md:px-[184px] rounded-full"
           >
             구매하기
           </button>

@@ -59,16 +59,18 @@ function GroupPostCard({
               <span>{startDate}</span> ~ <span>{endDate}</span>
             </div>
           </div>
-          <h4 className="text-[24px] font-bold truncate mt-[6px]">{title}</h4>
-          <div className="flex items-baseline gap-2 mt-[6px]">
+          <h4 className="text-[16px] md:text-[24px] font-bold truncate mt-[6px]">
+            {title}
+          </h4>
+          <div className="flex items-center gap-2 mt-[6px]">
             <span
               className={`${
                 isFinished ? "text-gray-2" : "text-red-3"
-              } text-[16px] font-bold`}
+              } text-[14px] md:text-[16px] font-bold`}
             >
               {peopleNum - application.length}명 남음
             </span>
-            <span className="text-[20px] font-bold">
+            <span className="text-[18px] md:text-[20px] font-bold">
               {price.toLocaleString()}원
             </span>
           </div>

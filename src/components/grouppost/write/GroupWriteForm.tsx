@@ -25,7 +25,8 @@ const EditorModule = dynamic(
 function GroupWriteForm() {
   const router = useRouter();
   const user = useAuthStore((state) => state.user);
-
+  // const postRef = useRef(false);
+  const [isDebouncing, setIsDebouncing] = useState(false);
   const [error, setError] = useState({
     titleError: "",
     endDateError: "",
@@ -77,10 +78,18 @@ function GroupWriteForm() {
     },
     onSuccess: () => {
       router.push("/grouppost");
+      setIsDebouncing(false);
+    },
+    onError: () => {
+      setIsDebouncing(false);
     },
   });
 
   const addGroupPostHandler = async () => {
+    if (isDebouncing) {
+      return;
+    }
+
     const isValid = groupValidation(
       setError,
       title,
@@ -97,6 +106,8 @@ function GroupWriteForm() {
     }
 
     if (!editorRef.current) return Notify.failure("모든 항목을 입력해주세요");
+
+    setIsDebouncing(true);
 
     const today = new Date();
     const year = today.getFullYear();
@@ -120,15 +131,16 @@ function GroupWriteForm() {
         img_url: imgUrl,
         is_finished: false,
       };
+
       addMutation.mutate(newGroupPost);
     }
   };
 
   return (
     <InnerLayout>
-      <div className="flex flex-col gap-5">
+      <div className="flex flex-col gap-3 md:gap-5">
         <div className="flex gap-[2px]">
-          <label className="flex-0 w-[78px] h-[38px] flex items-center text-[18px] text-gray-3">
+          <label className="flex-0 w-[70px] md:w-[78px] h-[38px] flex items-center md:text-[18px] text-gray-3">
             제목
           </label>
           <div className="flex-1 w-full">
@@ -137,7 +149,7 @@ function GroupWriteForm() {
               placeholder="제목을 입력하세요."
               value={title}
               onChange={onChangeInput}
-              className="w-full pl-[2px] px-[2px] py-[5px] border-b-[1px] border-gray-3 font-bold text-[18px] text-black leading-normal  placeholder:text-gray-2 outline-none"
+              className="text-[16px] w-full pl-[2px] px-[2px] py-[5px] border-b-[1px] border-gray-3 font-bold md:text-[18px] text-black leading-normal  placeholder:text-gray-2 outline-none"
             />
             {error.titleError && (
               <p className={`text-red-3 text-[12px] mt-2`}>
@@ -146,13 +158,16 @@ function GroupWriteForm() {
             )}
           </div>
         </div>
-        <div className="flex gap-[41px]">
+        <div className="flex gap-2 md:gap-[41px]">
           <div className="flex gap-[2px]">
-            <label className="flex-0 w-[78px]  h-[38px] flex items-center text-[18px] text-gray-3">
+            <label className="hidden md:flex flex-0 w-[70px] md:w-[78px] h-[38px] items-center md:text-[18px] text-gray-3">
               공구기간
             </label>
+            <label className="flex md:hidden flex-0 w-[70px] md:w-[78px] h-[38px] items-center md:text-[18px] text-gray-3">
+              마감일
+            </label>
             <div className="flex gap-2">
-              <label className="h-[38px] flex items-center text-[14px] text-black">
+              <label className="hidden h-[38px] md:flex items-center text-[14px] text-black">
                 마감일
               </label>
               <div>
@@ -161,7 +176,7 @@ function GroupWriteForm() {
                   type="date"
                   value={endDate}
                   onChange={onChangeInput}
-                  className="border-b-[1px] border-gray-3 py-2 px-[2px] text-[18px] font-bold text-black outline-none"
+                  className="border-b-[1px] w-[108px] border-gray-3 py-2 px-[2px] md:text-[18px] font-bold text-black outline-none"
                 />
                 {error.endDateError && (
                   <p className={`text-red-3 text-[12px] mt-2`}>
@@ -172,8 +187,8 @@ function GroupWriteForm() {
             </div>
           </div>
 
-          <div className="flex gap-2">
-            <label className="flex-0 w-[78px]  h-[38px] flex items-center text-[18px] text-gray-3">
+          <div className="flex gap-2 overflow-hidden">
+            <label className="flex-0 w-[70px] md:w-[78px] h-[38px] flex items-center md:text-[18px] text-gray-3">
               공구인원
             </label>
             <div>
@@ -183,7 +198,7 @@ function GroupWriteForm() {
                 placeholder="숫자만 입력해주세요."
                 value={peopleNum}
                 onChange={onChangeInput}
-                className="w-[100px] pl-[2px] px-[2px] py-2 border-b border-gray-3 text-[18px] font-bold text-black outline-none"
+                className="w-auto max-w-[83px] md:w-[100px] pl-[2px] px-[2px] py-2 border-b border-gray-3 md:text-[18px] font-bold text-black outline-none"
               />
               {error.peopleNumError && (
                 <p className={`text-red-3 text-[12px] mt-2`}>
@@ -195,7 +210,7 @@ function GroupWriteForm() {
         </div>
 
         <div className="flex gap-[2px]">
-          <label className="flex-0 w-[78px] h-[38px] flex items-center text-[18px] text-gray-3">
+          <label className="flex-0 w-[70px] md:w-[78px] h-[38px] flex items-center md:text-[18px] text-gray-3">
             상품이름
           </label>
           <div className="flex-1 w-full">
@@ -204,7 +219,7 @@ function GroupWriteForm() {
               placeholder="제품명을 입력하세요."
               value={item}
               onChange={onChangeInput}
-              className="w-full pl-[2px] px-[2px] py-[5px] border-b-[1px] border-gray-3 font-bold text-[18px] text-black leading-normal placeholder:text-gray-2 outline-none"
+              className="w-full pl-[2px] px-[2px] py-[5px] border-b-[1px] border-gray-3 font-bold md:text-[18px] text-black leading-normal placeholder:text-gray-2 outline-none"
             />
             {error.itemError && (
               <p className={`text-red-3 text-[12px] mt-2`}>{error.itemError}</p>
@@ -213,7 +228,7 @@ function GroupWriteForm() {
         </div>
 
         <div className="flex gap-[2px]">
-          <label className="flex-0 w-[78px] h-[38px] flex items-center text-[18px] text-gray-3">
+          <label className="flex-0 w-[70px] md:w-[78px] h-[38px] flex items-center md:text-[18px] text-gray-3">
             공구가격
           </label>
           <input
@@ -222,11 +237,11 @@ function GroupWriteForm() {
             placeholder="숫자만 입력해주세요."
             value={price}
             onChange={onChangeInput}
-            className="flex-1 pl-[2px] px-[2px] py-[5px] border-b-[1px] border-gray-3 font-bold text-[18px] text-black leading-normal placeholder:text-gray-2 outline-none"
+            className="flex-1 pl-[2px] px-[2px] py-[5px] border-b-[1px] border-gray-3 font-bold md:text-[18px] text-black leading-normal placeholder:text-gray-2 outline-none"
           />
         </div>
         <div className="flex gap-[2px]">
-          <label className="flex-0 w-[78px] h-[38px] flex items-center text-[18px] text-gray-3">
+          <label className="flex-0 w-[70px] md:w-[78px] h-[38px] flex items-center md:text-[18px] text-gray-3">
             상품링크
           </label>
           <input
@@ -234,10 +249,13 @@ function GroupWriteForm() {
             placeholder="(선택사항) 상품소개 페이지 링크를 넣어주세요."
             value={link}
             onChange={onChangeInput}
-            className="flex-1 pl-[2px] px-[2px] py-[5px] border-b-[1px] border-gray-3 font-bold text-[18px] text-black leading-normal placeholder:text-gray-2 outline-none"
+            className="flex-1 pl-[2px] px-[2px] py-[5px] border-b-[1px] border-gray-3 font-bold md:text-[18px] text-black leading-normal placeholder:text-gray-2 outline-none"
           />
         </div>
-        <div className="flex gap-4 items-start mb-[6px]">
+        <div className="flex md:gap-4 items-start mb-[6px]">
+          <label className=" flex-0 w-[70px] md:w-[78px] h-[38px] flex md:hidden items-center md:text-[18px] text-gray-3">
+            이미지
+          </label>
           <input
             className="hidden"
             id="image-file"
@@ -245,10 +263,21 @@ function GroupWriteForm() {
             onChange={addImageHandler}
           />
           <label
-            className="flex justify-center items-center ml-[78px] px-7 py-[7px] border border-gray-4 bg-gray-1 font-bold text-[12px] text-gray-4 rounded-full cursor-pointer"
+            className="hidden md:flex justify-center items-center ml-[78px] px-7 py-[7px] border border-gray-4 bg-gray-1 font-bold text-[12px] text-gray-4 rounded-full cursor-pointer"
             htmlFor="image-file"
           >
             {imgUrl ? "이미지 수정" : "이미지 업로드"}
+          </label>
+          <label
+            className="md:hidden w-11 h-11 flex justify-center items-center border border-gray-3 bg-gray-1 rounded-[4px] cursor-pointer"
+            htmlFor="image-file"
+          >
+            <Image
+              src="/img/icon-add-photo.png"
+              alt="이미지 업로드 버튼"
+              width={22}
+              height={20}
+            />
           </label>
           {error.imageUrlError && (
             <p className={`text-red-3 text-[12px] mt-2`}>
@@ -265,10 +294,10 @@ function GroupWriteForm() {
       </div>
       <div className="flex justify-center">
         <button
-          className="bg-main-8 w-[300px] py-[10px] text-white rounded-full font-bold text-[20px] mt-[64px]"
+          className="bg-main-8 w-full md:w-[300px] py-[10px] text-white rounded-full font-bold text-[20px] mt-6 md:mt-[64px]"
           onClick={addGroupPostHandler}
         >
-          포스팅 하기
+          등록하기
         </button>
       </div>
     </InnerLayout>
