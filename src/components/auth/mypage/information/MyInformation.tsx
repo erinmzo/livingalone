@@ -171,7 +171,7 @@ function MyInformation() {
         <div className="flex flex-col gap-5 md:gap-0 items-center">
           <h5
             className="
-        font-bold text-[12px] flex items-center justify-center border-2 border-main-8 rounded-full w-[76px] h-[30px] text-main-8 
+        font-bold text-[12px] flex items-center justify-center border border-main-8 rounded-full w-[76px] h-[30px] text-main-8 
           md:border-none md:rounded-none md:text-left md:text-black md:text-[24px] md:w-[115px] md:h-[29px] md:block "
           >
             나의 정보
