@@ -36,8 +36,6 @@ function Alarm() {
     }
   }, [alarms, isAlarm]);
 
-  console.log(alarms);
-
   if (isPending)
     return (
       <div>
@@ -51,7 +49,9 @@ function Alarm() {
     <div className="relative">
       <button onClick={() => setIsOpenAlarm(!isOpenAlarm)} className="flex gap-1">
         <Image src="/img/icon-alarm.svg" alt="알람" width={24} height={24} />
-        {isAlarm && <span className="block w-1 h-1 bg-red-3 rounded-full"></span>}
+        {isAlarm && (
+          <span className="absolute right-[2px] top-[3px] block border-2 border-white w-[10px] h-[10px] bg-main-7 rounded-full"></span>
+        )}
       </button>
       {isOpenAlarm && <AlarmList alarms={alarms} userId={userId} />}
     </div>
