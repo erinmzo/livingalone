@@ -26,8 +26,9 @@ li {
   }
 
   .btn-fixed-right {
-    @apply fixed bottom-8 z-50;
+    @apply fixed bottom-28 z-50;
     right: 10%;
+    /* bottom: 20%; */
     /* right: calc(50% - 512px); */
   }
 
