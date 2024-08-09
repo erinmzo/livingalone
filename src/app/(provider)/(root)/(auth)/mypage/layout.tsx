@@ -11,7 +11,7 @@ import { PropsWithChildren } from "react";
 
 function MyPageLayout({ children }: PropsWithChildren) {
   const isOpenSideBar = useIsOpen((state) => state.isOpenSideBar);
-
+  console.log(isOpenSideBar);
   return (
     <>
       <MobileHeader hamburger title="마이페이지" />
