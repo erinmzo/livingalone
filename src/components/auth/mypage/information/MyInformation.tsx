@@ -1,17 +1,16 @@
 "use client";
 
-import { ElementRef } from "react";
 import { editMyProfile, getMyProfile, uploadImage } from "@/apis/mypage";
 import { useInputChange } from "@/hooks/useInput";
+import { Profile, TProfile } from "@/types/types";
 import { useAuthStore } from "@/zustand/authStore";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import Image from "next/image";
 import { Report } from "notiflix";
 import { ChangeEvent, MouseEventHandler, useRef, useState } from "react";
 import DaumPostcode from "react-daum-postcode";
 import Input from "../../common/Input";
 import SkeletonProfile from "./SkeletonProfile";
-import { Profile, TProfile } from "@/types/types";
-import Image from "next/image";
 
 function MyInformation() {
   const queryClient = useQueryClient();
@@ -70,10 +69,7 @@ function MyInformation() {
     onMutate: async (profileImage: File) => {
       await queryClient.cancelQueries({ queryKey: ["profile", userId] });
 
-      const previousProfile = queryClient.getQueryData<Profile>([
-        "profile",
-        userId,
-      ]);
+      const previousProfile = queryClient.getQueryData<Profile>(["profile", userId]);
 
       if (previousProfile) {
         queryClient.setQueryData(["profile", userId], {
@@ -111,18 +107,10 @@ function MyInformation() {
         const fileSize = file.size;
 
         if (fileType !== "image/jpeg" && fileType !== "image/png") {
-          Report.warning(
-            "유효하지 않은 파일 형식",
-            "JPG 또는 PNG 파일만 업로드 가능합니다.",
-            "확인"
-          );
+          Report.warning("유효하지 않은 파일 형식", "JPG 또는 PNG 파일만 업로드 가능합니다.", "확인");
           return;
         } else if (fileSize > 2 * 1024 * 1024) {
-          Report.warning(
-            "파일 용량 초과",
-            "파일 용량은 2MB 이하로 제한됩니다.",
-            "확인"
-          );
+          Report.warning("파일 용량 초과", "파일 용량은 2MB 이하로 제한됩니다.", "확인");
           return;
         }
 
@@ -151,12 +139,7 @@ function MyInformation() {
       return Report.info("변경된 내용이 없습니다.", "", "확인");
     }
 
-    if (
-      nickname !== profile?.nickname &&
-      nickname.trim() === "" &&
-      !imgFile &&
-      !detailAddress
-    ) {
+    if (nickname !== profile?.nickname && nickname.trim() === "" && !imgFile && !detailAddress) {
       return Report.warning("닉네임 공백", "닉네임을 적어주세요!", "확인");
     }
 
@@ -178,17 +161,17 @@ function MyInformation() {
           </h5>
           <div className="flex-col justify-center  items-center mb-8">
             <div className="w-full">
-              <Image
-                className="border border-gray-2 bg-gray-200 rounded-full md:hidden mb-6 w-[100px] h-[100px]"
-                src={profile?.profile_image_url}
-                alt={profile?.nickname}
-                width={100}
-                height={100}
-              />
+              {profile && (
+                <Image
+                  className="border border-gray-2 bg-gray-200 rounded-full md:hidden mb-6 w-[100px] h-[100px]"
+                  src={profile?.profile_image_url}
+                  alt={profile?.nickname}
+                  width={100}
+                  height={100}
+                />
+              )}
             </div>
-            <div className="text-[16px] font-bold md:hidden text-center w-full h-[19px]">
-              {profile?.nickname}
-            </div>
+            <div className="text-[16px] font-bold md:hidden text-center w-full h-[19px]">{profile?.nickname}</div>
           </div>
         </div>
         <form className="flex flex-col items-center w-full">
@@ -221,9 +204,7 @@ function MyInformation() {
               className="flex gap-3 w-[73px] py-2 border border-gray-3 bg-white font-bold rounded-full mb-3 justify-center items-center"
               onClick={handleSearchAddress}
             >
-              <span className="text-center text-[12px] text-gray-3">
-                주소변경
-              </span>
+              <span className="text-center text-[12px] text-gray-3">주소변경</span>
             </button>
             {isPostModalOpen && (
               <div className="absolute left-0 top-[48px] border border-black">
@@ -231,12 +212,7 @@ function MyInformation() {
               </div>
             )}
             <div className="flex flex-col gap-2">
-              <Input
-                variant="underline"
-                value={address}
-                onChange={() => {}}
-                placeholder={profile?.address!}
-              />
+              <Input variant="underline" value={address} onChange={() => {}} placeholder={profile?.address!} />
               <Input
                 variant="underline"
                 value={detailAddress}
