@@ -1,10 +1,4 @@
-<<<<<<< HEAD
-<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-<rect width="64" height="64" rx="16" fill="#57605D"/>
-<path d="M30 48V23.65L18.8 34.85L16 32L32 16L48 32L45.2 34.85L34 23.65V48H30Z" fill="white"/>
-=======
 <svg width="33" height="32" viewBox="0 0 33 32" fill="none" xmlns="http://www.w3.org/2000/svg">
 <rect x="0.193359" width="32" height="32" rx="8" fill="#57605D"/>
 <path d="M15.1934 24V11.825L9.59336 17.425L8.19336 16L16.1934 8L24.1934 16L22.7934 17.425L17.1934 11.825V24H15.1934Z" fill="white"/>
->>>>>>> 435e4d02b8384f5b7e376f557d78bc2bb1302df9
 </svg>
