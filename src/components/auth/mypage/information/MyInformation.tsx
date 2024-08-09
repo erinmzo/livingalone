@@ -168,7 +168,7 @@ function MyInformation() {
   return (
     <div className="flex-col w-full md:w-auto grow px-4 md:px-0">
       <div className="flex flex-col justify-center md:items-start items-center ">
-        <div className="flex flex-col ">
+        <div className="flex flex-col gap-5 md:gap-0 items-center">
           <h5
             className="
         font-bold text-[12px] flex items-center justify-center border-2 border-main-8 rounded-full w-[76px] h-[30px] text-main-8 
