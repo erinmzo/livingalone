@@ -27,7 +27,14 @@ function LikeItems() {
   return (
     user && (
       <div>
-        <div className="text-[24px] font-bold ml-1">좋아요 공구</div>
+        <div className="flex items-center justify-center md:block">
+          <div
+            className=" font-bold text-[12px] flex items-center justify-center border border-main-8 rounded-full w-[76px] h-[30px] text-main-8 
+          md:border-none md:rounded-none md:text-left md:text-black md:text-[24px] md:w-[115px] md:h-[29px] md:block "
+          >
+            좋아요 공구
+          </div>
+        </div>
         <div className="mt-8">
           {likePosts.length > 0 ? (
             <ul className="grid grid-cols-1 md:grid-cols-2 gap-8">

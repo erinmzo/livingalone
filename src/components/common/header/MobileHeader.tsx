@@ -12,10 +12,11 @@ interface MobileHeaderProps {
 }
 function MobileHeader({ title, hamburger = false, alarm = true }: MobileHeaderProps) {
   const user = useAuthStore((state) => state.user);
-  const setIsOpenSidebar = useIsOpen((state) => state.setIsOpenSideBar);
+  const toggleIsOpenSideBar = useIsOpen((state) => state.toggleIsOpenSideBar);
   const handleOpenSideBar = () => {
-    setIsOpenSidebar(true);
+    toggleIsOpenSideBar();
   };
+
   return (
     <div className="relative md:hidden flex justify-center py-[18px]">
       <div className="absolute left-[16px] top-[18px]">
