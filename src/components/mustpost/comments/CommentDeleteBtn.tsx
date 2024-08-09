@@ -35,7 +35,14 @@ function CommentDeleteBtn({
       }
     );
   };
-  return <button onClick={() => HandleCommentDelete(commentId)}>삭제</button>;
+  return (
+    <button
+      className="text-gray-4 text-xs"
+      onClick={() => HandleCommentDelete(commentId)}
+    >
+      삭제
+    </button>
+  );
 }
 
 export default CommentDeleteBtn;

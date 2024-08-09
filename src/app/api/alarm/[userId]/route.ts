@@ -8,7 +8,7 @@ export async function GET(request: NextRequest, { params }: { params: { userId: 
     const supabase = createClient();
     const { data, error } = await supabase
       .from("alarm")
-      .select("*,group_posts(title), must_posts(title)")
+      .select("*,group_posts(title, img_url), must_posts(title, img_url)")
       .eq("user_id", userId)
       .order("created_at", { ascending: false });
     if (error) throw error;
