@@ -12,7 +12,7 @@ function SearchBar() {
   };
   return (
     <form
-      className="flex flex-row w-[420px] mb-6 py-[6px] px-4 border border-gray-5 rounded-full"
+      className="flex flex-row w-[343px] md:w-[420px] mb-5 md:mb-6 py-[6px] px-4 border border-gray-5 rounded-full"
       onSubmit={handleSearch}
     >
       <Image src="/img/icon-search.svg" alt="검색버튼" width={36} height={24} />

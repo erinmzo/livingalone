@@ -77,15 +77,20 @@ function CommentForm({ postId, userId }: { postId: string; userId: string }) {
 
   return (
     <div>
-      <form onSubmit={submitHandler}>
+      <form onSubmit={submitHandler} className="flex flex-row w-[635px] pt-4">
         <textarea
           value={content}
-          placeholder="댓글을 입력해주세요."
+          placeholder="댓글 게시하기"
           onChange={(e) => setContentHandler(e)}
-          className="border border-black whitespace-pre-wrap break-words"
+          className="flex-grow px-4 py-[9px] h-[32px] border border-gray-4 text-xs rounded-[8px] resize-none"
         ></textarea>
-        <button className="">
-          <Image src="/img/icon-send.svg" alt="등록하기" width={32} height={32} />
+        <button className="flex-grow-0 pl-1">
+          <Image
+            src="/img/icon-send.svg"
+            alt="등록하기"
+            width={32}
+            height={32}
+          />
         </button>
       </form>
     </div>

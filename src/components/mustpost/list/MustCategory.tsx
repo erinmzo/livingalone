@@ -43,10 +43,10 @@ function MustCategory() {
 
   return (
     <div>
-      <ul className="flex flex-row gap-2">
+      <ul className="flex flex-row gap-[6px] md:gap-2 mb-[40px] md:mb-0">
         <li>
           <button
-            className={`w-[90px] py-2 px-4 border border-gray-3  rounded-full text-gray-3 font-bold hover:bg-main-8 hover:text-white ${
+            className={`w-[60px] md:w-[90px] py-[3px] md:py-[9px] border border-gray-3  rounded-full text-gray-3 font-bold text-xs md:text-[16px] hover:bg-main-8 hover:text-white ${
               selectedCategory === "ALL"
                 ? "bg-main-8 font-bold text-white border-transparent"
                 : "hover:bg-main-8 hover:text-white hover:border-transparent"
@@ -59,7 +59,7 @@ function MustCategory() {
         {mustCategories?.map((category) => (
           <li key={category.id}>
             <button
-              className={`w-[90px] py-2 px-4 border border-gray-3 rounded-full text-gray-3 font-bold hover:bg-main-8 hover:text-white  ${
+              className={`w-[60px] md:w-[90px] py-[3px] md:py-[9px] border border-gray-3  rounded-full text-gray-3 font-bold text-xs md:text-[16px] hover:bg-main-8 hover:text-white  ${
                 selectedCategory === category.id
                   ? "bg-main-8 font-bold text-white border-transparent"
                   : "hover:bg-main-8 hover:text-white hover:border-transparent"
