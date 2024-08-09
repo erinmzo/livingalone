@@ -13,7 +13,8 @@ export async function GET(
       .from("must_comments")
       .select("*, must_posts(*), profiles(*)")
       // must_posts(id, user_id), profiles(nickname, profile_img_url)
-      .eq("post_id", postId);
+      .eq("post_id", postId)
+      .order("created_at", { ascending: true });
 
     // console.log(postId);
 
