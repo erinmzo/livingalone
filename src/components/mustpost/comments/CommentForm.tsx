@@ -1,6 +1,6 @@
 "use client";
 import { insertComment } from "@/apis/mustpost";
-import { TComment } from "@/types/types";
+// import { TComment } from "@/types/types";
 import { useAuthStore } from "@/zustand/authStore";
 import {
   QueryClient,
@@ -10,6 +10,13 @@ import {
 import { useRouter } from "next/navigation";
 import { Notify } from "notiflix";
 import React, { useState } from "react";
+
+export type TComment = {
+  post_id: string;
+  user_id: string;
+  created_at: string | Date;
+  content: string;
+};
 
 function CommentForm({ postId }: { postId: string }) {
   const router = useRouter();
@@ -25,7 +32,7 @@ function CommentForm({ postId }: { postId: string }) {
     },
   });
 
-  const setContentHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const setContentHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value);
   };
 
@@ -36,14 +43,19 @@ function CommentForm({ postId }: { postId: string }) {
       return;
     }
     if (!user) {
-      router.push("/login");
       Notify.failure("로그인을 먼저 진행해주세요.");
+      router.push("/login");
       return;
     }
-    const today = new Date();
+
+    // 한국 시간으로 넣기
+    const offset = new Date().getTimezoneOffset() * 60000;
+    const today = new Date(Date.now() - offset);
+
     const newComment = {
       post_id: postId,
       user_id: user.id,
+      created_at: today,
       content,
     };
 
@@ -54,12 +66,11 @@ function CommentForm({ postId }: { postId: string }) {
   return (
     <div>
       <form onSubmit={submitHandler}>
-        <input
-          type="text"
+        <textarea
           value={content}
-          onChange={setContentHandler}
-          className="border border-black"
-        />
+          onChange={(e) => setContentHandler(e)}
+          className="border border-black whitespace-pre-wrap break-words"
+        ></textarea>
         <button>등록하기</button>
       </form>
     </div>
