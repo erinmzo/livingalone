@@ -7,6 +7,7 @@ interface userState {
   setIsOpenAlarm: (isOpen: boolean) => void;
   setIsOpenWriteButton: (isOpen: boolean) => void;
   setIsOpenSideBar: (isOpen: boolean) => void;
+  toggleIsOpenSideBar: () => void;
 }
 
 export const useIsOpen = create<userState>((set) => ({
@@ -16,4 +17,6 @@ export const useIsOpen = create<userState>((set) => ({
   setIsOpenAlarm: (isOpen) => set({ isOpenAlarm: isOpen }),
   setIsOpenWriteButton: (isOpen) => set({ isOpenWriteButton: isOpen }),
   setIsOpenSideBar: (isOpen) => set({ isOpenSideBar: isOpen }),
+  toggleIsOpenSideBar: () =>
+    set((state) => ({ isOpenSideBar: !state.isOpenSideBar })),
 }));
