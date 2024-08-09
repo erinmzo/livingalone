@@ -1,11 +1,18 @@
+"use client";
+
+import { useAuthStore } from "@/zustand/authStore";
 import { useIsOpen } from "@/zustand/isOpenStore";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+
+import { Notify } from "notiflix";
 import React from "react";
 
 function MobileSideBar() {
   const pathname = usePathname();
   const setIsOpenSideBar = useIsOpen((state) => state.setIsOpenSideBar);
+  const router = useRouter();
+  const saveUser = useAuthStore((state) => state.saveUser);
 
   const links = [
     { href: `/mypage`, label: "나의 정보" },
@@ -21,13 +28,20 @@ function MobileSideBar() {
     setIsOpenSideBar(false);
   };
 
+  const handleLogout = async () => {
+    await fetch("/api/auth/logout", { method: "DELETE" });
+    saveUser(null);
+    Notify.success("로그아웃이 되었습니다.");
+    router.push("/");
+  };
+
   return (
     <>
       <div
         className="fixed inset-0 bg-black opacity-50 z-[998]"
         onClick={handleCloseSideBar}
       />
-      <div className="md:hidden z-[999] bg-white absolute left-0 top-[58px] w-[268px] h-full border ">
+      <div className="md:hidden z-[999] bg-white absolute left-0 top-[60px] w-[268px] h-full border-r">
         <div>
           <ul className="flex flex-col gap-[24px]  items-center py-11">
             {links.map((link) => (
@@ -43,6 +57,12 @@ function MobileSideBar() {
               </li>
             ))}
           </ul>
+          <div
+            className="flex justify-center items-center text-[18px] hover:font-bold transition-all text-gray-3"
+            onClick={handleLogout}
+          >
+            로그아웃
+          </div>
         </div>
       </div>
     </>
