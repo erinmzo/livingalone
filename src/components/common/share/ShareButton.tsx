@@ -22,7 +22,7 @@ function ShareButton({
         onClick={() => {
           setIsModalOpen(true);
         }}
-        className="w-[120px] py-[10px] flex items-center justify-center gap-[6px] bg-main-1 border border-main-8 rounded-full"
+        className="shrink-0 w-[44px] md:w-[120px] h-[44px] md:h-auto py-[10px] flex items-center justify-center gap-[6px] bg-main-1 border border-main-8 rounded-full"
       >
         <Image
           src="/img/icon-share.png"
@@ -30,7 +30,7 @@ function ShareButton({
           width={16}
           height={22}
         />
-        <p className="text-main-8 text-[20px]">공유</p>
+        <p className="text-main-8 text-[20px] hidden md:block">공유</p>
       </button>
       {isModalOpen && (
         <ShareModal
