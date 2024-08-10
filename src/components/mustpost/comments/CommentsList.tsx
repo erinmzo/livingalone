@@ -75,21 +75,32 @@ function CommentsList({ postId }: { postId: string }) {
     return (
       <div className="flex justify-center items-center">
         <Image
-          src="/img/loading-spinner.svg"
+          src="/img/loading-spinner-transparent.svg"
           alt="로딩중"
           width={200}
           height={200}
-          className="bg-transparent"
         />
       </div>
     );
   }
 
-  // if (comments.length === 0) {
-  //   return (
-  //     <div className="text-center text-gray-500 py-4">댓글 없음</div>
-  //   );
-  // }
+  if (comments.length === 0) {
+    return (
+      <div className="flex flex-col justify-center items-center pt-[23px] pb-[16px]">
+        <div className="relative w-[67px] md:w-[100px] h-[62px] md:h-[94px] mb-5">
+          <Image
+            src="/img/icon-empty.png"
+            alt="empty"
+            layout="fill"
+            objectFit="cover"
+          />
+        </div>
+        <h4 className="text-gray-2 text-[16px] mb-1">
+          해당 카테고리에 맞는 게시글이 없습니다.
+        </h4>
+      </div>
+    );
+  }
 
   return (
     <div>
