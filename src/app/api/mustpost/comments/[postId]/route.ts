@@ -8,18 +8,20 @@ export async function GET(
 ) {
   const { postId } = params;
   const supabase = createClient();
-  try {
-    const { data } = await supabase
-      .from("must_comments")
-      .select("*, must_posts(*), profiles(*)")
-      // must_posts(id, user_id), profiles(nickname, profile_img_url)
-      .eq("post_id", postId)
-      .order("created_at", { ascending: true });
+  const page = parseInt(request.nextUrl.searchParams.get("page") || "1");
+  const limit = 10;
+  const offset = (page - 1) * limit;
 
-    // console.log(postId);
+  try {
+    const { data, count } = await supabase
+      .from("must_comments")
+      .select("*, must_posts(*), profiles(*)", { count: "exact" })
+      .eq("post_id", postId)
+      .order("created_at", { ascending: false })
+      .range(offset, offset + limit - 1);
 
     // console.log("라우트 핸들러 데이터", data);
-    return NextResponse.json(data);
+    return NextResponse.json({ data, count, page, limit });
   } catch (error) {
     return NextResponse.json({ error: "댓글을 가져오는데 실패했습니다." });
   }

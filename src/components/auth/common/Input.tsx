@@ -55,6 +55,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
           placeholder={placeholder}
           onChange={onChange}
           readOnly={readOnly}
+          id={inputId}
         />
       )}
       {type === "file" && (

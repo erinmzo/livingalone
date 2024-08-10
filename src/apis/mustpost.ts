@@ -33,7 +33,9 @@ export async function getCategories() {
 }
 
 export async function getMustPostbyCategory(page = 0, categoryId: string) {
-  const response = await fetch(`/api/mustpost/category/${categoryId}?page=${page}`);
+  const response = await fetch(
+    `/api/mustpost/category/${categoryId}?page=${page}`
+  );
   const data = await response.json();
   return {
     posts: data.data,
@@ -108,7 +110,10 @@ export async function updateMustPost(newMustPost: TNewMustPost) {
   });
 }
 
-export async function NewMustCategoryPost(postCategoryId: string, postId: string) {
+export async function NewMustCategoryPost(
+  postCategoryId: string,
+  postId: string
+) {
   const supabase = createClient();
   const { data } = await supabase
     .from("must_posts")
@@ -120,8 +125,8 @@ export async function NewMustCategoryPost(postCategoryId: string, postId: string
   return data;
 }
 
-export async function getComments(postId: string) {
-  const response = await fetch(`/api/mustpost/comments/${postId}`);
+export async function getComments(postId: string, page: number = 1) {
+  const response = await fetch(`/api/mustpost/comments/${postId}?page=${page}`);
   const data = await response.json();
   return data;
 }

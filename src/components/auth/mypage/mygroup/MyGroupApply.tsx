@@ -49,13 +49,13 @@ function MyGroupApply({
 
   return (
     <>
-      <td className="p-2">{idx + 1}</td>
-      <td className="p-2">{groupApply.user_name}</td>
-      <td className="p-2">{groupApply.user_phone}</td>
-      <td className="p-2">
+      <td className="md:p-2 hidden md:block">{idx + 1}</td>
+      <td className="md:p-2">{groupApply.user_name}</td>
+      <td className="md:p-2">{groupApply.user_phone}</td>
+      <td className="md:p-2">
         {groupApply.user_address} {groupApply.user_detail_address}
       </td>
-      <td className="p-2 text-center flex justify-center">
+      <td className="md:p-2 h-[44px] text-center flex justify-center items-center">
         <div onClick={paidGroupApplyHandler} className="w-6 h-6 cursor-pointer">
           {isPaid ? (
             <Image
