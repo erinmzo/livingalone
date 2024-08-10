@@ -80,6 +80,12 @@ function CommentsList({ postId }: { postId: string }) {
     );
   }
 
+  // if (comments.length === 0) {
+  //   return (
+  //     <div className="text-center text-gray-500 py-4">댓글 없음</div>
+  //   );
+  // }
+
   return (
     <div>
       {comments &&

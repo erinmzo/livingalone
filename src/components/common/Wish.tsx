@@ -68,12 +68,19 @@ function Wish({ postId }: WishProps) {
         onClick={handleToggleWish}
         className="flex justify-center items-center border border-gray-2 bg-white rounded-full p-[6px]"
       >
-        <Image src="/img/icon-wish.svg" alt="찜하기 버튼" width={20} height={20} />
+        <Image
+          src="/img/icon-wish.svg"
+          alt="찜하기 버튼"
+          width={20}
+          height={20}
+        />
       </button>
     );
 
   if (isPending)
-    return <div className="border border-gray-2 bg-gray-2 rounded-full w-[32px] h-[32px] animate-pulse"></div>;
+    return (
+      <div className="border border-gray-2 bg-gray-2 rounded-full w-[32px] h-[32px] animate-pulse"></div>
+    );
 
   if (isError) return <div>에러가 발생했습니다.</div>;
 
@@ -83,9 +90,19 @@ function Wish({ postId }: WishProps) {
       className="flex justify-center items-center border border-gray-2 bg-white rounded-full p-[6px]"
     >
       {isWish ? (
-        <Image src="/img/icon-wish-on.svg" alt="찜하기 버튼" width={20} height={20} />
+        <Image
+          src="/img/icon-wish-on.svg"
+          alt="찜하기 버튼"
+          width={20}
+          height={20}
+        />
       ) : (
-        <Image src="/img/icon-wish.svg" alt="찜하기 버튼" width={20} height={20} />
+        <Image
+          src="/img/icon-wish.svg"
+          alt="찜하기 버튼"
+          width={20}
+          height={20}
+        />
       )}
     </button>
   );

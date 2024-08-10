@@ -33,7 +33,7 @@ function MustPostCard({ postId, title, item, imgUrl }: MustPostCardProps) {
           </h4>
         </div>
       </Link>
-      <div className="absolute right-[20px] top-[20px] rounded-full">
+      <div className="absolute right-[11px] md:right-[20px] top-[10px] md:top-[20px] rounded-full">
         <Wish postId={postId} />
       </div>
     </div>

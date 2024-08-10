@@ -25,18 +25,18 @@ function MustCategory() {
 
   if (isPending)
     return (
-      <ul className="flex flex-row gap-2">
-        <li className="w-[90px] h-[37px] py-2 px-4 border border-gray-2 bg-gray-2 rounded-full animate-pulse"></li>
-        <li className="w-[90px] h-[37px] py-2 px-4 border border-gray-2 bg-gray-2 rounded-full animate-pulse"></li>
-        <li className="w-[90px] h-[37px] py-2 px-4 border border-gray-2 bg-gray-2 rounded-full animate-pulse"></li>
-        <li className="w-[90px] h-[37px] py-2 px-4 border border-gray-2 bg-gray-2 rounded-full animate-pulse"></li>
-        <li className="w-[90px] h-[37px] py-2 px-4 border border-gray-2 bg-gray-2 rounded-full animate-pulse"></li>
+      <ul className="flex flex-row gap-[6px] md:gap-2 mb-[40px] md:mb-0">
+        <li className="w-[60px] md:w-[90px] h-[24px] md:h-[36px] py-2 px-4 border border-gray-2 bg-gray-2 rounded-full animate-pulse"></li>
+        <li className="w-[60px] md:w-[90px] h-[24px] md:h-[36px] py-2 px-4 border border-gray-2 bg-gray-2 rounded-full animate-pulse"></li>
+        <li className="w-[60px] md:w-[90px] h-[24px] md:h-[36px] py-2 px-4 border border-gray-2 bg-gray-2 rounded-full animate-pulse"></li>
+        <li className="w-[60px] md:w-[90px] h-[24px] md:h-[36px] py-2 px-4 border border-gray-2 bg-gray-2 rounded-full animate-pulse"></li>
+        <li className="w-[60px] md:w-[90px] h-[24px] md:h-[36px] py-2 px-4 border border-gray-2 bg-gray-2 rounded-full animate-pulse"></li>
       </ul>
     );
 
   if (isError)
     return (
-      <li className="w-[90px] py-2 px-4 border border-gray-2 bg-gray-2 rounded-full animate-pulse">
+      <li className="w-[60px] md:w-[90px] h-[24px] md:h-[36px] py-2 px-4 border border-gray-2 bg-gray-2 rounded-full animate-pulse">
         에러
       </li>
     );
