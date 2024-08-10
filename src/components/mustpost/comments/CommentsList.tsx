@@ -20,15 +20,19 @@ function CommentsList({ postId }: { postId: string }) {
   const queryClient = useQueryClient();
   const router = useRouter();
   const user = useAuthStore((state) => state.user);
+  const [page, setPage] = useState(1);
+
   const {
-    data: comments = [],
+    data: commentsData,
     isPending,
     isError,
-  } = useQuery<MustComments[]>({
-    queryKey: ["comments", postId],
-    queryFn: () => getComments(postId),
+  } = useQuery({
+    queryKey: ["comments", postId, page],
+    queryFn: () => getComments(postId, page),
   });
-  // console.log(comments);
+  const comments = commentsData?.data || [];
+  const totalComments = commentsData?.count || 0;
+  const totalPages = Math.ceil(totalComments / commentsData?.limit);
 
   const { mutate: updateComment } = useMutation({
     mutationFn: (newEditComment: TEditComment) =>
@@ -83,7 +87,7 @@ function CommentsList({ postId }: { postId: string }) {
   return (
     <div>
       {comments &&
-        comments.map((comment) => (
+        comments.map((comment: any) => (
           <div key={comment.id}>
             {user?.id === comment.user_id ? (
               // 댓글 작성자와 아이디가 같은 유저일 경우
@@ -182,6 +186,20 @@ function CommentsList({ postId }: { postId: string }) {
             )}
           </div>
         ))}
+      <div className="flex justify-center mt-[14px] gap-2">
+        {[...Array(totalPages)].map((_, index) => {
+          return (
+            <button
+              className={`w-4 h-4 border-[0.5px] border-gray-2 flex justify-center items-center text-[10px]
+              ${page === index + 1 ? "text-main-8" : "text-gray-2"}`}
+              key={index + 1}
+              onClick={() => setPage(index + 1)}
+            >
+              {index + 1}
+            </button>
+          );
+        })}
+      </div>
     </div>
   );
 }

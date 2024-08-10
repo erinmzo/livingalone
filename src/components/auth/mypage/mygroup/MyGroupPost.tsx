@@ -82,11 +82,17 @@ function MyGroupPost({
   return (
     <>
       <div
-        className={`flex justify-between items-center py-[10px] border-b border-gray-2 ${
+        className={`flex flex-col-reverse md:flex-row justify-between md:items-center py-4 md:py-[10px] border-b border-gray-2 gap-1 md:gap-0 ${
           isFinished ? "text-gray-2" : "text-black"
         }`}
       >
-        <div className="flex">
+        <span className="text-[12px] md:hidden">
+          <span className="font-bold">
+            {groupPost.group_applications.length}명
+          </span>{" "}
+          / {groupPost.people_num}명
+        </span>
+        <div className="flex flex-row-reverse md:flex-row justify-between">
           <span
             onClick={() => setIsOpen(!isOpen)}
             className="flex items-center px-1 cursor-pointer"
@@ -108,13 +114,16 @@ function MyGroupPost({
             )}
           </span>
           <div
-            className="font-bold w-[200px] truncate cursor-pointer "
+            className="font-bold w-[200px] truncate cursor-pointer text-black"
             onClick={() => setIsOpen(!isOpen)}
           >
             {groupPost.title}
           </div>
         </div>
-        <Link href={`/grouppost/read/${groupPost.id}`}>
+        <Link
+          href={`/grouppost/read/${groupPost.id}`}
+          className="hidden md:block"
+        >
           <Image
             src="/img/icon-Arrow up-black.png"
             alt="공구템 가기"
@@ -122,10 +131,10 @@ function MyGroupPost({
             height={20}
           />
         </Link>
-        <span className="text-[12px]">
+        <span className="text-[12px] text-gray-3 md:text-black h-5 flex items-center">
           {groupPost.start_date} ~ {groupPost.end_date}
         </span>
-        <span className="text-[12px]">
+        <span className="text-[12px] hidden md:block">
           <span className="font-bold">
             {groupPost.group_applications.length}명
           </span>{" "}
@@ -154,16 +163,16 @@ function MyGroupPost({
       {isOpen && (
         <>
           {groupPost.group_applications.length ? (
-            <div className="mt-2">
+            <div className="md:mt-2">
               <table className="w-full text-left">
-                <colgroup>
+                <colgroup className="hidden md:contents">
                   <col width="10%" />
                   <col width="10%" />
                   <col width="20%" />
                   <col width="50%" />
                   <col width="10%" />
                 </colgroup>
-                <thead>
+                <thead className="hidden md:contents">
                   <tr className="text-sm text-gray-3">
                     <th className="p-2 font-normal">순서</th>
                     <th className="p-2 font-normal">이름</th>
@@ -176,7 +185,7 @@ function MyGroupPost({
                   {sortedApply.map((groupApply, idx: number) => {
                     return (
                       <tr
-                        className="text-sm border-b border-gray-2"
+                        className="text-xs md:text-sm border-b border-gray-2 h-[44px] font-bold md:font-normal"
                         key={groupApply.id}
                       >
                         <MyGroupApply
