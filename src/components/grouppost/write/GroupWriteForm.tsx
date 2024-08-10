@@ -140,11 +140,15 @@ function GroupWriteForm() {
     <InnerLayout>
       <div className="flex flex-col gap-3 md:gap-5">
         <div className="flex gap-[2px]">
-          <label className="flex-0 w-[70px] md:w-[78px] h-[38px] flex items-center md:text-[18px] text-gray-3">
+          <label
+            htmlFor="title"
+            className="flex-0 w-[70px] md:w-[78px] h-[38px] flex items-center md:text-[18px] text-gray-3"
+          >
             제목
           </label>
           <div className="flex-1 w-full">
             <input
+              id="title"
               name="title"
               placeholder="제목을 입력하세요."
               value={title}
@@ -160,7 +164,10 @@ function GroupWriteForm() {
         </div>
         <div className="flex gap-2 md:gap-[41px]">
           <div className="flex gap-[2px]">
-            <label className="hidden md:flex flex-0 w-[70px] md:w-[78px] h-[38px] items-center md:text-[18px] text-gray-3">
+            <label
+              htmlFor="endDate"
+              className="hidden md:flex flex-0 w-[70px] md:w-[78px] h-[38px] items-center md:text-[18px] text-gray-3"
+            >
               공구기간
             </label>
             <label className="flex md:hidden flex-0 w-[70px] md:w-[78px] h-[38px] items-center md:text-[18px] text-gray-3">
@@ -172,6 +179,7 @@ function GroupWriteForm() {
               </label>
               <div>
                 <input
+                  id="endDate"
                   name="endDate"
                   type="date"
                   value={endDate}
@@ -188,11 +196,15 @@ function GroupWriteForm() {
           </div>
 
           <div className="flex gap-2 overflow-hidden">
-            <label className="flex-0 w-[70px] md:w-[78px] h-[38px] flex items-center md:text-[18px] text-gray-3">
+            <label
+              htmlFor="peopleNum"
+              className="flex-0 w-[70px] md:w-[78px] h-[38px] flex items-center md:text-[18px] text-gray-3"
+            >
               공구인원
             </label>
             <div>
               <input
+                id="peopleNum"
                 name="peopleNum"
                 type="number"
                 placeholder="숫자만 입력해주세요."
@@ -210,11 +222,15 @@ function GroupWriteForm() {
         </div>
 
         <div className="flex gap-[2px]">
-          <label className="flex-0 w-[70px] md:w-[78px] h-[38px] flex items-center md:text-[18px] text-gray-3">
+          <label
+            htmlFor="item"
+            className="flex-0 w-[70px] md:w-[78px] h-[38px] flex items-center md:text-[18px] text-gray-3"
+          >
             상품이름
           </label>
           <div className="flex-1 w-full">
             <input
+              id="item"
               name="item"
               placeholder="제품명을 입력하세요."
               value={item}
@@ -228,10 +244,14 @@ function GroupWriteForm() {
         </div>
 
         <div className="flex gap-[2px]">
-          <label className="flex-0 w-[70px] md:w-[78px] h-[38px] flex items-center md:text-[18px] text-gray-3">
+          <label
+            htmlFor="price"
+            className="flex-0 w-[70px] md:w-[78px] h-[38px] flex items-center md:text-[18px] text-gray-3"
+          >
             공구가격
           </label>
           <input
+            id="price"
             name="price"
             type="number"
             placeholder="숫자만 입력해주세요."
@@ -241,10 +261,14 @@ function GroupWriteForm() {
           />
         </div>
         <div className="flex gap-[2px]">
-          <label className="flex-0 w-[70px] md:w-[78px] h-[38px] flex items-center md:text-[18px] text-gray-3">
+          <label
+            htmlFor="link"
+            className="flex-0 w-[70px] md:w-[78px] h-[38px] flex items-center md:text-[18px] text-gray-3"
+          >
             상품링크
           </label>
           <input
+            id="link"
             name="link"
             placeholder="(선택사항) 상품소개 페이지 링크를 넣어주세요."
             value={link}
