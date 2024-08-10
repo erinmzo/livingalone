@@ -9,19 +9,16 @@ export async function GET(
   const { postId } = params;
   const supabase = createClient();
   const page = parseInt(request.nextUrl.searchParams.get("page") || "1");
-  const limit = 5;
+  const limit = 10;
   const offset = (page - 1) * limit;
 
   try {
     const { data, count } = await supabase
       .from("must_comments")
       .select("*, must_posts(*), profiles(*)", { count: "exact" })
-      // must_posts(id, user_id), profiles(nickname, profile_img_url)
       .eq("post_id", postId)
       .order("created_at", { ascending: false })
       .range(offset, offset + limit - 1);
-
-    // console.log(postId);
 
     // console.log("라우트 핸들러 데이터", data);
     return NextResponse.json({ data, count, page, limit });
