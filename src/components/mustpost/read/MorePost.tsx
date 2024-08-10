@@ -27,13 +27,13 @@ async function MorePost({
 
   return (
     <div className="mt-16 md:mt-[190px]">
-      <h3 className="mb-3 md:mb-6 font-bold text-[18px] md:text-[26px] text-black">
+      <h3 className="mb-6 font-bold text-[18px] md:text-[26px] text-black">
         <span className="text-main-7">{category_name}</span> 관련 추천템
       </h3>
-      <div>
-        <ul className="grid grid-cols-1 md:grid-cols-3 gap-[32px]">
+      <div className="overflow-x-scroll scrollbar-hide">
+        <ul className=" w-[430px] sm:w-[700px] md:w-auto grid grid-cols-3 gap-[32px]">
           {latestPosts.map((post) => (
-            <li key={post.id} className="mb-[64px]">
+            <li key={post.id} className="">
               <MustPostCard
                 postId={post.id}
                 title={post.title}

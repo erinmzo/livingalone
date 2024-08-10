@@ -79,6 +79,7 @@ function CommentsList({ postId }: { postId: string }) {
           alt="로딩중"
           width={200}
           height={200}
+          className="bg-transparent"
         />
       </div>
     );
