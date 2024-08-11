@@ -276,10 +276,10 @@ function GroupWriteForm() {
             className="flex-1 pl-[2px] px-[2px] py-[5px] border-b-[1px] border-gray-3 font-bold md:text-[18px] text-black leading-normal placeholder:text-gray-2 outline-none"
           />
         </div>
-        <div className="flex md:gap-4 items-start mb-[6px]">
-          <label className=" flex-0 w-[70px] md:w-[78px] h-[38px] flex md:hidden items-center md:text-[18px] text-gray-3">
+        <div className="ml-[70px] md:ml-[78px] flex flex-col md:flex-row gap-2 md:gap-4 items-start mb-[6px]">
+          {/* <label className=" flex-0 w-[70px] md:w-[78px] h-[38px] flex md:hidden items-center md:text-[18px] text-gray-3">
             이미지
-          </label>
+          </label> */}
           <input
             className="hidden"
             id="image-file"
@@ -287,12 +287,12 @@ function GroupWriteForm() {
             onChange={addImageHandler}
           />
           <label
-            className="hidden md:flex justify-center items-center ml-[78px] px-7 py-[7px] border border-gray-4 bg-gray-1 font-bold text-[12px] text-gray-4 rounded-full cursor-pointer"
+            className="flex justify-center items-center px-7 py-[7px] border border-gray-4 bg-gray-1 font-bold text-[12px] text-gray-4 rounded-full cursor-pointer"
             htmlFor="image-file"
           >
             {imgUrl ? "이미지 수정" : "이미지 업로드"}
           </label>
-          <label
+          {/* <label
             className="md:hidden w-11 h-11 flex justify-center items-center border border-gray-3 bg-gray-1 rounded-[4px] cursor-pointer"
             htmlFor="image-file"
           >
@@ -302,14 +302,20 @@ function GroupWriteForm() {
               width={22}
               height={20}
             />
-          </label>
+          </label> */}
           {error.imageUrlError && (
             <p className={`text-red-3 text-[12px] mt-2`}>
               {error.imageUrlError}
             </p>
           )}
           {imgUrl && (
-            <Image src={imgUrl} alt="선택한 이미지" width={200} height={200} />
+            <Image
+              src={imgUrl}
+              alt="선택한 이미지"
+              width={200}
+              height={200}
+              className="border md:border-none rounded-[4px] md:rounded-none border-gray-3 w-[44px] h-[44px] md:w-[200px] md:h-auto object-cover"
+            />
           )}
         </div>
       </div>
