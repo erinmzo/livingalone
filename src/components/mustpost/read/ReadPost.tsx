@@ -40,7 +40,7 @@ function ReadPost({
         postId={postId}
       />
       <PostImage img_url={img_url} />
-      <div className="flex md:hidden flex-row justify-between border-b md:border-b-0 border-gray-2 ">
+      <div className="flex flex-row md:flex-col justify-between border-b md:border-b-0 border-gray-2 ">
         <ItemInfo item={item} location={location} price={price} name={name} />
         <div className="pt-[44px] md:pt-0 pr-2 md:pl-2 md:pr-0 md:pb-4 md:border-b-[1px] md:border-gray-2">
           <ShareButton
