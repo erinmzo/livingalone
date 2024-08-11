@@ -6,8 +6,9 @@ import { GroupApplyItems } from "@/types/types";
 import { useAuthStore } from "@/zustand/authStore";
 import { useQuery } from "@tanstack/react-query";
 import ApplyItemsCard from "./ApplyItemsCard";
-import EmptyState from "./EmptyState";
+
 import SkeletonApplyItemsCard from "./SkeletonApplyItems";
+import EmptyState from "./EmptyState";
 
 function ApplyItems() {
   const user = useAuthStore((state) => state.user);

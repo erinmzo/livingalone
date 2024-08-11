@@ -1,6 +1,5 @@
 import React from "react";
 import Image from "next/image";
-
 const EmptyState: React.FC = () => (
   <div className="flex flex-col py-[100px] justify-center items-center">
     <Image
@@ -15,5 +14,4 @@ const EmptyState: React.FC = () => (
     </div>
   </div>
 );
-
 export default EmptyState;
