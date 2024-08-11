@@ -63,12 +63,12 @@ function SelectCategory({
       )} */}
       <div>
         <div className="flex gap-[2px] items-start">
-          <span className="flex w-[78px] h-[38px] items-center py-[5px] text-lg text-gray-4">
+          <span className="flex w-[70px] md:w-[78px] h-[38px] items-center py-2 md:py-[5px] text-[16px] md:text-lg text-gray-4">
             카테고리
           </span>
           <div className="relative">
             <button
-              className="relative w-[100px] pl-[2px] py-2 border-b border-gray-3 font-bold text-[18px] text-left text-gray-5"
+              className="relative w-[100px] pl-[2px] py-2 border-b border-gray-3 font-bold text-[16px] md:text-[18px] text-left text-gray-5"
               onClick={handleIsOpen}
             >
               {initialCategoryName}

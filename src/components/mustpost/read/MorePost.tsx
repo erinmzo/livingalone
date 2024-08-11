@@ -20,7 +20,7 @@ async function MorePost({
         <h3 className="pb-6 font-bold text-2xl">
           <span className="text-main-7">{category_name} </span>최신 게시글
         </h3>
-        <div>해당 카테고리에 맞는 최신 게시글이 없습니다 🥹</div>
+        <div>해당 카테고리의 최신 게시글이 없습니다 🥹</div>
       </div>
     );
   }

@@ -27,7 +27,7 @@ function InputField({
     <div className="flex gap-[2px] justify-between items-start">
       <label
         htmlFor={name}
-        className=" w-[78px] h-[38px] flex items-center py-[5px] text-lg text-gray-4"
+        className="flex items-center w-[70px] md:w-[78px] h-[38px] py-[5px] text-[16px] md:text-lg text-gray-4"
       >
         {labelName}
       </label>
@@ -41,7 +41,7 @@ function InputField({
           minLength={minLength}
           max={max}
           onChange={(e) => onchangeValue(e)}
-          className="w-full pl-[2px] py-[5px] border-b border-gray-3 font-bold text-[18px] text-gray-5 outline-none placeholder:text-gray-2 leading-normal"
+          className="w-full pl-[2px] py-[5px] border-b border-gray-3 font-bold text-[16px] md:text-[18px] text-gray-5 outline-none placeholder:text-gray-2 leading-normal"
         />
         {error && <p className={`text-red-3 text-[12px] mt-2`}>{error}</p>}
       </div>

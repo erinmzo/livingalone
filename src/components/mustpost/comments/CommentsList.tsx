@@ -95,9 +95,10 @@ function CommentsList({ postId }: { postId: string }) {
             objectFit="cover"
           />
         </div>
-        <h4 className="text-gray-2 text-[16px] mb-1">
-          해당 카테고리에 맞는 게시글이 없습니다.
-        </h4>
+        <span className="text-gray-2 text-[16px] mb-1">댓글이 없습니다.</span>
+        <span className="text-gray-2 text-[16px]">
+          첫 댓글을 작성해 보세요!
+        </span>
       </div>
     );
   }
