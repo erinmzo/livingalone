@@ -285,7 +285,7 @@ function MustEditForm({ params }: { params: { id: string } }) {
             <EditorModule editorRef={editorRef} />
           </div>
         </form>
-        <div className="flex justify-center pb-[123px] md:pb-0 mt-[18px] md:mt-[6px]">
+        <div className="flex justify-center pb-[123px] md:pb-0 mt-[40px] md:mt-[64px]">
           <button
             onClick={addMustPostBtn}
             className="px-[106px] py-[8px] text-xl text-white font-bold focus:outline-none bg-main-8 rounded-full"
