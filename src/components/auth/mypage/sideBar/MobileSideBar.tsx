@@ -38,7 +38,7 @@ function MobileSideBar() {
   return (
     <>
       <div
-        className="fixed inset-0 bg-black opacity-50 z-[998]"
+        className="fixed inset-0 bg-black opacity-50 top-[60px] z-[998]"
         onClick={handleCloseSideBar}
       />
       <div className="md:hidden z-[999] bg-white absolute left-0 top-[60px] w-[268px] h-full border-r">

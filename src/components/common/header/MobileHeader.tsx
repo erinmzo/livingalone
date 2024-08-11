@@ -10,7 +10,11 @@ interface MobileHeaderProps {
   hamburger?: boolean;
   alarm?: boolean;
 }
-function MobileHeader({ title, hamburger = false, alarm = true }: MobileHeaderProps) {
+function MobileHeader({
+  title,
+  hamburger = false,
+  alarm = true,
+}: MobileHeaderProps) {
   const user = useAuthStore((state) => state.user);
   const toggleIsOpenSideBar = useIsOpen((state) => state.toggleIsOpenSideBar);
   const handleOpenSideBar = () => {
@@ -18,11 +22,16 @@ function MobileHeader({ title, hamburger = false, alarm = true }: MobileHeaderPr
   };
 
   return (
-    <div className="relative md:hidden flex justify-center py-[18px]">
+    <div className="relative z-[999] md:hidden flex justify-center py-[18px]  ">
       <div className="absolute left-[16px] top-[18px]">
         {hamburger && (
           <button onClick={handleOpenSideBar}>
-            <Image src="/img/icon-hamburger.svg" alt="마이페이지 메뉴" width={24} height={24} />
+            <Image
+              src="/img/icon-hamburger.svg"
+              alt="마이페이지 메뉴"
+              width={24}
+              height={24}
+            />
           </button>
         )}
       </div>
@@ -33,7 +42,9 @@ function MobileHeader({ title, hamburger = false, alarm = true }: MobileHeaderPr
           <Image src="/img/logo.svg" alt="혼자살때" width={50} height={0} />
         </Link>
       )}
-      <div className="absolute right-[16px] top-[18px]">{user && alarm && <Alarm />}</div>
+      <div className="absolute right-[16px] top-[18px]">
+        {user && alarm && <Alarm />}
+      </div>
     </div>
   );
 }
