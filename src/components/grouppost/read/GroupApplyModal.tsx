@@ -188,12 +188,14 @@ function GroupApplyModal({ id, onClose, userId }: PropsType) {
         </div>
         <div className="md:px-[26px]">
           <input
+            id="checkBox"
             type="checkbox"
             onChange={() => {
               setCheckBox(!checkBox);
             }}
           />
           <label
+            htmlFor="checkBox"
             className={`ml-2 font-bold ${
               checkBox ? "text-gray-4 md:text-gray-5" : "text-gray-4"
             }`}

@@ -4,7 +4,7 @@ import Link from "next/link";
 
 function PaymentComplete({ paymentId }: { paymentId: string }) {
   return (
-    <div className="flex flex-col justify-center items-center">
+    <div className="flex flex-col justify-center items-center mt-[88px]">
       <h4 className="font-semibold text-2xl md:text-3xl">
         주문이 완료되었습니다!
       </h4>

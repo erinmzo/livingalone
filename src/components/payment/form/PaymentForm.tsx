@@ -141,23 +141,31 @@ function PaymentForm() {
         <div className="flex flex-col gap-2 w-[268px] md:w-[504px] mt-[56px] md:mt-[35px] mb-[20px] md:mb-[46px] pl-[10px]">
           <div className="flex">
             <input
+              id="firstCheckBox"
               type="checkbox"
               onChange={() => {
                 setFirstCheckBox(!firstCheckBox);
               }}
             />
-            <label className="ml-2 md:font-bold text-[16px]">
+            <label
+              htmlFor="firstCheckBox"
+              className="ml-2 md:font-bold text-[16px]"
+            >
               개인정보(이름, 연락처, 이메일, 주소)를 수집하는 것에 동의합니다.
             </label>
           </div>
           <div className="flex">
             <input
+              id="secondCheckBox"
               type="checkbox"
               onChange={() => {
                 setSecondCheckBox(!secondCheckBox);
               }}
             />
-            <label className="ml-2 md:font-bold text-[16px] text-[#FF0000]">
+            <label
+              htmlFor="secondCheckBox"
+              className="ml-2 md:font-bold text-[16px] text-[#FF0000]"
+            >
               실제 판매 상품이 아니기에, 결제 시 즉시 환불처리 됩니다.
             </label>
           </div>
