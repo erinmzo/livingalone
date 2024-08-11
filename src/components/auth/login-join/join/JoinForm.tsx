@@ -83,10 +83,10 @@ const JoinForm = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center">
+    <div className="flex flex-col justify-normal items-center min-h-screen px-4 sm:px-6 mt-10 lg:px-8">
       <form
         onSubmit={handleSubmitJoin}
-        className="flex flex-col justify-center gap-6 w-[500px] mb-6"
+        className="flex flex-col justify-center gap-6 w-full mb-6 max-w-lg"
       >
         <Input
           label="닉네임"
@@ -126,7 +126,7 @@ const JoinForm = () => {
         />
         <button
           type="submit"
-          className="w-[500px] mt-4 py-3 text-xl bg-main-8 text-white rounded-full"
+          className="w-full mt-1 py-3 text-xl bg-main-8 text-white rounded-full"
         >
           가입하기
         </button>
