@@ -48,8 +48,8 @@ function MyInformation() {
       Report.success("변경이 완료되었습니다!", "", "확인");
     },
     onSettled: () => {
+      setAddress("");
       reset();
-      setImgFile(null);
       // 5. null이 아니면 원래 들어있던 값을 비운다
       if (inputRef.current) {
         inputRef.current.value = "";
@@ -140,7 +140,7 @@ function MyInformation() {
       detail_address: !detailAddress ? profile?.detail_address : detailAddress,
     };
 
-    const isEmpty = !imgFile && !detailAddress && !nickname;
+    const isEmpty = !imgFile && !detailAddress && !nickname && !address;
 
     if (isEmpty) {
       return Report.info("변경된 내용이 없습니다.", "", "확인");
@@ -154,7 +154,8 @@ function MyInformation() {
       nickname !== profile?.nickname &&
       nickname.trim() === "" &&
       !imgFile &&
-      !detailAddress
+      !detailAddress &&
+      !address
     ) {
       return Report.warning("닉네임 공백", "닉네임을 적어주세요!", "확인");
     }
@@ -175,7 +176,7 @@ function MyInformation() {
           >
             나의 정보
           </h5>
-          <div className="flex-col justify-center  items-center mb-8">
+          <div className="flex-col justify-center items-center mb-8">
             <div className="w-full">
               {profile && (
                 <Image
@@ -235,7 +236,6 @@ function MyInformation() {
               <Input
                 variant="underline"
                 value={address}
-                onChange={() => {}}
                 placeholder={profile?.address!}
               />
               <Input
