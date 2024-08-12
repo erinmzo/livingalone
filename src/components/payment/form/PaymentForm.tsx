@@ -27,15 +27,21 @@ function PaymentForm() {
   });
 
   const [isPostModalOpen, setIsPostModalOpen] = useState<boolean>(false);
-  const [purchaserAddress, setPurchaserAddress] = useState<string>("");
-  const [purchaserDetailAddress, setPurchaserDetailAddress] =
-    useState<string>("");
-  const [purchaserEmail, setPurchaserEmail] = useState<string>("");
+  // const [purchaserAddress, setPurchaserAddress] = useState<string>("");
+  // const [purchaserDetailAddress, setPurchaserDetailAddress] = useState<string>("");
+  // const [purchaserEmail, setPurchaserEmail] = useState<string>("");
   const [firstCheckBox, setFirstCheckBox] = useState<boolean>(false);
   const [secondCheckBox, setSecondCheckBox] = useState<boolean>(false);
-  const { values: input, handler: onChangeInput } = useInputChange({
+  const {
+    values: input,
+    handler: onChangeInput,
+    setValues,
+  } = useInputChange({
     purchaserName: "",
     purchaserPhone: "",
+    purchaserAddress: "",
+    purchaserDetailAddress: "",
+    purchaserEmail: "",
   });
 
   const [error, setError] = useState({
@@ -45,18 +51,37 @@ function PaymentForm() {
     addressError: "",
   });
 
-  const { purchaserName, purchaserPhone } = input;
+  const {
+    purchaserName,
+    purchaserPhone,
+    purchaserAddress,
+    purchaserDetailAddress,
+    purchaserEmail,
+  } = input;
 
   const onCompletePost = (data: { address: string }) => {
-    setPurchaserAddress(data.address);
+    setValues({
+      purchaserName,
+      purchaserPhone,
+      purchaserDetailAddress,
+      purchaserEmail,
+      purchaserAddress: data.address,
+    });
     setIsPostModalOpen(false);
   };
 
   useEffect(() => {
     if (profile?.address && profile.detail_address && user?.email) {
-      setPurchaserAddress(profile.address);
-      setPurchaserDetailAddress(profile.detail_address);
-      setPurchaserEmail(user.email);
+      setValues({
+        purchaserName: "",
+        purchaserPhone: "",
+        purchaserAddress: profile.address,
+        purchaserDetailAddress: profile.detail_address,
+        purchaserEmail: user.email,
+      });
+      // setPurchaserAddress(profile.address);
+      // setPurchaserDetailAddress(profile.detail_address);
+      // setPurchaserEmail(user.email);
     }
   }, [profile, user]);
   if (isPending)
@@ -108,7 +133,7 @@ function PaymentForm() {
             placeholder="주문자의 이메일을 입력해주세요."
             value={purchaserEmail}
             name="purchaserEmail"
-            onChange={(e) => setPurchaserEmail(e.target.value)}
+            onChange={onChangeInput}
             error={error.emailError}
           />
         </div>
@@ -134,7 +159,7 @@ function PaymentForm() {
             placeholder="상세 주소"
             value={purchaserDetailAddress}
             name="purchaserDetailAddress"
-            onChange={(e) => setPurchaserDetailAddress(e.target.value)}
+            onChange={onChangeInput}
           />
         </div>
 
