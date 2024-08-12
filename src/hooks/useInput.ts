@@ -24,5 +24,5 @@ export const useInputChange = <T extends Record<string, any>>(
     setValues(value);
   };
 
-  return { values, handler, setValueInit, reset };
+  return { setValues, values, handler, setValueInit, reset };
 };

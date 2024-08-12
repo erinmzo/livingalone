@@ -12,7 +12,7 @@ function PaymentCompletePage({
     <>
       <MobileHeader />
       <Page>
-        <PaymentComplete paymentId={searchParams.paymentId as string} />
+        <PaymentComplete paymentId={searchParams.paymentId} />
       </Page>
       <MobileNav />
     </>
