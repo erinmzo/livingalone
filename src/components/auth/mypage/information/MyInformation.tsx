@@ -249,7 +249,7 @@ function MyInformation() {
           </div>
           <button
             type="submit"
-            className="bg-main-8 w-full md:w-[500px] h-[52px] text-white md:mt-[62px] mt-[46px] rounded-full font-bold text-[18px]"
+            className="bg-main-8 w-full md:w-[500px] h-[52px] text-white md:mt-[62px] mt-[46px] rounded-full font-bold text-[18px] mb-[146px]"
             onClick={handleProfileUpdate}
           >
             변경하기
