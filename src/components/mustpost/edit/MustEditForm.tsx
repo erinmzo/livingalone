@@ -85,9 +85,11 @@ function MustEditForm({ params }: { params: { id: string } }) {
 
       if (editorRef.current) {
         editorRef.current.getInstance().setMarkdown(mustPost.content);
+        console.log(editorRef.current.getInstance());
+        console.log(mustPost.content);
       }
     }
-  }, [mustPost]);
+  }, [mustPost, editorRef.current]);
 
   const selectCategory = useCallback((category: MustCategory) => {
     setSelectedCategoryName(category.name);
