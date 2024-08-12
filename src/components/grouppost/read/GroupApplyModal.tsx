@@ -194,13 +194,15 @@ function GroupApplyModal({ id, onClose, userId }: PropsType) {
               setCheckBox(!checkBox);
             }}
           />
+
           <label
             htmlFor="checkBox"
             className={`ml-2 font-bold ${
               checkBox ? "text-gray-4 md:text-gray-5" : "text-gray-4"
             }`}
           >
-            공구 참여자 는 2024년 7월 22일 아래와 같이 서약합니다.
+            {/* <Image src="/img/icon-checkbox" alt="체크박스" width={} /> */}
+            공구 참여자는 2024년 7월 22일 아래와 같이 서약합니다.
           </label>
           <div
             className={`text-[14px] mt-2 ${

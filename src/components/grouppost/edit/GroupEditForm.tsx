@@ -30,7 +30,6 @@ function GroupEditForm({ params }: { params: { id: string } }) {
   const router = useRouter();
   const [checkBox, setCheckBox] = useState(false);
   const editorRef = useRef<EditorProps>(null);
-
   const [error, setError] = useState({
     titleError: "",
     endDateError: "",
@@ -77,6 +76,7 @@ function GroupEditForm({ params }: { params: { id: string } }) {
     userId,
     isFinished,
   } = input;
+  console.log(content);
   useEffect(() => {
     if (groupPost) {
       setValueInit({
@@ -178,7 +178,7 @@ function GroupEditForm({ params }: { params: { id: string } }) {
   return (
     <InnerLayout>
       <div className="hidden md:block border border-gray-2 rounded-lg p-6 text-xs text-gray-4 mb-6">
-        <div className="px-[44px] mb-2">
+        <div className="mb-2">
           <p>
             안녕하세요, 혼자살때 공구 게시판을 이용해주셔서 감사합니다. 공구
             진행 시 꼭 참고해 주세요:

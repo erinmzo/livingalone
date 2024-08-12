@@ -65,25 +65,27 @@ function GroupPopularList({ id }: { id: string }) {
       <h6 className="text-[18px] md:text-[26px] font-bold mb-6 mt-[64px] md:mt-[128px]">
         인기 공구템
       </h6>
-      <ul className="grid grid-cols-1 md:grid-cols-2 gap-8 px-[16px] lg:px-0 z-[10]">
-        {sortedGroupPosts.map((post) => {
-          return (
-            <li key={post.id}>
-              <GroupPostCard
-                postId={post.id}
-                application={post.group_applications}
-                title={post.title}
-                price={post.price}
-                peopleNum={post.people_num}
-                isFinished={post.is_finished}
-                imgUrl={post.img_url}
-                startDate={post.start_date}
-                endDate={post.end_date}
-              />
-            </li>
-          );
-        })}
-      </ul>
+      <div className="overflow-x-scroll">
+        <ul className="min-w-[548px] md:w-auto grid grid-cols-2 gap-8 px-[16px] lg:px-0 z-[10]">
+          {sortedGroupPosts.map((post) => {
+            return (
+              <li key={post.id}>
+                <GroupPostCard
+                  postId={post.id}
+                  application={post.group_applications}
+                  title={post.title}
+                  price={post.price}
+                  peopleNum={post.people_num}
+                  isFinished={post.is_finished}
+                  imgUrl={post.img_url}
+                  startDate={post.start_date}
+                  endDate={post.end_date}
+                />
+              </li>
+            );
+          })}
+        </ul>
+      </div>
     </>
   );
 }
