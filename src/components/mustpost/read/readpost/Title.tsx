@@ -6,12 +6,14 @@ interface TitleProps {
 }
 function Title({ title, postId }: TitleProps) {
   return (
-    <div className="flex flex-row items-center mb-6">
+    <div className="flex flex-row items-center ml-1 md:ml-0 mb-1 md:mb-6">
       {/* 제목부분 */}
-      <div className="hidden">
+      <div className="hidden md:block">
         <Wish postId={postId} />
       </div>
-      <h2 className="ml-2 font-bold text-2xl">{title}</h2>
+      <h2 className="md:ml-2 mb-1 md:mb-0 font-bold text-black text-[22px] md:text-2xl">
+        {title}
+      </h2>
     </div>
   );
 }

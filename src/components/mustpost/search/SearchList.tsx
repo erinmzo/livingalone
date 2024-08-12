@@ -46,7 +46,7 @@ function SearchList({ searchValue }: { searchValue: string }) {
       post.content.includes(searchValue)
   );
   return (
-    <div className="flex flex-col items-center justify-center">
+    <div className="flex flex-col items-center justify-center pt-[24px] md:pt-0">
       <div className="flex flex-col items-center justify-center">
         <Title />
         <div className="flex flex-col justify-center items-center md:mb-[30px]">
@@ -74,9 +74,26 @@ function SearchList({ searchValue }: { searchValue: string }) {
           </ul>
         </div>
       ) : (
-        <div className="flex flex-col justify-center items-center mt-[64px] min-h-[400px]">
-          <div className="mb-[64px]">
-            해당 카테고리에 맞는 게시글이 없습니다.
+        <div className="flex flex-col justify-center items-center min-h-[400px]">
+          <div className="flex flex-col justify-center items-center mb-[64px]">
+            <div className="relative w-[67px] md:w-[100px] h-[62px] md:h-[94px] mb-5">
+              <Image
+                src="/img/icon-empty.png"
+                alt="empty"
+                layout="fill"
+                objectFit="cover"
+              />
+            </div>
+
+            <h4 className="text-gray-2 text-[16px] mb-1">
+              <span className="text-main-8 text-[17px] font-bold">
+                {searchValue}
+              </span>
+              에 대한 검색 결과가 없습니다.
+            </h4>
+            <span className="text-gray-2 text-[16px]">
+              다른 키워드를 입력해 보세요!
+            </span>
           </div>
         </div>
       )}

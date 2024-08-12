@@ -37,17 +37,21 @@ function ReadPost({
         profile_image_url={profile_image_url}
         nickname={nickname}
         created_at={created_at}
+        postId={postId}
       />
       <PostImage img_url={img_url} />
-      <ItemInfo item={item} location={location} price={price} name={name} />
-      <div className="pl-2 pb-4 border-b-[1px] border-gray-2">
-        <ShareButton
-          postId={postId}
-          title={title}
-          content={item}
-          imgUrl={img_url}
-        />
+      <div className="flex flex-row md:flex-col justify-between border-b md:border-b-0 border-gray-2 ">
+        <ItemInfo item={item} location={location} price={price} name={name} />
+        <div className="pt-[44px] md:pt-0 pr-2 md:pl-2 md:pr-0 md:pb-4 md:border-b-[1px] md:border-gray-2">
+          <ShareButton
+            postId={postId}
+            title={title}
+            content={item}
+            imgUrl={img_url}
+          />
+        </div>
       </div>
+
       <Contents content={content} />
     </div>
   );

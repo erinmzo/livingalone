@@ -189,107 +189,110 @@ function MustEditForm({ params }: { params: { id: string } }) {
 
   return (
     <InnerLayout>
-      <form className="flex flex-col gap-5">
-        <InputField
-          labelName="제목"
-          name="title"
-          type="text"
-          value={title}
-          placeHolder="제목을 입력해주세요"
-          minLength={2}
-          onchangeValue={onChangeInput}
-          error={error.titleError}
-        />
-        {/* <p className={`text-red-3 text-[12px] mt-2`}>d에러메세지</p> */}
-
-        <div className="flex flex-row justify-between gap-2">
-          <SelectCategory
-            selectCategory={selectCategory}
-            initialCategoryName={selectedCategoryName}
-            error={error.categoryError}
+      <div className="pb-[76px] md:pb-0">
+        <form className="flex flex-col gap-3 md:gap-5 mt-[43px] md:mt-0">
+          <InputField
+            labelName="제목"
+            name="title"
+            type="text"
+            value={title}
+            placeHolder="제목을 입력해주세요"
+            minLength={2}
+            onchangeValue={onChangeInput}
+            error={error.titleError}
           />
-          <div className="pl-[72px] flex-grow">
-            <InputField
-              labelName="작성일자"
-              name="date"
-              type="text"
-              value={startDate}
-              onchangeValue={onChangeInput}
+          {/* <p className={`text-red-3 text-[12px] mt-2`}>d에러메세지</p> */}
+
+          <div className="flex flex-row justify-between gap-2">
+            <SelectCategory
+              selectCategory={selectCategory}
+              initialCategoryName={selectedCategoryName}
+              error={error.categoryError}
             />
+            <div className="md:pl-[72px] flex-grow">
+              <InputField
+                labelName="작성일자"
+                name="date"
+                type="text"
+                value={startDate}
+                onchangeValue={onChangeInput}
+              />
+            </div>
           </div>
-        </div>
 
-        <InputField
-          labelName="상품이름"
-          name="itemName"
-          type="text"
-          value={itemName}
-          placeHolder="상품 이름을 입력해주세요."
-          minLength={2}
-          onchangeValue={onChangeInput}
-          error={error.itemNameError}
-        />
-
-        <InputField
-          labelName="제작업체"
-          name="company"
-          type="text"
-          value={company}
-          placeHolder="구매처를 입력해주세요."
-          minLength={1}
-          onchangeValue={onChangeInput}
-          error={error.companyError}
-        />
-
-        <InputField
-          labelName="판매가격"
-          name="price"
-          type="number"
-          value={price}
-          placeHolder="숫자만 입력해주세요"
-          minLength={2}
-          onchangeValue={onChangeInput}
-          error={error.priceError}
-        />
-        <div className="flex gap-4 items-start">
-          <input
-            className="hidden"
-            id="image-file"
-            type="file"
-            onChange={addImageHandler}
+          <InputField
+            labelName="상품이름"
+            name="itemName"
+            type="text"
+            value={itemName}
+            placeHolder="상품 이름을 입력해주세요."
+            minLength={2}
+            onchangeValue={onChangeInput}
+            error={error.itemNameError}
           />
-          <label
-            className="flex justify-center items-center ml-[78px] px-7 py-[7px] border border-gray-4 bg-gray-1 font-bold text-[12px] text-gray-4 rounded-full cursor-pointer"
-            htmlFor="image-file"
-          >
-            {imgUrl ? "이미지 수정" : "이미지 업로드"}
-          </label>
-          {error.imageUrlError && (
-            <p className={`text-red-3 text-[12px] mt-2`}>
-              {error.imageUrlError}
-            </p>
-          )}
 
-          {imgUrl && (
-            <Image
-              src={imgUrl}
-              alt="포스팅한 이미지"
-              width={200}
-              height={200}
+          <InputField
+            labelName="제작업체"
+            name="company"
+            type="text"
+            value={company}
+            placeHolder="구매처를 입력해주세요."
+            minLength={1}
+            onchangeValue={onChangeInput}
+            error={error.companyError}
+          />
+
+          <InputField
+            labelName="판매가격"
+            name="price"
+            type="number"
+            value={price}
+            placeHolder="숫자만 입력해주세요"
+            minLength={2}
+            onchangeValue={onChangeInput}
+            error={error.priceError}
+          />
+          <div className="flex flex-col md:flex-row gap-2 md:gap-4 items-start">
+            <input
+              className="hidden"
+              id="image-file"
+              type="file"
+              onChange={addImageHandler}
             />
-          )}
+            <label
+              className="flex justify-center items-center ml-[72px] md:ml-[78px] px-7 py-[7px] border border-gray-4 bg-gray-1 font-bold text-[12px] text-gray-4 rounded-full cursor-pointer"
+              htmlFor="image-file"
+            >
+              {imgUrl ? "이미지 수정" : "이미지 업로드"}
+            </label>
+            {error.imageUrlError && (
+              <p className={`text-red-3 text-[12px] mt-2`}>
+                {error.imageUrlError}
+              </p>
+            )}
+            <div className="w-[44px] md:w-auto aspect-square ml-[72px] md:ml-0">
+              {imgUrl && (
+                <Image
+                  src={imgUrl}
+                  alt="포스팅한 이미지"
+                  width={200}
+                  height={200}
+                />
+              )}
+            </div>
+          </div>
+          <div>
+            <EditorModule editorRef={editorRef} />
+          </div>
+        </form>
+        <div className="flex justify-center pb-[123px] md:pb-0 mt-[40px] md:mt-[64px]">
+          <button
+            onClick={addMustPostBtn}
+            className="px-[106px] py-[8px] text-xl text-white font-bold focus:outline-none bg-main-8 rounded-full"
+          >
+            등록하기
+          </button>
         </div>
-        <div>
-          <EditorModule editorRef={editorRef} />
-        </div>
-      </form>
-      <div className="flex justify-center mt-[64px]">
-        <button
-          onClick={addMustPostBtn}
-          className="px-[106px] py-[8px] text-xl text-white font-bold focus:outline-none bg-main-8 rounded-full"
-        >
-          등록하기
-        </button>
       </div>
     </InnerLayout>
   );
