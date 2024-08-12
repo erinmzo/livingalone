@@ -14,9 +14,9 @@ interface InputProps {
 
 const variantStyles = {
   default:
-    "h-[48px] px-4 w-full rounded-lg border border-gray-2 text-[18px] placeholder-gray-2 focus:outline-none focus:border-gray-3 transition",
+    "h-[48px] px-4 w-full rounded-lg border border-gray-2 md:text-[18px] text-[16px] placeholder-gray-2 focus:outline-none focus:border-gray-3 transition",
   underline:
-    "border-b border-gray-2 px-1 py-2 text-[20px] placeholder-gray-2 focus:outline-none focus:border-black transition ",
+    "border-b border-gray-2 px-1 py-2 md:text-[20px] text-[16px]  placeholder-gray-2 focus:outline-none focus:border-black transition ",
 };
 
 // 3. forwardRef로 전달 받음
@@ -39,10 +39,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
   return (
     <div className="flex flex-col">
       {label && (
-        <label
-          className="ml-1 mb-[12px] font-bold text-[18px]"
-          htmlFor={inputId}
-        >
+        <label className="ml-1 mb-2  font-bold text-[18px]" htmlFor={inputId}>
           {label}
         </label>
       )}

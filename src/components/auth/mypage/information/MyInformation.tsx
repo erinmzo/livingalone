@@ -48,8 +48,8 @@ function MyInformation() {
       Report.success("변경이 완료되었습니다!", "", "확인");
     },
     onSettled: () => {
+      setAddress("");
       reset();
-      setImgFile(null);
       // 5. null이 아니면 원래 들어있던 값을 비운다
       if (inputRef.current) {
         inputRef.current.value = "";
@@ -140,7 +140,7 @@ function MyInformation() {
       detail_address: !detailAddress ? profile?.detail_address : detailAddress,
     };
 
-    const isEmpty = !imgFile && !detailAddress && !nickname;
+    const isEmpty = !imgFile && !detailAddress && !nickname && !address;
 
     if (isEmpty) {
       return Report.info("변경된 내용이 없습니다.", "", "확인");
@@ -154,7 +154,8 @@ function MyInformation() {
       nickname !== profile?.nickname &&
       nickname.trim() === "" &&
       !imgFile &&
-      !detailAddress
+      !detailAddress &&
+      !address
     ) {
       return Report.warning("닉네임 공백", "닉네임을 적어주세요!", "확인");
     }
@@ -165,21 +166,21 @@ function MyInformation() {
   if (isPending) return <SkeletonProfile />;
 
   return (
-    <div className="flex-col w-full md:w-auto grow px-4 md:px-0">
+    <div className="flex-col w-full md:w-auto grow md:px-0">
       <div className="flex flex-col justify-center md:items-start items-center ">
-        <div className="flex flex-col gap-5 md:gap-0 items-center">
+        <div className="flex flex-col gap-8 md:gap-0 items-center">
           <h5
             className="
-        font-bold text-[12px] mt-8 flex items-center justify-center border border-main-8 rounded-full w-[76px] h-[30px] text-main-8 
+        font-bold text-[12px] mt-8 md:mt-0 flex items-center justify-center border border-main-8 rounded-full w-[76px] h-[30px] text-main-8 
           md:border-none md:rounded-none md:text-left md:text-black md:text-[24px] md:w-[115px] md:h-[29px] md:block "
           >
             나의 정보
           </h5>
-          <div className="flex-col justify-center  items-center mb-8">
+          <div className="flex-col justify-center items-center mb-8">
             <div className="w-full">
               {profile && (
                 <Image
-                  className="border border-gray-2 bg-gray-200 rounded-full md:hidden mb-6 w-[100px] h-[100px]"
+                  className="border border-gray-2 bg-gray-200 rounded-full md:hidden mb-4 w-[100px] h-[100px]"
                   src={profile?.profile_image_url}
                   alt={profile?.nickname}
                   width={100}
@@ -216,13 +217,13 @@ function MyInformation() {
               />
             </div>
           </div>
-          <div className="relative mt-16 flex flex-col w-full">
+          <div className="relative mt-11 md:mt-16 flex flex-col w-full">
             <button
               type="button"
-              className="flex gap-3 w-[73px] py-2 border border-gray-3 bg-white font-bold rounded-full mb-3 justify-center items-center"
+              className="flex gap-3 w-[73px] py-2 border border-gray-3 bg-white font-bold rounded-full md:mb-3 mb-2 justify-center items-center"
               onClick={handleSearchAddress}
             >
-              <span className="text-center text-[12px] text-gray-3">
+              <span className="text-center md:text-[12px] text-[16px] text-gray-3">
                 주소변경
               </span>
             </button>
@@ -235,7 +236,6 @@ function MyInformation() {
               <Input
                 variant="underline"
                 value={address}
-                onChange={() => {}}
                 placeholder={profile?.address!}
               />
               <Input
@@ -249,7 +249,7 @@ function MyInformation() {
           </div>
           <button
             type="submit"
-            className="bg-main-8 w-full md:w-[500px] h-[52px] text-white py-2 mt-[50px] rounded-full font-bold text-[18px]"
+            className="bg-main-8 w-full md:w-[500px] h-[52px] text-white md:mt-[62px] mt-[46px] rounded-full font-bold text-[18px]"
             onClick={handleProfileUpdate}
           >
             변경하기

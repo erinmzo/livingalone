@@ -35,7 +35,7 @@ function MyGroup() {
         내가 쓴 공구
       </h5>
       <div className="md:hidden flex justify-center mb-[30px]">
-        <div className="flex justify-center items-center font-bold text-xs text-main-8 border border-main-8 bg-gray-1 w-[73px] h-[30px] rounded-full">
+        <div className="flex justify-center items-center font-bold text-xs text-main-8 border border-main-8 bg-gray-1 w-[73px] h-[30px] rounded-full mt-8 md:mt-0">
           내가 쓴 공구
         </div>
       </div>
