@@ -27,15 +27,21 @@ function PaymentForm() {
   });
 
   const [isPostModalOpen, setIsPostModalOpen] = useState<boolean>(false);
-  const [purchaserAddress, setPurchaserAddress] = useState<string>("");
-  const [purchaserDetailAddress, setPurchaserDetailAddress] =
-    useState<string>("");
-  const [purchaserEmail, setPurchaserEmail] = useState<string>("");
+  // const [purchaserAddress, setPurchaserAddress] = useState<string>("");
+  // const [purchaserDetailAddress, setPurchaserDetailAddress] = useState<string>("");
+  // const [purchaserEmail, setPurchaserEmail] = useState<string>("");
   const [firstCheckBox, setFirstCheckBox] = useState<boolean>(false);
   const [secondCheckBox, setSecondCheckBox] = useState<boolean>(false);
-  const { values: input, handler: onChangeInput } = useInputChange({
+  const {
+    values: input,
+    handler: onChangeInput,
+    setValues,
+  } = useInputChange({
     purchaserName: "",
     purchaserPhone: "",
+    purchaserAddress: "",
+    purchaserDetailAddress: "",
+    purchaserEmail: "",
   });
 
   const [error, setError] = useState({
@@ -45,18 +51,37 @@ function PaymentForm() {
     addressError: "",
   });
 
-  const { purchaserName, purchaserPhone } = input;
+  const {
+    purchaserName,
+    purchaserPhone,
+    purchaserAddress,
+    purchaserDetailAddress,
+    purchaserEmail,
+  } = input;
 
   const onCompletePost = (data: { address: string }) => {
-    setPurchaserAddress(data.address);
+    setValues({
+      purchaserName,
+      purchaserPhone,
+      purchaserDetailAddress,
+      purchaserEmail,
+      purchaserAddress: data.address,
+    });
     setIsPostModalOpen(false);
   };
 
   useEffect(() => {
     if (profile?.address && profile.detail_address && user?.email) {
-      setPurchaserAddress(profile.address);
-      setPurchaserDetailAddress(profile.detail_address);
-      setPurchaserEmail(user.email);
+      setValues({
+        purchaserName: "",
+        purchaserPhone: "",
+        purchaserAddress: profile.address,
+        purchaserDetailAddress: profile.detail_address,
+        purchaserEmail: user.email,
+      });
+      // setPurchaserAddress(profile.address);
+      // setPurchaserDetailAddress(profile.detail_address);
+      // setPurchaserEmail(user.email);
     }
   }, [profile, user]);
   if (isPending)
@@ -108,7 +133,7 @@ function PaymentForm() {
             placeholder="주문자의 이메일을 입력해주세요."
             value={purchaserEmail}
             name="purchaserEmail"
-            onChange={(e) => setPurchaserEmail(e.target.value)}
+            onChange={onChangeInput}
             error={error.emailError}
           />
         </div>
@@ -134,40 +159,42 @@ function PaymentForm() {
             placeholder="상세 주소"
             value={purchaserDetailAddress}
             name="purchaserDetailAddress"
-            onChange={(e) => setPurchaserDetailAddress(e.target.value)}
+            onChange={onChangeInput}
           />
         </div>
 
-        <div className="flex flex-col gap-2 w-[268px] md:w-[504px] mt-[56px] md:mt-[35px] mb-[20px] md:mb-[46px] pl-[10px]">
-          <div className="flex">
-            <input
-              id="firstCheckBox"
-              type="checkbox"
-              onChange={() => {
-                setFirstCheckBox(!firstCheckBox);
-              }}
-            />
-            <label
-              htmlFor="firstCheckBox"
-              className="ml-2 md:font-bold text-[16px]"
-            >
-              개인정보(이름, 연락처, 이메일, 주소)를 수집하는 것에 동의합니다.
-            </label>
-          </div>
-          <div className="flex">
-            <input
-              id="secondCheckBox"
-              type="checkbox"
-              onChange={() => {
-                setSecondCheckBox(!secondCheckBox);
-              }}
-            />
-            <label
-              htmlFor="secondCheckBox"
-              className="ml-2 md:font-bold text-[16px] text-[#FF0000]"
-            >
-              실제 판매 상품이 아니기에, 결제 시 즉시 환불처리 됩니다.
-            </label>
+        <div className="flex justify-center items-center">
+          <div className="flex flex-col gap-2 w-[268px] md:w-[484px] mt-[56px] md:mt-[35px] mb-[20px] md:mb-[46px]">
+            <div className="flex">
+              <input
+                id="firstCheckBox"
+                type="checkbox"
+                onChange={() => {
+                  setFirstCheckBox(!firstCheckBox);
+                }}
+              />
+              <label
+                htmlFor="firstCheckBox"
+                className="ml-2 md:font-bold text-[16px]"
+              >
+                개인정보(이름, 연락처, 이메일, 주소)를 수집하는 것에 동의합니다.
+              </label>
+            </div>
+            <div className="flex">
+              <input
+                id="secondCheckBox"
+                type="checkbox"
+                onChange={() => {
+                  setSecondCheckBox(!secondCheckBox);
+                }}
+              />
+              <label
+                htmlFor="secondCheckBox"
+                className="ml-2 md:font-bold text-[16px] text-[#FF0000]"
+              >
+                실제 판매 상품이 아니기에, 결제 시 즉시 환불처리 됩니다.
+              </label>
+            </div>
           </div>
         </div>
 
