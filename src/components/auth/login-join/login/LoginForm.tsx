@@ -53,9 +53,9 @@ const LoginForm = () => {
     <div className="flex flex-col justify-start items-center min-h-screen px-4 sm:px-6 mt-8 lg:px-8 sm:mb-8">
       <form
         onSubmit={handleLoginSubmit}
-        className="flex flex-col justify-center w-full max-w-md space-y-4"
+        className="flex flex-col justify-center w-full max-w-md space-y-7"
       >
-        <div className="flex flex-col mb-6">
+        <div className="flex flex-col mb-4 sm:mb-3">
           <Input
             label="이메일"
             type="text"
@@ -65,7 +65,7 @@ const LoginForm = () => {
             onChange={onChangeInput}
           />
         </div>
-        <div className="flex flex-col mb-14 sm:mb-8">
+        <div className="flex flex-col mt-4 sm:mb-3">
           <Input
             label="비밀번호"
             type="password"
@@ -75,38 +75,38 @@ const LoginForm = () => {
             onChange={onChangeInput}
           />
         </div>
-        <button className="py-3 text-xl bg-main-8 text-white rounded-3xl gap-6 sm:mt-10 md:mt-8">
+        <button className="text-lg bg-main-8 py-2 w-full sm:py-2 sm:text-base text-white rounded-3xl sm:mb-16 md:mt-6">
           로그인
         </button>
       </form>
-      <div className="flex flex-col items-center gap-6 w-full max-w-md mt-5">
+      <div className="flex flex-col items-center gap-4 w-full max-w-md mt-6 sm:mt-16 sm:text-sm md:mt-5">
         <Link href="/join" className="w-full">
-          <button className="w-full py-3 text-xl border border-gray-2 rounded-3xl font-medium ">
+          <button className="flex items-center justify-center text-lg border border-gray-2 py-2 rounded-3xl font-medium w-full sm:py-2 sm:text-base md:text-md">
             회원가입
           </button>
         </Link>
         <button
-          className="flex items-center justify-center  w-full py-3 text-xl border border-gray-2 rounded-3xl font-medium md:text-md"
+          className="flex items-center justify-center sm:py-2 sm:text-base w-full py-2 text-lg border border-gray-2 rounded-3xl font-medium md:text-md"
           onClick={handleGoogleLogin}
         >
           <Image
             src="/img/icon-google.png"
             alt="구글 로그인 아이콘"
-            width={28}
-            height={28}
+            width={24}
+            height={24}
             className="mr-2"
           />
           구글 간편로그인
         </button>
         <button
-          className="flex items-center justify-center  w-full py-3 text-xl border border-gray-2 rounded-3xl font-medium"
+          className="flex items-center justify-center sm:py-2 sm:text-base w-full py-2 text-lg border border-gray-2 rounded-3xl font-medium md:text-md"
           onClick={handleKakaoLogin}
         >
           <Image
             src="/img/kakaotalk-icon.png"
             alt="카카오 로그인 아이콘"
-            width={28}
-            height={28}
+            width={24}
+            height={24}
             className="mr-2"
           />
           카카오 간편로그인
