@@ -113,16 +113,15 @@ function CommentsList({ postId }: { postId: string }) {
               // 수정 모드
               <div>
                 {editCommentId === comment.id ? (
-                  <div>
+                  <div className="pr-1 w-4 h-4">
                     <Image
                       src={comment.profiles.profile_image_url}
                       alt="유저 프로필 사진"
-                      width={50}
-                      height={50}
+                      width={16}
+                      height={16}
                     />
                     <form onSubmit={handleUpdateComment}>
                       <textarea
-                        // defaultValue={comment.content}
                         value={editComment}
                         onChange={(e) => setEditComment(e.target.value)}
                       ></textarea>
@@ -135,13 +134,13 @@ function CommentsList({ postId }: { postId: string }) {
                 ) : (
                   // 읽기 모드
                   <div className="flex flex-row px-2 py-2 border-b border-gray-2">
-                    <div className="pr-1">
+                    <div className="mr-1 w-4 h-4 flex-shrink-0">
                       <Image
                         src={comment.profiles.profile_image_url}
                         alt="유저 프로필 사진"
                         width={16}
                         height={16}
-                        className="rounded-full"
+                        className="w-4 h-4 rounded-full"
                       />
                     </div>
                     <div>
@@ -149,7 +148,7 @@ function CommentsList({ postId }: { postId: string }) {
                         <span className="pb-1 text-gray-4 text-[10px]">
                           {comment.profiles.nickname}
                         </span>
-                        <span className="pb-[2px] text-gray-4 text-xs">
+                        <span className="pb-[2px] text-gray-4 text-xs whitespace-pre-wrap break-words">
                           {comment.content}
                         </span>
                         <span className="text-gray-2 text-[10px]">
@@ -180,7 +179,7 @@ function CommentsList({ postId }: { postId: string }) {
             ) : (
               // 댓글 작성자와 아이디가 다른 유저일 경우
               <div className="flex flex-row px-2 py-2 border-b border-gray-2">
-                <div className="pr-1">
+                <div className="pr-1 w-4">
                   <Image
                     src={comment.profiles.profile_image_url}
                     alt="유저 프로필 사진"
@@ -194,7 +193,7 @@ function CommentsList({ postId }: { postId: string }) {
                   <span className="pb-1 text-gray-4 text-[10px]">
                     {comment.profiles.nickname}
                   </span>
-                  <span className="pb-[2px] text-gray-4 text-xs">
+                  <span className="pb-[2px] text-gray-4 text-xs whitespace-pre-wrap break-words">
                     {comment.content}
                   </span>
                   <span className="text-gray-2 text-[10px]">
