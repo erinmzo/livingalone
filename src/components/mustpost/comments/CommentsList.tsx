@@ -179,12 +179,12 @@ function CommentsList({ postId }: { postId: string }) {
             ) : (
               // 댓글 작성자와 아이디가 다른 유저일 경우
               <div className="flex flex-row px-2 py-2 border-b border-gray-2">
-                <div className="pr-1 w-4">
+                <div className="relative mr-1 w-4 h-4 flex-shrink-0">
                   <Image
                     src={comment.profiles.profile_image_url}
                     alt="유저 프로필 사진"
-                    width={16}
-                    height={16}
+                    fill
+                    objectFit="cover"
                     className="rounded-full"
                   />
                 </div>
