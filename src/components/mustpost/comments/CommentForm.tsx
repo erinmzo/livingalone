@@ -5,7 +5,6 @@ import { TAddAlarm } from "@/types/types";
 import { useAuthStore } from "@/zustand/authStore";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { Notify } from "notiflix";
 import React, { useState } from "react";
 
@@ -17,13 +16,14 @@ export type TComment = {
 };
 
 function CommentForm({ postId, userId }: { postId: string; userId: string }) {
-  const router = useRouter();
   const user = useAuthStore((state) => state.user);
   const queryClient = useQueryClient();
   const [content, setContent] = useState("");
+  const [countContent, setCountContent] = useState(0);
 
   const setContentHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value);
+    setCountContent(content.length);
   };
 
   const { mutate: addComment } = useMutation({
@@ -40,13 +40,18 @@ function CommentForm({ postId, userId }: { postId: string; userId: string }) {
 
   const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!user) {
+      Notify.warning("로그인을 먼저 진행해주세요.");
+      return;
+    }
+
     if (!content.trim()) {
       Notify.warning("댓글을 입력해주세요.");
       return;
     }
-    if (!user) {
-      Notify.failure("로그인을 먼저 진행해주세요.");
-      router.push("/login");
+
+    if (content.length > 500) {
+      Notify.warning("500자 이내로 작성해주세요");
       return;
     }
 
@@ -82,9 +87,11 @@ function CommentForm({ postId, userId }: { postId: string; userId: string }) {
           value={content}
           placeholder="댓글 게시하기"
           cols={30}
-          rows={2}
+          rows={1}
+          maxLength={501}
+          autoFocus={true}
           onChange={(e) => setContentHandler(e)}
-          className="flex-grow px-4 py-[9px] border border-gray-4 text-xs rounded-[8px] resize-none"
+          className="flex-grow px-4 py-[9px] border border-gray-4 text-xs rounded-[8px] resize-none outline-none"
         ></textarea>
         <button className="flex-grow-0 pl-1">
           <Image
