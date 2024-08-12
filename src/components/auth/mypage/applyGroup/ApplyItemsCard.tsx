@@ -38,7 +38,7 @@ const ApplyItemsCard: React.FC<ApplyItemsCardProps> = ({ apply }) => {
             {/* 반응형 코드 시작: 작은 화면에서 정보 표시 */}
             <div className="flex flex-col items-start gap-[14px] md:hidden">
               <ApplyItemsDetails apply={apply} />
-              <div className="flex flex-col text-[14px] items-start">
+              <div className="flex flex-col text-[14px] items-start gap-1">
                 <div className="text-gray-4 font-bold">주문자 정보</div>
                 <ApplyItemsUserInfo
                   userName={user_name}
