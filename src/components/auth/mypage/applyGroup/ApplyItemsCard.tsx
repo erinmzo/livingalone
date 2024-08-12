@@ -50,7 +50,7 @@ const ApplyItemsCard: React.FC<ApplyItemsCardProps> = ({ apply }) => {
             {/* 반응형 코드 끝 */}
           </div>
 
-          <div className="flex flex-col justify-center gap-2">
+          <div className="flex flex-col justify-center gap-[8.5px]">
             {/* 비반응형 코드 시작: 큰 화면에서 상태 및 정보 표시 */}
             <div className="md:flex md:gap-2 hidden">
               <ApplyItemsStatus isFinished={isFinished} />
@@ -65,8 +65,8 @@ const ApplyItemsCard: React.FC<ApplyItemsCardProps> = ({ apply }) => {
           </div>
         </div>
         {/* 비반응형 코드 시작: 큰 화면에서 주문자 정보 표시 */}
-        <div className="w-[227px] h-[94px] ml-5 flex-col justify-center border-l border-gray-2 pl-[30px] hidden md:flex">
-          <div className="text-gray-4 mb-2 font-bold">주문자 정보</div>
+        <div className="w-[227px] h-[94px] ml-5 flex-col justify-center border-l md:gap-3 border-gray-2 pl-[30px] hidden md:flex">
+          <div className="text-gray-4 font-bold">주문자 정보</div>
           <ApplyItemsUserInfo
             userName={user_name}
             userPhone={user_phone}
