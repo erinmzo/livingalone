@@ -29,7 +29,7 @@ function LikeItems() {
       <div>
         <div className="flex items-center justify-center md:block">
           <div
-            className=" font-bold text-[12px] flex items-center justify-center border border-main-8 rounded-full w-[76px] h-[30px] text-main-8 
+            className=" font-bold mt-8 md:mt-0 text-[12px] flex items-center justify-center border border-main-8 rounded-full w-[76px] h-[30px] text-main-8 
           md:border-none md:rounded-none md:text-left md:text-black md:text-[24px] md:w-[115px] md:h-[29px] md:block "
           >
             좋아요 공구
