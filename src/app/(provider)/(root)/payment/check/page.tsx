@@ -10,8 +10,8 @@ function PaymentCheckPage({
   return (
     <Page>
       <PaymentCheck
-        paymentId={searchParams.paymentId as string}
-        code={searchParams.code as string}
+        paymentId={searchParams.paymentId}
+        code={searchParams.code}
       />
     </Page>
   );

@@ -50,7 +50,7 @@ function MyGroupApply({
   return (
     <>
       <td className="md:p-2 text-gray-3 md:text-black">{idx + 1}</td>
-      <td className="md:p-2">{groupApply.user_name}</td>
+      <td className="md:p-2 min-w-[40px]">{groupApply.user_name}</td>
       <td className="md:p-2">{groupApply.user_phone}</td>
       <td className="md:p-2">
         {groupApply.user_address} {groupApply.user_detail_address}

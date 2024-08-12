@@ -12,10 +12,11 @@ function PaymentMain() {
   const userId = user?.id as string;
   const router = useRouter();
 
-  const { data: paymentList = [] } = useQuery({
+  const { data: paymentCount } = useQuery({
     queryKey: ["payment"],
     queryFn: getPaymentAll,
   });
+  console.log(paymentCount);
 
   const {
     data: payment,
@@ -73,7 +74,7 @@ function PaymentMain() {
 
         <div className="relative mt-[63px]">
           <span className="absolute top-[-55px] left-[calc(50%-94px)] bg-white py-2 px-8 text-main-7 rounded-full text-[16px] after:pointer">
-            남은 럭키박스 {100 - paymentList.length}개!
+            남은 럭키박스 {100 - paymentCount}개!
           </span>
           <button
             onClick={onClickPaymentBtnHandler}

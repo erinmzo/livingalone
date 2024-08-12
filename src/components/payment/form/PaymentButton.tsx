@@ -91,9 +91,9 @@ function PaymentButton({
     }
     const response = await PortOne.requestPayment({
       // Store ID 설정
-      storeId: "store-1dde2d66-0b23-4480-9c18-cc7c666a63ff",
+      storeId: `${process.env.NEXT_PUBLIC_STORE_ID}`,
       // 채널 키 설정
-      channelKey: "channel-key-4f07d679-cd8b-4143-8e64-ff67afba4b18",
+      channelKey: `${process.env.NEXT_PUBLIC_CHANNEL_KEY}`,
       paymentId: uuidv4(),
       orderName: "혼자살때 럭키박스",
       totalAmount: 1000,
@@ -114,7 +114,7 @@ function PaymentButton({
         },
       },
 
-      redirectUrl: `http://localhost:3000/payment/check`,
+      redirectUrl: `${process.env.NEXT_PUBLIC_SITE_URL}payment/check`,
     });
 
     if (response?.code != null) {
