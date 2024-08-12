@@ -44,7 +44,7 @@ function GroupSection() {
         content="공동구매를 통해 자취에 필요한 물품을 저렴한 금액에 구매해보세요"
         link="/grouppost"
       />
-      <ul className="grid grid-cols-1 md:grid-cols-2 gap-8 px-[16px] lg:px-0">
+      <ul className="grid grid-cols-1 md:grid-cols-2 gap-8 px-[27px] lg:px-0">
         {groupPosts.map((post) => {
           return (
             <li key={post.id}>
