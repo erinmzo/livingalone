@@ -36,7 +36,7 @@ function WishMust() {
         </div>
         <div className="mt-8">
           {wish.length > 0 ? (
-            <ul className="grid grid-cols-2 gap-[32px]">
+            <ul className="grid grid-cols-2 gap-[16px]">
               {wish.map((post: any) => (
                 <li key={post.id} className="mb-[64px]">
                   <MustPostCard

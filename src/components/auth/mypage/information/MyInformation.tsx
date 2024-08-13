@@ -224,7 +224,7 @@ function MyInformation() {
               onClick={handleSearchAddress}
             >
               <span className="text-center md:text-[12px] text-[16px] text-gray-3">
-                주소변경
+                주소검색
               </span>
             </button>
             {isPostModalOpen && (
@@ -236,7 +236,7 @@ function MyInformation() {
               <Input
                 variant="underline"
                 value={address}
-                placeholder={profile?.address!}
+                placeholder={profile?.address! || "oo시 oo구"}
               />
               <Input
                 variant="underline"
