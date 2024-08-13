@@ -129,7 +129,7 @@ export default function ChatForm({ postId, userId, onClose }: { postId: string; 
                 <div key={message.id}>
                   <div className="flex flex-col justify-end">
                     <div className="flex justify-end items-end gap-[10px]">
-                      <span className="text-gray-3 text-[10px]">
+                      <span className="text-gray-3 text-[10px] text-right">
                         {message.created_at.split("T").join(" ").substring(0, 16)}
                       </span>
                       <div className="flex flex-col gap-1 p-[10px] bg-white rounded-lg">
