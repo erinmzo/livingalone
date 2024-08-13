@@ -27,6 +27,10 @@ const LoginForm = () => {
 
   const { email, password } = input;
 
+  // 정규표현식
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
+
   const handleLoginSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const loginData = { email, password };
@@ -36,21 +40,33 @@ const LoginForm = () => {
     // 2. 비밀번호는 숫자+영문 포함해서 6글자 이상으로 하기
 
     // email 유효성 검사
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
     if (!emailRegex.test(email)) {
-      return setError({
-        emailError: "이메일 형식으로 입력해주세요 ex) example@example.com",
-        passwordError: "",
-      });
+      setError((prev) => ({
+        ...prev,
+        emailError: "이메일 형식으로 입력해주세요. ex) example@example.com",
+      }));
+      return;
+    }
+
+    // 비밀번호 유효성 검사
+
+    if (!passwordRegex.test(password)) {
+      setError((prev) => ({
+        ...prev,
+        passwordError:
+          "비밀번호는 숫자와 영문자 조합으로 6글자 이상이어야 합니다.",
+      }));
+      return;
     }
 
     // 2. 유효성 검사에 실패하면 setError로 state를 변경한다.
-    if (password.length < 6) {
-      return setError({
-        emailError: "",
-        passwordError: "비밀번호는 6자리 이상이어야 합니다.",
-      });
-    }
+    // if (password.length < 6) {
+    //   return setError({
+    //     emailError: "",
+    //     passwordError: "비밀번호는 영문 숫자포함 6자리 이상이어야 합니다.",
+    //   });
+    // }
 
     const { data, error } = await login(loginData);
 
