@@ -21,6 +21,7 @@ function MyInformation() {
   const [address, setAddress] = useState<string>("");
   const [imgFile, setImgFile] = useState<File | null>();
   const [imgUrl, setImgUrl] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   // ref 선언
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -66,27 +67,25 @@ function MyInformation() {
       setImgUrl(imageUrl);
       return imageUrl;
     },
-    onMutate: async (profileImage: File) => {
-      await queryClient.cancelQueries({ queryKey: ["profile", userId] });
+    // onMutate: async (profileImage: File) => {
+    //   await queryClient.cancelQueries({ queryKey: ["profile", userId] });
 
-      const previousProfile = queryClient.getQueryData<Profile>([
-        "profile",
-        userId,
-      ]);
+    //   const previousProfile = queryClient.getQueryData<Profile>([
+    //     "profile",
+    //     userId,
+    //   ]);
 
-      if (previousProfile) {
-        queryClient.setQueryData(["profile", userId], {
-          ...previousProfile,
-          profile_image_url: URL.createObjectURL(profileImage),
-        });
-      }
+    //   if (previousProfile) {
+    //     queryClient.setQueryData(["profile", userId], {
+    //       ...previousProfile,
+    //       profile_image_url: URL.createObjectURL(profileImage),
+    //     });
+    //   }
 
-      return { previousProfile };
-    },
-    onError: (err, profileImage, context) => {
-      if (context?.previousProfile) {
-        queryClient.setQueryData(["profile", userId], context.previousProfile);
-      }
+    //   return { previousProfile };
+    // },
+    onError: () => {
+      Report.failure("오류", "오류", "확인");
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ["profile", userId] });
@@ -127,6 +126,10 @@ function MyInformation() {
 
         setImgFile(file);
         uploadImageProfile(file);
+        setIsLoading(true);
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 1000);
       }
     }
   };
@@ -181,7 +184,7 @@ function MyInformation() {
               {profile && (
                 <Image
                   className="border border-gray-2 bg-gray-200 rounded-full md:hidden mb-4 w-[100px] h-[100px]"
-                  src={profile?.profile_image_url}
+                  src={imgUrl || profile?.profile_image_url}
                   alt={profile?.nickname}
                   width={100}
                   height={100}
@@ -251,6 +254,7 @@ function MyInformation() {
             type="submit"
             className="bg-main-8 w-full md:w-[500px] h-[52px] text-white md:mt-[62px] mt-[46px] rounded-full font-bold text-[18px] mb-[146px]"
             onClick={handleProfileUpdate}
+            disabled={isLoading}
           >
             변경하기
           </button>
