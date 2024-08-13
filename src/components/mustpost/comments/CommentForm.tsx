@@ -19,11 +19,9 @@ function CommentForm({ postId, userId }: { postId: string; userId: string }) {
   const user = useAuthStore((state) => state.user);
   const queryClient = useQueryClient();
   const [content, setContent] = useState("");
-  const [countContent, setCountContent] = useState(0);
 
   const setContentHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value);
-    setCountContent(content.length);
   };
 
   const { mutate: addComment } = useMutation({
