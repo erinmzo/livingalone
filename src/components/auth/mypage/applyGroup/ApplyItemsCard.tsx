@@ -16,17 +16,17 @@ const ApplyItemsCard: React.FC<ApplyItemsCardProps> = ({ apply }) => {
 
   return (
     <li key={apply.id}>
-      <div className="md:w-[672px] md:h-[140px] border border-gray-2 rounded-lg flex items-center p-4 w-[343px] h-[161px]">
+      <div className="md:px-4 md:py-5 border border-gray-2 rounded-lg flex items-center p-4 w-full">
         <div className="flex gap-2">
           <div className="flex gap-[16px]">
-            <div className="flex flex-col justify-center items-center gap-3">
+            <div className="flex flex-col items-center gap-3">
               <Link href={`/grouppost/read/${post_id}`}>
                 <Image
                   src={group_posts.img_url}
                   alt="이미지"
                   width={100}
                   height={100}
-                  className="rounded-lg border border-gray-2"
+                  className="rounded-lg border border-gray-2 w-[70px] h-[70px] md:w-[100px] md:h-[100px]"
                 />
               </Link>
               {/* 반응형 코드 시작: 작은 화면에서 상태 표시 */}

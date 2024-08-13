@@ -146,7 +146,7 @@ function GroupApplyModal({ id, onClose, userId }: PropsType) {
         </h6>
         <div className="md:px-9">
           <input
-            className="w-full h-[38px] md:h-[47px] text-[18px] md:text-[24px] border-b-2 border-black p-1"
+            className="rounded-none w-full h-[38px] md:h-[47px] text-[18px] md:text-[24px] border-b-2 border-black p-1"
             placeholder="입금자명"
             value={name}
             onChange={(e) => setName(e.target.value)}
@@ -156,7 +156,7 @@ function GroupApplyModal({ id, onClose, userId }: PropsType) {
           )}
 
           <input
-            className="w-full h-[38px] md:h-[47px] mt-[26px] text-[18px] md:text-[24px] border-b-2 border-black p-1"
+            className="rounded-none w-full h-[38px] md:h-[47px] mt-[26px] text-[18px] md:text-[24px] border-b-2 border-black p-1"
             placeholder="010-XXXX-XXXX"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
@@ -171,7 +171,7 @@ function GroupApplyModal({ id, onClose, userId }: PropsType) {
             주소검색
           </button>
           <input
-            className="w-full h-[38px] md:h-[47px] text-[18px] md:text-[24px] border-b-2 border-black p-1"
+            className="rounded-none w-full h-[38px] md:h-[47px] text-[18px] md:text-[24px] border-b-2 border-black p-1"
             placeholder="주소"
             value={address}
             readOnly
@@ -180,7 +180,7 @@ function GroupApplyModal({ id, onClose, userId }: PropsType) {
             <p className={`text-red-3 mt-2`}>{error.addressError}</p>
           )}
           <input
-            className="w-full h-[38px] md:h-[47px] text-[18px] md:text-[24px] mt-2 mb-[40px] border-b-2 border-black p-1"
+            className="rounded-none w-full h-[38px] md:h-[47px] text-[18px] md:text-[24px] mt-2 mb-[40px] border-b-2 border-black p-1"
             placeholder="상세 주소"
             value={detailAddress}
             onChange={(e) => setDetailAddress(e.target.value)}
@@ -193,15 +193,30 @@ function GroupApplyModal({ id, onClose, userId }: PropsType) {
             onChange={() => {
               setCheckBox(!checkBox);
             }}
+            className="hidden"
           />
 
           <label
             htmlFor="checkBox"
-            className={`ml-2 font-bold ${
+            className={`font-bold flex items-center gap-1 ${
               checkBox ? "text-gray-4 md:text-gray-5" : "text-gray-4"
             }`}
           >
-            {/* <Image src="/img/icon-checkbox" alt="체크박스" width={} /> */}
+            {checkBox ? (
+              <Image
+                src="/img/icon-checkbox-checked.png"
+                alt="체크박스"
+                width={24}
+                height={24}
+              />
+            ) : (
+              <Image
+                src="/img/icon-checkbox.png"
+                alt="체크된 체크박스"
+                width={24}
+                height={24}
+              />
+            )}
             공구 참여자는 2024년 7월 22일 아래와 같이 서약합니다.
           </label>
           <div

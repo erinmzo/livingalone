@@ -6,6 +6,7 @@ import { postRevalidate } from "@/utils/revalidate";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import { Confirm } from "notiflix";
+import SkeletonGroupFinishBtn from "./SkeletonGroupFinishBtn";
 
 function GroupFinishBtn({ id }: { id: string }) {
   const {
@@ -26,17 +27,7 @@ function GroupFinishBtn({ id }: { id: string }) {
     },
   });
 
-  if (isPending)
-    return (
-      <div className="flex justify-center items-center">
-        <Image
-          src="/img/loading-spinner.svg"
-          alt="로딩중"
-          width={200}
-          height={200}
-        />
-      </div>
-    );
+  if (isPending) return <SkeletonGroupFinishBtn />;
 
   if (isError)
     return <div className="flex justify-center items-center">에러...</div>;

@@ -172,11 +172,27 @@ function PaymentForm() {
                 onChange={() => {
                   setFirstCheckBox(!firstCheckBox);
                 }}
+                className="hidden"
               />
               <label
                 htmlFor="firstCheckBox"
-                className="ml-2 md:font-bold text-[16px]"
+                className="flex gap-2 items-center md:font-bold text-[16px]"
               >
+                {firstCheckBox ? (
+                  <Image
+                    src="/img/icon-checkbox-checked.png"
+                    alt="체크박스"
+                    width={24}
+                    height={24}
+                  />
+                ) : (
+                  <Image
+                    src="/img/icon-checkbox.png"
+                    alt="체크된 체크박스"
+                    width={24}
+                    height={24}
+                  />
+                )}
                 개인정보(이름, 연락처, 이메일, 주소)를 수집하는 것에 동의합니다.
               </label>
             </div>
@@ -187,11 +203,27 @@ function PaymentForm() {
                 onChange={() => {
                   setSecondCheckBox(!secondCheckBox);
                 }}
+                className="hidden"
               />
               <label
                 htmlFor="secondCheckBox"
-                className="ml-2 md:font-bold text-[16px] text-[#FF0000]"
+                className="flex gap-2 items-center md:font-bold text-[16px] text-[#FF0000]"
               >
+                {secondCheckBox ? (
+                  <Image
+                    src="/img/icon-checkbox-checked.png"
+                    alt="체크박스"
+                    width={24}
+                    height={24}
+                  />
+                ) : (
+                  <Image
+                    src="/img/icon-checkbox.png"
+                    alt="체크된 체크박스"
+                    width={24}
+                    height={24}
+                  />
+                )}
                 실제 판매 상품이 아니기에, 결제 시 즉시 환불처리 됩니다.
               </label>
             </div>
