@@ -11,17 +11,12 @@ function MyMust() {
   const user = useAuthStore((state) => state.user);
   const userId = user?.id as string;
 
-  const {
-    data: myMustPosts = [],
-    isPending,
-    isError,
-  } = useQuery({
+  const { data: myMustPosts = [], isPending } = useQuery({
     queryKey: ["liek", userId],
     queryFn: () => myItemsPost(userId),
   });
 
   if (isPending) return <SkeletonMust />;
-  if (isError) return <div>에러.. </div>;
 
   return (
     user && (
