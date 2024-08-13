@@ -38,8 +38,17 @@ function SelectCategory({
     selectCategory(category);
   };
 
-  if (isPending) return <div>불러오는 중</div>;
-  if (isError) return <div>에러 발생!</div>;
+  if (isPending)
+    return (
+      <div className="flex gap-[2px] items-center justify-center">
+        <span className="flex w-[70px] md:w-[78px] h-[38px] py-2 md:py-[5px] text-[16px] md:text-lg text-gray-4">
+          카테고리
+        </span>
+        <span className="inline-block w-[100px] h-[38px] pl-[2px] border-b border-gray-3 box-border"></span>
+      </div>
+    );
+
+  if (isError) return <div>데이터 로딩에 실패했습니다!</div>;
 
   return (
     <div className="relative">

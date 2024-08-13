@@ -7,7 +7,7 @@ import { postRevalidate } from "@/utils/revalidate";
 import { useAuthStore } from "@/zustand/authStore";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { EditorProps } from "@toast-ui/react-editor";
-import dynamic from "next/dynamic";
+// import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Notify } from "notiflix";
@@ -15,13 +15,13 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import InputField from "../write/InputField";
 import SelectCategory from "../write/SelectCategory";
 import { mustValidation } from "../common/MustValidation";
-
-const EditorModule = dynamic(
-  () => import("@/components/common/editor/EditorModule"),
-  {
-    ssr: false,
-  }
-);
+import EditorModule from "@/components/common/editor/EditorModule";
+// const EditorModule = dynamic(
+//   () => import("@/components/common/editor/EditorModule"),
+//   {
+//     ssr: false,
+//   }
+// );
 
 type TMustPost = MustPost & {
   must_categories: { id: string; name: string };
@@ -72,7 +72,7 @@ function MustEditForm({ params }: { params: { id: string } }) {
   });
 
   useEffect(() => {
-    if (mustPost) {
+    if (mustPost && editorRef.current) {
       setValueInit({
         title: mustPost.title,
         itemName: mustPost.item,
@@ -83,11 +83,7 @@ function MustEditForm({ params }: { params: { id: string } }) {
       setSelectedCategoryId(mustPost.must_categories.id);
       setImgUrl(mustPost.img_url);
 
-      if (editorRef.current) {
-        editorRef.current.getInstance().setMarkdown(mustPost.content);
-        console.log(editorRef.current.getInstance());
-        console.log(mustPost.content);
-      }
+      editorRef.current.getInstance().setMarkdown(mustPost.content);
     }
   }, [mustPost, editorRef.current]);
 
