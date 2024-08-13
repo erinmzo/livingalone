@@ -39,10 +39,14 @@ function MyGroup() {
           내가 쓴 공구
         </div>
       </div>
-      <div className="hidden md:block border border-gray-2 rounded-lg py-6 text-xs px-[68px] text-gray-4 mb-6">
-        <p className="leading-normal ">
+      <div className="border border-gray-2 rounded-lg py-4 md:py-6 text-[10px] md:text-xs px-3 md:px-[68px] text-gray-4 mb-2 md:mb-6">
+        <p className="hidden md:block leading-normal ">
           안녕하세요, 혼자살때 공구 게시판을 이용해주셔서 감사합니다. 공구 진행
           시 꼭 참고해 주세요
+        </p>
+        <p className="md:hidden leading-normal ">
+          안녕하세요, 혼자살때 공구 게시판을 이용해주셔서 감사합니다. <br />{" "}
+          공구 진행 시 꼭 참고해 주세요
         </p>
         <ul>
           <li className="flex">
