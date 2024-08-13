@@ -141,7 +141,7 @@ function PostList() {
         </div>
       )}
       {hasNextPage && (
-        <div className="flex justify-center mt-12 md:mt-[124px]">
+        <div className="flex justify-center mt-12 md:mt-[124px] mb-[137px]">
           <button
             onClick={() => fetchNextPage()}
             disabled={isFetchingNextPage}

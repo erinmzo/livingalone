@@ -9,7 +9,7 @@ function GroupPostNotice({
   setCheckBox: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   return (
-    <div className="border border-gray-2 rounded-lg p-3 md:p-6 text-[10px] md:text-xs text-gray-4 mb-6">
+    <div className="border border-gray-2 rounded-lg p-3 md:p-6 text-xs md:text-[13px] text-gray-4 mb-6">
       <div className="mb-2">
         <p className="leading-normal">
           안녕하세요, 혼자살때 공구 게시판을 이용해주셔서 감사합니다. 공구 진행
