@@ -1,3 +1,4 @@
+import FrontBanner from "@/components/common/banner/FrontBanner";
 import TopButton from "@/components/common/button/TopButton";
 import MobileHeader from "@/components/common/header/MobileHeader";
 import MobileNav from "@/components/common/header/MobileNav";
@@ -11,8 +12,9 @@ import MustVisual from "@/components/main/must/MustVisual";
 function HomePage() {
   return (
     <>
+      <FrontBanner />
       <MobileHeader />
-      <main className="lg:pb-[300px]">
+      <main className="md:pb-[300px]">
         <MustVisual />
         <MustSection />
         <GroupVisual />

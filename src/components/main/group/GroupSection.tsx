@@ -44,7 +44,7 @@ function GroupSection() {
         content="공동구매를 통해 자취에 필요한 물품을 저렴한 금액에 구매해보세요"
         link="/grouppost"
       />
-      <ul className="grid grid-cols-1 md:grid-cols-2 gap-8 px-[16px] lg:px-0">
+      <ul className="grid grid-cols-1 md:grid-cols-2 gap-8 px-[27px] lg:px-0">
         {groupPosts.map((post) => {
           return (
             <li key={post.id}>
@@ -67,7 +67,7 @@ function GroupSection() {
         <div className="border border-main-8 rounded-full w-[108px]">
           <Link
             className="block text-[16px] font-bold text-main-8 flex items-center py-[8px] px-[18px]"
-            href="/grouppost/list"
+            href="/grouppost"
           >
             전체보기
             <Image src="/img/icon-right.svg" alt="&gt;" width={7} height={12} className="ml-2" />
