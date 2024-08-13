@@ -62,33 +62,19 @@ function MyInformation() {
     mutationFn: async (profileImage: File) => {
       const formData = new FormData();
       formData.append("file", profileImage);
+      setIsLoading(true);
       const response = await uploadImage(formData);
       const imageUrl = `https://nqqsefrllkqytkwxfshk.supabase.co/storage/v1/object/public/${response.fullPath}`;
       setImgUrl(imageUrl);
       return imageUrl;
     },
-    // onMutate: async (profileImage: File) => {
-    //   await queryClient.cancelQueries({ queryKey: ["profile", userId] });
 
-    //   const previousProfile = queryClient.getQueryData<Profile>([
-    //     "profile",
-    //     userId,
-    //   ]);
-
-    //   if (previousProfile) {
-    //     queryClient.setQueryData(["profile", userId], {
-    //       ...previousProfile,
-    //       profile_image_url: URL.createObjectURL(profileImage),
-    //     });
-    //   }
-
-    //   return { previousProfile };
-    // },
     onError: () => {
       Report.failure("오류", "오류", "확인");
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ["profile", userId] });
+      setIsLoading(false);
     },
   });
 
@@ -101,7 +87,7 @@ function MyInformation() {
     setIsPostModalOpen(false);
   };
 
-  const handleUploadImage = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleUploadImage = async (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const file = e.target.files[0];
       if (file) {
@@ -126,10 +112,6 @@ function MyInformation() {
 
         setImgFile(file);
         uploadImageProfile(file);
-        setIsLoading(true);
-        setTimeout(() => {
-          setIsLoading(false);
-        }, 1000);
       }
     }
   };
