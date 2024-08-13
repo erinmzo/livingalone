@@ -8,6 +8,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Notify, Report } from "notiflix";
 import Input from "../../common/Input";
+import { useState } from "react";
 
 const LoginForm = () => {
   const router = useRouter();
@@ -18,11 +19,55 @@ const LoginForm = () => {
     password: "",
   });
 
+  // 1. useState로 에러처리하는 놈을 만들었다.
+  const [error, setError] = useState({
+    emailError: "",
+    passwordError: "",
+  });
+
   const { email, password } = input;
+
+  // 정규표현식
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
 
   const handleLoginSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const loginData = { email, password };
+
+    // TODO:
+    // 1. email 형식에 맞추지 않으면 에러 메세지 만들기
+    // 2. 비밀번호는 숫자+영문 포함해서 6글자 이상으로 하기
+
+    // email 유효성 검사
+
+    if (!emailRegex.test(email)) {
+      setError((prev) => ({
+        ...prev,
+        emailError: "이메일 형식으로 입력해주세요. ex) example@example.com",
+      }));
+      return;
+    }
+
+    // 비밀번호 유효성 검사
+
+    if (!passwordRegex.test(password)) {
+      setError((prev) => ({
+        ...prev,
+        passwordError:
+          "비밀번호는 숫자와 영문자 조합으로 6글자 이상이어야 합니다.",
+      }));
+      return;
+    }
+
+    // 2. 유효성 검사에 실패하면 setError로 state를 변경한다.
+    // if (password.length < 6) {
+    //   return setError({
+    //     emailError: "",
+    //     passwordError: "비밀번호는 영문 숫자포함 6자리 이상이어야 합니다.",
+    //   });
+    // }
+
     const { data, error } = await login(loginData);
 
     if (error) {
@@ -63,6 +108,7 @@ const LoginForm = () => {
             name="email"
             placeholder="이메일 주소를 입력해주세요"
             onChange={onChangeInput}
+            error={error.emailError}
           />
         </div>
         <div className="flex flex-col mt-4 sm:mb-3">
@@ -73,6 +119,8 @@ const LoginForm = () => {
             name="password"
             placeholder="비밀번호를 입력해주세요"
             onChange={onChangeInput}
+            // 3. Input 컴포넌트에 error를 넣는다.
+            error={error.passwordError}
           />
         </div>
         <button className="py-2 text-xl bg-main-8 text-white rounded-3xl sm:mt-10 md:mt-8 md:text-lg sm:text-sm">
