@@ -16,7 +16,6 @@ function PaymentMain() {
     queryKey: ["payment"],
     queryFn: getPaymentAll,
   });
-  console.log(paymentCount);
 
   const {
     data: payment,
@@ -41,17 +40,11 @@ function PaymentMain() {
   if (isPending)
     return (
       <div className="flex min-h-screen justify-center items-center">
-        <Image
-          src="/img/loading-spinner.svg"
-          alt="로딩중"
-          width={200}
-          height={200}
-        />
+        <Image src="/img/loading-spinner.svg" alt="로딩중" width={200} height={200} />
       </div>
     );
 
-  if (isError)
-    return <div className="flex justify-center items-center">에러...</div>;
+  if (isError) return <div className="flex justify-center items-center">에러...</div>;
   return (
     <div className="bg-green-1 min-h-screen md:pt-[130px] pb-[200px] sm:pb-[400px] md:pb-[300px] lg:pb-[600px] text-center">
       <div className="bg-green-1 mx-auto max-w-[660px] md:px-[16px] lg:px-0">

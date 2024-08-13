@@ -2,10 +2,7 @@ import { createClient } from "@/supabase/server";
 import { NextRequest, NextResponse } from "next/server";
 
 // 댓글 가져오기
-export async function GET(
-  request: NextRequest,
-  { params }: { params: { postId: string } }
-) {
+export async function GET(request: NextRequest, { params }: { params: { postId: string } }) {
   const { postId } = params;
   const supabase = createClient();
   const page = parseInt(request.nextUrl.searchParams.get("page") || "1");
@@ -20,7 +17,6 @@ export async function GET(
       .order("created_at", { ascending: false })
       .range(offset, offset + limit - 1);
 
-    // console.log("라우트 핸들러 데이터", data);
     return NextResponse.json({ data, count, page, limit });
   } catch (error) {
     return NextResponse.json({ error: "댓글을 가져오는데 실패했습니다." });

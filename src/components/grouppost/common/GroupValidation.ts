@@ -67,5 +67,4 @@ export function groupValidation(
     return false;
   }
   return true;
-  console.log("haha");
 }
