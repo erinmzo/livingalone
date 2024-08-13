@@ -47,39 +47,79 @@ function AlarmItem({ alarm, userId }: { alarm: TAlarm; userId: string }) {
             ? " bg-main-1"
             : alarm.type === "apply"
             ? " bg-yellow-1"
-            : " bg-red-1"
+            : " bg-gray-6"
         } text-left text-[13px] text-gray-4`}
         onClick={() => handleClickAlarm(alarm.id)}
       >
         <Link href={alarm.link} className="flex gap-2">
-          {alarm.group_posts.img_url ? (
-            <Image
-              src={alarm.group_posts.img_url}
-              alt={alarm.group_posts.title}
-              width={42}
-              height={42}
-              className="rounded-[4px]"
-            />
-          ) : (
-            <span className="w-[42px] h-[42px] bg-gray-2 rounded-lg"></span>
-          )}
           {alarm.type === "chat" && (
-            <div className="flex flex-col gap-1">
-              <span className="text-gray-3 text-[12px]">{alarm.created_at.split("T").join(" ").substring(0, 10)}</span>
-              <p className="text-[14px]">
-                <span className="text-main-8">{alarm.group_posts.title}</span>에 채팅이 왔습니다.
-              </p>
-            </div>
+            <>
+              {alarm.group_posts.img_url ? (
+                <Image
+                  src={alarm.group_posts.img_url}
+                  alt={alarm.group_posts.title}
+                  width={52}
+                  height={52}
+                  className="rounded-[4px] shrink-0 h-[52px]"
+                />
+              ) : (
+                <span className="w-[42px] h-[42px] bg-gray-2 rounded-lg"></span>
+              )}
+              <div className="flex flex-col gap-1">
+                <span className="text-gray-3 text-[12px]">
+                  {alarm.created_at.split("T").join(" ").substring(0, 10)}
+                </span>
+                <p className="text-[14px]">
+                  <span className="text-main-8">{alarm.group_posts.title}</span>에 채팅이 왔습니다.
+                </p>
+              </div>
+            </>
           )}
           {alarm.type === "apply" && (
-            <div>
-              <span className="text-main-8">{alarm.group_posts.title}</span>에 공구 신청이 왔습니다.
-            </div>
+            <>
+              {alarm.group_posts.img_url ? (
+                <Image
+                  src={alarm.group_posts.img_url}
+                  alt={alarm.group_posts.title}
+                  width={52}
+                  height={52}
+                  className="rounded-[4px] shrink-0 h-[52px]"
+                />
+              ) : (
+                <span className="w-[42px] h-[42px] bg-gray-2 rounded-lg"></span>
+              )}
+              <div className="flex flex-col gap-1">
+                <span className="text-gray-3 text-[12px]">
+                  {alarm.created_at.split("T").join(" ").substring(0, 10)}
+                </span>
+                <p className="text-[14px]">
+                  <span className="text-main-8">{alarm.group_posts.title}</span>에 채팅이 왔습니다.
+                </p>
+              </div>
+            </>
           )}
           {alarm.type === "comment" && (
-            <div>
-              <span className="text-main-8">{alarm.group_posts.title}</span>에 댓글이 달렸습니다.
-            </div>
+            <>
+              {alarm.must_posts.img_url ? (
+                <Image
+                  src={alarm.must_posts.img_url}
+                  alt={alarm.must_posts.title}
+                  width={52}
+                  height={52}
+                  className="rounded-[4px] shrink-0 h-[52px]"
+                />
+              ) : (
+                <span className="w-[42px] h-[42px] bg-gray-2 rounded-lg"></span>
+              )}
+              <div className="flex flex-col gap-1">
+                <span className="text-gray-3 text-[12px]">
+                  {alarm.created_at.split("T").join(" ").substring(0, 10)}
+                </span>
+                <p className="text-[14px]">
+                  <span className="text-main-8">{alarm.must_posts.title}</span>에 채팅이 왔습니다.
+                </p>
+              </div>
+            </>
           )}
 
           <button onClick={() => handleCloseAlarm(alarm.id)}>
