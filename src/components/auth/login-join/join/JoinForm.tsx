@@ -14,14 +14,20 @@ const JoinForm = () => {
     password: "",
     passwordConfirm: "",
   });
+
   const [error, setError] = useState({
     emailError: "",
     passwordError: "",
     passwordConfirmError: "",
+    nicknameError: "",
   });
+
   const { nickname, email, password, passwordConfirm } = input;
 
   const joinData = { nickname, email, password };
+  // 정규표현식
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
 
   const handleSubmitJoin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -29,6 +35,7 @@ const JoinForm = () => {
       emailError: "",
       passwordError: "",
       passwordConfirmError: "",
+      nicknameError: "",
     });
 
     const response = await fetch("/api/auth/join", {
@@ -40,10 +47,25 @@ const JoinForm = () => {
     });
     const data = await response.json();
 
+    if (nickname.length < 2 || nickname.length >= 8) {
+      setError((prev) => ({
+        ...prev,
+        nicknameError: "닉네임은 2~8글자 사이로 입력해주세요",
+      }));
+    }
+
     if (data.message === "Unable to validate email address: invalid format") {
       setError((prev) => ({
         ...prev,
         emailError: "이메일 형식으로 입력해주세요.",
+      }));
+      return;
+    }
+
+    if (!emailRegex.test(email)) {
+      setError((prev) => ({
+        ...prev,
+        emailError: "이메일 형식으로 입력해주세요. ex) example@example.com",
       }));
       return;
     }
@@ -56,16 +78,25 @@ const JoinForm = () => {
       return;
     }
 
-    if (
-      data.message === "Password should be at least 6 characters." ||
-      password.length === 0
-    ) {
+    if (!passwordRegex.test(password)) {
       setError((prev) => ({
         ...prev,
-        passwordError: "비밀번호는 6자리 이상되어야 합니다.",
+        passwordError:
+          "비밀번호는 숫자와 영문자 조합으로 6자리 이상이어야 합니다.",
       }));
       return;
     }
+
+    // if (
+    //   data.message === "Password should be at least 6 characters." ||
+    //   password.length === 0
+    // ) {
+    //   setError((prev) => ({
+    //     ...prev,
+    //     passwordError: "비밀번호는 6자리 이상되어야 합니다.",
+    //   }));
+    //   return;
+    // }
 
     if (password !== passwordConfirm) {
       setError((prev) => ({
@@ -95,6 +126,7 @@ const JoinForm = () => {
           name="nickname"
           placeholder="커뮤니티에서 사용할 닉네임을 적어주세요"
           onChange={onChangeInput}
+          error={error.nicknameError}
         />
         <Input
           label="이메일"
