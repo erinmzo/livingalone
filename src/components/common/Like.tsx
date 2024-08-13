@@ -50,10 +50,16 @@ function Like({ postId }: LikeProps) {
     onMutate: async (likeData: TGroupLikeData) => {
       await queryClient.cancelQueries({ queryKey: ["like", postId] });
 
-      const previousLikes = queryClient.getQueryData<GroupLike[]>(["like", postId]);
+      const previousLikes = queryClient.getQueryData<GroupLike[]>([
+        "like",
+        postId,
+      ]);
 
       // Optimistic update
-      queryClient.setQueryData<GroupLike[]>(["like", postId], (old) => [...(old || []), likeData as GroupLike]);
+      queryClient.setQueryData<GroupLike[]>(["like", postId], (old) => [
+        ...(old || []),
+        likeData as GroupLike,
+      ]);
 
       setIsLike(true);
       return { previousLikes };
@@ -72,11 +78,20 @@ function Like({ postId }: LikeProps) {
     onMutate: async (likeData: TGroupLikeData) => {
       await queryClient.cancelQueries({ queryKey: ["like", postId] });
 
-      const previousLikes = queryClient.getQueryData<GroupLike[]>(["like", postId]);
+      const previousLikes = queryClient.getQueryData<GroupLike[]>([
+        "like",
+        postId,
+      ]);
 
       // Optimistic update
       queryClient.setQueryData<GroupLike[]>(["like", postId], (old) =>
-        old?.filter((like) => !(like.post_id === likeData.post_id && like.user_id === likeData.user_id))
+        old?.filter(
+          (like) =>
+            !(
+              like.post_id === likeData.post_id &&
+              like.user_id === likeData.user_id
+            )
+        )
       );
       setIsLike(false);
 
@@ -118,13 +133,19 @@ function Like({ postId }: LikeProps) {
     return (
       <button onClick={handleToggleLike}>
         <div className="flex justify-center items-center border border-gray-2 bg-white rounded-full py-1 px-3">
-          <Image src="/img/icon-like.svg" alt="좋아요 버튼" width={20} height={20} />
+          <Image
+            src="/img/icon-like.svg"
+            alt="좋아요 버튼"
+            width={20}
+            height={20}
+          />
           <span>{likesCount}</span>
         </div>
       </button>
     );
 
-  if (isPending) return <div className="rounded-full w-[55px] h-[30px] animate-pulse"></div>;
+  if (isPending)
+    return <div className="rounded-full w-[55px] h-[30px] animate-pulse"></div>;
 
   if (isError) return <span>에러</span>;
 
@@ -133,12 +154,22 @@ function Like({ postId }: LikeProps) {
       <button onClick={handleToggleLike}>
         {isLike ? (
           <div className="flex justify-center items-center border border-gray-2 bg-white rounded-full py-1 px-3">
-            <Image src="/img/icon-like-on.svg" alt="좋아요 버튼" width={18} height={18} />
+            <Image
+              src="/img/icon-like-on.svg"
+              alt="좋아요 버튼"
+              width={18}
+              height={18}
+            />
             <span className="ml-1 text-main-8 font-bold">{likesCount}</span>
           </div>
         ) : (
           <div className="flex justify-center items-center border border-gray-2 bg-white rounded-full py-1 px-3">
-            <Image src="/img/icon-like.svg" alt="좋아요 버튼" width={18} height={18} />
+            <Image
+              src="/img/icon-like.svg"
+              alt="좋아요 버튼"
+              width={18}
+              height={18}
+            />
             <span className="ml-1 text-gray-4 font-bold">{likesCount}</span>
           </div>
         )}
