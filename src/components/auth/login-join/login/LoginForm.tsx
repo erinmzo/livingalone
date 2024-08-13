@@ -7,8 +7,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Notify, Report } from "notiflix";
-import Input from "../../common/Input";
 import { useState } from "react";
+import Input from "../../common/Input";
 
 const LoginForm = () => {
   const router = useRouter();
@@ -19,7 +19,6 @@ const LoginForm = () => {
     password: "",
   });
 
-  // 1. useState로 에러처리하는 놈을 만들었다.
   const [error, setError] = useState({
     emailError: "",
     passwordError: "",
@@ -29,17 +28,10 @@ const LoginForm = () => {
 
   // 정규표현식
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-  const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
 
   const handleLoginSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const loginData = { email, password };
-
-    // TODO:
-    // 1. email 형식에 맞추지 않으면 에러 메세지 만들기
-    // 2. 비밀번호는 숫자+영문 포함해서 6글자 이상으로 하기
-
-    // email 유효성 검사
 
     if (!emailRegex.test(email)) {
       setError((prev) => ({
@@ -49,33 +41,10 @@ const LoginForm = () => {
       return;
     }
 
-    // 비밀번호 유효성 검사
-
-    if (!passwordRegex.test(password)) {
-      setError((prev) => ({
-        ...prev,
-        passwordError:
-          "비밀번호는 숫자와 영문자 조합으로 6글자 이상이어야 합니다.",
-      }));
-      return;
-    }
-
-    // 2. 유효성 검사에 실패하면 setError로 state를 변경한다.
-    // if (password.length < 6) {
-    //   return setError({
-    //     emailError: "",
-    //     passwordError: "비밀번호는 영문 숫자포함 6자리 이상이어야 합니다.",
-    //   });
-    // }
-
     const { data, error } = await login(loginData);
 
     if (error) {
-      return Report.failure(
-        "로그인에 실패했습니다.",
-        "아이디와 비밀번호를 정확히 입력해 주세요.",
-        "확인"
-      );
+      return Report.failure("로그인에 실패했습니다.", "아이디와 비밀번호를 정확히 입력해 주세요.", "확인");
     }
 
     saveUser(data.user);
@@ -90,16 +59,12 @@ const LoginForm = () => {
 
   const handleKakaoLogin = async () => {
     const { error } = await kakaoLogin();
-    if (error)
-      return Report.failure("카카오 로그인에 실패했습니다.", "", "확인");
+    if (error) return Report.failure("카카오 로그인에 실패했습니다.", "", "확인");
   };
 
   return (
     <div className="flex flex-col justify-start items-center min-h-screen px-4 sm:px-6 mt-8 lg:px-8 sm:mb-8">
-      <form
-        onSubmit={handleLoginSubmit}
-        className="flex flex-col justify-center w-full max-w-md space-y-7"
-      >
+      <form onSubmit={handleLoginSubmit} className="flex flex-col justify-center w-full max-w-md space-y-7">
         <div className="flex flex-col mb-5 sm:mb-3">
           <Input
             label="이메일"
@@ -137,26 +102,14 @@ const LoginForm = () => {
           className="flex items-center justify-center sm:py-2 sm:text-base w-full py-2 text-lg border border-gray-2 rounded-3xl font-medium md:text-md"
           onClick={handleGoogleLogin}
         >
-          <Image
-            src="/img/icon-google.png"
-            alt="구글 로그인 아이콘"
-            width={24}
-            height={24}
-            className="mr-2"
-          />
+          <Image src="/img/icon-google.png" alt="구글 로그인 아이콘" width={24} height={24} className="mr-2" />
           구글 간편로그인
         </button>
         <button
           className="flex items-center justify-center w-full py-2 text-lg border border-gray-2 rounded-3xl font-medium sm:py-2 sm:text-base  md:text-md"
           onClick={handleKakaoLogin}
         >
-          <Image
-            src="/img/kakaotalk-icon.png"
-            alt="카카오 로그인 아이콘"
-            width={24}
-            height={24}
-            className="mr-2"
-          />
+          <Image src="/img/kakaotalk-icon.png" alt="카카오 로그인 아이콘" width={24} height={24} className="mr-2" />
           카카오 간편로그인
         </button>
       </div>
