@@ -254,7 +254,6 @@ function MustEditForm({ params }: { params: { id: string } }) {
             type="number"
             value={price}
             placeHolder="숫자만 입력해주세요"
-            minLength={2}
             onchangeValue={onChangeInput}
             error={error.priceError}
           />
