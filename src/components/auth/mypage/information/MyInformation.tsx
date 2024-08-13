@@ -256,7 +256,7 @@ function MyInformation() {
             onClick={handleProfileUpdate}
             disabled={isLoading}
           >
-            변경하기
+            {isLoading ? "잠시만 기다려주세요..." : "변경하기"}{" "}
           </button>
         </form>
       </div>
