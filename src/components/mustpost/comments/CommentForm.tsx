@@ -85,14 +85,19 @@ function CommentForm({ postId, userId }: { postId: string; userId: string }) {
           value={content}
           placeholder="댓글 게시하기"
           cols={30}
-          rows={1}
+          rows={2}
           maxLength={501}
           autoFocus={true}
           onChange={(e) => setContentHandler(e)}
-          className="flex-grow px-4 py-[9px] border border-gray-4 text-xs rounded-[8px] resize-none outline-none"
+          className="flex-grow px-4 py-[9px] border border-gray-4 text-sm rounded-[8px] resize-none outline-none"
         ></textarea>
         <button className="flex-grow-0 pl-1">
-          <Image src="/img/icon-send.svg" alt="등록하기" width={32} height={32} />
+          <Image
+            src="/img/icon-send.svg"
+            alt="등록하기"
+            width={32}
+            height={32}
+          />
         </button>
       </form>
     </div>

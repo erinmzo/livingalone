@@ -122,6 +122,7 @@ function MustEditForm({ params }: { params: { id: string } }) {
       postRevalidate(`/mustpost/read/${id}`);
       router.push(`/mustpost/read/${id}`);
       router.refresh();
+      Notify.success("게시물 수정이 완료되었습니다.");
     },
   });
 
