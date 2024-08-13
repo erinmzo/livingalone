@@ -44,7 +44,7 @@ function MustSection() {
         <div className="border border-main-8 rounded-full w-[108px]">
           <Link
             className="block text-[16px] font-bold text-main-8 flex items-center py-[8px] px-[18px]"
-            href="/mustpost/list"
+            href="/mustpost"
           >
             전체보기
             <Image src="/img/icon-right.svg" alt="&gt;" width={7} height={12} className="ml-2" />
