@@ -21,6 +21,7 @@ function MyInformation() {
   const [address, setAddress] = useState<string>("");
   const [imgFile, setImgFile] = useState<File | null>();
   const [imgUrl, setImgUrl] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   // ref 선언
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -61,32 +62,19 @@ function MyInformation() {
     mutationFn: async (profileImage: File) => {
       const formData = new FormData();
       formData.append("file", profileImage);
+      setIsLoading(true);
       const response = await uploadImage(formData);
       const imageUrl = `https://nqqsefrllkqytkwxfshk.supabase.co/storage/v1/object/public/${response.fullPath}`;
       setImgUrl(imageUrl);
       return imageUrl;
     },
-    onMutate: async (profileImage: File) => {
-      await queryClient.cancelQueries({ queryKey: ["profile", userId] });
 
-      const previousProfile = queryClient.getQueryData<Profile>(["profile", userId]);
-
-      if (previousProfile) {
-        queryClient.setQueryData(["profile", userId], {
-          ...previousProfile,
-          profile_image_url: URL.createObjectURL(profileImage),
-        });
-      }
-
-      return { previousProfile };
-    },
-    onError: (err, profileImage, context) => {
-      if (context?.previousProfile) {
-        queryClient.setQueryData(["profile", userId], context.previousProfile);
-      }
+    onError: () => {
+      Report.failure("오류", "오류", "확인");
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ["profile", userId] });
+      setIsLoading(false);
     },
   });
 
@@ -99,7 +87,7 @@ function MyInformation() {
     setIsPostModalOpen(false);
   };
 
-  const handleUploadImage = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleUploadImage = async (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const file = e.target.files[0];
       if (file) {
@@ -107,10 +95,18 @@ function MyInformation() {
         const fileSize = file.size;
 
         if (fileType !== "image/jpeg" && fileType !== "image/png") {
-          Report.warning("유효하지 않은 파일 형식", "JPG 또는 PNG 파일만 업로드 가능합니다.", "확인");
+          Report.warning(
+            "유효하지 않은 파일 형식",
+            "JPG 또는 PNG 파일만 업로드 가능합니다.",
+            "확인"
+          );
           return;
         } else if (fileSize > 2 * 1024 * 1024) {
-          Report.warning("파일 용량 초과", "파일 용량은 2MB 이하로 제한됩니다.", "확인");
+          Report.warning(
+            "파일 용량 초과",
+            "파일 용량은 2MB 이하로 제한됩니다.",
+            "확인"
+          );
           return;
         }
 
@@ -139,7 +135,13 @@ function MyInformation() {
       return Report.info("변경된 내용이 없습니다.", "", "확인");
     }
 
-    if (nickname !== profile?.nickname && nickname.trim() === "" && !imgFile && !detailAddress && !address) {
+    if (
+      nickname !== profile?.nickname &&
+      nickname.trim() === "" &&
+      !imgFile &&
+      !detailAddress &&
+      !address
+    ) {
       return Report.warning("닉네임 공백", "닉네임을 적어주세요!", "확인");
     }
 
@@ -164,14 +166,16 @@ function MyInformation() {
               {profile && (
                 <Image
                   className="border border-gray-2 bg-gray-200 rounded-full md:hidden mb-4 w-[100px] h-[100px]"
-                  src={profile?.profile_image_url}
+                  src={imgUrl || profile?.profile_image_url}
                   alt={profile?.nickname}
                   width={100}
                   height={100}
                 />
               )}
             </div>
-            <div className="text-[16px] font-bold md:hidden text-center w-full h-[19px]">{profile?.nickname}</div>
+            <div className="text-[16px] font-bold md:hidden text-center w-full h-[19px]">
+              {profile?.nickname}
+            </div>
           </div>
         </div>
         <form className="flex flex-col items-center w-full">
@@ -204,7 +208,9 @@ function MyInformation() {
               className="flex gap-3 w-fit py-2 px-4 border border-gray-3 bg-white font-bold rounded-full md:mb-3 mb-2 justify-center items-center"
               onClick={handleSearchAddress}
             >
-              <span className="text-center md:text-[12px] text-[16px] text-gray-3">주소변경</span>
+              <span className="text-center md:text-[12px] text-[16px] text-gray-3">
+                주소검색
+              </span>
             </button>
             {isPostModalOpen && (
               <div className="absolute left-0 top-[48px] border border-black">
@@ -212,13 +218,17 @@ function MyInformation() {
               </div>
             )}
             <div className="flex flex-col gap-2">
-              <Input variant="underline" value={address} placeholder={profile?.address!} />
+              <Input
+                variant="underline"
+                value={address}
+                placeholder={profile?.address! || "OO시 OO구  OO동"}
+              />
               <Input
                 variant="underline"
                 value={detailAddress}
                 name="detailAddress"
                 onChange={onChangeInput}
-                placeholder={profile?.detail_address!}
+                placeholder={profile?.detail_address! || "OO호"}
               />
             </div>
           </div>
@@ -226,8 +236,9 @@ function MyInformation() {
             type="submit"
             className="bg-main-8 w-full md:w-[500px] h-[52px] text-white md:mt-[62px] mt-[46px] rounded-full font-bold text-[18px] mb-[146px]"
             onClick={handleProfileUpdate}
+            disabled={isLoading}
           >
-            변경하기
+            {isLoading ? "잠시만 기다려주세요..." : "변경하기"}{" "}
           </button>
         </form>
       </div>
