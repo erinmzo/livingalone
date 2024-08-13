@@ -4,7 +4,8 @@ import { MustWish, TMustWishData } from "@/types/types";
 import { useAuthStore } from "@/zustand/authStore";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
-import { Report } from "notiflix";
+import { useRouter } from "next/navigation";
+import { Confirm } from "notiflix";
 import { useEffect, useState } from "react";
 
 interface WishProps {
@@ -16,6 +17,7 @@ function Wish({ postId }: WishProps) {
   const [isWish, setIsWish] = useState<boolean>(false);
   const user = useAuthStore((state) => state.user);
   const userId = user?.id as string;
+  const router = useRouter();
 
   const {
     data: myWish,
@@ -58,7 +60,18 @@ function Wish({ postId }: WishProps) {
       setIsWish((prev) => !prev);
       isWish ? removeWish(wishData) : addWish(wishData);
     } else {
-      Report.failure("로그인 후 진행할 수 있습니다", "", "확인");
+      Confirm.show(
+        "로그인 후 이용 가능",
+        "로그인하러 가시겠습니까?",
+        "로그인 하기",
+        "취소",
+        () => {
+          router.push("/login");
+        },
+        () => {
+          return;
+        }
+      );
     }
   };
 
