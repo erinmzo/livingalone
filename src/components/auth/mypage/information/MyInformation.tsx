@@ -236,14 +236,14 @@ function MyInformation() {
               <Input
                 variant="underline"
                 value={address}
-                placeholder={profile?.address! || "oo시 oo구"}
+                placeholder={profile?.address! || "OO시 OO구  OO동"}
               />
               <Input
                 variant="underline"
                 value={detailAddress}
                 name="detailAddress"
                 onChange={onChangeInput}
-                placeholder={profile?.detail_address!}
+                placeholder={profile?.detail_address! || "OO호"}
               />
             </div>
           </div>
