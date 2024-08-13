@@ -41,7 +41,7 @@ function InputField({
           minLength={minLength}
           maxLength={maxLength}
           onChange={(e) => onchangeValue(e)}
-          className="w-full pl-[2px] py-[5px] border-b border-gray-3 font-bold text-[16px] md:text-[18px] text-gray-5 outline-none placeholder:text-gray-2 leading-normal"
+          className="w-full pl-[2px] py-[5px] border-b border-gray-3 font-bold text-[16px] md:text-[18px] text-gray-5 outline-none placeholder:text-gray-2 leading-normal rounded-none"
         />
         {error && <p className={`text-red-3 text-[12px] mt-2`}>{error}</p>}
       </div>
