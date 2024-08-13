@@ -14,11 +14,14 @@ const JoinForm = () => {
     password: "",
     passwordConfirm: "",
   });
+
   const [error, setError] = useState({
     emailError: "",
     passwordError: "",
     passwordConfirmError: "",
+    nicknameError: "",
   });
+
   const { nickname, email, password, passwordConfirm } = input;
 
   const joinData = { nickname, email, password };
@@ -29,6 +32,7 @@ const JoinForm = () => {
       emailError: "",
       passwordError: "",
       passwordConfirmError: "",
+      nicknameError: "",
     });
 
     const response = await fetch("/api/auth/join", {
@@ -40,10 +44,26 @@ const JoinForm = () => {
     });
     const data = await response.json();
 
+    if (nickname.length < 2 || nickname.length >= 8) {
+      setError((prev) => ({
+        ...prev,
+        nicknameError: "닉네임은 2~8글자 사이로 입력해주세요",
+      }));
+    }
+
     if (data.message === "Unable to validate email address: invalid format") {
       setError((prev) => ({
         ...prev,
         emailError: "이메일 형식으로 입력해주세요.",
+      }));
+      return;
+    }
+
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(email)) {
+      setError((prev) => ({
+        ...prev,
+        emailError: "이메일 형식으로 입력해주세요. ex) example@example.com",
       }));
       return;
     }
@@ -95,6 +115,7 @@ const JoinForm = () => {
           name="nickname"
           placeholder="커뮤니티에서 사용할 닉네임을 적어주세요"
           onChange={onChangeInput}
+          error={error.nicknameError}
         />
         <Input
           label="이메일"
