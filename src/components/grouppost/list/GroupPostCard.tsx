@@ -47,36 +47,22 @@ function GroupPostCard({
                 종료됨
               </span>
             ) : (
-              <span className="py-[4px] px-[12px] rounded-full bg-main-7 text-white text-[12px] font-bold">
-                진행중
-              </span>
+              <span className="py-[4px] px-[12px] rounded-full bg-main-7 text-white text-[12px] font-bold">진행중</span>
             )}
-            <div
-              className={`text-[14px] ${
-                isFinished ? "text-gray-2" : "text-gray-3"
-              }`}
-            >
+            <div className={`text-[14px] ${isFinished ? "text-gray-2" : "text-gray-3"}`}>
               <span>{startDate}</span> ~ <span>{endDate}</span>
             </div>
           </div>
-          <h4 className="text-[16px] md:text-[24px] font-bold truncate mt-[6px]">
-            {title}
-          </h4>
+          <h4 className="text-[16px] md:text-[24px] font-bold truncate mt-[6px]">{title}</h4>
           <div className="flex items-center gap-2 mt-[6px]">
-            <span
-              className={`${
-                isFinished ? "text-gray-2" : "text-red-3"
-              } text-[14px] md:text-[16px] font-bold`}
-            >
+            <span className={`${isFinished ? "text-gray-2" : "text-red-3"} text-[14px] md:text-[16px] font-bold`}>
               {peopleNum - application.length}명 남음
             </span>
-            <span className="text-[18px] md:text-[20px] font-bold">
-              {price.toLocaleString()}원
-            </span>
+            <span className="text-[18px] md:text-[20px] font-bold">{price.toLocaleString()}원</span>
           </div>
         </div>
       </Link>
-      <div className="absolute right-3 md:right-[20px] top-[14px] md:top-[20px]">
+      <div className="absolute right-[12px] top-[12px] md:right-[20px] md:top-[20px]">
         <Like postId={postId} />
       </div>
     </div>
