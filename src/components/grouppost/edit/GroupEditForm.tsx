@@ -331,17 +331,6 @@ function GroupEditForm({ params }: { params: { id: string } }) {
           >
             {imgUrl ? "이미지 수정" : "이미지 업로드"}
           </label>
-          {/* <label
-            className="md:hidden w-11 h-11 flex justify-center items-center border border-gray-3 bg-gray-1 rounded-[4px] cursor-pointer"
-            htmlFor="image-file"
-          >
-            <Image
-              src="/img/icon-add-photo.png"
-              alt="이미지 업로드 버튼"
-              width={22}
-              height={20}
-            />
-          </label> */}
           {error.imageUrlError && (
             <p className={`text-red-3 text-[12px] mt-2`}>
               {error.imageUrlError}
