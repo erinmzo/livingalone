@@ -70,6 +70,7 @@ function MustWriteForm() {
         queryKey: ["mustPosts", selectedCategory],
       });
       router.push("/mustpost");
+      Notify.success("게시물이 등록되었습니다.");
     },
   });
 
