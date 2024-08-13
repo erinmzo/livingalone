@@ -70,9 +70,9 @@ function CommentForm({ postId, userId }: { postId: string; userId: string }) {
     const chatAlarmData = {
       type: "comment",
       user_id: userId,
-      group_post_id: postId,
-      must_post_id: null,
-      link: `/grouppost/read/${postId}`,
+      group_post_id: null,
+      must_post_id: postId,
+      link: `/mustpost/read/${postId}`,
       is_read: false,
     };
     addAlarm(chatAlarmData);
@@ -92,12 +92,7 @@ function CommentForm({ postId, userId }: { postId: string; userId: string }) {
           className="flex-grow px-4 py-[9px] border border-gray-4 text-xs rounded-[8px] resize-none outline-none"
         ></textarea>
         <button className="flex-grow-0 pl-1">
-          <Image
-            src="/img/icon-send.svg"
-            alt="등록하기"
-            width={32}
-            height={32}
-          />
+          <Image src="/img/icon-send.svg" alt="등록하기" width={32} height={32} />
         </button>
       </form>
     </div>
