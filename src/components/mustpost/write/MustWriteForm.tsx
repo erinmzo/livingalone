@@ -31,7 +31,7 @@ function MustWriteForm() {
   const user = useAuthStore((state) => state.user);
   const queryClient = useQueryClient();
   const selectedCategory = useCategoryStore((state) => state.selectedCategory);
-  const maxImageSize = 1 * 1024 * 1024;
+  const maxImageSize = 2 * 1024 * 1024;
 
   const [imgUrl, setImgUrl] = useState<string>("");
   const editorRef = useRef<EditorProps>(null);
@@ -95,7 +95,7 @@ function MustWriteForm() {
       const newMustPostImage = e.target.files[0];
 
       if (newMustPostImage.size > maxImageSize) {
-        Notify.failure("1MB 이하의 이미지로 업로드해주세요");
+        Notify.failure("2MB 이하의 이미지로 업로드해주세요");
         return;
       }
       addImage(newMustPostImage);
@@ -204,9 +204,10 @@ function MustWriteForm() {
             labelName="판매가격"
             name="price"
             type="number"
-            value={price}
-            placeHolder="숫자만 입력해주세요"
+            value={price || ""}
+            placeHolder="0"
             minLength={2}
+            maxLength={8}
             onchangeValue={onChangeInput}
             error={error.priceError}
           />

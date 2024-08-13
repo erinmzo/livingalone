@@ -32,7 +32,7 @@ function MustEditForm({ params }: { params: { id: string } }) {
   const user = useAuthStore((state) => state.user);
   const userId = user?.id;
   const router = useRouter();
-  const maxImageSize = 1 * 1024 * 1024;
+  const maxImageSize = 2 * 1024 * 1024;
 
   const editorRef = useRef<EditorProps>(null);
 
@@ -82,6 +82,10 @@ function MustEditForm({ params }: { params: { id: string } }) {
       setSelectedCategoryName(mustPost.must_categories.name);
       setSelectedCategoryId(mustPost.must_categories.id);
       setImgUrl(mustPost.img_url);
+
+      if (editorRef.current) {
+        editorRef.current.getInstance().setMarkdown(mustPost.content);
+      }
     }
   }, [mustPost]);
 
@@ -107,7 +111,7 @@ function MustEditForm({ params }: { params: { id: string } }) {
       const newMustPostImage = e.target.files[0];
 
       if (newMustPostImage.size > maxImageSize) {
-        Notify.failure("1MB 이하의 이미지로 업로드해주세요");
+        Notify.failure("2MB 이하의 이미지로 업로드해주세요");
         return;
       }
       addImage(newMustPostImage);

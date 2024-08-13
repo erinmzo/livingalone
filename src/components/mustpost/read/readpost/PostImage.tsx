@@ -10,7 +10,7 @@ function PostImage({ img_url }: PostImageProps) {
   return (
     <div className="mb-3 md:mb-6 w-full lg:min-w-[680px]">
       {isLoading && (
-        <div className="w-[680px] h-[680px] border border-gray-2 animate-pulse rounded-[16px]"></div>
+        <div className="w-full h-[400px] md:h-[680px] border border-gray-2 animate-pulse rounded-[16px]"></div>
       )}
       <Image
         src={img_url}

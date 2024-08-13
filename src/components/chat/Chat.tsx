@@ -17,7 +17,7 @@ function Chat({ postId, userId }: ChatProps) {
       <div className="flex justify-center">
         <button
           onClick={() => setIsModalOpen(true)}
-          className="text-gray-4 border border-gray-4 py-[9px] px-[90px] rounded-full font-bold text-[20px]"
+          className="text-gray-4 border border-gray-4 py-[9px] px-[80px] rounded-full font-bold text-[20px]"
         >
           실시간 채팅 참여하기
         </button>

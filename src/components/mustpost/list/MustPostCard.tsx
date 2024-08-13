@@ -25,15 +25,11 @@ function MustPostCard({ postId, title, item, imgUrl }: MustPostCardProps) {
           />
         </div>
         <div className="px-1 mt-2 md:mt-4">
-          <span className="block text-[12px] md:text-[14px] text-gray-3 truncate">
-            {item}
-          </span>
-          <h4 className="font-bold text-[16px] md:text-[20px] text-black mt-[3px] md:mt-[6px] truncate">
-            {title}
-          </h4>
+          <span className="block text-[12px] md:text-[14px] text-gray-3 truncate">{item}</span>
+          <h4 className="font-bold text-[16px] md:text-[20px] text-black mt-[3px] md:mt-[6px] truncate">{title}</h4>
         </div>
       </Link>
-      <div className="absolute right-[11px] md:right-[20px] top-[10px] md:top-[20px] rounded-full">
+      <div className="absolute right-[11px] rigth-[10px] md:right-[20px] top-[10px] md:top-[20px] rounded-full">
         <Wish postId={postId} />
       </div>
     </div>
