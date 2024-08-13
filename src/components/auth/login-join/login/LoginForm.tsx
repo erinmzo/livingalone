@@ -55,7 +55,7 @@ const LoginForm = () => {
         onSubmit={handleLoginSubmit}
         className="flex flex-col justify-center w-full max-w-md space-y-7"
       >
-        <div className="flex flex-col mb-4 sm:mb-3">
+        <div className="flex flex-col mb-5 sm:mb-3">
           <Input
             label="이메일"
             type="text"
@@ -75,7 +75,7 @@ const LoginForm = () => {
             onChange={onChangeInput}
           />
         </div>
-        <button className="text-lg bg-main-8 py-2 w-full sm:py-2 sm:text-base text-white rounded-3xl sm:mb-16 md:mt-6">
+        <button className="py-2 text-xl bg-main-8 text-white rounded-3xl sm:mt-10 md:mt-8 md:text-lg sm:text-sm">
           로그인
         </button>
       </form>
@@ -99,7 +99,7 @@ const LoginForm = () => {
           구글 간편로그인
         </button>
         <button
-          className="flex items-center justify-center sm:py-2 sm:text-base w-full py-2 text-lg border border-gray-2 rounded-3xl font-medium md:text-md"
+          className="flex items-center justify-center w-full py-2 text-lg border border-gray-2 rounded-3xl font-medium sm:py-2 sm:text-base  md:text-md"
           onClick={handleKakaoLogin}
         >
           <Image
