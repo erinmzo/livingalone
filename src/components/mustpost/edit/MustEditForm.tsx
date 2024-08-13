@@ -85,9 +85,11 @@ function MustEditForm({ params }: { params: { id: string } }) {
 
       if (editorRef.current) {
         editorRef.current.getInstance().setMarkdown(mustPost.content);
+        console.log(editorRef.current.getInstance());
+        console.log(mustPost.content);
       }
     }
-  }, [mustPost]);
+  }, [mustPost, editorRef.current]);
 
   const selectCategory = useCallback((category: MustCategory) => {
     setSelectedCategoryName(category.name);
@@ -252,7 +254,6 @@ function MustEditForm({ params }: { params: { id: string } }) {
             type="number"
             value={price}
             placeHolder="숫자만 입력해주세요"
-            minLength={2}
             onchangeValue={onChangeInput}
             error={error.priceError}
           />
