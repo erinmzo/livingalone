@@ -162,22 +162,24 @@ function CommentsList({ postId }: { postId: string }) {
                     </div>
                     <div>
                       <div className="flex flex-col py-[2px]">
-                        <span className="pb-1 text-gray-4 text-[10px]">
+                        <span className="pb-1 text-gray-4 text-[12px]">
                           {comment.profiles.nickname}
                         </span>
-                        <span className="pb-[2px] text-gray-4 text-xs whitespace-pre-wrap break-words">
+                        <span className="pb-[2px] text-gray-4 text-sm whitespace-pre-wrap break-words">
                           {comment.content}
                         </span>
-                        <span className="text-gray-2 text-[10px]">
+                        <span className="text-gray-2 text-xs">
                           {comment.created_at
                             .split("T")
                             .join(" ")
                             .substring(0, 16)}
                         </span>
                       </div>
-                      <div className="flex gap-2">
+                    </div>
+                    <div className="flex flex-row justify-center gap-2 ml-auto">
+                      <div className="flex flex-row justify-center items-center gap-1">
                         <button
-                          className="text-gray-4 text-xs"
+                          className="py-1 px-2 border text-[10px] text-gray-3 bg-gray-6 rounded-[4px]"
                           onClick={() =>
                             handleEditComment(comment.id, comment.content)
                           }
@@ -210,13 +212,13 @@ function CommentsList({ postId }: { postId: string }) {
                 </div>
 
                 <div className="flex flex-col py-[2px]">
-                  <span className="pb-1 text-gray-4 text-[10px]">
+                  <span className="pb-1 text-gray-4 text-[12px]">
                     {comment.profiles.nickname}
                   </span>
-                  <span className="pb-[2px] text-gray-4 text-xs whitespace-pre-wrap break-words">
+                  <span className="pb-[2px] text-gray-4 text-sm whitespace-pre-wrap break-words">
                     {comment.content}
                   </span>
-                  <span className="text-gray-2 text-[10px]">
+                  <span className="text-gray-2 text-xs">
                     {comment.created_at.split("T").join(" ").substring(0, 16)}
                   </span>
                 </div>
