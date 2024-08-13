@@ -69,10 +69,7 @@ function MyInformation() {
     onMutate: async (profileImage: File) => {
       await queryClient.cancelQueries({ queryKey: ["profile", userId] });
 
-      const previousProfile = queryClient.getQueryData<Profile>([
-        "profile",
-        userId,
-      ]);
+      const previousProfile = queryClient.getQueryData<Profile>(["profile", userId]);
 
       if (previousProfile) {
         queryClient.setQueryData(["profile", userId], {
@@ -110,18 +107,10 @@ function MyInformation() {
         const fileSize = file.size;
 
         if (fileType !== "image/jpeg" && fileType !== "image/png") {
-          Report.warning(
-            "유효하지 않은 파일 형식",
-            "JPG 또는 PNG 파일만 업로드 가능합니다.",
-            "확인"
-          );
+          Report.warning("유효하지 않은 파일 형식", "JPG 또는 PNG 파일만 업로드 가능합니다.", "확인");
           return;
         } else if (fileSize > 2 * 1024 * 1024) {
-          Report.warning(
-            "파일 용량 초과",
-            "파일 용량은 2MB 이하로 제한됩니다.",
-            "확인"
-          );
+          Report.warning("파일 용량 초과", "파일 용량은 2MB 이하로 제한됩니다.", "확인");
           return;
         }
 
@@ -150,13 +139,7 @@ function MyInformation() {
       return Report.info("변경된 내용이 없습니다.", "", "확인");
     }
 
-    if (
-      nickname !== profile?.nickname &&
-      nickname.trim() === "" &&
-      !imgFile &&
-      !detailAddress &&
-      !address
-    ) {
+    if (nickname !== profile?.nickname && nickname.trim() === "" && !imgFile && !detailAddress && !address) {
       return Report.warning("닉네임 공백", "닉네임을 적어주세요!", "확인");
     }
 
@@ -188,9 +171,7 @@ function MyInformation() {
                 />
               )}
             </div>
-            <div className="text-[16px] font-bold md:hidden text-center w-full h-[19px]">
-              {profile?.nickname}
-            </div>
+            <div className="text-[16px] font-bold md:hidden text-center w-full h-[19px]">{profile?.nickname}</div>
           </div>
         </div>
         <form className="flex flex-col items-center w-full">
@@ -223,9 +204,7 @@ function MyInformation() {
               className="flex gap-3 w-fit py-2 px-4 border border-gray-3 bg-white font-bold rounded-full md:mb-3 mb-2 justify-center items-center"
               onClick={handleSearchAddress}
             >
-              <span className="text-center md:text-[12px] text-[16px] text-gray-3">
-                주소변경
-              </span>
+              <span className="text-center md:text-[12px] text-[16px] text-gray-3">주소변경</span>
             </button>
             {isPostModalOpen && (
               <div className="absolute left-0 top-[48px] border border-black">
@@ -233,11 +212,7 @@ function MyInformation() {
               </div>
             )}
             <div className="flex flex-col gap-2">
-              <Input
-                variant="underline"
-                value={address}
-                placeholder={profile?.address!}
-              />
+              <Input variant="underline" value={address} placeholder={profile?.address!} />
               <Input
                 variant="underline"
                 value={detailAddress}

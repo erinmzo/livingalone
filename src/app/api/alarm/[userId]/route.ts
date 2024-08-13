@@ -31,3 +31,17 @@ export async function PUT(request: NextRequest, { params }: { params: { userId: 
     return NextResponse.json({ error: "데이터를 불러오는 데 실패했습니다." });
   }
 }
+
+export async function DELETE(request: NextRequest) {
+  const alarm = await request.json();
+
+  try {
+    const supabase = createClient();
+    const { data, error } = await supabase.from("alarm").delete().eq("id", alarm.id);
+
+    if (error) throw error;
+    return NextResponse.json(data);
+  } catch (error) {
+    return NextResponse.json({ error: "데이터를 불러오는 데 실패했습니다." });
+  }
+}

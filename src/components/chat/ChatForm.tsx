@@ -6,7 +6,8 @@ import { TAddAlarm } from "@/types/types";
 import { useAuthStore } from "@/zustand/authStore";
 import { useMutation } from "@tanstack/react-query";
 import Image from "next/image";
-import { Notify, Report } from "notiflix";
+import { useRouter } from "next/navigation";
+import { Confirm, Notify } from "notiflix";
 import { useEffect, useRef, useState } from "react";
 
 type TChat = {
@@ -24,6 +25,7 @@ export default function ChatForm({ postId, userId, onClose }: { postId: string; 
   const [messages, setMessages] = useState<TChat[]>([]);
   const [newMessage, setNewMessage] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
 
   const fetchInitialMessages = async () => {
     const { data } = await supabase
@@ -43,7 +45,6 @@ export default function ChatForm({ postId, userId, onClose }: { postId: string; 
       .channel("chat1")
       .on("postgres_changes", { event: "INSERT", schema: "public", table: "chat" }, async (payload: any) => {
         const profile = await getMyProfile(payload.new.user_id);
-
         setMessages((currentMessages) => [
           ...currentMessages,
           { ...payload.new, profiles: { nickname: profile.nickname } },
@@ -70,10 +71,27 @@ export default function ChatForm({ postId, userId, onClose }: { postId: string; 
 
     if (!newMessage) return Notify.failure("내용을 입력해주세요.");
 
-    if (!user) return Report.failure("로그인 후 이용하실 수 있습니다.", "", "확인");
+    if (!user) {
+      Confirm.show(
+        "로그인 후 이용 가능",
+        "로그인하러 가시겠습니까?",
+        "로그인 하기",
+        "취소",
+        () => {
+          router.push("/login");
+        },
+        () => {
+          return;
+        }
+      );
+    }
+
+    const offset = new Date().getTimezoneOffset() * 60000;
+    const today = new Date(Date.now() - offset).toISOString();
 
     if (user) {
       const chatInfo = {
+        created_at: today,
         text: newMessage,
         user_id: user.id,
         post_id: postId,
@@ -103,12 +121,12 @@ export default function ChatForm({ postId, userId, onClose }: { postId: string; 
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-[99] md:px-[16px] py-[0px] md:px-0 md:py-[80px]">
-      <div className="relative w-full mx-auto rounded-lg bg-gray-6 p-[16px] md:pt-[32px] rounded-lg z-[999] box-border flex flex-col justify-center items-center top-[-30px] max-w-[300px] md:max-w-[343px] h-full max-h-[500px] md:max-h-[760px] ">
+      <div className="relative w-full mx-auto rounded-lg bg-gray-6 p-[16px] md:pt-[32px] rounded-lg z-[999] box-border flex flex-col justify-end items-center top-[-30px] max-w-[300px] md:max-w-[343px] h-full max-h-[500px] md:max-h-[760px] ">
         {messages.length > 0 ? (
-          <div className="overflow-y-scroll flex flex-col gap-[10px] py-[16px]">
+          <div className="overflow-y-scroll flex flex-col gap-[10px] py-[16px] w-full">
             {messages.map((message) =>
               user && user.id === message.user_id ? (
-                <>
+                <div key={message.id}>
                   <div className="flex flex-col justify-end">
                     <div className="flex justify-end items-end gap-[10px]">
                       <span className="text-gray-3 text-[10px]">
@@ -119,7 +137,7 @@ export default function ChatForm({ postId, userId, onClose }: { postId: string; 
                       </div>
                     </div>
                   </div>
-                </>
+                </div>
               ) : (
                 <div key={message.id} className="flex flex-col justify-start">
                   <div className="flex items-end text-gray-5 gap-[10px] mt-2">
@@ -149,7 +167,7 @@ export default function ChatForm({ postId, userId, onClose }: { postId: string; 
         ) : (
           <div className="flex justify-center text-gray-2 h-full">공구 채팅을 시작해보세요</div>
         )}
-        <form onSubmit={handleSendMessage} className="flex items-center gap-1">
+        <form onSubmit={handleSendMessage} className="flex w-full items-center gap-1">
           <input
             type="text"
             value={newMessage}

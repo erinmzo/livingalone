@@ -49,6 +49,7 @@ export type TAlarm = Tables<"alarm"> & {
   must_posts: { title: string; img_url: string };
 };
 export type TEditAlarm = Pick<Alarm, "user_id" | "id" | "is_read">;
+export type TDeleteAlarm = Pick<Alarm, "user_id" | "id">;
 
 export type Comment = Tables<"must_comments">;
 // export type TComment = Omit<Comment, "id">;
