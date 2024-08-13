@@ -40,7 +40,7 @@ function SelectCategory({
 
   if (isPending)
     return (
-      <div className="flex gap-[2px] items-start">
+      <div className="flex gap-[2px] items-center justify-center">
         <span className="flex w-[70px] md:w-[78px] h-[38px] py-2 md:py-[5px] text-[16px] md:text-lg text-gray-4">
           카테고리
         </span>

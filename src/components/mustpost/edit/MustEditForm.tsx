@@ -7,7 +7,7 @@ import { postRevalidate } from "@/utils/revalidate";
 import { useAuthStore } from "@/zustand/authStore";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { EditorProps } from "@toast-ui/react-editor";
-import dynamic from "next/dynamic";
+// import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Notify } from "notiflix";
