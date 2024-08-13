@@ -115,34 +115,49 @@ function CommentsList({ postId }: { postId: string }) {
               // 수정 모드
               <div>
                 {editCommentId === comment.id ? (
-                  <div className="pr-1 w-4 h-4">
-                    <Image
-                      src={comment.profiles.profile_image_url}
-                      alt="유저 프로필 사진"
-                      width={16}
-                      height={16}
-                    />
-                    <form onSubmit={handleUpdateComment}>
-                      <textarea
-                        value={editComment}
-                        onChange={(e) => setEditComment(e.target.value)}
-                      ></textarea>
+                  <div className="flex flex-row px-2 py-2 border-b border-gray-2">
+                    <div className="mr-1 w-6 h-6 flex-shrink-0">
+                      <Image
+                        src={comment.profiles.profile_image_url}
+                        alt="유저 프로필 사진"
+                        width={24}
+                        height={24}
+                        className="rounded-full"
+                      />
+                    </div>
+                    <div>
+                      <span className="inline-block text-xs text-gray-4 mb-[5px]">
+                        {comment.profiles.nickname}
+                      </span>
+                      <form onSubmit={handleUpdateComment}>
+                        <textarea
+                          value={editComment}
+                          cols={30}
+                          rows={1}
+                          maxLength={501}
+                          autoFocus={true}
+                          onChange={(e) => setEditComment(e.target.value)}
+                          className="px-4 py-2 text-[14px] border border-gray-3 rounded-[4px] resize-none outline-none"
+                        ></textarea>
+                      </form>
+                    </div>
+                    <div className="flex flex-row gap-1 ml-2 ">
                       <button type="submit">완료</button>
                       <button type="button" onClick={handleCancelEdit}>
                         취소
                       </button>
-                    </form>
+                    </div>
                   </div>
                 ) : (
                   // 읽기 모드
                   <div className="flex flex-row px-2 py-2 border-b border-gray-2">
-                    <div className="mr-1 w-4 h-4 flex-shrink-0">
+                    <div className="mr-1 w-6 h-6 flex-shrink-0">
                       <Image
                         src={comment.profiles.profile_image_url}
                         alt="유저 프로필 사진"
-                        width={16}
-                        height={16}
-                        className="w-4 h-4 rounded-full"
+                        width={24}
+                        height={24}
+                        className="rounded-full"
                       />
                     </div>
                     <div>
@@ -181,13 +196,16 @@ function CommentsList({ postId }: { postId: string }) {
             ) : (
               // 댓글 작성자와 아이디가 다른 유저일 경우
               <div className="flex flex-row px-2 py-2 border-b border-gray-2">
-                <div className="relative mr-1 w-4 h-4 flex-shrink-0">
+                <div className="mr-1 w-6 h-6 flex-shrink-0">
                   <Image
                     src={comment.profiles.profile_image_url}
                     alt="유저 프로필 사진"
-                    fill
-                    objectFit="cover"
+                    width={24}
+                    height={24}
                     className="rounded-full"
+                    // fill
+                    // objectFit="cover"
+                    // className="rounded-full"
                   />
                 </div>
 
