@@ -179,7 +179,7 @@ function GroupEditForm({ params }: { params: { id: string } }) {
     <InnerLayout>
       <div className="hidden md:block border border-gray-2 rounded-lg p-6 text-xs text-gray-4 mb-6">
         <div className="mb-2">
-          <p>
+          <p className="leading-normal">
             안녕하세요, 혼자살때 공구 게시판을 이용해주셔서 감사합니다. 공구
             진행 시 꼭 참고해 주세요:
           </p>
@@ -188,23 +188,27 @@ function GroupEditForm({ params }: { params: { id: string } }) {
               <div className="w-[18px] flex justify-center shrink-0">
                 <div className="w-[3px] h-[3px] rounded-full mt-[5px] bg-gray-4"></div>
               </div>
-              <p>
+              <p className="leading-normal">
                 혼자살때에서는 공동 구매(공구) 결제가 이루어지지 않습니다.
-                저희는 공구를 할 수 있는 게시판만 제공해 드립니다. 공구자는
-                공구를 열고 신청자를 받아 이후 과정을 직접 진행해 주셔야 합니다.
+                저희는 공구를 할 수 있는 게시판만 제공해 드립니다.
+                <br />
+                공구자는 공구를 열고 신청자를 받아 이후 과정을 직접 진행해
+                주셔야 합니다.
               </p>
             </li>
             <li className="flex">
               <div className="w-[18px] flex justify-center shrink-0">
                 <div className="w-[3px] h-[3px] rounded-full mt-[5px] bg-gray-4"></div>
               </div>
-              <p>공구 참여 인원은 최대 30명 이하로 제한됩니다.</p>
+              <p className="leading-normal">
+                공구 참여 인원은 최대 30명 이하로 제한됩니다.
+              </p>
             </li>
             <li className="flex">
               <div className="w-[18px] flex justify-center shrink-0">
                 <div className="w-[3px] h-[3px] rounded-full mt-[5px] bg-gray-4"></div>
               </div>
-              <p>
+              <p className="leading-normal">
                 상품 링크는 선택 사항입니다. 아이템의 상세 페이지를 보여주고
                 싶다면 링크를 추가해 주세요.
               </p>
@@ -213,25 +217,29 @@ function GroupEditForm({ params }: { params: { id: string } }) {
               <div className="w-[18px] flex justify-center shrink-0">
                 <div className="w-[3px] h-[3px] rounded-full mt-[5px] bg-gray-4"></div>
               </div>
-              <p>상품 이미지는 반드시 올려주셔야 합니다.</p>
+              <p className="leading-normal">
+                상품 이미지는 반드시 올려주셔야 합니다.
+              </p>
             </li>
             <li className="flex">
               <div className="w-[18px] flex justify-center shrink-0">
                 <div className="w-[3px] h-[3px] rounded-full mt-[5px] bg-gray-4"></div>
               </div>
-              <p>혼자살때에서는 공구 진행과 관련된 책임을 지지 않습니다.</p>
+              <p className="leading-normal">
+                혼자살때에서는 공구 진행과 관련된 책임을 지지 않습니다.
+              </p>
             </li>
             <li className="flex">
               <div className="w-[18px] flex justify-center shrink-0">
                 <div className="w-[3px] h-[3px] rounded-full mt-[5px] bg-gray-4"></div>
               </div>
-              <p>
+              <p className="leading-normal">
                 공구자는 신청자의 개인정보를 물건 발송 이후 즉시 모두 삭제해
                 주시기 바랍니다.
               </p>
             </li>
           </ul>
-          <p>
+          <p className="leading-normal">
             위 내용을 잘 숙지하시어 원활한 공구 진행을 부탁드립니다. 감사합니다.
           </p>
         </div>
@@ -242,11 +250,29 @@ function GroupEditForm({ params }: { params: { id: string } }) {
             onChange={() => {
               setCheckBox(!checkBox);
             }}
+            className="hidden"
           />
           <label
             htmlFor="checkBox"
-            className={`text-[14px] ${checkBox ? "text-main-8" : "text-red-3"}`}
+            className={`flex items-center gap-1 text-[14px] ${
+              checkBox ? "text-main-8" : "text-red-3"
+            }`}
           >
+            {checkBox ? (
+              <Image
+                src="/img/icon-checkbox-green.png"
+                alt="체크박스"
+                width={24}
+                height={24}
+              />
+            ) : (
+              <Image
+                src="/img/icon-checkbox-red.png"
+                alt="체크된 체크박스"
+                width={24}
+                height={24}
+              />
+            )}
             위의 내용을 확인하셨나요?
           </label>
         </div>
@@ -266,7 +292,7 @@ function GroupEditForm({ params }: { params: { id: string } }) {
               placeholder="제목을 입력하세요."
               value={title}
               onChange={onChangeInput}
-              className="text-[16px] w-full pl-[2px] px-[2px] py-[5px] border-b-[1px] border-gray-3 font-bold md:text-[18px] text-black leading-normal  placeholder:text-gray-2 outline-none"
+              className="rounded-none text-[16px] w-full pl-[2px] px-[2px] py-[5px] border-b-[1px] border-gray-3 font-bold md:text-[18px] text-black leading-normal  placeholder:text-gray-2 outline-none"
             />
             {error.titleError && (
               <p className={`text-red-3 text-[12px] mt-2`}>
@@ -297,7 +323,7 @@ function GroupEditForm({ params }: { params: { id: string } }) {
                   type="date"
                   value={endDate}
                   onChange={onChangeInput}
-                  className="border-b-[1px] border-gray-3 py-2 px-[2px] md:text-[18px] font-bold text-black outline-none"
+                  className="rounded-none border-b-[1px] border-gray-3 py-2 px-[2px] md:text-[18px] font-bold text-black outline-none"
                 />
                 {error.endDateError && (
                   <p className={`text-red-3 text-[12px] mt-2`}>
@@ -323,7 +349,7 @@ function GroupEditForm({ params }: { params: { id: string } }) {
                 placeholder="숫자만 입력해주세요."
                 value={peopleNum}
                 onChange={onChangeInput}
-                className="w-auto max-w-[83px] md:w-[100px] pl-[2px] px-[2px] py-2 border-b border-gray-3 md:text-[18px] font-bold text-black outline-none"
+                className="rounded-none w-auto max-w-[83px] md:w-[100px] pl-[2px] px-[2px] py-2 border-b border-gray-3 md:text-[18px] font-bold text-black outline-none"
               />
               {error.peopleNumError && (
                 <p className={`text-red-3 text-[12px] mt-2`}>
@@ -348,7 +374,7 @@ function GroupEditForm({ params }: { params: { id: string } }) {
               placeholder="제품명을 입력하세요."
               value={item}
               onChange={onChangeInput}
-              className="w-full pl-[2px] px-[2px] py-[5px] border-b-[1px] border-gray-3 font-bold md:text-[18px] text-black leading-normal placeholder:text-gray-2 outline-none"
+              className="rounded-none w-full pl-[2px] px-[2px] py-[5px] border-b-[1px] border-gray-3 font-bold md:text-[18px] text-black leading-normal placeholder:text-gray-2 outline-none"
             />
             {error.itemError && (
               <p className={`text-red-3 text-[12px] mt-2`}>{error.itemError}</p>
@@ -370,7 +396,7 @@ function GroupEditForm({ params }: { params: { id: string } }) {
             placeholder="숫자만 입력해주세요."
             value={price}
             onChange={onChangeInput}
-            className="flex-1 pl-[2px] px-[2px] py-[5px] border-b-[1px] border-gray-3 font-bold md:text-[18px] text-black leading-normal placeholder:text-gray-2 outline-none"
+            className="rounded-none flex-1 pl-[2px] px-[2px] py-[5px] border-b-[1px] border-gray-3 font-bold md:text-[18px] text-black leading-normal placeholder:text-gray-2 outline-none"
           />
         </div>
         <div className="flex gap-[2px]">
@@ -386,7 +412,7 @@ function GroupEditForm({ params }: { params: { id: string } }) {
             placeholder="(선택사항) 상품소개 페이지 링크를 넣어주세요."
             value={link}
             onChange={onChangeInput}
-            className="flex-1 pl-[2px] px-[2px] py-[5px] border-b-[1px] border-gray-3 font-bold md:text-[18px] text-black leading-normal placeholder:text-gray-2 outline-none"
+            className="rounded-none flex-1 pl-[2px] px-[2px] py-[5px] border-b-[1px] border-gray-3 font-bold md:text-[18px] text-black leading-normal placeholder:text-gray-2 outline-none"
           />
         </div>
         <div className="ml-[70px] md:ml-[78px] flex flex-col md:flex-row gap-2 md:gap-4 items-start mb-[6px]">
@@ -435,7 +461,7 @@ function GroupEditForm({ params }: { params: { id: string } }) {
       <div className="mt-[14px]">
         <EditorModule editorRef={editorRef} />
       </div>
-      <div className="flex justify-center">
+      <div className="flex justify-center pb-[123px] md:pb-0">
         <button
           className="bg-main-8 w-full md:w-[300px] py-[10px] text-white rounded-full font-bold text-[20px] mt-6 md:mt-[64px]"
           onClick={editGroupPostHandler}

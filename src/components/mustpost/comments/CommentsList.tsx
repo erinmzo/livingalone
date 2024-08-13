@@ -210,7 +210,7 @@ function CommentsList({ postId }: { postId: string }) {
         {[...Array(totalPages)].map((_, index) => {
           return (
             <button
-              className={`w-4 h-4 border-[0.5px] border-gray-2 flex justify-center items-center text-[10px]
+              className={`w-4 h-4 border-[1px] border-gray-2 flex justify-center items-center text-[10px]
               ${page === index + 1 ? "text-main-8" : "text-gray-2"}`}
               key={index + 1}
               onClick={() => setPage(index + 1)}
