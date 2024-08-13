@@ -167,7 +167,7 @@ function MustWriteForm() {
               initialCategoryName={selectedCategoryName}
               error={error.categoryError}
             />
-            <div className="md:pl-[72px] flex-grow">
+            <div className="md:pl-[72px] flex-grow content-end">
               <InputField
                 labelName="작성일자"
                 name="date"
