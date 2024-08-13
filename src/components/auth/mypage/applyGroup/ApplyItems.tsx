@@ -40,9 +40,9 @@ function ApplyItems() {
             신청한 공구
           </div>
         </div>
-        <div className="mt-8">
+        <div className="mt-8 w-full">
           {applyPosts.length ? (
-            <ul className="grid grid-cols-1 gap-8">
+            <ul className="grid grid-cols-1 gap-8 ">
               {applyPosts.map((apply) => (
                 <ApplyItemsCard key={apply.id} apply={apply} />
               ))}

@@ -220,7 +220,7 @@ function MyInformation() {
           <div className="relative mt-11 md:mt-16 flex flex-col w-full">
             <button
               type="button"
-              className="flex gap-3 w-[73px] py-2 border border-gray-3 bg-white font-bold rounded-full md:mb-3 mb-2 justify-center items-center"
+              className="flex gap-3 w-fit py-2 px-4 border border-gray-3 bg-white font-bold rounded-full md:mb-3 mb-2 justify-center items-center"
               onClick={handleSearchAddress}
             >
               <span className="text-center md:text-[12px] text-[16px] text-gray-3">
@@ -249,7 +249,7 @@ function MyInformation() {
           </div>
           <button
             type="submit"
-            className="bg-main-8 w-full md:w-[500px] h-[52px] text-white md:mt-[62px] mt-[46px] rounded-full font-bold text-[18px]"
+            className="bg-main-8 w-full md:w-[500px] h-[52px] text-white md:mt-[62px] mt-[46px] rounded-full font-bold text-[18px] mb-[146px]"
             onClick={handleProfileUpdate}
           >
             변경하기

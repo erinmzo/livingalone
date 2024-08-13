@@ -70,7 +70,7 @@ function MyPayment() {
           결제 내역
         </h5>
         <div className="md:hidden flex justify-center mb-[32px]">
-          <div className="flex justify-center items-center font-bold text-xs text-main-8 border border-main-8 bg-gray-1 w-[73px] h-[30px] rounded-full">
+          <div className="flex justify-center items-center font-bold text-xs text-main-8 border border-main-8 bg-gray-1 w-[73px] h-[30px] rounded-full mt-8 md:mt-0">
             결제내역
           </div>
         </div>
