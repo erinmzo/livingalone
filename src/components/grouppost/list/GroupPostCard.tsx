@@ -76,7 +76,7 @@ function GroupPostCard({
           </div>
         </div>
       </Link>
-      <div className="absolute right-[20px] top-[20px]">
+      <div className="absolute right-3 md:right-[20px] top-[14px] md:top-[20px]">
         <Like postId={postId} />
       </div>
     </div>
