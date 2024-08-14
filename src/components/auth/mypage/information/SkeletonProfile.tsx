@@ -2,11 +2,11 @@ import React from "react";
 
 const SkeletonProfile = () => {
   return (
-    <div className="animate-pulse flex flex-col gap-8 p-4 md:p-0">
+    <div className="animate-pulse flex flex-col gap-8 md:gap-0 p-4 md:p-0">
       {/* 타이틀 */}
-      <div className="flex flex-col justify-center items-center gap-8 mb-8 mt-8 md:mt-0 md:block ">
+      <div className="flex flex-col justify-center items-center mb-8 mt-8 md:mt-0 md:block ">
         <div className=" bg-gray-2 md:rounded md:mt-0 border rounded-full w-[76px] h-[30px] md:w-[115px] md:h-[29px]"></div>
-        <div className="border border-gray-2 bg-gray-2 rounded-full md:hidden w-[100px] h-[100px]"></div>
+        <div className="border border-gray-2 bg-gray-2 rounded-full mb-4 mt-8 md:hidden w-[100px] h-[100px]"></div>
         <div className="border border-gray-2 bg-gray-2 text-[16px] w-[100px] rounded font-bold md:hidden text-center h-[19px]"></div>
       </div>
 
