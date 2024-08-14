@@ -43,20 +43,24 @@ export default function ChatForm({ postId, userId, onClose }: { postId: string; 
 
     const messageSubscription = supabase
       .channel("chat1")
-      .on("postgres_changes", { event: "INSERT", schema: "public", table: "chat" }, async (payload: any) => {
-        const profile = await getMyProfile(payload.new.user_id);
-        setMessages((currentMessages) => [
-          ...currentMessages,
-          {
-            ...payload.new,
-            profiles: {
-              nickname: profile.nickname,
-              profile_image_url: profile.profile_image_url,
-              user_id: profile.user_id,
+      .on(
+        "postgres_changes",
+        { event: "INSERT", schema: "public", table: "chat", filter: `post_id=eq.${postId}` },
+        async (payload: any) => {
+          const profile = await getMyProfile(payload.new.user_id);
+          setMessages((currentMessages) => [
+            ...currentMessages,
+            {
+              ...payload.new,
+              profiles: {
+                nickname: profile.nickname,
+                profile_image_url: profile.profile_image_url,
+                user_id: profile.user_id,
+              },
             },
-          },
-        ]);
-      })
+          ]);
+        }
+      )
       .subscribe();
     return () => {
       supabase.removeChannel(messageSubscription);
