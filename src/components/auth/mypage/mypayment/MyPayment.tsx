@@ -6,6 +6,7 @@ import { useAuthStore } from "@/zustand/authStore";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
+import SkeletonPayment from "./SkeletonPayment";
 
 function MyPayment() {
   const user = useAuthStore((state) => state.user);
@@ -31,17 +32,7 @@ function MyPayment() {
     },
   });
 
-  if (isPending)
-    return (
-      <div className="flex justify-center items-center">
-        <Image
-          src="/img/loading-spinner.svg"
-          alt="로딩중"
-          width={200}
-          height={200}
-        />
-      </div>
-    );
+  if (isPending) return <SkeletonPayment />;
 
   if (isError)
     return <div className="flex justify-center items-center">에러...</div>;
