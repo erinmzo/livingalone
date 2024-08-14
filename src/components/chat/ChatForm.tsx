@@ -18,7 +18,15 @@ type TChat = {
   user_id: string;
 };
 
-export default function ChatForm({ postId, userId, onClose }: { postId: string; userId: string; onClose: () => void }) {
+export default function ChatForm({
+  postId,
+  userId,
+  onClose,
+}: {
+  postId: string;
+  userId: string;
+  onClose: () => void;
+}) {
   const supabase = createClient();
   const user = useAuthStore((state) => state.user);
   const id = user?.id as string;
@@ -43,13 +51,17 @@ export default function ChatForm({ postId, userId, onClose }: { postId: string; 
 
     const messageSubscription = supabase
       .channel("chat1")
-      .on("postgres_changes", { event: "INSERT", schema: "public", table: "chat" }, async (payload: any) => {
-        const profile = await getMyProfile(payload.new.user_id);
-        setMessages((currentMessages) => [
-          ...currentMessages,
-          { ...payload.new, profiles: { nickname: profile.nickname } },
-        ]);
-      })
+      .on(
+        "postgres_changes",
+        { event: "INSERT", schema: "public", table: "chat" },
+        async (payload: any) => {
+          const profile = await getMyProfile(payload.new.user_id);
+          setMessages((currentMessages) => [
+            ...currentMessages,
+            { ...payload.new, profiles: { nickname: profile.nickname } },
+          ]);
+        }
+      )
       .subscribe();
     return () => {
       supabase.removeChannel(messageSubscription);
@@ -130,7 +142,10 @@ export default function ChatForm({ postId, userId, onClose }: { postId: string; 
                   <div className="flex flex-col justify-end">
                     <div className="flex justify-end items-end gap-[10px]">
                       <span className="text-gray-3 text-[10px] text-right">
-                        {message.created_at.split("T").join(" ").substring(0, 16)}
+                        {message.created_at
+                          .split("T")
+                          .join(" ")
+                          .substring(0, 16)}
                       </span>
                       <div className="flex flex-col gap-1 p-[10px] bg-white rounded-lg">
                         <span>{message.text}</span>
@@ -151,7 +166,9 @@ export default function ChatForm({ postId, userId, onClose }: { postId: string; 
                         />
                       </div>
                       <div className="flex flex-col gap-1 p-[10px] bg-white rounded-lg">
-                        <span className="text-[10px] text-gray-3 truncate">{message.profiles.nickname}</span>
+                        <span className="text-[10px] text-gray-3 truncate">
+                          {message.profiles.nickname}
+                        </span>
                         <span>{message.text}</span>
                       </div>
                     </div>
@@ -165,9 +182,14 @@ export default function ChatForm({ postId, userId, onClose }: { postId: string; 
             <div ref={messagesEndRef} />
           </div>
         ) : (
-          <div className="flex justify-center text-gray-2 h-full">공구 채팅을 시작해보세요</div>
+          <div className="flex justify-center text-gray-2 h-full">
+            공구 채팅을 시작해보세요
+          </div>
         )}
-        <form onSubmit={handleSendMessage} className="flex w-full items-center gap-1">
+        <form
+          onSubmit={handleSendMessage}
+          className="flex w-full items-center gap-1"
+        >
           <input
             type="text"
             value={newMessage}
@@ -176,14 +198,22 @@ export default function ChatForm({ postId, userId, onClose }: { postId: string; 
             className="border border-gray-4 rounded-lg py-[5px] px-[16px] grow text-[12px]"
           />
           <button type="submit">
-            <Image src="/img/icon-send.svg" alt="채팅 보내기" width={32} height={32} />
+            <Image
+              src="/img/icon-send.svg"
+              alt="채팅 보내기"
+              width={32}
+              height={32}
+            />
           </button>
         </form>
         <button onClick={onClose} className="absolute right-[8px] top-[8px]">
           <Image src="/img/icon-close.svg" alt="닫기" width={16} height={16} />
         </button>
       </div>
-      <div onClick={onClose} className="fixed inset-0 bg-black bg-opacity-50"></div>
+      <div
+        onClick={onClose}
+        className="fixed inset-0 bg-black bg-opacity-50"
+      ></div>
     </div>
   );
 }
