@@ -5,11 +5,10 @@ import Page from "@/components/common/Page/Page";
 import MobileHeader from "@/components/common/header/MobileHeader";
 import MobileNav from "@/components/common/header/MobileNav";
 import IsOpenProvider from "@/providers/IsOpenProvider";
-import { useIsOpen } from "@/zustand/isOpenStore";
-import { PropsWithChildren } from "react";
-function MyPageLayout({ children }: PropsWithChildren) {
-  const isOpenSideBar = useIsOpen((state) => state.isOpenSideBar);
 
+import { PropsWithChildren } from "react";
+
+function MyPageLayout({ children }: PropsWithChildren) {
   return (
     <>
       <MobileHeader hamburger title="마이페이지" />
