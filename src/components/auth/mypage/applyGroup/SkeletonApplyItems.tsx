@@ -46,11 +46,12 @@ const ApplyItemsCardSkeleton = () => {
         </div>
 
         {/* 큰 화면에서 주문자 정보 표시 */}
-        <div className="hidden md:flex w-[227px] h-[94px] ml-5 flex-col justify-center border-l border-gray-2 pl-[30px]">
+        <div className="hidden md:flex w-[227px] h-[94px] ml-5  flex-col justify-center border-l border-gray-2 pl-[30px]">
           {/* 주문자 정보 스켈레톤 */}
           <div className="bg-gray-2 rounded w-[80px] h-[16px] mb-2"></div>
+          <div className="bg-gray-2 rounded w-[100px] h-[16px] mb-2"></div>
+          <div className="bg-gray-2 rounded w-[110px] h-[16px] mb-2"></div>
           <div className="bg-gray-2 rounded w-[120px] h-[16px]"></div>
-          <div className="bg-gray-2 rounded w-[100px] h-[16px]"></div>
         </div>
       </div>
     </div>
