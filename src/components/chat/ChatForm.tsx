@@ -53,7 +53,12 @@ export default function ChatForm({
       .channel("chat1")
       .on(
         "postgres_changes",
-        { event: "INSERT", schema: "public", table: "chat" },
+        {
+          event: "INSERT",
+          schema: "public",
+          table: "chat",
+          filter: `post_id=eq.${postId}`,
+        },
         async (payload: any) => {
           const profile = await getMyProfile(payload.new.user_id);
           setMessages((currentMessages) => [
