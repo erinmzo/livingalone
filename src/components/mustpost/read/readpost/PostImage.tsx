@@ -20,8 +20,8 @@ function PostImage({ img_url }: PostImageProps) {
         }`}
         width={0}
         height={0}
-        priority
-        onLoadingComplete={() => setIsLoading(false)}
+        priority={true}
+        onLoad={() => setIsLoading(false)}
       />
     </div>
   );

@@ -11,7 +11,6 @@ import { GroupPost, TNewGroupPost } from "@/types/types";
 import { postRevalidate } from "@/utils/revalidate";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { EditorProps } from "@toast-ui/react-editor";
-import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Notify } from "notiflix";

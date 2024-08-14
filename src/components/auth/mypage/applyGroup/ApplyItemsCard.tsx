@@ -26,7 +26,7 @@ const ApplyItemsCard: React.FC<ApplyItemsCardProps> = ({ apply }) => {
                   alt="이미지"
                   width={100}
                   height={100}
-                  className="rounded-lg border border-gray-2 w-[70px] h-[70px] md:w-[100px] md:h-[100px]"
+                  className="object-cover rounded-lg border border-gray-2 w-[70px] h-[70px] md:w-[100px] md:h-[100px]"
                 />
               </Link>
               {/* 반응형 코드 시작: 작은 화면에서 상태 표시 */}
