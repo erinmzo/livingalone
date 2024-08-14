@@ -87,7 +87,7 @@ function CommentForm({ postId, userId }: { postId: string; userId: string }) {
           cols={28}
           rows={2}
           maxLength={501}
-          autoFocus={true}
+          autoFocus={false}
           onChange={(e) => setContentHandler(e)}
           className="flex-grow py-[15px] pl-[17px] pr-[50px] md:pl-[15px] md:pr-[49px] md:py-[15px] text-sm rounded-[8px] resize-none outline-none"
         ></textarea>

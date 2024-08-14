@@ -127,7 +127,7 @@ function CommentsList({ postId }: { postId: string }) {
                           cols={30}
                           rows={2}
                           maxLength={501}
-                          autoFocus={true}
+                          autoFocus={false}
                           onChange={(e) => setEditComment(e.target.value)}
                           className="w-[275px] md:w-[514px] px-4 py-2 text-[14px] border border-gray-3 rounded-[4px] resize-none outline-none flex-grow-1"
                         ></textarea>
