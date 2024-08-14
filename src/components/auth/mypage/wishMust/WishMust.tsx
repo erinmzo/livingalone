@@ -21,7 +21,6 @@ function WishMust() {
   });
 
   if (isPending) return <SkeletonMust />;
-  if (isError) return <div>에러.. </div>;
 
   return (
     user && (
