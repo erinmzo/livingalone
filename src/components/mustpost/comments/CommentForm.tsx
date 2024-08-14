@@ -79,25 +79,20 @@ function CommentForm({ postId, userId }: { postId: string; userId: string }) {
   };
 
   return (
-    <div className="md:w-[635px] pt-4 ">
-      <form onSubmit={submitHandler} className="flex flex-row">
+    <div className="md:w-[634px] mt-6 bg-gray-1 border border-gray-4 rounded-[8px]">
+      <form onSubmit={submitHandler} className=" flex flex-col relative">
         <textarea
           value={content}
-          placeholder="댓글 게시하기"
-          cols={30}
+          placeholder="커뮤니티가 더 훈훈해지는 댓글 부탁드립니다."
+          cols={28}
           rows={2}
           maxLength={501}
           autoFocus={true}
           onChange={(e) => setContentHandler(e)}
-          className="flex-grow px-4 py-[9px] border border-gray-4 text-sm rounded-[8px] resize-none outline-none"
+          className="flex-grow py-[15px] pl-[17px] pr-[50px] md:pl-[15px] md:pr-[49px] md:py-[15px] text-sm rounded-[8px] resize-none outline-none"
         ></textarea>
-        <button className="flex-grow-0 pl-1">
-          <Image
-            src="/img/icon-send.svg"
-            alt="등록하기"
-            width={32}
-            height={32}
-          />
+        <button className="absolute right-0 bottom-0 w-[34px] mb-[15px] mr-[15px] md:mb-[15px] md:mr-[15px] py-[3px] px-[7px] border border-gray-3 text-[10px] text-gray-3 rounded-[4px] z-10">
+          등록
         </button>
       </form>
     </div>
