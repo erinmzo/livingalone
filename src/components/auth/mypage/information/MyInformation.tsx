@@ -222,6 +222,7 @@ function MyInformation() {
                 variant="underline"
                 value={address}
                 placeholder={profile?.address! || "OO시 OO구  OO동"}
+                readOnly
               />
               <Input
                 variant="underline"

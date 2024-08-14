@@ -75,12 +75,7 @@ function CommentsList({ postId }: { postId: string }) {
     return (
       <div className="flex justify-center items-center w-full">
         <div className="relative w-[100px] h-[100px] md:w-[200px] md:h-[200px] flex justify-center items-center">
-          <Image
-            src="/img/loading-spinner-transparent.svg"
-            alt="로딩중"
-            fill
-            objectFit="cover"
-          />
+          <Image src="/img/loading-spinner-transparent.svg" alt="로딩중" fill />
         </div>
       </div>
     );
@@ -90,12 +85,7 @@ function CommentsList({ postId }: { postId: string }) {
     return (
       <div className="flex flex-col justify-center items-center pt-[23px] pb-[16px]">
         <div className="relative w-[67px] md:w-[100px] h-[62px] md:h-[94px] mb-5">
-          <Image
-            src="/img/icon-empty.png"
-            alt="empty"
-            layout="fill"
-            objectFit="cover"
-          />
+          <Image src="/img/icon-empty.png" alt="empty" layout="fill" />
         </div>
         <span className="text-gray-2 text-[16px] mb-1">댓글이 없습니다.</span>
         <span className="text-gray-2 text-[16px]">
@@ -121,7 +111,6 @@ function CommentsList({ postId }: { postId: string }) {
                         src={comment.profiles.profile_image_url}
                         alt="유저 프로필 사진"
                         fill
-                        objectFit="cover"
                         className="rounded-full"
                       />
                     </div>
@@ -165,7 +154,6 @@ function CommentsList({ postId }: { postId: string }) {
                         src={comment.profiles.profile_image_url}
                         alt="유저 프로필 사진"
                         fill
-                        objectFit="cover"
                         className="rounded-full"
                       />
                     </div>
@@ -212,7 +200,6 @@ function CommentsList({ postId }: { postId: string }) {
                     src={comment.profiles.profile_image_url}
                     alt="유저 프로필 사진"
                     fill
-                    objectFit="cover"
                     className="rounded-full"
                   />
                 </div>

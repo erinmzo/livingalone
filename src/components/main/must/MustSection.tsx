@@ -20,11 +20,17 @@ function MustSection() {
   if (isPending)
     return (
       <div className="flex justify-center items-center">
-        <Image src="/img/loading-spinner.svg" alt="로딩중" width={200} height={200} />
+        <Image
+          src="/img/loading-spinner.svg"
+          alt="로딩중"
+          width={200}
+          height={200}
+        />
       </div>
     );
 
-  if (isError) return <div className="flex justify-center items-center">에러...</div>;
+  if (isError)
+    return <div className="flex justify-center items-center">에러...</div>;
 
   return (
     <div className="container mx-auto lg:max-w-[1024px] pt-[42px] pb-[132px] lg:pt-[58px] lg:pb-[153px]">
@@ -36,7 +42,12 @@ function MustSection() {
       <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-[27px] lg:px-0">
         {mustPosts.map((post) => (
           <li key={post.id}>
-            <MustPostCard title={post.title} item={post.item} imgUrl={post.img_url} postId={post.id} />
+            <MustPostCard
+              title={post.title}
+              item={post.item}
+              imgUrl={post.img_url}
+              postId={post.id}
+            />
           </li>
         ))}
       </ul>
@@ -47,7 +58,13 @@ function MustSection() {
             href="/mustpost"
           >
             전체보기
-            <Image src="/img/icon-right.svg" alt="&gt;" width={7} height={12} className="ml-2" />
+            <Image
+              src="/img/icon-right.svg"
+              alt="&gt;"
+              width={7}
+              height={11}
+              className="w-[7px] h-[11px] ml-2"
+            />
           </Link>
         </div>
       </div>

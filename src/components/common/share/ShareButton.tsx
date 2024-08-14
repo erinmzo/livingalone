@@ -29,6 +29,7 @@ function ShareButton({
           alt="공유 이미지"
           width={16}
           height={22}
+          className="w-[16px] h-[22px]"
         />
         <p className="text-gray-3 text-[20px] hidden md:block">공유</p>
       </button>

@@ -27,9 +27,6 @@ function PaymentForm() {
   });
 
   const [isPostModalOpen, setIsPostModalOpen] = useState<boolean>(false);
-  // const [purchaserAddress, setPurchaserAddress] = useState<string>("");
-  // const [purchaserDetailAddress, setPurchaserDetailAddress] = useState<string>("");
-  // const [purchaserEmail, setPurchaserEmail] = useState<string>("");
   const [firstCheckBox, setFirstCheckBox] = useState<boolean>(false);
   const [secondCheckBox, setSecondCheckBox] = useState<boolean>(false);
   const {
@@ -79,9 +76,6 @@ function PaymentForm() {
         purchaserDetailAddress: profile.detail_address,
         purchaserEmail: user.email,
       });
-      // setPurchaserAddress(profile.address);
-      // setPurchaserDetailAddress(profile.detail_address);
-      // setPurchaserEmail(user.email);
     }
   }, [profile, user]);
   if (isPending)

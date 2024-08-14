@@ -118,7 +118,6 @@ function PaymentButton({
     });
 
     if (response?.code != null) {
-      // 오류 발생
       return alert(response.message);
     }
 

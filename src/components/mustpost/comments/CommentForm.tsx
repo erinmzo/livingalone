@@ -97,6 +97,7 @@ function CommentForm({ postId, userId }: { postId: string; userId: string }) {
             alt="등록하기"
             width={32}
             height={32}
+            className="h-[32px]"
           />
         </button>
       </form>
