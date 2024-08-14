@@ -207,7 +207,7 @@ export default function ChatForm({
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
             placeholder="채팅을 입력하세요."
-            className="border border-gray-4 rounded-lg py-[5px] px-[16px] text-[16px] w-full"
+            className="border border-gray-4 rounded-lg py-[5px] px-[8px] md:px-[16px] w-full grow text-[16px]"
           />
           <button type="submit" className="shrink-0">
             <Image
