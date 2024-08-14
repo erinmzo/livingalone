@@ -20,7 +20,7 @@ function MyPageLayout({ children }: PropsWithChildren) {
           </h1>
           <div className="flex md:py-[100px] md:px-[50px]">
             <SideBar />
-            {isOpenSideBar && <MobileSideBar />}
+            <MobileSideBar />
             <main className="ml-0 md:ml-[50px] w-auto grow">{children}</main>
           </div>
         </Page>
