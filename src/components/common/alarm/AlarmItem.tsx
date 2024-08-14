@@ -65,11 +65,12 @@ function AlarmItem({ alarm, userId }: { alarm: TAlarm; userId: string }) {
               <span className="w-[42px] h-[42px] bg-gray-2 rounded-lg"></span>
             )}
             <div className="flex flex-col gap-1">
-              <span className="text-gray-3 text-[12px]">
-                <Link href={alarm.link}>{alarm.created_at.split("T").join(" ").substring(0, 10)}</Link>
-              </span>
+              <span className="text-gray-3 text-[12px]">{alarm.created_at.split("T").join(" ").substring(0, 10)}</span>
               <p className="text-[14px]">
-                <span className="text-main-8">{alarm.group_posts.title}</span>에 채팅이 왔습니다.
+                <Link href={alarm.link}>
+                  <span className="text-main-8">{alarm.group_posts.title}</span>
+                </Link>
+                에 채팅이 왔습니다.
               </p>
             </div>
           </div>
@@ -88,11 +89,12 @@ function AlarmItem({ alarm, userId }: { alarm: TAlarm; userId: string }) {
               <span className="w-[42px] h-[42px] bg-gray-2 rounded-lg"></span>
             )}
             <div className="flex flex-col gap-1">
-              <span className="text-gray-3 text-[12px]">
-                <Link href={alarm.link}>{alarm.created_at.split("T").join(" ").substring(0, 10)}</Link>
-              </span>
+              <span className="text-gray-3 text-[12px]">{alarm.created_at.split("T").join(" ").substring(0, 10)}</span>
               <p className="text-[14px]">
-                <span className="text-main-8">{alarm.group_posts.title}</span>에 공구 신청이 왔습니다.
+                <Link href={alarm.link}>
+                  <span className="text-main-8">{alarm.group_posts.title}</span>
+                </Link>
+                에 공구 신청이 왔습니다.
               </p>
             </div>
           </div>
@@ -111,11 +113,12 @@ function AlarmItem({ alarm, userId }: { alarm: TAlarm; userId: string }) {
               <span className="w-[42px] h-[42px] bg-gray-2 rounded-lg"></span>
             )}
             <div className="flex flex-col gap-1">
-              <span className="text-gray-3 text-[12px]">
-                <Link href={alarm.link}>{alarm.created_at.split("T").join(" ").substring(0, 10)}</Link>
-              </span>
+              <span className="text-gray-3 text-[12px]">{alarm.created_at.split("T").join(" ").substring(0, 10)}</span>
               <p className="text-[14px]">
-                <span className="text-main-8">{alarm.must_posts.title}</span>에 댓글이 달렸습니다.
+                <Link href={alarm.link}>
+                  <span className="text-main-8">{alarm.must_posts.title}</span>
+                </Link>
+                에 댓글이 달렸습니다.
               </p>
             </div>
           </div>
