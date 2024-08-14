@@ -189,9 +189,9 @@ export default function ChatForm({ postId, userId, onClose }: { postId: string; 
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
             placeholder="채팅을 입력하세요."
-            className="border border-gray-4 rounded-lg py-[5px] px-[8px] md:px-[16px] text-[12px] grow"
+            className="border border-gray-4 rounded-lg py-[5px] px-[8px] md:px-[16px] w-full grow text-[16px]"
           />
-          <button type="submit" className="min-w-[32px]">
+          <button type="submit" className="shrink-0">
             <Image src="/img/icon-send.svg" alt="채팅 보내기" width={32} height={32} />
           </button>
         </form>
