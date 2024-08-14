@@ -79,7 +79,7 @@ function GroupSection() {
       <div className="md:hidden w-full flex justify-center mt-[40px]">
         <div className="border border-main-8 rounded-full w-[108px]">
           <Link
-            className="block text-[16px] font-bold text-main-8 flex items-center py-[8px] px-[18px]"
+            className="text-[16px] font-bold text-main-8 flex items-center py-[8px] px-[18px]"
             href="/grouppost"
           >
             전체보기

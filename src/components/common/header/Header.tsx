@@ -14,7 +14,7 @@ function Header() {
     <header>
       <TopBanner />
       <AuthHeader />
-      <div className="container mx-auto w-full max-w-[1024px] flex justify-center justify-between items-center py-[18px] px-[16px] lg:px-0">
+      <div className="container mx-auto w-full max-w-[1024px] flex justify-between items-center py-[18px] px-[16px] lg:px-0">
         <h1 className="text-[30px] font-extrabold">
           <Link href="/">
             <Image src="/img/logo.svg" alt="혼자살때" width={90} height={42} />
