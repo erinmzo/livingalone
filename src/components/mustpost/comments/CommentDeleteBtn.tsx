@@ -37,7 +37,7 @@ function CommentDeleteBtn({
   };
   return (
     <button
-      className="w-[34px] py-[3px] border text-[10px] text-gray-3 bg-gray-6 rounded-[4px]"
+      className="w-[34px] py-[3px] border text-[12px] text-gray-3 bg-gray-6 rounded-[4px]"
       onClick={() => HandleCommentDelete(commentId)}
     >
       삭제
