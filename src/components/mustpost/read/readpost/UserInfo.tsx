@@ -15,13 +15,15 @@ function UserInfo({
 }: UserInfoProps) {
   return (
     <div className="flex flex-row items-center gap-2 px-1 md:ml-[2px] mb-[15px] md:mb-2 ">
-      <Image
-        src={profile_image_url}
-        alt="프로필 이미지"
-        width={40}
-        height={40}
-        className="rounded-full"
-      />
+      <div className="flex-shrink-0 relative w-10 h-10">
+        <Image
+          src={profile_image_url}
+          alt="프로필 이미지"
+          fill
+          objectFit="cover"
+          className="rounded-full"
+        />
+      </div>
       <div className="flex flex-col">
         <span className="text-[16px] text-black">{nickname}</span>
         <span className="text-[14px] text-gray-3">
