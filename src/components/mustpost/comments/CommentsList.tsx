@@ -111,11 +111,12 @@ function CommentsList({ postId }: { postId: string }) {
                         src={comment.profiles.profile_image_url}
                         alt="유저 프로필 사진"
                         fill
+                        objectFit="cover"
                         className="rounded-full"
                       />
                     </div>
                     <div className="flex-grow-1">
-                      <span className="inline-block mb-1 text-gray-4 h-4 text-[12px]">
+                      <span className="inline-block mb-1 text-gray-4 h-4 text-[14px]">
                         {comment.profiles.nickname}
                       </span>
                       <form
@@ -129,19 +130,19 @@ function CommentsList({ postId }: { postId: string }) {
                           maxLength={501}
                           autoFocus={false}
                           onChange={(e) => setEditComment(e.target.value)}
-                          className="w-[275px] md:w-[514px] px-4 py-2 text-[14px] border border-gray-3 rounded-[4px] resize-none outline-none flex-grow-1"
+                          className="w-[275px] md:w-[514px] px-4 py-2 text-[16px] border border-gray-3 rounded-[4px] resize-none outline-none flex-grow-1"
                         ></textarea>
                         <div className="flex flex-row justify-center items-center gap-1 w-[72px] md:ml-1 flex-grow-0 mt-3 md:mt-0">
                           <button
                             type="button"
                             onClick={handleCancelEdit}
-                            className="w-[34px] py-[3px] border text-[10px] text-gray-3 bg-gray-6 rounded-[4px]"
+                            className="w-[34px] py-[3px] border text-[12px] text-gray-3 bg-gray-6 rounded-[4px]"
                           >
                             취소
                           </button>
                           <button
                             type="submit"
-                            className="w-[34px] py-[3px] text-[10px] text-gray-1 rounded-[4px] bg-main-8"
+                            className="w-[34px] py-[3px] text-[12px] text-gray-1 rounded-[4px] bg-main-8"
                           >
                             완료
                           </button>
@@ -165,16 +166,16 @@ function CommentsList({ postId }: { postId: string }) {
                       </div>
                       <div className="flex-grow-1">
                         <div className="flex flex-col py-[2px]">
-                          <span className="inline-block mb-1 text-gray-4 h-4 text-[12px]">
+                          <span className="inline-block mb-1 text-gray-4 h-4 text-[14px]">
                             {comment.profiles.nickname}
                           </span>
                         </div>
                         {/* Pc */}
                         <div className="flex flex-col">
-                          <span className="pb-[2px] text-gray-4 text-sm whitespace-pre-wrap break-words">
+                          <span className="pb-[2px] text-gray-4 text-[16px] whitespace-pre-wrap break-words">
                             {comment.content}
                           </span>
-                          <span className="text-gray-2 text-xs">
+                          <span className="text-gray-2 text-[14px]">
                             {comment.created_at
                               .split("T")
                               .join(" ")
@@ -187,7 +188,7 @@ function CommentsList({ postId }: { postId: string }) {
                     <div className="md:flex md:justify-center md:items-center w-[34px] flex-shrink-0 md:w-[72px] md:ml-auto">
                       <div className="flex flex-row w-[88px] md:w-auto justify-items-start md:justify-center items-center gap-1 mt-3 md:mt-0 md:ml-1 ml-6">
                         <button
-                          className="w-[34px] py-[3px] border text-[10px] text-gray-1 bg-gray-3 rounded-[4px]"
+                          className="w-[34px] py-[3px] border text-[12px] text-gray-1 bg-gray-3 rounded-[4px]"
                           onClick={() =>
                             handleEditComment(comment.id, comment.content)
                           }
@@ -216,13 +217,13 @@ function CommentsList({ postId }: { postId: string }) {
                 </div>
 
                 <div className="flex flex-col py-[2px]">
-                  <span className="inline-block mb-1 text-gray-4 h-4 text-[12px]">
+                  <span className="inline-block mb-1 text-gray-4 h-4 text-[14px]">
                     {comment.profiles.nickname}
                   </span>
-                  <span className="pb-[2px] text-gray-4 text-sm whitespace-pre-wrap break-words">
+                  <span className="pb-[2px] text-gray-4 text-[16px] whitespace-pre-wrap break-words">
                     {comment.content}
                   </span>
-                  <span className="text-gray-2 text-xs">
+                  <span className="text-gray-2 text-[14px]">
                     {comment.created_at.split("T").join(" ").substring(0, 16)}
                   </span>
                 </div>

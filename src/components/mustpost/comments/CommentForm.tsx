@@ -89,9 +89,9 @@ function CommentForm({ postId, userId }: { postId: string; userId: string }) {
           maxLength={501}
           autoFocus={false}
           onChange={(e) => setContentHandler(e)}
-          className="flex-grow py-[15px] pl-[17px] pr-[50px] md:pl-[15px] md:pr-[49px] md:py-[15px] text-sm rounded-[8px] resize-none outline-none"
+          className="flex-grow py-[15px] pl-[17px] pr-[50px] md:pl-[15px] md:pr-[49px] md:py-[15px] text-[16px] rounded-[8px] resize-none outline-none"
         ></textarea>
-        <button className="absolute right-0 bottom-0 w-[34px] mb-[15px] mr-[15px] md:mb-[15px] md:mr-[15px] py-[3px] px-[7px] border border-gray-3 text-[10px] text-gray-3 rounded-[4px] z-10">
+        <button className="absolute right-0 bottom-0 w-[34px] mb-[15px] mr-[15px] md:mb-[15px] md:mr-[15px] py-[3px] px-[5px] border border-gray-3 text-[12px] text-gray-3 rounded-[4px] z-10">
           등록
         </button>
       </form>
