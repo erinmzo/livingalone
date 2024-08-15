@@ -5,8 +5,6 @@ interface InputFieldProps {
   value?: string | number;
   type: string;
   placeHolder?: string;
-  minLength?: number;
-  maxLength?: number;
   onchangeValue: (e: React.ChangeEvent<HTMLInputElement>) => void;
   name?: string;
   error?: string;
@@ -18,8 +16,6 @@ function InputField({
   type,
   placeHolder,
   onchangeValue,
-  minLength,
-  maxLength,
   name,
   error,
 }: InputFieldProps) {
@@ -38,8 +34,6 @@ function InputField({
           name={name}
           value={value}
           placeholder={placeHolder}
-          minLength={minLength}
-          maxLength={maxLength}
           onChange={(e) => onchangeValue(e)}
           className="w-full pl-[2px] py-[5px] border-b border-gray-3 font-bold text-[16px] md:text-[18px] text-gray-5 outline-none placeholder:text-gray-2 leading-normal rounded-none"
         />

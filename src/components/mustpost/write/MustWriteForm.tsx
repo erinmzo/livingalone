@@ -161,7 +161,6 @@ function MustWriteForm() {
             type="text"
             value={title}
             placeHolder="제목을 입력해주세요"
-            minLength={2}
             onchangeValue={onChangeInput}
             error={error.titleError}
           />
@@ -190,7 +189,6 @@ function MustWriteForm() {
             type="text"
             value={itemName}
             placeHolder="상품 이름을 입력해주세요."
-            minLength={2}
             onchangeValue={onChangeInput}
             error={error.itemNameError}
           />
@@ -201,7 +199,6 @@ function MustWriteForm() {
             type="text"
             value={company}
             placeHolder="구매처를 입력해주세요."
-            minLength={1}
             onchangeValue={onChangeInput}
             error={error.companyError}
           />
@@ -212,8 +209,6 @@ function MustWriteForm() {
             type="number"
             value={price || ""}
             placeHolder="0"
-            minLength={2}
-            maxLength={8}
             onchangeValue={onChangeInput}
             error={error.priceError}
           />

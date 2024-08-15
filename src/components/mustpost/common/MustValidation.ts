@@ -31,6 +31,13 @@ export function mustValidation(
     }));
     return false;
   }
+  if (title.length > 50) {
+    setError((prev) => ({
+      ...prev,
+      titleError: "제목은 최대 50자까지 입력 가능합니다",
+    }));
+    return false;
+  }
   if (!selectedCategoryId) {
     setError((prev) => ({
       ...prev,
@@ -56,6 +63,13 @@ export function mustValidation(
     setError((prev) => ({
       ...prev,
       priceError: "가격을 올바른 단위로 입력해주세요.",
+    }));
+    return false;
+  }
+  if (price > 10000000) {
+    setError((prev) => ({
+      ...prev,
+      priceError: "가격은 최대 999만원까지 입력 가능합니다.",
     }));
     return false;
   }
