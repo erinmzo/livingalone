@@ -220,7 +220,7 @@ function MustWriteForm() {
             onchangeValue={onChangeInput}
             error={error.priceError}
           />
-          <div className="flex flex-col md:flex-row gap-2 md:gap-4 items-start">
+          <div className="flex flex-col md:flex-row gap-2 md:gap-4 items-start md:items-center">
             <input
               className="hidden"
               id="image-file"
@@ -236,7 +236,7 @@ function MustWriteForm() {
             </label>
 
             {loading && !imgUrl && (
-              <div className="w-[111px] md:w-[200px] ml-[72px] md:ml-0 py-1 bg-gray-6 rounded-full overflow-hidden">
+              <div className="w-[119px] md:w-[200px] ml-[72px] md:ml-0 py-1 bg-gray-6 rounded-full overflow-hidden">
                 <div className="w-[90px] h-2 bg-main-7 rounded-full animate-progressBar"></div>
               </div>
             )}
