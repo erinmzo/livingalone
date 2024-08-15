@@ -101,17 +101,20 @@ function MustWriteForm() {
     }));
     if (e.target.files) {
       const newMustPostImage = e.target.files[0];
-      const fileType = newMustPostImage.type;
+      if (newMustPostImage) {
+        const fileType = newMustPostImage.type;
+
+        if (!fileType.includes("image")) {
+          Notify.failure("이미지 파일만 업로드 해주세요");
+          return;
+        }
+      }
 
       if (newMustPostImage.size > maxImageSize) {
         Notify.failure("2MB 이하의 이미지로 업로드해주세요");
         return;
       }
 
-      if (!fileType.includes("image")) {
-        Notify.failure("이미지 파일만 업로드 해주세요");
-        return;
-      }
       addImage(newMustPostImage);
     }
   };
@@ -220,26 +223,28 @@ function MustWriteForm() {
             onchangeValue={onChangeInput}
             error={error.priceError}
           />
-          <div className="flex flex-col md:flex-row gap-2 md:gap-4 items-start md:items-center">
-            <input
-              className="hidden"
-              id="image-file"
-              type="file"
-              accept="image/*"
-              onChange={addImageHandler}
-            />
-            <label
-              className="flex justify-center items-center ml-[72px] md:ml-[78px] px-7 py-[7px] border border-gray-4 bg-gray-1 font-bold text-[12px] text-gray-4 rounded-full cursor-pointer"
-              htmlFor="image-file"
-            >
-              {imgUrl ? "이미지 수정" : "이미지 업로드"}
-            </label>
+          <div className="flex flex-col md:flex-row gap-2 md:gap-4 items-start">
+            <div className="flex items-center gap-4">
+              <input
+                className="hidden"
+                id="image-file"
+                type="file"
+                accept="image/*"
+                onChange={addImageHandler}
+              />
+              <label
+                className="flex justify-center items-center ml-[72px] md:ml-[78px] px-7 py-[7px] border border-gray-4 bg-gray-1 font-bold text-[12px] text-gray-4 rounded-full cursor-pointer"
+                htmlFor="image-file"
+              >
+                {imgUrl ? "이미지 수정" : "이미지 업로드"}
+              </label>
 
-            {loading && !imgUrl && (
-              <div className="w-[119px] md:w-[200px] ml-[72px] md:ml-0 py-1 bg-gray-6 rounded-full overflow-hidden">
-                <div className="w-[90px] h-2 bg-main-7 rounded-full animate-progressBar"></div>
-              </div>
-            )}
+              {loading && !imgUrl && (
+                <div className="w-[119px] md:w-[200px] ml-[72px] md:ml-0 py-1 bg-gray-6 rounded-full overflow-hidden">
+                  <div className="w-[90px] h-2 bg-main-7 rounded-full animate-progressBar"></div>
+                </div>
+              )}
+            </div>
 
             {error.imageUrlError && (
               <p className={`text-red-3 text-[12px] mt-2`}>
