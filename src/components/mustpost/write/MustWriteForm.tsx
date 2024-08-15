@@ -91,12 +91,17 @@ function MustWriteForm() {
       ...prev,
       imageUrlError: "",
     }));
-
     if (e.target.files) {
       const newMustPostImage = e.target.files[0];
+      const fileType = newMustPostImage.type;
 
       if (newMustPostImage.size > maxImageSize) {
         Notify.failure("2MB 이하의 이미지로 업로드해주세요");
+        return;
+      }
+
+      if (!fileType.includes("image")) {
+        Notify.failure("이미지 파일만 업로드 해주세요");
         return;
       }
       addImage(newMustPostImage);
@@ -217,6 +222,7 @@ function MustWriteForm() {
               className="hidden"
               id="image-file"
               type="file"
+              accept="image/*"
               onChange={addImageHandler}
             />
             <label
