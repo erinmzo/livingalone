@@ -1,11 +1,11 @@
 import Page from "@/components/common/Page/Page";
 import TopButton from "@/components/common/button/TopButton";
-import PostList from "@/components/grouppost/list/PostList";
+import GroupPostList from "@/components/grouppost/list/GroupPostList";
 
 function GroupListPage() {
   return (
     <Page>
-      <PostList />
+      <GroupPostList />
       <TopButton />
     </Page>
   );

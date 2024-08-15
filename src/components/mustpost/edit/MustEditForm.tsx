@@ -12,7 +12,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Notify } from "notiflix";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import InputField from "../write/InputField";
+import InputField from "../../common/input/InputField";
 import SelectCategory from "../write/SelectCategory";
 import { mustValidation } from "../common/MustValidation";
 import EditorModule from "@/components/common/editor/EditorModule";

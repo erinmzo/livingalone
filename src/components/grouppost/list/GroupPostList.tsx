@@ -1,30 +1,12 @@
 "use client";
 
 import { getGroupPosts } from "@/apis/grouppost";
-import { GroupApplication, GroupPost } from "@/types/types";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import GroupPostCard from "./GroupPostCard";
 
-type TGroupApplication = Pick<GroupApplication, "id">;
-type TGroupApplications = {
-  group_applications: TGroupApplication[];
-};
-type TMainGroupPost = Pick<
-  GroupPost,
-  | "id"
-  | "title"
-  | "price"
-  | "people_num"
-  | "is_finished"
-  | "img_url"
-  | "start_date"
-  | "end_date"
-> &
-  TGroupApplications;
-
-function PostList() {
+function GroupPostList() {
   const [isFinished, SetIsFinished] = useState<boolean>(false);
   const {
     data,
@@ -60,7 +42,7 @@ function PostList() {
   );
 
   useEffect(() => {
-    refetch(); // isFinished 상태가 변경될 때마다 refetch 실행
+    refetch();
   }, [isFinished, refetch]);
 
   if (isPending)
@@ -155,4 +137,4 @@ function PostList() {
   );
 }
 
-export default PostList;
+export default GroupPostList;
