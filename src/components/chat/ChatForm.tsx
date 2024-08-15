@@ -144,8 +144,8 @@ export default function ChatForm({
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center z-[99] md:px-[16px] py-[0px] md:px-0 md:py-[80px]">
-      <div className="relative w-full mx-auto rounded-lg bg-gray-6 p-[16px] md:pt-[32px] rounded-lg z-[999] box-border flex flex-col justify-end items-center top-[-30px] max-w-[300px] md:max-w-[343px] h-full max-h-[500px] md:max-h-[760px] ">
+    <div className="fixed inset-0 flex items-center justify-center z-[99] px-[16px] py-[0px] md:px-0 md:py-[80px]">
+      <div className="relative w-full mx-auto bg-gray-6 p-[16px] md:pt-[32px] rounded-lg z-[999] box-border flex flex-col justify-end items-center top-[-30px] max-w-[300px] md:max-w-[343px] h-full max-h-[500px] md:max-h-[760px] ">
         {messages.length > 0 ? (
           <div className="overflow-y-scroll flex flex-col gap-[10px] py-[16px] w-full">
             {messages.map((message) =>

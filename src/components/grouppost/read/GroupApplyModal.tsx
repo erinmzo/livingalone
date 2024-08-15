@@ -30,7 +30,6 @@ function GroupApplyModal({ id, onClose, userId }: PropsType) {
   const [detailAddress, setDetailAddress] = useState<string>("");
   const [checkBox, setCheckBox] = useState<boolean>(false);
 
-  // 유효성 검사 useState
   const [error, setError] = useState({
     phoneError: "",
     nameError: "",

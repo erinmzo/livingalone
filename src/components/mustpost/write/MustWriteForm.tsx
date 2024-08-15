@@ -8,7 +8,7 @@ import Image from "next/image";
 import { Notify } from "notiflix";
 import React, { useRef, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-import InputField from "./InputField";
+import InputField from "../../common/input/InputField";
 import SelectCategory from "./SelectCategory";
 
 import { useInputChange } from "@/hooks/useInput";

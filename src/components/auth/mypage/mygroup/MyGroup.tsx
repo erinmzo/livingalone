@@ -7,6 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import MyGroupPost from "./MyGroupPost";
 import SkeletonMyGroup from "./SkeletonMyGroup";
+import NoticeDot from "@/components/common/NoticeDot";
 
 function MyGroup() {
   const user = useAuthStore((state) => state.user);
@@ -50,9 +51,7 @@ function MyGroup() {
         </p>
         <ul>
           <li className="flex">
-            <div className="w-[18px] flex justify-center shrink-0">
-              <div className="w-[3px] h-[3px] rounded-full mt-[5px] bg-gray-4"></div>
-            </div>
+            <NoticeDot />
             <p className="leading-normal ">
               혼자살때에서는 공동 구매(공구) 결제가 이루어지지 않습니다. 저희는
               공구를 할 수 있는 게시판만 제공해 드립니다. <br /> 공구자는 공구를
@@ -60,17 +59,13 @@ function MyGroup() {
             </p>
           </li>
           <li className="flex">
-            <div className="w-[18px] flex justify-center shrink-0">
-              <div className="w-[3px] h-[3px] rounded-full mt-[5px] bg-gray-4"></div>
-            </div>
+            <NoticeDot />
             <p className="leading-normal ">
               혼자살때에서는 공구 진행과 관련된 책임을 지지 않습니다.
             </p>
           </li>
           <li className="flex">
-            <div className="w-[18px] flex justify-center shrink-0">
-              <div className="w-[3px] h-[3px] rounded-full mt-[5px] bg-gray-4"></div>
-            </div>
+            <NoticeDot />
             <p className="leading-normal ">
               공구자는 신청자의 개인정보를 물건 발송 이후 즉시 모두 삭제해
               주시기 바랍니다.

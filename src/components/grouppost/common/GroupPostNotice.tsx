@@ -1,5 +1,6 @@
 import Image from "next/image";
 import React from "react";
+import NoticeDot from "../../common/NoticeDot";
 
 function GroupPostNotice({
   checkBox,
@@ -17,9 +18,7 @@ function GroupPostNotice({
         </p>
         <ul>
           <li className="flex">
-            <div className="w-[18px] flex justify-center shrink-0">
-              <div className="w-[3px] h-[3px] rounded-full mt-[5px] bg-gray-4"></div>
-            </div>
+            <NoticeDot />
             <p className="leading-normal">
               혼자살때에서는 공동 구매(공구) 결제가 이루어지지 않습니다. 저희는
               공구를 할 수 있는 게시판만 제공해 드립니다.
@@ -29,42 +28,32 @@ function GroupPostNotice({
             </p>
           </li>
           <li className="flex">
-            <div className="w-[18px] flex justify-center shrink-0">
-              <div className="w-[3px] h-[3px] rounded-full mt-[5px] bg-gray-4"></div>
-            </div>
+            <NoticeDot />
             <p className="leading-normal">
               공구 참여 인원은 최대 30명 이하로 제한됩니다.
             </p>
           </li>
           <li className="flex">
-            <div className="w-[18px] flex justify-center shrink-0">
-              <div className="w-[3px] h-[3px] rounded-full mt-[5px] bg-gray-4"></div>
-            </div>
+            <NoticeDot />
             <p className="leading-normal">
               상품 링크는 선택 사항입니다. 아이템의 상세 페이지를 보여주고
               싶다면 링크를 추가해 주세요.
             </p>
           </li>
           <li className="flex">
-            <div className="w-[18px] flex justify-center shrink-0">
-              <div className="w-[3px] h-[3px] rounded-full mt-[5px] bg-gray-4"></div>
-            </div>
+            <NoticeDot />
             <p className="leading-normal">
               상품 이미지는 반드시 올려주셔야 합니다.
             </p>
           </li>
           <li className="flex">
-            <div className="w-[18px] flex justify-center shrink-0">
-              <div className="w-[3px] h-[3px] rounded-full mt-[5px] bg-gray-4"></div>
-            </div>
+            <NoticeDot />
             <p className="leading-normal">
               혼자살때에서는 공구 진행과 관련된 책임을 지지 않습니다.
             </p>
           </li>
           <li className="flex">
-            <div className="w-[18px] flex justify-center shrink-0">
-              <div className="w-[3px] h-[3px] rounded-full mt-[5px] bg-gray-4"></div>
-            </div>
+            <NoticeDot />
             <p className="leading-normal">
               공구자는 신청자의 개인정보를 물건 발송 이후 즉시 모두 삭제해
               주시기 바랍니다.

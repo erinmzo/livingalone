@@ -15,6 +15,7 @@ import React, { useRef, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { groupValidation } from "../common/GroupValidation";
 import GroupPostNotice from "../common/GroupPostNotice";
+import InputField from "@/components/common/input/InputField";
 
 const EditorModule = dynamic(
   () => import("@/components/common/editor/EditorModule"),
@@ -26,7 +27,6 @@ const EditorModule = dynamic(
 function GroupWriteForm() {
   const router = useRouter();
   const user = useAuthStore((state) => state.user);
-  // const postRef = useRef(false);
   const [checkBox, setCheckBox] = useState(false);
   const [isDebouncing, setIsDebouncing] = useState(false);
   const [error, setError] = useState({
@@ -147,38 +147,25 @@ function GroupWriteForm() {
       <GroupPostNotice checkBox={checkBox} setCheckBox={setCheckBox} />
 
       <div className="flex flex-col gap-3 md:gap-5">
-        <div className="flex gap-[2px]">
-          <label
-            htmlFor="title"
-            className="flex-0 w-[70px] md:w-[78px] h-[38px] flex items-center md:text-[18px] text-gray-3"
-          >
-            제목
-          </label>
-          <div className="flex-1 w-full">
-            <input
-              id="title"
-              name="title"
-              placeholder="제목을 입력하세요."
-              value={title}
-              onChange={onChangeInput}
-              className="rounded-none text-[16px] w-full pl-[2px] px-[2px] py-[5px] border-b-[1px] border-gray-3 font-bold md:text-[18px] text-black leading-normal  placeholder:text-gray-2 outline-none"
-            />
-            {error.titleError && (
-              <p className={`text-red-3 text-[12px] mt-2`}>
-                {error.titleError}
-              </p>
-            )}
-          </div>
-        </div>
+        <InputField
+          labelName="제목"
+          name="title"
+          type="text"
+          value={title}
+          placeHolder="제목을 입력해주세요"
+          minLength={1}
+          onchangeValue={onChangeInput}
+          error={error.titleError}
+        />
         <div className="flex gap-2 md:gap-[41px]">
           <div className="flex gap-[2px]">
             <label
               htmlFor="endDate"
-              className="hidden md:flex flex-0 w-[70px] md:w-[78px] h-[38px] items-center md:text-[18px] text-gray-3"
+              className="hidden md:flex flex-0 w-[70px] md:w-[78px] h-[38px] items-center md:text-[18px] text-gray-4"
             >
               공구기간
             </label>
-            <label className="flex md:hidden flex-0 w-[70px] md:w-[78px] h-[38px] items-center md:text-[18px] text-gray-3">
+            <label className="flex md:hidden flex-0 w-[70px] md:w-[78px] h-[38px] items-center md:text-[18px] text-gray-4">
               마감일
             </label>
             <div className="flex gap-2">
@@ -206,7 +193,7 @@ function GroupWriteForm() {
           <div className="flex gap-2 overflow-hidden">
             <label
               htmlFor="peopleNum"
-              className="flex-0 shrink-0 w-[70px] md:w-[78px] h-[38px] flex items-center md:text-[18px] text-gray-3"
+              className="flex-0 shrink-0 w-[70px] md:w-[78px] h-[38px] flex items-center md:text-[18px] text-gray-4"
             >
               공구인원
             </label>
@@ -229,65 +216,35 @@ function GroupWriteForm() {
           </div>
         </div>
 
-        <div className="flex gap-[2px]">
-          <label
-            htmlFor="item"
-            className="flex-0 w-[70px] md:w-[78px] h-[38px] flex items-center md:text-[18px] text-gray-3"
-          >
-            상품이름
-          </label>
-          <div className="flex-1 w-full">
-            <input
-              id="item"
-              name="item"
-              placeholder="제품명을 입력하세요."
-              value={item}
-              onChange={onChangeInput}
-              className="rounded-none w-full pl-[2px] px-[2px] py-[5px] border-b-[1px] border-gray-3 font-bold md:text-[18px] text-black leading-normal placeholder:text-gray-2 outline-none"
-            />
-            {error.itemError && (
-              <p className={`text-red-3 text-[12px] mt-2`}>{error.itemError}</p>
-            )}
-          </div>
-        </div>
-
-        <div className="flex gap-[2px]">
-          <label
-            htmlFor="price"
-            className="flex-0 w-[70px] md:w-[78px] h-[38px] flex items-center md:text-[18px] text-gray-3"
-          >
-            공구가격
-          </label>
-          <input
-            id="price"
-            name="price"
-            type="number"
-            placeholder="숫자만 입력해주세요."
-            value={price}
-            onChange={onChangeInput}
-            className="rounded-none flex-1 pl-[2px] px-[2px] py-[5px] border-b-[1px] border-gray-3 font-bold md:text-[18px] text-black leading-normal placeholder:text-gray-2 outline-none"
-          />
-        </div>
-        <div className="flex gap-[2px]">
-          <label
-            htmlFor="link"
-            className="flex-0 w-[70px] md:w-[78px] h-[38px] flex items-center md:text-[18px] text-gray-3"
-          >
-            상품링크
-          </label>
-          <input
-            id="link"
-            name="link"
-            placeholder="(선택사항) 상품소개 페이지 링크를 넣어주세요."
-            value={link}
-            onChange={onChangeInput}
-            className="rounded-none flex-1 pl-[2px] px-[2px] py-[5px] border-b-[1px] border-gray-3 font-bold md:text-[18px] text-black leading-normal placeholder:text-gray-2 outline-none"
-          />
-        </div>
+        <InputField
+          labelName="상품이름"
+          name="item"
+          type="text"
+          value={item}
+          placeHolder="제품명을 입력해주세요."
+          minLength={1}
+          onchangeValue={onChangeInput}
+          error={error.itemError}
+        />
+        <InputField
+          labelName="공구가격"
+          name="price"
+          type="number"
+          value={price}
+          placeHolder="숫자만 입력해주세요."
+          minLength={1}
+          onchangeValue={onChangeInput}
+        />
+        <InputField
+          labelName="상품링크"
+          name="link"
+          type="text"
+          value={link}
+          placeHolder="(선택사항) 상품소개 페이지 링크를 넣어주세요."
+          minLength={1}
+          onchangeValue={onChangeInput}
+        />
         <div className="ml-[70px] md:ml-[78px] flex flex-col md:flex-row gap-2 md:gap-4 items-start mb-[6px]">
-          {/* <label className=" flex-0 w-[70px] md:w-[78px] h-[38px] flex md:hidden items-center md:text-[18px] text-gray-3">
-            이미지
-          </label> */}
           <input
             className="hidden"
             id="image-file"
@@ -300,17 +257,6 @@ function GroupWriteForm() {
           >
             {imgUrl ? "이미지 수정" : "이미지 업로드"}
           </label>
-          {/* <label
-            className="md:hidden w-11 h-11 flex justify-center items-center border border-gray-3 bg-gray-1 rounded-[4px] cursor-pointer"
-            htmlFor="image-file"
-          >
-            <Image
-              src="/img/icon-add-photo.png"
-              alt="이미지 업로드 버튼"
-              width={22}
-              height={20}
-            />
-          </label> */}
           {error.imageUrlError && (
             <p className={`text-red-3 text-[12px] mt-2`}>
               {error.imageUrlError}
