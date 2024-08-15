@@ -5,7 +5,10 @@ import InnerLayout from "@/components/common/Page/InnerLayout";
 import { MustCategory, TNewMustPost } from "@/types/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
+
 import { Notify } from "notiflix";
+import { Progress } from "@nextui-org/progress";
+
 import React, { useRef, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import InputField from "../../common/input/InputField";
@@ -34,6 +37,8 @@ function MustWriteForm() {
   const maxImageSize = 2 * 1024 * 1024;
 
   const [imgUrl, setImgUrl] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
+
   const editorRef = useRef<EditorProps>(null);
   const [selectedCategoryName, setSelectedCategoryName] =
     useState<string>("선택");
@@ -78,10 +83,13 @@ function MustWriteForm() {
     mutationFn: async (newMustPostImage: any) => {
       const formData = new FormData();
       formData.append("file", newMustPostImage);
+
+      setLoading(true);
       const response = await insertMustImage(formData);
       setImgUrl(
         `https://nqqsefrllkqytkwxfshk.supabase.co/storage/v1/object/public/mustposts/${response.path}`
       );
+      setLoading(false);
     },
   });
 
@@ -226,20 +234,40 @@ function MustWriteForm() {
             >
               {imgUrl ? "이미지 수정" : "이미지 업로드"}
             </label>
+
+            {loading && !imgUrl && (
+              <div className="w-[111px] md:w-[200px] ml-[72px] md:ml-0 py-1 bg-gray-6 rounded-full overflow-hidden">
+                <div className="w-[90px] h-2 bg-main-7 rounded-full animate-progressBar"></div>
+              </div>
+            )}
+
             {error.imageUrlError && (
               <p className={`text-red-3 text-[12px] mt-2`}>
                 {error.imageUrlError}
               </p>
             )}
             <div className="w-[44px] md:w-auto aspect-square ml-[72px] md:ml-0">
-              {imgUrl && (
-                <Image
-                  src={imgUrl}
-                  alt="포스팅한 이미지"
-                  width={200}
-                  height={200}
-                />
-              )}
+              <div className="relative">
+                {loading && imgUrl && (
+                  <div className="absolute inset-0 m-auto top flex justify-center items-center">
+                    <Image
+                      src="/img/loading-spinner-transparent.svg"
+                      alt="로딩중"
+                      width={150}
+                      height={150}
+                    />
+                  </div>
+                )}
+
+                {imgUrl && (
+                  <Image
+                    src={imgUrl}
+                    alt="포스팅한 이미지"
+                    width={200}
+                    height={200}
+                  />
+                )}
+              </div>
             </div>
           </div>
           <div className="mb-[22px] md:mb-[58px]">
