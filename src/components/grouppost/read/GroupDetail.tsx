@@ -165,7 +165,7 @@ async function GroupDetail({ params }: Props) {
         </div>
       </InnerLayout>
       <GroupPopularList id={id} />
-      <div className="flex justify-center mt-[69px]">
+      <div className="flex justify-center mt-[69px] mb-[77px] md:mb-0">
         <Link href={"/grouppost"}>
           <button className="border-gray-4 border-[1px] rounded-full text-gray-4 font-bold py-[7.5px] flex items-center pl-[10px] pr-[18px] h-[36px]">
             <Image
