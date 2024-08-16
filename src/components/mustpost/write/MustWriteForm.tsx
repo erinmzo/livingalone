@@ -222,7 +222,7 @@ function MustWriteForm() {
             error={error.priceError}
           />
           <div className="flex flex-col md:flex-row gap-2 md:gap-4 items-start">
-            <div className="flex items-center gap-4 w-full">
+            <div className="flex items-center gap-4 w-full md:w-auto">
               <input
                 className="hidden"
                 id="image-file"
