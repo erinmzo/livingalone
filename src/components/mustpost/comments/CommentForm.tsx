@@ -4,7 +4,6 @@ import { insertComment } from "@/apis/mustpost";
 import { TAddAlarm } from "@/types/types";
 import { useAuthStore } from "@/zustand/authStore";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import Image from "next/image";
 import { Notify } from "notiflix";
 import React, { useState } from "react";
 

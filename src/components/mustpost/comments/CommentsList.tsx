@@ -1,6 +1,5 @@
 "use client";
 import { getComments, updatenewComment } from "@/apis/mustpost";
-import { MustComments } from "@/types/types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import React, { useState } from "react";

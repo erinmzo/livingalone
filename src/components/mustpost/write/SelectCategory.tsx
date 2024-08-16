@@ -52,24 +52,6 @@ function SelectCategory({
 
   return (
     <div className="relative">
-      {/* {isOpen && (
-        <ul className="z-[9999] flex flex-col items-start justify-center absolute right-0 w-[100px] border-t-0 border border-gray-4 bg-white py-[4px]">
-          {mustCategories?.map((category) => (
-            <li
-              key={category.id}
-              className="w-full text-gray-4 text-[14px] hover:bg-main-2"
-            >
-              <button
-                // onClick={() => handleSelectCategory(category.name)}
-                onClick={() => handleSelectCategory(category)}
-                className="inline-flex w-full py-[5px] px-[16px]  hover:bg-main-2"
-              >
-                {category.name}
-              </button>
-            </li>
-          ))}
-        </ul>
-      )} */}
       <div>
         <div className="flex gap-[2px] items-start">
           <span className="flex w-[70px] md:w-[78px] h-[38px] items-center py-2 md:py-[5px] text-[16px] md:text-lg text-gray-4">
