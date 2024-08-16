@@ -4,7 +4,7 @@ import { likeItemPage } from "@/apis/mypage";
 import GroupPostCard from "@/components/grouppost/list/GroupPostCard";
 import { useAuthStore } from "@/zustand/authStore";
 import { useQuery } from "@tanstack/react-query";
-import GroupPostCardSkeleton from "./SkeletonLikeItem";
+import SkeletonLikeItem from "./SkeletonLikeItem";
 import EmptyState from "../EmptyState/EmptyState";
 
 function LikeItems() {
@@ -16,7 +16,7 @@ function LikeItems() {
     queryFn: () => likeItemPage(userId),
   });
 
-  if (isPending) return <GroupPostCardSkeleton />;
+  if (isPending) return <SkeletonLikeItem />;
 
   return (
     user && (
