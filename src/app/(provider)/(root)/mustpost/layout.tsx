@@ -6,7 +6,7 @@ import { PropsWithChildren } from "react";
 function MustPostLayout({ children }: PropsWithChildren) {
   return (
     <>
-      <MobileHeader title="구해줘 자취템" />
+      <MobileHeader title="자랑해 자취템" />
       <IsOpenProvider>
         <main>{children}</main>
       </IsOpenProvider>
