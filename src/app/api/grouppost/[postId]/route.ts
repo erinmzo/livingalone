@@ -1,11 +1,7 @@
 import { createClient } from "@/supabase/server";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(
-  request: NextRequest,
-  { params }: { params: { postId: string } }
-) {
-  // 게시글 상세 가져오기
+export async function GET(_: NextRequest, { params }: { params: { postId: string } }) {
   const { postId } = params;
   const supabase = createClient();
   try {
@@ -20,20 +16,13 @@ export async function GET(
   }
 }
 
-export async function PUT(
-  request: NextRequest,
-  { params }: { params: { postId: string } }
-) {
-  // 게시글 수정
+export async function PUT(request: NextRequest, { params }: { params: { postId: string } }) {
   const { postId } = params;
   const newGroupPost = await request.json();
 
   const supabase = createClient();
   try {
-    const { data } = await supabase
-      .from("group_posts")
-      .update(newGroupPost)
-      .eq("id", postId);
+    const { data } = await supabase.from("group_posts").update(newGroupPost).eq("id", postId);
 
     return NextResponse.json(data);
   } catch (error) {
@@ -41,18 +30,11 @@ export async function PUT(
   }
 }
 
-export async function DELETE(
-  _: NextRequest,
-  { params }: { params: { postId: string } }
-) {
+export async function DELETE(_: NextRequest, { params }: { params: { postId: string } }) {
   const { postId } = params;
-  //삭제
   try {
     const supabase = createClient();
-    const { data } = await supabase
-      .from("group_posts")
-      .delete()
-      .eq("id", postId);
+    const { data } = await supabase.from("group_posts").delete().eq("id", postId);
     return NextResponse.json(data);
   } catch (error) {
     return NextResponse.json({ error: "포스트를 삭제하는 데 실패했습니다." });

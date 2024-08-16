@@ -2,29 +2,11 @@
 
 import { getGroupPostOnMain } from "@/apis/grouppost";
 import GroupPostCard from "@/components/grouppost/list/GroupPostCard";
-import { GroupApplication, GroupPost } from "@/types/types";
+import { TMainGroupPost } from "@/types/types";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
 import MainSectionTitle from "../common/MainSectionTitle";
-
-type TGroupApplication = Pick<GroupApplication, "id">;
-type TGroupApplications = {
-  group_applications: TGroupApplication[];
-};
-
-type TMainGroupPost = Pick<
-  GroupPost,
-  | "id"
-  | "title"
-  | "price"
-  | "people_num"
-  | "is_finished"
-  | "img_url"
-  | "start_date"
-  | "end_date"
-> &
-  TGroupApplications;
 
 function GroupSection() {
   const {
@@ -38,17 +20,11 @@ function GroupSection() {
   if (isPending)
     return (
       <div className="flex justify-center items-center">
-        <Image
-          src="/img/loading-spinner.svg"
-          alt="로딩중"
-          width={200}
-          height={200}
-        />
+        <Image src="/img/loading-spinner.svg" alt="로딩중" width={200} height={200} />
       </div>
     );
 
-  if (isError)
-    return <div className="flex justify-center items-center">에러...</div>;
+  if (isError) return <div className="flex justify-center items-center">에러...</div>;
 
   return (
     <div className="container mx-auto lg:max-w-[1024px] pt-[42px] pb-[90px] lg:pt-[58px] lg:pb-[153px]">
@@ -78,18 +54,9 @@ function GroupSection() {
       </ul>
       <div className="md:hidden w-full flex justify-center mt-[40px]">
         <div className="border border-main-8 rounded-full w-[108px]">
-          <Link
-            className="text-[16px] font-bold text-main-8 flex items-center py-[8px] px-[18px]"
-            href="/grouppost"
-          >
+          <Link className="text-[16px] font-bold text-main-8 flex items-center py-[8px] px-[18px]" href="/grouppost">
             전체보기
-            <Image
-              src="/img/icon-right.svg"
-              alt="&gt;"
-              width={7}
-              height={11}
-              className="w-[7px] h-[11px] ml-2"
-            />
+            <Image src="/img/icon-right.svg" alt="&gt;" width={7} height={11} className="w-[7px] h-[11px] ml-2" />
           </Link>
         </div>
       </div>

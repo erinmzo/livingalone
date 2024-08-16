@@ -7,8 +7,8 @@ import { useAuthStore } from "@/zustand/authStore";
 import { useQuery } from "@tanstack/react-query";
 import SkeletonApplyItemsCard from "./SkeletonApplyItems";
 
-import ApplyItemsCard from "./ApplyItemsCard";
 import EmptyState from "../EmptyState/EmptyState";
+import ApplyItemsCard from "./ApplyItemsCard";
 
 function ApplyItems() {
   const user = useAuthStore((state) => state.user);
@@ -16,7 +16,7 @@ function ApplyItems() {
   const { data: applyPosts = [], isPending } = useQuery<GroupApplyItems[]>({
     queryKey: ["apply", user?.id],
     queryFn: () => {
-      if (!user || !user.id) throw new Error("User not found");
+      if (!user || !user.id) throw new Error("유저 정보가 없습니다.");
       return applyItems(user.id);
     },
     enabled: !!user,

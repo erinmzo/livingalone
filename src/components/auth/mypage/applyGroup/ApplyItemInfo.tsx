@@ -1,5 +1,3 @@
-import React from "react";
-
 interface ApplyItemInfoProps {
   title: string;
   startDate: string;
@@ -8,13 +6,7 @@ interface ApplyItemInfoProps {
   isFinished: boolean;
 }
 
-const ApplyItemInfo: React.FC<ApplyItemInfoProps> = ({
-  title,
-  startDate,
-  endDate,
-  price,
-  isFinished,
-}) => {
+const ApplyItemInfo = ({ title, startDate, endDate, price, isFinished }: ApplyItemInfoProps) => {
   return (
     <div className="flex flex-col">
       <div className="md:hidden flex flex-col">
@@ -34,9 +26,7 @@ const ApplyItemInfo: React.FC<ApplyItemInfoProps> = ({
               종료됨
             </span>
           ) : (
-            <span className="py-[4px] px-[12px] rounded-full bg-main-7 text-white text-[12px] font-bold">
-              진행중
-            </span>
+            <span className="py-[4px] px-[12px] rounded-full bg-main-7 text-white text-[12px] font-bold">진행중</span>
           )}
         </div>
         <div className="text-gray-4">
