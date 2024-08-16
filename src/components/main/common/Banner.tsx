@@ -7,7 +7,7 @@ function Banner() {
       <div className="relative w-full lg:max-w-[1024px] mx-auto">
         <Link href="/payment">
           <Image
-            src="/img/banner-randombox.png"
+            src="/img/banner-randombox.webp"
             alt="랜덤박스 구매하러가기"
             width={0}
             height={0}

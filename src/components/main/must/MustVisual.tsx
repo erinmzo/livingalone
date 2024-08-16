@@ -6,12 +6,14 @@ function MustVisual() {
       <div className="container mx-auto lg:max-w-[1024px] flex justify-center">
         <div className="hidden md:block relative py-[60px] px-0">
           <Image
-            src="/img/main-visual-must.png"
+            src="/img/main-visual-must.webp"
             alt="쉿 너만 알고 있어, 이건 말이야"
             width={0}
             height={0}
             priority
             className="w-[500px] h-auto"
+            placeholder="blur"
+            blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mO8Wg8AAi8BVvC05AcAAAAASUVORK5CYII="
           />
           <Image
             src="/img/main-visual-must-icon.svg"
@@ -23,7 +25,7 @@ function MustVisual() {
         </div>
         <div className="block md:hidden py-[60px]">
           <Image
-            src="/img/mo-main-visual-must.png"
+            src="/img/mo-main-visual-must.webp"
             alt="쉿 너만 알고 있어, 이건 말이야"
             width={294}
             height={0}
