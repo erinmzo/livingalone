@@ -30,7 +30,7 @@ function UserInfo({
           {created_at.split("T").join(" ").substring(0, 10)}
         </span>
       </div>
-      <div className="w-[32px] aspect-square ml-auto md:hidden">
+      <div className="shrink-0 w-[32px] aspect-square ml-auto md:hidden">
         <Wish postId={postId} />
       </div>
     </div>

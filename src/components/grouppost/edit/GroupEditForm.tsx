@@ -6,6 +6,8 @@ import {
   updateGroupPost,
 } from "@/apis/grouppost";
 import InnerLayout from "@/components/common/Page/InnerLayout";
+import EditorModule from "@/components/common/editor/EditorModule";
+import InputField from "@/components/common/input/InputField";
 import { useInputChange } from "@/hooks/useInput";
 import { GroupPost, TNewGroupPost } from "@/types/types";
 import { postRevalidate } from "@/utils/revalidate";
@@ -15,10 +17,10 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Notify } from "notiflix";
 import React, { useEffect, useRef, useState } from "react";
-import { groupValidation } from "../common/GroupValidation";
-import EditorModule from "@/components/common/editor/EditorModule";
 import GroupPostNotice from "../common/GroupPostNotice";
-import InputField from "@/components/common/input/InputField";
+import { groupValidation } from "../common/GroupValidation";
+
+import imageCompression from "browser-image-compression";
 
 function GroupEditForm({ params }: { params: { id: string } }) {
   const { id } = params;
@@ -30,6 +32,7 @@ function GroupEditForm({ params }: { params: { id: string } }) {
     endDateError: "",
     peopleNumError: "",
     itemError: "",
+    priceError: "",
     imageUrlError: "",
   });
 
@@ -108,7 +111,22 @@ function GroupEditForm({ params }: { params: { id: string } }) {
     e.preventDefault();
     if (e.target.files) {
       const newGroupImage = e.target.files[0];
-      addImageMutation.mutate(newGroupImage);
+      const fileType = newGroupImage.type;
+
+      if (newGroupImage && !fileType.includes("image")) {
+        Notify.failure("이미지 파일만 업로드 해주세요");
+        return;
+      }
+
+      const options = {
+        maxSizeMB: 1,
+        maxWidthOrHeight: 1000,
+        useWebWorker: true,
+      };
+
+      const compressedFile = await imageCompression(newGroupImage, options);
+
+      addImageMutation.mutate(compressedFile);
     }
   };
 
@@ -131,6 +149,7 @@ function GroupEditForm({ params }: { params: { id: string } }) {
       endDate,
       peopleNum,
       item,
+      price,
       imgUrl
     );
     if (!isValid) {
@@ -266,6 +285,7 @@ function GroupEditForm({ params }: { params: { id: string } }) {
           placeHolder="숫자만 입력해주세요."
           minLength={1}
           onchangeValue={onChangeInput}
+          error={error.priceError}
         />
         <InputField
           labelName="상품링크"
@@ -308,7 +328,7 @@ function GroupEditForm({ params }: { params: { id: string } }) {
       <div className="mt-[14px]">
         <EditorModule editorRef={editorRef} />
       </div>
-      <div className="flex justify-center pb-[123px] md:pb-0 ">
+      <div className="flex justify-center pb-[123px] md:pb-[250px] lg:pb-0">
         <button
           className="bg-main-8 w-full md:w-[300px] py-[10px] text-white rounded-full font-bold text-[20px] mt-6 md:mt-[64px]"
           onClick={editGroupPostHandler}

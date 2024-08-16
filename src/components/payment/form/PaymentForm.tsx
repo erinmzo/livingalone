@@ -8,9 +8,10 @@ import { Profile } from "@/types/types";
 import { useAuthStore } from "@/zustand/authStore";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import DaumPostcode from "react-daum-postcode";
 import PaymentButton from "./PaymentButton";
+import { InputPhoneValidate } from "@/components/common/input/InputPhoneValidate";
 
 function PaymentForm() {
   const user = useAuthStore((state) => state.user);
@@ -67,6 +68,14 @@ function PaymentForm() {
     setIsPostModalOpen(false);
   };
 
+  const onChangePhone = (e: ChangeEvent<HTMLInputElement>) => {
+    const validatedPhone = InputPhoneValidate(e);
+    setValues((prev) => ({
+      ...prev,
+      purchaserPhone: validatedPhone,
+    }));
+  };
+
   useEffect(() => {
     if (profile?.address && profile.detail_address && user?.email) {
       setValues({
@@ -117,7 +126,7 @@ function PaymentForm() {
             placeholder="010-XXXX-XXXX"
             value={purchaserPhone}
             name="purchaserPhone"
-            onChange={onChangeInput}
+            onChange={onChangePhone}
             error={error.phoneError}
           />
 

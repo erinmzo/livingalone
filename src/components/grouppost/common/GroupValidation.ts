@@ -5,6 +5,7 @@ export function groupValidation(
       endDateError: string;
       peopleNumError: string;
       itemError: string;
+      priceError: string;
       imageUrlError: string;
     }>
   >,
@@ -12,6 +13,7 @@ export function groupValidation(
   endDate: string,
   peopleNum: number,
   item: string,
+  price: number,
   imgUrl: string
 ): boolean {
   setError({
@@ -19,6 +21,7 @@ export function groupValidation(
     endDateError: "",
     peopleNumError: "",
     itemError: "",
+    priceError: "",
     imageUrlError: "",
   });
   if (!title.trim()) {
@@ -32,6 +35,16 @@ export function groupValidation(
     setError((prev) => ({
       ...prev,
       endDateError: "마감일을 지정해주세요.",
+    }));
+    return false;
+  }
+
+  const currentDate = new Date();
+  const inputEndDate = new Date(endDate);
+  if (inputEndDate < currentDate) {
+    setError((prev) => ({
+      ...prev,
+      endDateError: "현재 날짜 이후로 설정해주세요.",
     }));
     return false;
   }
@@ -55,6 +68,14 @@ export function groupValidation(
     setError((prev) => ({
       ...prev,
       itemError: "상품 이름은 필수 입력입니다.",
+    }));
+    return false;
+  }
+
+  if (price <= 0) {
+    setError((prev) => ({
+      ...prev,
+      priceError: "공구 가격을 정확히 입력해주세요.",
     }));
     return false;
   }

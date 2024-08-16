@@ -2,6 +2,7 @@
 
 import { insertAlarm } from "@/apis/alarm";
 import { insertGroupApply } from "@/apis/grouppost";
+import { InputPhoneValidate } from "@/components/common/input/InputPhoneValidate";
 import { TAddAlarm, TNewGroupApplication } from "@/types/types";
 import { postRevalidate } from "@/utils/revalidate";
 import { useAuthStore } from "@/zustand/authStore";
@@ -158,7 +159,10 @@ function GroupApplyModal({ id, onClose, userId }: PropsType) {
             className="rounded-none w-full h-[38px] md:h-[47px] mt-[26px] text-[18px] md:text-[24px] border-b-2 border-black p-1"
             placeholder="010-XXXX-XXXX"
             value={phone}
-            onChange={(e) => setPhone(e.target.value)}
+            onChange={(e) => {
+              const validatedPhone = InputPhoneValidate(e);
+              setPhone(validatedPhone);
+            }}
           />
           {error.phoneError && (
             <p className={`text-red-3 mt-2`}>{error.phoneError}</p>
