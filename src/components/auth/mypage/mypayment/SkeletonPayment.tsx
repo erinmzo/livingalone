@@ -11,13 +11,10 @@ function SkeletonPayment() {
           <div className="flex flex-col gap-3">
             <p className="bg-gray-2 rounded h-[20px] w-[100px] mb-1"></p>
             <div className="flex items-center gap-3 md:gap-[10px]">
-              {/* 이미지 */}
               <div className="bg-gray-2 rounded w-[62px] h-[62px] shrink-0"></div>
-              <div className="flex flex-col gap-1 w-full">
-                {/* 상품 이름 스켈레톤 */}
+              <div className="flex flex-col gap-1">
                 <div className="bg-gray-2 rounded h-[20px] w-[150px]"></div>
-                {/* 가격 스켈레톤 */}
-                <div className="bg-gray-2 rounded h-[20px] w-[50px]"></div>
+                <div className="bg-gray-2 rounded h-[20px] w-[150px]"></div>
               </div>
             </div>
           </div>

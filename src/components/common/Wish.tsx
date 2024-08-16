@@ -40,14 +40,14 @@ function Wish({ postId }: WishProps) {
   const { mutate: addWish } = useMutation({
     mutationFn: (wishData: TMustWishData) => insertWish(wishData),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["wish", postId, userId] });
+      queryClient.invalidateQueries({ queryKey: ["wish"] });
     },
   });
 
   const { mutate: removeWish } = useMutation({
     mutationFn: (wishData: TMustWishData) => deleteWish(wishData),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["wish", postId, userId] });
+      queryClient.invalidateQueries({ queryKey: ["wish"] });
     },
   });
 
