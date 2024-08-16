@@ -1,5 +1,6 @@
 "use client";
 import { TAlarm } from "@/types/types";
+import Image from "next/image";
 import AlarmItem from "./AlarmItem";
 
 function AlarmList({ alarms, userId }: { alarms: TAlarm[]; userId: string }) {
@@ -14,7 +15,8 @@ function AlarmList({ alarms, userId }: { alarms: TAlarm[]; userId: string }) {
           ))}
         </ul>
       ) : (
-        <div className="flex w-[300px] md:w-[340px h-[110px] justify-center items-center text-[14px]">
+        <div className="flex flex-col gap-3 h-[110px] justify-center items-center text-[16px] text-gray-3">
+          <Image src="/img/icon-empty-alarm.svg" alt="알림 없음" width={40} height={40} />
           알람이 없습니다.
         </div>
       )}
