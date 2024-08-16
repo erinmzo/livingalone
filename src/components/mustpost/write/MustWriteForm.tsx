@@ -1,305 +1,258 @@
 "use client";
-import {
-  getGroupPost,
-  insertGroupImage,
-  updateGroupPost,
-} from "@/apis/grouppost";
+
+import { insertMustImage, insertMustPost } from "@/apis/mustpost";
 import InnerLayout from "@/components/common/Page/InnerLayout";
-import EditorModule from "@/components/common/editor/EditorModule";
-import InputField from "@/components/common/input/InputField";
-import { useInputChange } from "@/hooks/useInput";
-import { GroupPost, TNewGroupPost } from "@/types/types";
-import { postRevalidate } from "@/utils/revalidate";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { EditorProps } from "@toast-ui/react-editor";
+import { MustCategory, TNewMustPost } from "@/types/types";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+
 import { Notify } from "notiflix";
-import React, { useEffect, useRef, useState } from "react";
-import GroupPostNotice from "../common/GroupPostNotice";
-import { groupValidation } from "../common/GroupValidation";
-function GroupEditForm({ params }: { params: { id: string } }) {
-  const { id } = params;
+
+import React, { useRef, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
+import InputField from "../../common/input/InputField";
+import SelectCategory from "./SelectCategory";
+
+import { useInputChange } from "@/hooks/useInput";
+import { useAuthStore } from "@/zustand/authStore";
+import { useCategoryStore } from "@/zustand/mustStore";
+import { EditorProps } from "@toast-ui/react-editor";
+import dynamic from "next/dynamic";
+import { useRouter } from "next/navigation";
+import { mustValidation } from "../common/MustValidation";
+
+const EditorModule = dynamic(() => import("@/components/common/editor/EditorModule"), {
+  ssr: false,
+});
+
+function MustWriteForm() {
   const router = useRouter();
-  const [checkBox, setCheckBox] = useState(false);
-  const editorRef = useRef<EditorProps>(null);
-  const [error, setError] = useState({
-    titleError: “”,
-    endDateError: “”,
-    peopleNumError: “”,
-    itemError: “”,
-    imageUrlError: “”,
-  });
-  const {
-    data: groupPost,
-    isPending,
-    isError,
-  } = useQuery<GroupPost>({
-    queryKey: [“editGroupPost”, id],
-    queryFn: () => getGroupPost(id),
-  });
+  const user = useAuthStore((state) => state.user);
+  const queryClient = useQueryClient();
+  const selectedCategory = useCategoryStore((state) => state.selectedCategory);
+  const maxImageSize = 2 * 1024 * 1024;
+
   const [imgUrl, setImgUrl] = useState<string>("");
-  const {
-    values: input,
-    handler: onChangeInput,
-    setValueInit,
-  } = useInputChange({
-    title: “”,
-    startDate: “”,
-    endDate: “”,
-    content: “”,
-    item: “”,
-    link: “”,
-    peopleNum: 0,
-    price: 0,
-    userId: “”,
-    isFinished: false,
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const editorRef = useRef<EditorProps>(null);
+  const [selectedCategoryName, setSelectedCategoryName] = useState<string>("선택");
+  const [selectedCategoryId, setSelectedCategoryId] = useState<string>("");
+
+  const [error, setError] = useState({
+    titleError: "",
+    categoryError: "",
+    itemNameError: "",
+    companyError: "",
+    priceError: "",
+    imageUrlError: "",
   });
-  const {
-    title,
-    startDate,
-    endDate,
-    content,
-    item,
-    link,
-    peopleNum,
-    price,
-    userId,
-    isFinished,
-  } = input;
-  useEffect(() => {
-    if (groupPost) {
-      setValueInit({
-        title: groupPost.title,
-        startDate: groupPost.start_date,
-        endDate: groupPost.end_date,
-        content: groupPost.content,
-        item: groupPost.item,
-        link: groupPost.link ? groupPost.link : "",
-        peopleNum: groupPost.people_num,
-        price: groupPost.price,
-        userId: groupPost.user_id,
-        isFinished: groupPost.is_finished,
+
+  const { values: input, handler: onChangeInput } = useInputChange({
+    title: "",
+    date: "",
+    itemName: "",
+    company: "",
+    price: 0,
+    content: "",
+  });
+  const { title, itemName, company, price } = input;
+
+  const selectCategory = (category: MustCategory) => {
+    setSelectedCategoryName(category.name);
+    setSelectedCategoryId(category.id);
+  };
+
+  const { mutate: addMustPost } = useMutation({
+    mutationFn: (newMustPost: TNewMustPost) => insertMustPost(newMustPost),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["mustPosts", selectedCategory],
       });
-      setImgUrl(groupPost.img_url);
-      if (editorRef.current) {
-        editorRef.current.getInstance().setMarkdown(groupPost.content);
-      }
-    }
-  }, [groupPost, editorRef.current]);
-  const addImageMutation = useMutation({
-    mutationFn: async (newGroupImage: any) => {
-      const formData = new FormData();
-      formData.append(“file”, newGroupImage);
-      const response = await insertGroupImage(formData);
-      setImgUrl(
-        `https://nqqsefrllkqytkwxfshk.supabase.co/storage/v1/object/public/groupposts/${response.path}`
-      );
+      router.push("/mustpost");
+      Notify.success("게시물이 등록되었습니다.");
     },
   });
-  const addImageHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
+
+  const { mutate: addImage } = useMutation({
+    mutationFn: async (newMustPostImage: any) => {
+      const formData = new FormData();
+      formData.append("file", newMustPostImage);
+
+      setLoading(true);
+      const response = await insertMustImage(formData);
+      setImgUrl(`https://nqqsefrllkqytkwxfshk.supabase.co/storage/v1/object/public/mustposts/${response.path}`);
+      setLoading(false);
+    },
+  });
+
+  const addImageHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
+    setError((prev) => ({
+      ...prev,
+      imageUrlError: "",
+    }));
     if (e.target.files) {
-      const newGroupImage = e.target.files[0];
-      addImageMutation.mutate(newGroupImage);
+      const newMustPostImage = e.target.files[0];
+      if (newMustPostImage) {
+        const fileType = newMustPostImage.type;
+
+        if (!fileType.includes("image")) {
+          Notify.failure("이미지 파일만 업로드 해주세요");
+          return;
+        }
+      }
+
+      if (newMustPostImage.size > maxImageSize) {
+        Notify.failure("2MB 이하의 이미지로 업로드해주세요");
+        return;
+      }
+
+      addImage(newMustPostImage);
     }
   };
-  const updateMutation = useMutation({
-    mutationFn: async (newGroupPost: TNewGroupPost) => {
-      await updateGroupPost(newGroupPost);
-    },
-    onSuccess: async () => {
-      Notify.success(“공구템 수정이 완료되었습니다!“);
-      postRevalidate(`/grouppost/read/${id}`);
-      router.push(`/grouppost/read/${id}`);
-      router.refresh();
-    },
-  });
-  const editGroupPostHandler = async () => {
-    const isValid = groupValidation(
-      setError,
-      title,
-      endDate,
-      peopleNum,
-      item,
-      imgUrl
-    );
+
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, "0");
+  const day = String(today.getDate()).padStart(2, "0");
+  const startDate = `${year}-${month}-${day}` as string;
+
+  const addMustPostBtn = async () => {
+    const isValid = mustValidation(setError, title, selectedCategoryId, itemName, company, price, imgUrl);
     if (!isValid) {
       return;
     }
-    if (!editorRef.current) return Notify.failure("모든 항목을 입력해주세요");
+    if (!user) {
+      router.push("/login");
+      Notify.failure("로그인을 먼저 진행해주세요.");
+      return;
+    }
+
     if (editorRef.current) {
       const editorContent = editorRef.current.getInstance().getMarkdown();
-      const newGroupPost: TNewGroupPost = {
-        id,
-        user_id: userId,
+
+      const newMustPost: TNewMustPost = {
+        id: uuidv4(),
+        user_id: user.id,
         title,
-        start_date: startDate,
-        end_date: endDate,
-        people_num: +peopleNum,
-        price,
+        category_id: selectedCategoryId,
         content: editorContent,
-        item,
-        link,
         img_url: imgUrl,
-        is_finished: isFinished,
+        item: itemName,
+        location: company,
+        price,
       };
-      updateMutation.mutate(newGroupPost);
+      addMustPost(newMustPost);
     }
   };
-  if (isPending)
-    return (
-      <div className="flex justify-center items-center">
-        <Image
-          src="/img/loading-spinner.svg"
-          alt="로딩중"
-          width={200}
-          height={200}
-        />
-      </div>
-    );
-  if (isError)
-    return <div className="flex justify-center items-center">에러...</div>;
+
   return (
     <InnerLayout>
-      <GroupPostNotice checkBox={checkBox} setCheckBox={setCheckBox} />
-      <div className="flex flex-col gap-3 md:gap-5">
-        <InputField
-          labelName="제목"
-          name="title"
-          type="text"
-          value={title}
-          placeHolder="제목을 입력해주세요"
-          minLength={1}
-          onchangeValue={onChangeInput}
-          error={error.titleError}
-        />
-        <div className="flex gap-2 md:gap-[41px]">
-          <div className="flex gap-[2px]">
-            <label
-              htmlFor="endDate"
-              className="hidden md:flex flex-0 w-[70px] md:w-[78px] h-[38px] items-center md:text-[18px] text-gray-4"
-            >
-              공구기간
-            </label>
-            <label className="flex md:hidden flex-0 w-[70px] md:w-[78px] h-[38px] items-center md:text-[18px] text-gray-4">
-              마감일
-            </label>
-            <div className="flex gap-2">
-              <label className="hidden h-[38px] md:flex items-center text-[14px] text-black">
-                마감일
+      <div className="pb-[76px] md:pb-0">
+        <form className="flex flex-col gap-3 md:gap-5 mt-[43px] md:mt-0">
+          <InputField
+            labelName="제목"
+            name="title"
+            type="text"
+            value={title}
+            placeHolder="제목을 입력해주세요"
+            onchangeValue={onChangeInput}
+            error={error.titleError}
+          />
+          {/* <p className={`text-red-3 text-[12px] mt-2`}>d에러메세지</p> */}
+
+          <div className="flex flex-row justify-between gap-2">
+            <SelectCategory
+              selectCategory={selectCategory}
+              initialCategoryName={selectedCategoryName}
+              error={error.categoryError}
+            />
+            <div className="md:pl-[72px] flex-grow content-end">
+              <InputField
+                labelName="작성일자"
+                name="date"
+                type="text"
+                value={startDate}
+                onchangeValue={onChangeInput}
+              />
+            </div>
+          </div>
+
+          <InputField
+            labelName="상품이름"
+            name="itemName"
+            type="text"
+            value={itemName}
+            placeHolder="상품 이름을 입력해주세요."
+            onchangeValue={onChangeInput}
+            error={error.itemNameError}
+          />
+
+          <InputField
+            labelName="제작업체"
+            name="company"
+            type="text"
+            value={company}
+            placeHolder="구매처를 입력해주세요."
+            onchangeValue={onChangeInput}
+            error={error.companyError}
+          />
+
+          <InputField
+            labelName="판매가격"
+            name="price"
+            type="number"
+            value={price || ""}
+            placeHolder="0"
+            onchangeValue={onChangeInput}
+            error={error.priceError}
+          />
+          <div className="flex flex-col md:flex-row gap-2 md:gap-4 items-start">
+            <div className="flex items-center gap-4">
+              <input className="hidden" id="image-file" type="file" accept="image/*" onChange={addImageHandler} />
+              <label
+                className="flex justify-center items-center ml-[72px] md:ml-[78px] px-7 py-[7px] border border-gray-4 bg-gray-1 font-bold text-[12px] text-gray-4 rounded-full cursor-pointer"
+                htmlFor="image-file"
+              >
+                {imgUrl ? "이미지 수정" : "이미지 업로드"}
               </label>
-              <div>
-                <input
-                  id="endDate"
-                  name="endDate"
-                  type="date"
-                  value={endDate}
-                  onChange={onChangeInput}
-                  className="rounded-none border-b-[1px] border-gray-3 py-2 px-[2px] md:text-[18px] font-bold text-black outline-none"
-                />
-                {error.endDateError && (
-                  <p className={`text-red-3 text-[12px] mt-2`}>
-                    {error.endDateError}
-                  </p>
+
+              {loading && !imgUrl && (
+                <div className="w-[119px] md:w-[200px] ml-[72px] md:ml-0 py-1 bg-gray-6 rounded-full overflow-hidden">
+                  <div className="w-[90px] h-2 bg-main-7 rounded-full animate-progressBar"></div>
+                </div>
+              )}
+            </div>
+
+            {error.imageUrlError && <p className={`text-red-3 text-[12px] mt-2`}>{error.imageUrlError}</p>}
+            <div className="w-[44px] md:w-auto aspect-square ml-[72px] md:ml-0">
+              <div className="relative">
+                {loading && imgUrl && (
+                  <div className="absolute inset-0 m-auto top flex justify-center items-center">
+                    <Image src="/img/loading-spinner-transparent.svg" alt="로딩중" width={150} height={150} />
+                  </div>
                 )}
+
+                {imgUrl && <Image src={imgUrl} alt="포스팅한 이미지" width={200} height={200} />}
               </div>
             </div>
           </div>
-          <div className="flex gap-2 overflow-hidden">
-            <label
-              htmlFor="peopleNum"
-              className="flex-0 shrink-0 w-[70px] md:w-[78px] h-[38px] flex items-center md:text-[18px] text-gray-4"
-            >
-              공구인원
-            </label>
-            <div>
-              <input
-                id="peopleNum"
-                name="peopleNum"
-                type="number"
-                placeholder="숫자만 입력해주세요."
-                value={peopleNum}
-                onChange={onChangeInput}
-                className="rounded-none w-auto max-w-[83px] md:w-[100px] pl-[2px] px-[2px] py-2 border-b border-gray-3 md:text-[18px] font-bold text-black outline-none"
-              />
-              {error.peopleNumError && (
-                <p className={`text-red-3 text-[12px] mt-2`}>
-                  {error.peopleNumError}
-                </p>
-              )}
-            </div>
+          <div className="mb-[22px] md:mb-[58px]">
+            <EditorModule editorRef={editorRef} />
           </div>
-        </div>
-        <InputField
-          labelName="상품이름"
-          name="item"
-          type="text"
-          value={item}
-          placeHolder="제품명을 입력해주세요."
-          minLength={1}
-          onchangeValue={onChangeInput}
-          error={error.itemError}
-        />
-        <InputField
-          labelName="공구가격"
-          name="price"
-          type="number"
-          value={price}
-          placeHolder="숫자만 입력해주세요."
-          minLength={1}
-          onchangeValue={onChangeInput}
-        />
-        <InputField
-          labelName="상품링크"
-          name="link"
-          type="text"
-          value={link}
-          placeHolder="(선택사항) 상품소개 페이지 링크를 넣어주세요."
-          minLength={1}
-          onchangeValue={onChangeInput}
-        />
-        <div className="ml-[70px] md:ml-[78px] flex flex-col md:flex-row gap-2 md:gap-4 items-start mb-[6px]">
-          <input
-            className="hidden"
-            id="image-file"
-            type="file"
-            onChange={addImageHandler}
-          />
-          <label
-            className="flex justify-center items-center px-7 py-[7px] border border-gray-4 bg-gray-1 font-bold text-[12px] text-gray-4 rounded-full cursor-pointer"
-            htmlFor="image-file"
+        </form>
+        <div className="flex justify-center pb-[123px] md:pb-0 mt-[18px] md:mt-[6px]">
+          <button
+            onClick={addMustPostBtn}
+            className="px-[106px] py-[8px] text-xl text-white font-bold focus:outline-none bg-main-8 rounded-full"
           >
-            {imgUrl ? "이미지 수정" : "이미지 업로드"}
-          </label>
-          {error.imageUrlError && (
-            <p className={`text-red-3 text-[12px] mt-2`}>
-              {error.imageUrlError}
-            </p>
-          )}
-          {imgUrl && (
-            <Image
-              src={imgUrl}
-              alt="선택한 이미지"
-              width={200}
-              height={200}
-              className="border md:border-none rounded-[4px] md:rounded-none border-gray-3 w-[44px] h-[44px] md:w-[200px] md:h-auto object-cover"
-            />
-          )}
+            등록하기
+          </button>
         </div>
-      </div>
-      <div className="mt-[14px]">
-        <EditorModule editorRef={editorRef} />
-      </div>
-      <div className="flex justify-center pb-[123px] md:pb-0 ">
-        <button
-          className="bg-main-8 w-full md:w-[300px] py-[10px] text-white rounded-full font-bold text-[20px] mt-6 md:mt-[64px]"
-          onClick={editGroupPostHandler}
-        >
-          수정 완료
-        </button>
       </div>
     </InnerLayout>
   );
 }
-export default GroupEditForm;
+
+export default MustWriteForm;
