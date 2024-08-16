@@ -174,7 +174,6 @@ function MustWriteForm() {
             onchangeValue={onChangeInput}
             error={error.titleError}
           />
-          {/* <p className={`text-red-3 text-[12px] mt-2`}>d에러메세지</p> */}
 
           <div className="flex flex-row justify-between gap-2">
             <SelectCategory
@@ -223,7 +222,7 @@ function MustWriteForm() {
             error={error.priceError}
           />
           <div className="flex flex-col md:flex-row gap-2 md:gap-4 items-start">
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4 w-full">
               <input
                 className="hidden"
                 id="image-file"
@@ -232,15 +231,15 @@ function MustWriteForm() {
                 onChange={addImageHandler}
               />
               <label
-                className="flex justify-center items-center ml-[72px] md:ml-[78px] px-7 py-[7px] border border-gray-4 bg-gray-1 font-bold text-[12px] text-gray-4 rounded-full cursor-pointer"
+                className="flex justify-center items-center shrink-0 ml-[72px] md:ml-[78px] px-7 py-[7px] border border-gray-4 bg-gray-1 font-bold text-[12px] text-gray-4 rounded-full cursor-pointer"
                 htmlFor="image-file"
               >
                 {imgUrl ? "이미지 수정" : "이미지 업로드"}
               </label>
 
               {loading && !imgUrl && (
-                <div className="w-[119px] md:w-[200px] ml-[72px] md:ml-0 py-1 bg-gray-6 rounded-full overflow-hidden">
-                  <div className="w-[90px] h-2 bg-main-7 rounded-full animate-progressBar"></div>
+                <div className="w-full md:w-[200px] md:ml-0 mr-[10px] md:mr-0 py-1 bg-gray-6 rounded-full overflow-hidden">
+                  <div className="w-[60px] md:w-[90px] h-2 bg-main-7 rounded-full animate-progressBar"></div>
                 </div>
               )}
             </div>

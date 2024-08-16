@@ -28,7 +28,7 @@ function ItemInfo({ item, price, location, name }: ItemInfoProps) {
             {price.toLocaleString()}원
           </span>
         </div>
-        <span className="hidden font-bold text-2xl text-black md:inline">
+        <span className="shrink-0 hidden font-bold text-2xl text-black md:inline">
           {price.toLocaleString()}원
         </span>
       </div>
