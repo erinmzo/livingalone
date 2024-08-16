@@ -7,7 +7,6 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 
 import { Notify } from "notiflix";
-import { Progress } from "@nextui-org/progress";
 
 import React, { useRef, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
