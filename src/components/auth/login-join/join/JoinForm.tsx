@@ -38,7 +38,7 @@ const JoinForm = () => {
       nicknameError: "",
     });
 
-    if (nickname.length < 2 || nickname.length >= 8) {
+    if (nickname.length < 2 || nickname.length > 8) {
       return setError((prev) => ({
         ...prev,
         nicknameError: "닉네임은 2~8글자 사이로 입력해주세요",
@@ -56,7 +56,7 @@ const JoinForm = () => {
       return setError((prev) => ({
         ...prev,
         passwordError:
-          "비밀번호는 숫자와 영문자 조합으로 6자리 이상이어야 합니다.",
+          "비밀번호는 숫자와 영문자, 특수문자 조합으로 6자리 이상 15자리 이하여야 합니다.",
       }));
     }
 
