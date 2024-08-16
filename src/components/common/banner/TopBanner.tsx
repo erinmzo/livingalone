@@ -10,7 +10,6 @@ function TopBanner() {
           alt="천원의 행복! 혼자살때 럭키박스(선착순 100명)"
           width={355}
           height={27}
-          priority
         />
       </Link>
     </div>
