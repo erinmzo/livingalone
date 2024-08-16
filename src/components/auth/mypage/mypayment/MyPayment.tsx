@@ -7,6 +7,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
 import SkeletonPayment from "./SkeletonPayment";
+import EmptyState from "../EmptyState/EmptyState";
 
 function MyPayment() {
   const user = useAuthStore((state) => state.user);
@@ -140,18 +141,7 @@ function MyPayment() {
             </div>
           </div>
         ) : (
-          <div className="flex flex-col py-[100px] justify-center items-center">
-            <Image
-              src="/img/icon-empty.png"
-              alt="empty"
-              width={100}
-              height={0}
-              className="mb-5"
-            />
-            <div className="flex justify-center items-center text-gray-4">
-              주문 내역이 없습니다.
-            </div>
-          </div>
+          <EmptyState message="결제 내역이 없습니다." />
         )}
       </div>
     )

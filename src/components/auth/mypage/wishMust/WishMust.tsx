@@ -6,6 +6,7 @@ import { useAuthStore } from "@/zustand/authStore";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import SkeletonMust from "./SkeletonMust";
+import EmptyState from "../EmptyState/EmptyState";
 
 function WishMust() {
   const user = useAuthStore((state) => state.user);
@@ -48,18 +49,7 @@ function WishMust() {
               ))}
             </ul>
           ) : (
-            <div className="flex flex-col py-[100px] justify-center items-center">
-              <Image
-                src="/img/icon-empty.png"
-                alt="empty"
-                width={100}
-                height={0}
-                className="mb-5"
-              />
-              <div className="flex justify-center items-center text-gray-4">
-                찜한 자취템이 없습니다.
-              </div>
-            </div>
+            <EmptyState message="찜한 자취템이 없습니다." />
           )}
         </div>
       </div>

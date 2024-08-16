@@ -6,6 +6,7 @@ import { useAuthStore } from "@/zustand/authStore";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import SkeletonMust from "../wishMust/SkeletonMust";
+import EmptyState from "../EmptyState/EmptyState";
 
 function MyMust() {
   const user = useAuthStore((state) => state.user);
@@ -44,18 +45,14 @@ function MyMust() {
               ))}
             </ul>
           ) : (
-            <div className="flex flex-col py-[100px] justify-center items-center">
-              <Image
-                src="/img/icon-empty.png"
-                alt="empty"
-                width={100}
-                height={0}
-                className="mb-5"
-              />
-              <div className="flex justify-center items-center text-gray-4">
-                나의 자취템이 없습니다. 나만의 자취템을 자랑해주세요!
-              </div>
-            </div>
+            <EmptyState
+              message={
+                <>
+                  <p>나의 자취템이 없습니다.</p>
+                  <p>나만의 자취템을 자랑해주세요!</p>
+                </>
+              }
+            />
           )}
         </div>
       </div>

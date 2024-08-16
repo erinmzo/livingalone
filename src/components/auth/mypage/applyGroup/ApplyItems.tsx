@@ -5,10 +5,10 @@ import { applyItems } from "@/apis/mypage";
 import { GroupApplyItems } from "@/types/types";
 import { useAuthStore } from "@/zustand/authStore";
 import { useQuery } from "@tanstack/react-query";
-
 import SkeletonApplyItemsCard from "./SkeletonApplyItems";
-import EmptyState from "./EmptyState";
+
 import ApplyItemsCard from "./ApplyItemsCard";
+import EmptyState from "../EmptyState/EmptyState";
 
 function ApplyItems() {
   const user = useAuthStore((state) => state.user);
@@ -48,7 +48,14 @@ function ApplyItems() {
               ))}
             </ul>
           ) : (
-            <EmptyState />
+            <EmptyState
+              message={
+                <>
+                  <p>아직 신청한 공구가 없습니다.</p>
+                  <p>마음에 드는 공구가 있다면 신청해보세요!</p>
+                </>
+              }
+            />
           )}
         </div>
       </div>

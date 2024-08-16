@@ -4,8 +4,8 @@ import { likeItemPage } from "@/apis/mypage";
 import GroupPostCard from "@/components/grouppost/list/GroupPostCard";
 import { useAuthStore } from "@/zustand/authStore";
 import { useQuery } from "@tanstack/react-query";
-import Image from "next/image";
 import GroupPostCardSkeleton from "./SkeletonLikeItem";
+import EmptyState from "../EmptyState/EmptyState";
 
 function LikeItems() {
   const user = useAuthStore((state) => state.user);
@@ -55,18 +55,7 @@ function LikeItems() {
               })}
             </ul>
           ) : (
-            <div className="flex flex-col py-[100px] justify-center items-center">
-              <Image
-                src="/img/icon-empty.png"
-                alt="empty"
-                width={100}
-                height={0}
-                className="mb-5"
-              />
-              <div className="flex justify-center items-center text-gray-4">
-                좋아요한 공구가 없습니다.
-              </div>
-            </div>
+            <EmptyState message="좋아요 한 공구가 없습니다." />
           )}
         </div>
       </div>
