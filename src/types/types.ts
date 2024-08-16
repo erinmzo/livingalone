@@ -31,7 +31,7 @@ export type TNewGroupApplication = Omit<GroupApplication, "created_at">;
 
 export type TGroupApplication = Pick<GroupApplication, "id">;
 export type TGroupApplications = {
-  group_applications: TGroupApplication[];
+  group_applications: GroupApplication[];
 };
 
 export type TMainGroupPost = Pick<
