@@ -22,8 +22,6 @@ function LikeItems() {
 
   if (isPending) return <GroupPostCardSkeleton />;
 
-  if (isError) return <div>에러..</div>;
-
   return (
     user && (
       <div>

@@ -144,6 +144,11 @@ function MyInformation() {
     ) {
       return Report.warning("닉네임 공백", "닉네임을 적어주세요!", "확인");
     }
+    if (nickname.length < 2) {
+      return Report.info("닉네임 길이", "2글자 이상으로 작성해주세요", "확인");
+    } else if (nickname.length > 8) {
+      return Report.info("닉네임 길이", "8글자 이하로 작성해주세요", "확인");
+    }
 
     editProfile(newProfile);
   };
