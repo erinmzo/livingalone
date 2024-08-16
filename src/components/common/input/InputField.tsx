@@ -11,16 +11,7 @@ interface InputFieldProps {
   minLength?: number;
 }
 
-function InputField({
-  labelName,
-  value,
-  type,
-  placeHolder,
-  onchangeValue,
-  name,
-  error,
-  minLength,
-}: InputFieldProps) {
+function InputField({ labelName, value, type, placeHolder, onchangeValue, name, error, minLength }: InputFieldProps) {
   return (
     <div className="flex gap-[2px] justify-between items-start">
       <label

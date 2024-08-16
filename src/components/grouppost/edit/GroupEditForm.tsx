@@ -1,11 +1,9 @@
 "use client";
 
-import {
-  getGroupPost,
-  insertGroupImage,
-  updateGroupPost,
-} from "@/apis/grouppost";
+import { getGroupPost, insertGroupImage, updateGroupPost } from "@/apis/grouppost";
 import InnerLayout from "@/components/common/Page/InnerLayout";
+import EditorModule from "@/components/common/editor/EditorModule";
+import InputField from "@/components/common/input/InputField";
 import { useInputChange } from "@/hooks/useInput";
 import { GroupPost, TNewGroupPost } from "@/types/types";
 import { postRevalidate } from "@/utils/revalidate";
@@ -15,10 +13,10 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Notify } from "notiflix";
 import React, { useEffect, useRef, useState } from "react";
-import { groupValidation } from "../common/GroupValidation";
-import EditorModule from "@/components/common/editor/EditorModule";
 import GroupPostNotice from "../common/GroupPostNotice";
-import InputField from "@/components/common/input/InputField";
+import { groupValidation } from "../common/GroupValidation";
+
+import imageCompression from "browser-image-compression";
 
 function GroupEditForm({ params }: { params: { id: string } }) {
   const { id } = params;
@@ -59,18 +57,7 @@ function GroupEditForm({ params }: { params: { id: string } }) {
     userId: "",
     isFinished: false,
   });
-  const {
-    title,
-    startDate,
-    endDate,
-    content,
-    item,
-    link,
-    peopleNum,
-    price,
-    userId,
-    isFinished,
-  } = input;
+  const { title, startDate, endDate, content, item, link, peopleNum, price, userId, isFinished } = input;
   useEffect(() => {
     if (groupPost) {
       setValueInit({
@@ -98,9 +85,7 @@ function GroupEditForm({ params }: { params: { id: string } }) {
       const formData = new FormData();
       formData.append("file", newGroupImage);
       const response = await insertGroupImage(formData);
-      setImgUrl(
-        `https://nqqsefrllkqytkwxfshk.supabase.co/storage/v1/object/public/groupposts/${response.path}`
-      );
+      setImgUrl(`https://nqqsefrllkqytkwxfshk.supabase.co/storage/v1/object/public/groupposts/${response.path}`);
     },
   });
 
@@ -108,7 +93,22 @@ function GroupEditForm({ params }: { params: { id: string } }) {
     e.preventDefault();
     if (e.target.files) {
       const newGroupImage = e.target.files[0];
-      addImageMutation.mutate(newGroupImage);
+      const fileType = newGroupImage.type;
+
+      if (newGroupImage && !fileType.includes("image")) {
+        Notify.failure("이미지 파일만 업로드 해주세요");
+        return;
+      }
+
+      const options = {
+        maxSizeMB: 1,
+        maxWidthOrHeight: 1000,
+        useWebWorker: true,
+      };
+
+      const compressedFile = await imageCompression(newGroupImage, options);
+
+      addImageMutation.mutate(compressedFile);
     }
   };
 
@@ -125,14 +125,7 @@ function GroupEditForm({ params }: { params: { id: string } }) {
   });
 
   const editGroupPostHandler = async () => {
-    const isValid = groupValidation(
-      setError,
-      title,
-      endDate,
-      peopleNum,
-      item,
-      imgUrl
-    );
+    const isValid = groupValidation(setError, title, endDate, peopleNum, item, imgUrl);
     if (!isValid) {
       return;
     }
@@ -162,17 +155,11 @@ function GroupEditForm({ params }: { params: { id: string } }) {
   if (isPending)
     return (
       <div className="flex justify-center items-center">
-        <Image
-          src="/img/loading-spinner.svg"
-          alt="로딩중"
-          width={200}
-          height={200}
-        />
+        <Image src="/img/loading-spinner.svg" alt="로딩중" width={200} height={200} />
       </div>
     );
 
-  if (isError)
-    return <div className="flex justify-center items-center">에러...</div>;
+  if (isError) return <div className="flex justify-center items-center">에러...</div>;
 
   return (
     <InnerLayout>
@@ -201,9 +188,7 @@ function GroupEditForm({ params }: { params: { id: string } }) {
               마감일
             </label>
             <div className="flex gap-2">
-              <label className="hidden h-[38px] md:flex items-center text-[14px] text-black">
-                마감일
-              </label>
+              <label className="hidden h-[38px] md:flex items-center text-[14px] text-black">마감일</label>
               <div>
                 <input
                   id="endDate"
@@ -213,11 +198,7 @@ function GroupEditForm({ params }: { params: { id: string } }) {
                   onChange={onChangeInput}
                   className="rounded-none border-b-[1px] border-gray-3 py-2 px-[2px] md:text-[18px] font-bold text-black outline-none"
                 />
-                {error.endDateError && (
-                  <p className={`text-red-3 text-[12px] mt-2`}>
-                    {error.endDateError}
-                  </p>
-                )}
+                {error.endDateError && <p className={`text-red-3 text-[12px] mt-2`}>{error.endDateError}</p>}
               </div>
             </div>
           </div>
@@ -239,11 +220,7 @@ function GroupEditForm({ params }: { params: { id: string } }) {
                 onChange={onChangeInput}
                 className="rounded-none w-auto max-w-[83px] md:w-[100px] pl-[2px] px-[2px] py-2 border-b border-gray-3 md:text-[18px] font-bold text-black outline-none"
               />
-              {error.peopleNumError && (
-                <p className={`text-red-3 text-[12px] mt-2`}>
-                  {error.peopleNumError}
-                </p>
-              )}
+              {error.peopleNumError && <p className={`text-red-3 text-[12px] mt-2`}>{error.peopleNumError}</p>}
             </div>
           </div>
         </div>
@@ -277,23 +254,14 @@ function GroupEditForm({ params }: { params: { id: string } }) {
           onchangeValue={onChangeInput}
         />
         <div className="ml-[70px] md:ml-[78px] flex flex-col md:flex-row gap-2 md:gap-4 items-start mb-[6px]">
-          <input
-            className="hidden"
-            id="image-file"
-            type="file"
-            onChange={addImageHandler}
-          />
+          <input className="hidden" id="image-file" type="file" onChange={addImageHandler} />
           <label
             className="flex justify-center items-center px-7 py-[7px] border border-gray-4 bg-gray-1 font-bold text-[12px] text-gray-4 rounded-full cursor-pointer"
             htmlFor="image-file"
           >
             {imgUrl ? "이미지 수정" : "이미지 업로드"}
           </label>
-          {error.imageUrlError && (
-            <p className={`text-red-3 text-[12px] mt-2`}>
-              {error.imageUrlError}
-            </p>
-          )}
+          {error.imageUrlError && <p className={`text-red-3 text-[12px] mt-2`}>{error.imageUrlError}</p>}
           {imgUrl && (
             <Image
               src={imgUrl}
