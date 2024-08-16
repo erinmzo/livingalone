@@ -64,11 +64,16 @@ const config: Config = {
       },
       animation: {
         spin: "spin 5s linear infinite",
+        progressBar: "progressBar 1s infinite linear",
       },
       keyframes: {
         pulse: {
           "0%, 100%": { opacity: "1" },
           "50%": { opacity: "0.7" },
+        },
+        progressBar: {
+          "0%": { transform: "translateX(-100%)" },
+          "100%": { transform: "translateX(200%)" },
         },
       },
     },
