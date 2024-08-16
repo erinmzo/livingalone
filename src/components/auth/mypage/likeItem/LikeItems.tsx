@@ -11,11 +11,7 @@ function LikeItems() {
   const user = useAuthStore((state) => state.user);
   const userId = user?.id as string;
 
-  const {
-    data: likePosts = [],
-    isPending,
-    isError,
-  } = useQuery({
+  const { data: likePosts = [], isPending } = useQuery({
     queryKey: ["like", userId],
     queryFn: () => likeItemPage(userId),
   });
