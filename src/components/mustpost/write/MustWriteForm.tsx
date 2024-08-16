@@ -19,12 +19,9 @@ import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import { mustValidation } from "../common/MustValidation";
 
-const EditorModule = dynamic(
-  () => import("@/components/common/editor/EditorModule"),
-  {
-    ssr: false,
-  }
-);
+const EditorModule = dynamic(() => import("@/components/common/editor/EditorModule"), {
+  ssr: false,
+});
 
 function MustWriteForm() {
   const router = useRouter();
@@ -35,8 +32,7 @@ function MustWriteForm() {
 
   const [imgUrl, setImgUrl] = useState<string>("");
   const editorRef = useRef<EditorProps>(null);
-  const [selectedCategoryName, setSelectedCategoryName] =
-    useState<string>("선택");
+  const [selectedCategoryName, setSelectedCategoryName] = useState<string>("선택");
   const [selectedCategoryId, setSelectedCategoryId] = useState<string>("");
 
   const [error, setError] = useState({
@@ -79,9 +75,7 @@ function MustWriteForm() {
       const formData = new FormData();
       formData.append("file", newMustPostImage);
       const response = await insertMustImage(formData);
-      setImgUrl(
-        `https://nqqsefrllkqytkwxfshk.supabase.co/storage/v1/object/public/mustposts/${response.path}`
-      );
+      setImgUrl(`https://nqqsefrllkqytkwxfshk.supabase.co/storage/v1/object/public/mustposts/${response.path}`);
     },
   });
 
@@ -110,15 +104,7 @@ function MustWriteForm() {
   const startDate = `${year}-${month}-${day}` as string;
 
   const addMustPostBtn = async () => {
-    const isValid = mustValidation(
-      setError,
-      title,
-      selectedCategoryId,
-      itemName,
-      company,
-      price,
-      imgUrl
-    );
+    const isValid = mustValidation(setError, title, selectedCategoryId, itemName, company, price, imgUrl);
     if (!isValid) {
       return;
     }
@@ -213,32 +199,16 @@ function MustWriteForm() {
             error={error.priceError}
           />
           <div className="flex flex-col md:flex-row gap-2 md:gap-4 items-start">
-            <input
-              className="hidden"
-              id="image-file"
-              type="file"
-              onChange={addImageHandler}
-            />
+            <input className="hidden" id="image-file" type="file" onChange={addImageHandler} />
             <label
               className="flex justify-center items-center ml-[72px] md:ml-[78px] px-7 py-[7px] border border-gray-4 bg-gray-1 font-bold text-[12px] text-gray-4 rounded-full cursor-pointer"
               htmlFor="image-file"
             >
               {imgUrl ? "이미지 수정" : "이미지 업로드"}
             </label>
-            {error.imageUrlError && (
-              <p className={`text-red-3 text-[12px] mt-2`}>
-                {error.imageUrlError}
-              </p>
-            )}
+            {error.imageUrlError && <p className={`text-red-3 text-[12px] mt-2`}>{error.imageUrlError}</p>}
             <div className="w-[44px] md:w-auto aspect-square ml-[72px] md:ml-0">
-              {imgUrl && (
-                <Image
-                  src={imgUrl}
-                  alt="포스팅한 이미지"
-                  width={200}
-                  height={200}
-                />
-              )}
+              {imgUrl && <Image src={imgUrl} alt="포스팅한 이미지" width={200} height={200} />}
             </div>
           </div>
           <div className="mb-[22px] md:mb-[58px]">

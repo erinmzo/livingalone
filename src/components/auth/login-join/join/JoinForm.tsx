@@ -38,7 +38,7 @@ const JoinForm = () => {
       nicknameError: "",
     });
 
-    if (nickname.length < 2 && nickname.length > 8) {
+    if (nickname.length < 2 || nickname.length > 8) {
       return setError((prev) => ({
         ...prev,
         nicknameError: "닉네임은 2~8글자 사이로 입력해주세요",
