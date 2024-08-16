@@ -122,8 +122,8 @@ function GroupPostList() {
           </p>
         </div>
       )}
-      {hasNextPage && (
-        <div className="flex justify-center mt-12 md:mt-[124px] mb-[137px]">
+      <div className="flex justify-center mt-12 md:mt-[124px] mb-[137px]">
+        {hasNextPage && (
           <button
             onClick={() => fetchNextPage()}
             disabled={isFetchingNextPage}
@@ -131,8 +131,8 @@ function GroupPostList() {
           >
             {isFetchingNextPage ? "로딩중..." : "더보기"}
           </button>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }

@@ -55,6 +55,8 @@ function PaymentMain() {
             width={0}
             height={0}
             className="w-full h-auto hidden md:block"
+            placeholder="blur"
+            blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mO8Wg8AAi8BVvC05AcAAAAASUVORK5CYII="
           />
           <Image
             src="/img/luckybox-landing/img-luckybox-mo.png"
@@ -62,6 +64,8 @@ function PaymentMain() {
             width={0}
             height={0}
             className="w-full h-auto md:hidden block"
+            placeholder="blur"
+            blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mO8Wg8AAi8BVvC05AcAAAAASUVORK5CYII="
           />
         </div>
 
