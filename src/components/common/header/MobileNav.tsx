@@ -2,16 +2,25 @@
 import { useAuthStore } from "@/zustand/authStore";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { Notify } from "notiflix";
 import { useState } from "react";
 import MobileWriteButton from "./MobileWriteButton";
 
 function MobileNav() {
   const pathname = usePathname();
   const user = useAuthStore((state) => state.user);
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const onClose = () => {
     setIsOpen(false);
+  };
+  const handleClickWrite = () => {
+    if (!user) {
+      Notify.failure("로그인 후 이용이 가능합니다");
+      router.push("/login");
+    }
+    setIsOpen((prev) => !prev);
   };
 
   return (
@@ -21,7 +30,7 @@ function MobileNav() {
           <ul className="w-full min-w-[320px] grid grid-cols-5">
             <li>
               <div className="flex flex-col justify-center items-center gap-[5px]">
-                <button onClick={() => setIsOpen((prev) => !prev)} className="flex flex-col items-center gap-[5px]">
+                <button onClick={handleClickWrite} className="flex flex-col items-center gap-[5px]">
                   <Image src="/img/mo-icon-write.svg" alt="글쓰기" width={24} height={24} />
                   <span className="text-[10px]">글쓰기</span>
                 </button>
