@@ -27,7 +27,7 @@ const JoinForm = () => {
   const joinData = { nickname, email, password };
   // 정규표현식
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-  const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
+  const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{6,15}$/;
 
   const handleSubmitJoin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -38,7 +38,7 @@ const JoinForm = () => {
       nicknameError: "",
     });
 
-    if (nickname.length < 2 || nickname.length >= 8) {
+    if (nickname.length < 2 && nickname.length > 8) {
       return setError((prev) => ({
         ...prev,
         nicknameError: "닉네임은 2~8글자 사이로 입력해주세요",
@@ -55,7 +55,7 @@ const JoinForm = () => {
     if (!passwordRegex.test(password) || password.length < 6) {
       return setError((prev) => ({
         ...prev,
-        passwordError: "비밀번호는 숫자와 영문자 조합으로 6자리 이상이어야 합니다.",
+        passwordError: "비밀번호는 숫자와 영문자, 특수문자 조합으로 6자리 이상 15자리 이하여야 합니다.",
       }));
     }
 

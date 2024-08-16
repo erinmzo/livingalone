@@ -47,13 +47,10 @@ function Alarm() {
 
   return (
     <div className="relative">
-      <button
-        onClick={() => setIsOpenAlarm(!isOpenAlarm)}
-        className="flex gap-1"
-      >
+      <button onClick={() => setIsOpenAlarm(!isOpenAlarm)} className="flex gap-1">
         <Image src="/img/icon-alarm.svg" alt="알람" width={24} height={24} />
         {isAlarm && (
-          <span className="absolute right-[2px] top-[3px] block border-2 border-white w-[10px] h-[10px] bg-main-7 rounded-full"></span>
+          <span className="absolute right-[2px] top-[3px] block border-2 border-white w-[10px] h-[10px] bg-main-7 rounded-full z-[10]"></span>
         )}
       </button>
       {isOpenAlarm && <AlarmList alarms={alarms} userId={userId} />}
