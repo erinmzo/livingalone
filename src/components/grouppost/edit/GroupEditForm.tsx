@@ -1,6 +1,10 @@
 "use client";
 
-import { getGroupPost, insertGroupImage, updateGroupPost } from "@/apis/grouppost";
+import {
+  getGroupPost,
+  insertGroupImage,
+  updateGroupPost,
+} from "@/apis/grouppost";
 import InnerLayout from "@/components/common/Page/InnerLayout";
 import EditorModule from "@/components/common/editor/EditorModule";
 import InputField from "@/components/common/input/InputField";
@@ -28,6 +32,7 @@ function GroupEditForm({ params }: { params: { id: string } }) {
     endDateError: "",
     peopleNumError: "",
     itemError: "",
+    priceError: "",
     imageUrlError: "",
   });
 
@@ -57,7 +62,18 @@ function GroupEditForm({ params }: { params: { id: string } }) {
     userId: "",
     isFinished: false,
   });
-  const { title, startDate, endDate, content, item, link, peopleNum, price, userId, isFinished } = input;
+  const {
+    title,
+    startDate,
+    endDate,
+    content,
+    item,
+    link,
+    peopleNum,
+    price,
+    userId,
+    isFinished,
+  } = input;
   useEffect(() => {
     if (groupPost) {
       setValueInit({
@@ -85,7 +101,9 @@ function GroupEditForm({ params }: { params: { id: string } }) {
       const formData = new FormData();
       formData.append("file", newGroupImage);
       const response = await insertGroupImage(formData);
-      setImgUrl(`https://nqqsefrllkqytkwxfshk.supabase.co/storage/v1/object/public/groupposts/${response.path}`);
+      setImgUrl(
+        `https://nqqsefrllkqytkwxfshk.supabase.co/storage/v1/object/public/groupposts/${response.path}`
+      );
     },
   });
 
@@ -125,7 +143,15 @@ function GroupEditForm({ params }: { params: { id: string } }) {
   });
 
   const editGroupPostHandler = async () => {
-    const isValid = groupValidation(setError, title, endDate, peopleNum, item, imgUrl);
+    const isValid = groupValidation(
+      setError,
+      title,
+      endDate,
+      peopleNum,
+      item,
+      price,
+      imgUrl
+    );
     if (!isValid) {
       return;
     }
@@ -155,11 +181,17 @@ function GroupEditForm({ params }: { params: { id: string } }) {
   if (isPending)
     return (
       <div className="flex justify-center items-center">
-        <Image src="/img/loading-spinner.svg" alt="로딩중" width={200} height={200} />
+        <Image
+          src="/img/loading-spinner.svg"
+          alt="로딩중"
+          width={200}
+          height={200}
+        />
       </div>
     );
 
-  if (isError) return <div className="flex justify-center items-center">에러...</div>;
+  if (isError)
+    return <div className="flex justify-center items-center">에러...</div>;
 
   return (
     <InnerLayout>
@@ -188,7 +220,9 @@ function GroupEditForm({ params }: { params: { id: string } }) {
               마감일
             </label>
             <div className="flex gap-2">
-              <label className="hidden h-[38px] md:flex items-center text-[14px] text-black">마감일</label>
+              <label className="hidden h-[38px] md:flex items-center text-[14px] text-black">
+                마감일
+              </label>
               <div>
                 <input
                   id="endDate"
@@ -198,7 +232,11 @@ function GroupEditForm({ params }: { params: { id: string } }) {
                   onChange={onChangeInput}
                   className="rounded-none border-b-[1px] border-gray-3 py-2 px-[2px] md:text-[18px] font-bold text-black outline-none"
                 />
-                {error.endDateError && <p className={`text-red-3 text-[12px] mt-2`}>{error.endDateError}</p>}
+                {error.endDateError && (
+                  <p className={`text-red-3 text-[12px] mt-2`}>
+                    {error.endDateError}
+                  </p>
+                )}
               </div>
             </div>
           </div>
@@ -220,7 +258,11 @@ function GroupEditForm({ params }: { params: { id: string } }) {
                 onChange={onChangeInput}
                 className="rounded-none w-auto max-w-[83px] md:w-[100px] pl-[2px] px-[2px] py-2 border-b border-gray-3 md:text-[18px] font-bold text-black outline-none"
               />
-              {error.peopleNumError && <p className={`text-red-3 text-[12px] mt-2`}>{error.peopleNumError}</p>}
+              {error.peopleNumError && (
+                <p className={`text-red-3 text-[12px] mt-2`}>
+                  {error.peopleNumError}
+                </p>
+              )}
             </div>
           </div>
         </div>
@@ -243,6 +285,7 @@ function GroupEditForm({ params }: { params: { id: string } }) {
           placeHolder="숫자만 입력해주세요."
           minLength={1}
           onchangeValue={onChangeInput}
+          error={error.priceError}
         />
         <InputField
           labelName="상품링크"
@@ -254,14 +297,23 @@ function GroupEditForm({ params }: { params: { id: string } }) {
           onchangeValue={onChangeInput}
         />
         <div className="ml-[70px] md:ml-[78px] flex flex-col md:flex-row gap-2 md:gap-4 items-start mb-[6px]">
-          <input className="hidden" id="image-file" type="file" onChange={addImageHandler} />
+          <input
+            className="hidden"
+            id="image-file"
+            type="file"
+            onChange={addImageHandler}
+          />
           <label
             className="flex justify-center items-center px-7 py-[7px] border border-gray-4 bg-gray-1 font-bold text-[12px] text-gray-4 rounded-full cursor-pointer"
             htmlFor="image-file"
           >
             {imgUrl ? "이미지 수정" : "이미지 업로드"}
           </label>
-          {error.imageUrlError && <p className={`text-red-3 text-[12px] mt-2`}>{error.imageUrlError}</p>}
+          {error.imageUrlError && (
+            <p className={`text-red-3 text-[12px] mt-2`}>
+              {error.imageUrlError}
+            </p>
+          )}
           {imgUrl && (
             <Image
               src={imgUrl}
@@ -276,7 +328,7 @@ function GroupEditForm({ params }: { params: { id: string } }) {
       <div className="mt-[14px]">
         <EditorModule editorRef={editorRef} />
       </div>
-      <div className="flex justify-center pb-[123px] md:pb-0 ">
+      <div className="flex justify-center pb-[123px] md:pb-[250px] lg:pb-0">
         <button
           className="bg-main-8 w-full md:w-[300px] py-[10px] text-white rounded-full font-bold text-[20px] mt-6 md:mt-[64px]"
           onClick={editGroupPostHandler}
