@@ -79,7 +79,7 @@ function Wish({ postId }: WishProps) {
     return (
       <button
         onClick={handleToggleWish}
-        className="flex justify-center items-center border border-gray-2 bg-white rounded-full p-[6px]"
+        className="shrink-0 flex justify-center items-center border border-gray-2 bg-white rounded-full p-[6px]"
       >
         <Image
           src="/img/icon-wish.svg"
@@ -92,7 +92,7 @@ function Wish({ postId }: WishProps) {
 
   if (isPending)
     return (
-      <div className="border border-gray-2 bg-gray-2 rounded-full w-[24px] h-[24px] md:w-[32px] md:h-[32px] animate-pulse"></div>
+      <div className="border border-gray-2 bg-gray-2 rounded-full w-[34px] h-[34px] animate-pulse"></div>
     );
 
   if (isError) return <div>에러가 발생했습니다.</div>;
@@ -100,7 +100,7 @@ function Wish({ postId }: WishProps) {
   return (
     <button
       onClick={handleToggleWish}
-      className="flex justify-center items-center border border-gray-2 bg-white rounded-full p-[6px]"
+      className="shrink-0 flex justify-center items-center border border-gray-2 bg-white rounded-full p-[6px]"
     >
       {isWish ? (
         <Image

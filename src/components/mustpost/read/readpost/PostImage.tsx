@@ -28,5 +28,3 @@ function PostImage({ img_url }: PostImageProps) {
 }
 
 export default PostImage;
-
-// 원본 비율에 따르는데 사진의 가로 길이는 680으로 맞추고 세로로 비율이 떨어지게끔
