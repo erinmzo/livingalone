@@ -8,6 +8,7 @@ import Image from "next/image";
 import MyGroupPost from "./MyGroupPost";
 import SkeletonMyGroup from "./SkeletonMyGroup";
 import NoticeDot from "@/components/common/NoticeDot";
+import EmptyState from "../EmptyState/EmptyState";
 
 function MyGroup() {
   const user = useAuthStore((state) => state.user);
@@ -87,18 +88,7 @@ function MyGroup() {
           })}
         </div>
       ) : (
-        <div className="flex flex-col py-[100px] justify-center items-center">
-          <Image
-            src="/img/icon-empty.png"
-            alt="empty"
-            width={100}
-            height={0}
-            className="mb-5"
-          />
-          <div className="flex justify-center items-center text-gray-4">
-            등록한 공구템이 없습니다
-          </div>
-        </div>
+        <EmptyState message="등록한 공구템이 없습니다." />
       )}
     </div>
   );

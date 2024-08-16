@@ -5,20 +5,15 @@ import { applyItems } from "@/apis/mypage";
 import { GroupApplyItems } from "@/types/types";
 import { useAuthStore } from "@/zustand/authStore";
 import { useQuery } from "@tanstack/react-query";
-
 import SkeletonApplyItemsCard from "./SkeletonApplyItems";
-import EmptyState from "./EmptyState";
+
 import ApplyItemsCard from "./ApplyItemsCard";
+import EmptyState from "../EmptyState/EmptyState";
 
 function ApplyItems() {
   const user = useAuthStore((state) => state.user);
-  const userId = user?.id;
 
-  const {
-    data: applyPosts = [],
-    isPending,
-    isError,
-  } = useQuery<GroupApplyItems[]>({
+  const { data: applyPosts = [], isPending } = useQuery<GroupApplyItems[]>({
     queryKey: ["apply", user?.id],
     queryFn: () => {
       if (!user || !user.id) throw new Error("User not found");
@@ -28,7 +23,7 @@ function ApplyItems() {
   });
 
   if (isPending) return <SkeletonApplyItemsCard />;
-  if (isError) return <div>에러..</div>;
+
   return (
     user && (
       <div className="flex flex-col justify-center items-center md:block">
@@ -48,7 +43,14 @@ function ApplyItems() {
               ))}
             </ul>
           ) : (
-            <EmptyState />
+            <EmptyState
+              message={
+                <>
+                  <p>아직 신청한 공구가 없습니다.</p>
+                  <p>마음에 드는 공구가 있다면 신청해보세요!</p>
+                </>
+              }
+            />
           )}
         </div>
       </div>

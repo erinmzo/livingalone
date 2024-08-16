@@ -8,11 +8,9 @@ const SkeletonMyGroupPost = () => {
       </div>
 
       <div className="border border-gray-2 rounded-lg py-4 md:py-6 px-3 md:px-8 text-gray-4 mb-2 md:mb-6">
-        {/* 상단 텍스트 */}
         <div className="bg-gray-2 rounded h-[16px] mb-4 w-full"></div>
         <div className="bg-gray-2 rounded h-[16px] mb-4 w-full md:hidden"></div>
 
-        {/* 리스트 항목들 */}
         <div className="flex mb-2 items-center">
           <div className="w-[18px] flex justify-center shrink-0">
             <div className="w-[4px] h-[4px] rounded-full mt-[5px"></div>
@@ -32,7 +30,6 @@ const SkeletonMyGroupPost = () => {
           <div className="bg-gray-2 rounded h-[16px] flex-grow ml-2"></div>
         </div>
 
-        {/* 하단 텍스트 */}
         <div className="bg-gray-2 rounded h-[16px] mt-4 w-3/4"></div>
       </div>
 
