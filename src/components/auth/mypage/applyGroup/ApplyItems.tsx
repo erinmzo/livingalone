@@ -12,13 +12,8 @@ import EmptyState from "../EmptyState/EmptyState";
 
 function ApplyItems() {
   const user = useAuthStore((state) => state.user);
-  const userId = user?.id;
 
-  const {
-    data: applyPosts = [],
-    isPending,
-    isError,
-  } = useQuery<GroupApplyItems[]>({
+  const { data: applyPosts = [], isPending } = useQuery<GroupApplyItems[]>({
     queryKey: ["apply", user?.id],
     queryFn: () => {
       if (!user || !user.id) throw new Error("User not found");
@@ -28,7 +23,7 @@ function ApplyItems() {
   });
 
   if (isPending) return <SkeletonApplyItemsCard />;
-  if (isError) return <div>에러..</div>;
+
   return (
     user && (
       <div className="flex flex-col justify-center items-center md:block">

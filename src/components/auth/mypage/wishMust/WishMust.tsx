@@ -4,19 +4,13 @@ import { wishItem } from "@/apis/mypage";
 import MustPostCard from "@/components/mustpost/list/MustPostCard";
 import { useAuthStore } from "@/zustand/authStore";
 import { useQuery } from "@tanstack/react-query";
-import Image from "next/image";
 import SkeletonMust from "./SkeletonMust";
 import EmptyState from "../EmptyState/EmptyState";
 
 function WishMust() {
   const user = useAuthStore((state) => state.user);
   const userId = user?.id as string;
-
-  const {
-    data: wish = [],
-    isPending,
-    isError,
-  } = useQuery({
+  const { data: wish = [], isPending } = useQuery({
     queryKey: ["wish", userId],
     queryFn: () => wishItem(userId),
   });
