@@ -21,6 +21,8 @@ import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import { mustValidation } from "../common/MustValidation";
 
+import imageCompression from "browser-image-compression";
+
 const EditorModule = dynamic(() => import("@/components/common/editor/EditorModule"), {
   ssr: false,
 });
@@ -86,7 +88,7 @@ function MustWriteForm() {
     },
   });
 
-  const addImageHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const addImageHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     setError((prev) => ({
       ...prev,
@@ -94,21 +96,22 @@ function MustWriteForm() {
     }));
     if (e.target.files) {
       const newMustPostImage = e.target.files[0];
-      if (newMustPostImage) {
-        const fileType = newMustPostImage.type;
+      const fileType = newMustPostImage.type;
 
-        if (!fileType.includes("image")) {
-          Notify.failure("이미지 파일만 업로드 해주세요");
-          return;
-        }
-      }
-
-      if (newMustPostImage.size > maxImageSize) {
-        Notify.failure("2MB 이하의 이미지로 업로드해주세요");
+      if (newMustPostImage && !fileType.includes("image")) {
+        Notify.failure("이미지 파일만 업로드 해주세요");
         return;
       }
 
-      addImage(newMustPostImage);
+      const options = {
+        maxSizeMB: 1,
+        maxWidthOrHeight: 1000,
+        useWebWorker: true,
+      };
+
+      const compressedFile = await imageCompression(newMustPostImage, options);
+
+      addImage(compressedFile);
     }
   };
 
