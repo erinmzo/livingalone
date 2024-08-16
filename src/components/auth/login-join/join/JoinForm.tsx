@@ -1,4 +1,5 @@
 "use client";
+import { emailRegex, passwordRegex } from "@/constants/regex";
 import { useInputChange } from "@/hooks/useInput";
 import { useRouter } from "next/navigation";
 import { Notify } from "notiflix";
@@ -25,9 +26,6 @@ const JoinForm = () => {
   const { nickname, email, password, passwordConfirm } = input;
 
   const joinData = { nickname, email, password };
-  // 정규표현식
-  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-  const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{6,15}$/;
 
   const handleSubmitJoin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -55,8 +53,7 @@ const JoinForm = () => {
     if (!passwordRegex.test(password) || password.length < 6) {
       return setError((prev) => ({
         ...prev,
-        passwordError:
-          "비밀번호는 숫자와 영문자, 특수문자 조합으로 6자리 이상 15자리 이하여야 합니다.",
+        passwordError: "비밀번호는 숫자와 영문자, 특수문자 조합으로 6자리 이상 15자리 이하여야 합니다.",
       }));
     }
 
@@ -89,10 +86,7 @@ const JoinForm = () => {
 
   return (
     <div className="flex flex-col justify-normal items-center min-h-screen px-4 sm:px-6 mt-10 lg:px-8">
-      <form
-        onSubmit={handleSubmitJoin}
-        className="flex flex-col justify-center gap-6 w-full mb-6 max-w-lg"
-      >
+      <form onSubmit={handleSubmitJoin} className="flex flex-col justify-center gap-6 w-full mb-6 max-w-lg">
         <Input
           label="닉네임"
           type="text"
@@ -130,10 +124,7 @@ const JoinForm = () => {
           onChange={onChangeInput}
           error={error.passwordConfirmError}
         />
-        <button
-          type="submit"
-          className="w-full mt-1 py-3 text-xl bg-main-8 text-white rounded-full"
-        >
+        <button type="submit" className="w-full mt-1 py-3 text-xl bg-main-8 text-white rounded-full">
           가입하기
         </button>
       </form>

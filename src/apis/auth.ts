@@ -4,7 +4,7 @@ export async function getUser() {
   const supabase = createClient();
   const { data, error } = await supabase.auth.getUser();
 
-  if (data.user?.id) {
+  if (data.user) {
     const userId = data.user.id as string;
     const { data: profile, error: profileError } = await supabase
       .from("profiles")

@@ -1,23 +1,15 @@
-import React, { useMemo } from "react";
-import MustPostCard from "./MustPostCard";
-import Image from "next/image";
-import { useInfiniteQuery } from "@tanstack/react-query";
 import { getMustPostAll, getMustPostbyCategory } from "@/apis/mustpost";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import Image from "next/image";
+import { useMemo } from "react";
+import MustPostCard from "./MustPostCard";
 
 interface MustPostListProps {
   selectedCategory: string;
 }
 
 function MustPostList({ selectedCategory }: MustPostListProps) {
-  const {
-    data,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-    isPending,
-    isError,
-    refetch,
-  } = useInfiniteQuery({
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isPending, isError } = useInfiniteQuery({
     queryKey: ["mustPosts", selectedCategory],
     queryFn: async ({ pageParam = 0 }) => {
       const response =
@@ -30,39 +22,23 @@ function MustPostList({ selectedCategory }: MustPostListProps) {
       };
     },
     getNextPageParam: (lastPage, allPages) => {
-      const totalFetched = allPages.reduce(
-        (acc, page) => acc + page.posts.length,
-        0
-      );
+      const totalFetched = allPages.reduce((acc, page) => acc + page.posts.length, 0);
       if (totalFetched >= lastPage.total) return undefined;
       return allPages.length;
     },
     initialPageParam: 0,
   });
 
-  const mustPosts = useMemo(
-    () => data?.pages?.flatMap((page) => page.posts) || [],
-    [data]
-  );
+  const mustPosts = useMemo(() => data?.pages?.flatMap((page) => page.posts) || [], [data]);
 
   if (isPending)
     return (
       <div className="flex justify-center items-center">
-        <Image
-          src="/img/loading-spinner.svg"
-          alt="로딩중"
-          width={200}
-          height={200}
-        />
+        <Image src="/img/loading-spinner.svg" alt="로딩중" width={200} height={200} />
       </div>
     );
 
-  if (isError)
-    return (
-      <div className="flex justify-center items-center">
-        데이터를 불러오는데 실패했습니다!
-      </div>
-    );
+  if (isError) return <div className="flex justify-center items-center">데이터를 불러오는데 실패했습니다!</div>;
   return (
     <>
       {mustPosts.length > 0 ? (
@@ -70,12 +46,7 @@ function MustPostList({ selectedCategory }: MustPostListProps) {
           <ul className="grid grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
             {mustPosts.map((post) => (
               <li key={post.id} className="mb-[34px] md:mb-[64px]">
-                <MustPostCard
-                  postId={post.id}
-                  title={post.title}
-                  item={post.item}
-                  imgUrl={post.img_url}
-                />
+                <MustPostCard postId={post.id} title={post.title} item={post.item} imgUrl={post.img_url} />
               </li>
             ))}
           </ul>
@@ -97,9 +68,7 @@ function MustPostList({ selectedCategory }: MustPostListProps) {
             <div className="relative w-[67px] md:w-[100px] h-[62px] md:h-[94px] mb-5">
               <Image src="/img/icon-empty.png" alt="empty" layout="fill" />
             </div>
-            <h4 className="text-gray-2 text-[16px] mb-1">
-              해당 카테고리에 맞는 게시글이 없습니다.
-            </h4>
+            <h4 className="text-gray-2 text-[16px] mb-1">해당 카테고리에 맞는 게시글이 없습니다.</h4>
           </div>
         </div>
       )}

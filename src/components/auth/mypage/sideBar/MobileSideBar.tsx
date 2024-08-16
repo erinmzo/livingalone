@@ -1,12 +1,12 @@
 "use client";
 
+import { mypageMenu } from "@/constants/mypage";
 import { useAuthStore } from "@/zustand/authStore";
 import { useIsOpen } from "@/zustand/isOpenStore";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 
 import { Notify } from "notiflix";
-import React from "react";
 
 function MobileSideBar() {
   const pathname = usePathname();
@@ -14,16 +14,6 @@ function MobileSideBar() {
   const setIsOpenSideBar = useIsOpen((state) => state.setIsOpenSideBar);
   const router = useRouter();
   const saveUser = useAuthStore((state) => state.saveUser);
-
-  const links = [
-    { href: `/mypage`, label: "나의 정보" },
-    { href: `/mypage/wishmust`, label: "찜한 자취템" },
-    { href: `/mypage/mymust`, label: "나의 자취템" },
-    { href: `/mypage/likegroup`, label: "좋아요 공구" },
-    { href: `/mypage/applygroup`, label: "신청한 공구" },
-    { href: `/mypage/mygroup`, label: "내가 쓴 공구" },
-    { href: `/mypage/mypayment`, label: "결제 내역" },
-  ];
 
   const handleCloseSideBar = () => {
     setIsOpenSideBar(false);
@@ -40,11 +30,7 @@ function MobileSideBar() {
     <>
       <div
         className={`fixed inset-0 top-[60px] transition-all
-          ${
-            isOpenSideBar
-              ? "bg-black opacity-50 z-[998]"
-              : "bg-transparent z-[-1]"
-          }
+          ${isOpenSideBar ? "bg-black opacity-50 z-[998]" : "bg-transparent z-[-1]"}
           `}
         onClick={handleCloseSideBar}
       />
@@ -55,13 +41,11 @@ function MobileSideBar() {
       >
         <div>
           <ul className="flex flex-col gap-[24px] items-center py-11">
-            {links.map((link) => (
+            {mypageMenu.map((link) => (
               <li
                 key={link.href}
                 className={`text-[18px] hover:text-gray-5 hover:font-bold transition-all text-gray-3 ${
-                  pathname === link.href
-                    ? "text-gray-5 font-bold"
-                    : "text-gray-2"
+                  pathname === link.href ? "text-gray-5 font-bold" : "text-gray-2"
                 }`}
                 onClick={handleCloseSideBar}
               >

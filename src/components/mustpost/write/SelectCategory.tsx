@@ -10,13 +10,8 @@ interface SelectCategoryProps {
   selectCategory: (category: MustCategory) => void;
   error: string;
 }
-//선택된 카테고리를 MustWriteForm으로 전달
 
-function SelectCategory({
-  initialCategoryName,
-  selectCategory,
-  error,
-}: SelectCategoryProps) {
+function SelectCategory({ initialCategoryName, selectCategory, error }: SelectCategoryProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const {
@@ -74,10 +69,7 @@ function SelectCategory({
             {isOpen && (
               <ul className="z-[9999] flex flex-col items-start justify-center absolute left-0 w-[100px] border-t-0 border border-gray-4 bg-white py-[4px]">
                 {mustCategories?.map((category) => (
-                  <li
-                    key={category.id}
-                    className="w-full text-gray-4 text-[14px] hover:bg-main-2"
-                  >
+                  <li key={category.id} className="w-full text-gray-4 text-[14px] hover:bg-main-2">
                     <button
                       // onClick={() => handleSelectCategory(category.name)}
                       onClick={() => handleSelectCategory(category)}

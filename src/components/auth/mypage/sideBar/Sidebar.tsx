@@ -1,5 +1,6 @@
 "use client";
 import { getMyProfile } from "@/apis/mypage";
+import { mypageMenu } from "@/constants/mypage";
 import { Profile } from "@/types/types";
 import { useAuthStore } from "@/zustand/authStore";
 import { useQuery } from "@tanstack/react-query";
@@ -7,23 +8,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import SkeletonSideBar from "./SkeletonSideBar";
-import { useState } from "react";
 
 function SideBar() {
   const user = useAuthStore((state) => state.user);
   const userId = user?.id as string;
   const pathname = usePathname();
-  const [isOpen, setIsOpen] = useState(false);
-
-  const links = [
-    { href: `/mypage`, label: "나의 정보" },
-    { href: `/mypage/wishmust`, label: "찜한 자취템" },
-    { href: `/mypage/mymust`, label: "나의 자취템" },
-    { href: `/mypage/likegroup`, label: "좋아요 공구" },
-    { href: `/mypage/applygroup`, label: "신청한 공구" },
-    { href: `/mypage/mygroup`, label: "내가 쓴 공구" },
-    { href: `/mypage/mypayment`, label: "결제 내역" },
-  ];
 
   const { data: profile, isPending } = useQuery<Profile>({
     queryKey: ["profile", userId],
@@ -46,18 +35,14 @@ function SideBar() {
               height={100}
             />
           </div>
-          <div className="text-[16px] font-bold text-center w-full h-[19px]">
-            {profile?.nickname}
-          </div>
+          <div className="text-[16px] font-bold text-center w-full h-[19px]">{profile?.nickname}</div>
         </div>
         <ul className="flex flex-col gap-[24px] items-start">
-          {links.map((link) => (
+          {mypageMenu.map((link) => (
             <li
               key={link.href}
               className={`text-[18px] hover:text-gray-5 hover:font-bold transition-all ${
-                pathname === link.href
-                  ? " text-gray-5 font-bold"
-                  : "text-gray-2"
+                pathname === link.href ? " text-gray-5 font-bold" : "text-gray-2"
               }`}
             >
               <Link href={link.href}>{link.label}</Link>

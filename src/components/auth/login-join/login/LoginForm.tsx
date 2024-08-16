@@ -1,6 +1,7 @@
 "use client";
 
 import { googleLogin, kakaoLogin, login } from "@/apis/auth";
+import { emailRegex } from "@/constants/regex";
 import { useInputChange } from "@/hooks/useInput";
 import { useAuthStore } from "@/zustand/authStore";
 import Image from "next/image";
@@ -25,9 +26,6 @@ const LoginForm = () => {
   });
 
   const { email, password } = input;
-
-  // 정규표현식
-  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
   const handleLoginSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

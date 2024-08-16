@@ -1,16 +1,15 @@
-import React from "react";
+import { GroupApplyItems } from "@/types/types";
 import Image from "next/image";
 import Link from "next/link";
-import { GroupApplyItems } from "@/types/types";
-import ApplyItemsStatus from "./ApplyItemsStatus";
 import ApplyItemsDetails from "./ApplyItemsDetails";
+import ApplyItemsStatus from "./ApplyItemsStatus";
 import ApplyItemsUserInfo from "./ApplyItemsUserInfo";
 
 interface ApplyItemsCardProps {
   apply: GroupApplyItems;
 }
 
-const ApplyItemsCard: React.FC<ApplyItemsCardProps> = ({ apply }) => {
+const ApplyItemsCard = ({ apply }: ApplyItemsCardProps) => {
   const { group_posts, post_id, user_name, user_phone, user_address } = apply;
   const isFinished = group_posts.is_finished;
 
@@ -37,11 +36,7 @@ const ApplyItemsCard: React.FC<ApplyItemsCardProps> = ({ apply }) => {
               <ApplyItemsDetails apply={apply} />
               <div className="flex flex-col text-[14px] items-start gap-1">
                 <div className="text-gray-4 font-bold">주문자 정보</div>
-                <ApplyItemsUserInfo
-                  userName={user_name}
-                  userPhone={user_phone}
-                  userAddress={user_address}
-                />
+                <ApplyItemsUserInfo userName={user_name} userPhone={user_phone} userAddress={user_address} />
               </div>
             </div>
           </div>
@@ -60,11 +55,7 @@ const ApplyItemsCard: React.FC<ApplyItemsCardProps> = ({ apply }) => {
         </div>
         <div className="w-[227px] h-[94px] ml-5 flex-col justify-center border-l md:gap-3 border-gray-2 pl-[30px] hidden md:flex">
           <div className="text-gray-4 font-bold">주문자 정보</div>
-          <ApplyItemsUserInfo
-            userName={user_name}
-            userPhone={user_phone}
-            userAddress={user_address}
-          />
+          <ApplyItemsUserInfo userName={user_name} userPhone={user_phone} userAddress={user_address} />
         </div>
       </div>
     </li>

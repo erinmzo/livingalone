@@ -1,14 +1,11 @@
-import React from "react";
-
 const SkeletonLikeItem = () => {
-  const likeArray = [1, 2];
   return (
     <div className="relative text-gray-2 animate-pulse ">
       <div className="flex items-center justify-center md:block">
         <div className="bg-gray-2 md:rounded mb-6 mt-8 md:mt-0 border rounded-full w-[76px] h-[30px] md:w-[115px] md:h-[29px]"></div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {likeArray.map((_, index) => (
+        {[...Array(2)].map((_, index) => (
           <div key={index} className="flex mb-4">
             <div className="flex-1">
               <div className="relative aspect-video rounded-lg overflow-hidden border border-gray-2 bg-gray-2 w-full md"></div>

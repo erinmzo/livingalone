@@ -1,12 +1,12 @@
 "use client";
 import { getComments, updatenewComment } from "@/apis/mustpost";
+import { useAuthStore } from "@/zustand/authStore";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { Notify } from "notiflix";
 import React, { useState } from "react";
 import CommentDeleteBtn from "./CommentDeleteBtn";
-import { useAuthStore } from "@/zustand/authStore";
-import { Notify } from "notiflix";
-import { useRouter } from "next/navigation";
 
 export type TEditComment = {
   commentId: string | null;
@@ -21,11 +21,7 @@ function CommentsList({ postId }: { postId: string }) {
   const user = useAuthStore((state) => state.user);
   const [page, setPage] = useState(1);
 
-  const {
-    data: commentsData,
-    isPending,
-    isError,
-  } = useQuery({
+  const { data: commentsData, isPending } = useQuery({
     queryKey: ["comments", postId, page],
     queryFn: () => getComments(postId, page),
   });
@@ -34,8 +30,7 @@ function CommentsList({ postId }: { postId: string }) {
   const totalPages = Math.ceil(totalComments / commentsData?.limit);
 
   const { mutate: updateComment } = useMutation({
-    mutationFn: (newEditComment: TEditComment) =>
-      updatenewComment(newEditComment),
+    mutationFn: (newEditComment: TEditComment) => updatenewComment(newEditComment),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["comments", postId] });
     },
@@ -87,9 +82,7 @@ function CommentsList({ postId }: { postId: string }) {
           <Image src="/img/icon-empty.png" alt="empty" layout="fill" />
         </div>
         <span className="text-gray-2 text-[16px] mb-1">댓글이 없습니다.</span>
-        <span className="text-gray-2 text-[16px]">
-          첫 댓글을 작성해 보세요!
-        </span>
+        <span className="text-gray-2 text-[16px]">첫 댓글을 작성해 보세요!</span>
       </div>
     );
   }
@@ -115,13 +108,8 @@ function CommentsList({ postId }: { postId: string }) {
                       />
                     </div>
                     <div className="flex-grow-1">
-                      <span className="inline-block mb-1 text-gray-4 h-4 text-[14px]">
-                        {comment.profiles.nickname}
-                      </span>
-                      <form
-                        onSubmit={handleUpdateComment}
-                        className="flex flex-col md:flex-row "
-                      >
+                      <span className="inline-block mb-1 text-gray-4 h-4 text-[14px]">{comment.profiles.nickname}</span>
+                      <form onSubmit={handleUpdateComment} className="flex flex-col md:flex-row ">
                         <textarea
                           value={editComment}
                           cols={30}
@@ -175,10 +163,7 @@ function CommentsList({ postId }: { postId: string }) {
                             {comment.content}
                           </span>
                           <span className="text-gray-2 text-[14px]">
-                            {comment.created_at
-                              .split("T")
-                              .join(" ")
-                              .substring(0, 16)}
+                            {comment.created_at.split("T").join(" ").substring(0, 16)}
                           </span>
                         </div>
                       </div>
@@ -188,16 +173,11 @@ function CommentsList({ postId }: { postId: string }) {
                       <div className="flex flex-row w-[88px] md:w-auto justify-items-start md:justify-center items-center gap-1 mt-3 md:mt-0 md:ml-1 ml-6">
                         <button
                           className="w-[34px] py-[3px] border text-[12px] text-gray-1 bg-gray-3 rounded-[4px]"
-                          onClick={() =>
-                            handleEditComment(comment.id, comment.content)
-                          }
+                          onClick={() => handleEditComment(comment.id, comment.content)}
                         >
                           수정
                         </button>
-                        <CommentDeleteBtn
-                          commentId={comment.id}
-                          postId={postId}
-                        />
+                        <CommentDeleteBtn commentId={comment.id} postId={postId} />
                       </div>
                     </div>
                   </div>
@@ -216,9 +196,7 @@ function CommentsList({ postId }: { postId: string }) {
                 </div>
 
                 <div className="flex flex-col py-[2px]">
-                  <span className="inline-block mb-1 text-gray-4 h-4 text-[14px]">
-                    {comment.profiles.nickname}
-                  </span>
+                  <span className="inline-block mb-1 text-gray-4 h-4 text-[14px]">{comment.profiles.nickname}</span>
                   <span className="pb-[2px] text-gray-4 text-[16px] whitespace-pre-wrap break-words">
                     {comment.content}
                   </span>

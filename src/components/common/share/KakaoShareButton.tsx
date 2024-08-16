@@ -1,19 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import React from "react";
 
-function KakaoShareButton({
-  postId,
-  title,
-  content,
-  imgUrl,
-}: {
-  postId: string;
-  title: string;
-  content: string;
-  imgUrl: string;
-}) {
+function KakaoShareButton({ title, content, imgUrl }: { title: string; content: string; imgUrl: string }) {
   const handleShareToKakao = () => {
     const { Kakao } = window;
     Kakao.Share.sendDefault({
@@ -40,12 +29,7 @@ function KakaoShareButton({
   };
   return (
     <button onClick={handleShareToKakao} className="">
-      <Image
-        src="/img/icon-kakao-share.png"
-        alt="카카오 공유 버튼"
-        width={56}
-        height={56}
-      />
+      <Image src="/img/icon-kakao-share.png" alt="카카오 공유 버튼" width={56} height={56} />
       <p className="text-[10px] text-black mt-1">카카오톡 공유</p>
     </button>
   );

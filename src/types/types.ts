@@ -29,11 +29,29 @@ export type GroupApplyItems = GroupApplication & { group_posts: GroupPost };
 export type TNewGroupPost = Omit<GroupPost, "created_at">;
 export type TNewGroupApplication = Omit<GroupApplication, "created_at">;
 
-export type TGroupLikeData = Omit<GroupLike, "created_at" | "id">;
-
+export type TGroupApplication = Pick<GroupApplication, "id">;
 export type TGroupApplications = {
-  group_applications: GroupApplication[];
+  group_applications: TGroupApplication[];
 };
+
+export type TMainGroupPost = Pick<
+  GroupPost,
+  "id" | "title" | "price" | "people_num" | "is_finished" | "img_url" | "start_date" | "end_date"
+> &
+  TGroupApplications;
+
+export type TGroupLikeData = Omit<GroupLike, "created_at" | "id">;
+export type TGroupLike = Pick<GroupLike, "id">;
+export type TGroupApplicationsLikes = {
+  group_applications: TGroupApplication[];
+  group_likes: TGroupLike[];
+};
+
+export type TPopularGroupPost = Pick<
+  GroupPost,
+  "id" | "title" | "price" | "people_num" | "is_finished" | "img_url" | "start_date" | "end_date"
+> &
+  TGroupApplicationsLikes;
 
 export type TMyGroupPost = GroupPost & TGroupApplications;
 
@@ -52,4 +70,3 @@ export type TEditAlarm = Pick<Alarm, "user_id" | "id" | "is_read">;
 export type TDeleteAlarm = Pick<Alarm, "user_id" | "id">;
 
 export type Comment = Tables<"must_comments">;
-// export type TComment = Omit<Comment, "id">;
