@@ -12,8 +12,8 @@ const SkeletonMust = () => {
           <div key={index} className="flex">
             <div className="flex-1">
               <div className="overflow-hidden relative aspect-square rounded-lg border border-gray-2 bg-gray-2 w-full "></div>
-              <div className="px-1 mt-4 w-full">
-                <span className="block text-[14px] bg-gray-2 h-4 rounded mb-1"></span>
+              <div className="px-1 mt-4 ">
+                <span className="block text-[14px] bg-gray-2 h-4 rounded w-[50%] mb-1"></span>
                 <h4 className="text-[20px] bg-gray-2 h-6 rounded "></h4>
               </div>
             </div>
