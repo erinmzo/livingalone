@@ -73,7 +73,7 @@ async function GroupDetail({ params }: Props) {
               priority
             />
             {link && (
-              <a href={link} target="_blank">
+              <a href={link} target="_blank" className="hidden md:block">
                 <div className=" cursor-pointer flex justify-center items-center bg-black absolute w-full h-full top-0 left-0 opacity-0 hover:opacity-100 hover:bg-opacity-50">
                   <p className="z-10 opacity-100 text-white">공구템 보러가기</p>
                   <Image
@@ -87,8 +87,22 @@ async function GroupDetail({ params }: Props) {
               </a>
             )}
 
-            <div className="absolute bottom-5 left-5">
+            <div className="absolute w-full bottom-5 px-5 flex justify-between items-center">
               <Like postId={id} />
+              {link && (
+                <a href={link} target="_blank" className="md:hidden">
+                  <button className="md:hidden border border-gray-1 bg-black text-gray-1 bg-opacity-30 h-[30px] px-[41px] rounded-full flex items-center">
+                    <p>공구템 보러가기</p>
+                    <Image
+                      src="/img/icon-up-right.png"
+                      alt="보러가기 버튼"
+                      width={20}
+                      height={20}
+                      className="w-5 h-5"
+                    />
+                  </button>
+                </a>
+              )}
             </div>
           </div>
           <div className="flex justify-between mt-[23px]">

@@ -38,13 +38,19 @@ function FrontBanner() {
               </Link>
             </div>
             <ul className="flex">
-              <li className="border-r border-gray-2 w-[50%] flex justify-center items-center py-[13px]">
-                <button onClick={handleCloseForToday} className="block text-gray-3 text-[12px]">
+              <li className="border-r border-gray-2 w-[50%] flex justify-center items-center">
+                <button
+                  onClick={handleCloseForToday}
+                  className="block text-gray-3 text-[12px] py-[13px] w-full"
+                >
                   오늘 그만 보기
                 </button>
               </li>
-              <li className="w-[50%] flex justify-center items-center py-[13px]">
-                <button onClick={() => setIsOpenFrontBanner(false)} className="block text-gray-3 text-[12px]">
+              <li className="w-[50%] flex justify-center items-center">
+                <button
+                  onClick={() => setIsOpenFrontBanner(false)}
+                  className="block text-gray-3 text-[12px] py-[13px] w-full"
+                >
                   닫기
                 </button>
               </li>
