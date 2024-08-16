@@ -69,7 +69,7 @@ function Like({ postId }: LikeProps) {
       setIsLike(false);
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["like", userId, postId] });
+      queryClient.invalidateQueries({ queryKey: ["like"] });
     },
   });
 
@@ -102,7 +102,8 @@ function Like({ postId }: LikeProps) {
       setIsLike(true);
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["like", userId, postId] });
+      // queryClient.invalidateQueries({ queryKey: ["like", userId, postId] });
+      queryClient.invalidateQueries({ queryKey: ["like"] });
     },
   });
 
