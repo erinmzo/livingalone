@@ -73,7 +73,7 @@ export type Database = {
           user_id: string
         }
         Insert: {
-          created_at?: string
+          created_at: string
           id?: string
           post_id: string
           text: string
@@ -308,6 +308,7 @@ export type Database = {
           id: string
           img_url: string
           item: string
+          link: string | null
           location: string
           price: number
           title: string
@@ -320,6 +321,7 @@ export type Database = {
           id?: string
           img_url: string
           item: string
+          link?: string | null
           location: string
           price: number
           title: string
@@ -332,6 +334,7 @@ export type Database = {
           id?: string
           img_url?: string
           item?: string
+          link?: string | null
           location?: string
           price?: number
           title?: string
@@ -471,7 +474,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      update_finished_groups: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
     }
     Enums: {
       [_ in never]: never
