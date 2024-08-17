@@ -22,6 +22,7 @@ import { useRouter } from "next/navigation";
 import { mustValidation } from "../common/MustValidation";
 
 import imageCompression from "browser-image-compression";
+import { link } from "fs";
 
 const EditorModule = dynamic(
   () => import("@/components/common/editor/EditorModule"),
@@ -60,8 +61,9 @@ function MustWriteForm() {
     company: "",
     price: 0,
     content: "",
+    link: "",
   });
-  const { title, itemName, company, price } = input;
+  const { title, itemName, company, price, link } = input;
 
   const selectCategory = (category: MustCategory) => {
     setSelectedCategoryName(category.name);
@@ -158,6 +160,7 @@ function MustWriteForm() {
         item: itemName,
         location: company,
         price,
+        link,
       };
       addMustPost(newMustPost);
     }
@@ -222,6 +225,15 @@ function MustWriteForm() {
             placeHolder="0"
             onchangeValue={onChangeInput}
             error={error.priceError}
+          />
+
+          <InputField
+            labelName="상품링크"
+            name="link"
+            type="text"
+            value={link || ""}
+            placeHolder="(선택사항) 상품소개 페이지 링크를 넣어주세요."
+            onchangeValue={onChangeInput}
           />
           <div className="flex flex-col md:flex-row gap-2 md:gap-4 items-start">
             <div className="flex items-center gap-4 w-full md:w-auto">

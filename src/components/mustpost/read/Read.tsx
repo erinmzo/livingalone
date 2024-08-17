@@ -47,6 +47,7 @@ async function Read({ params }: Props) {
     category_id,
     location,
     img_url,
+    link,
     profiles: { nickname, profile_image_url },
     must_categories: { name },
   } = data as TMustPostDetail;
@@ -67,6 +68,7 @@ async function Read({ params }: Props) {
             profile_image_url={profile_image_url}
             name={name}
             postId={id}
+            link={link}
           />
           <Comments postId={id} userId={user_id} />
           <MustPostAction id={id} userId={user_id} />
