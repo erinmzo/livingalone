@@ -16,6 +16,7 @@ interface ReadPostProps {
   profile_image_url: string;
   name: string;
   postId: string;
+  link: string | null;
 }
 function ReadPost({
   created_at,
@@ -29,6 +30,7 @@ function ReadPost({
   profile_image_url,
   name,
   postId,
+  link,
 }: ReadPostProps) {
   return (
     <div className="mt-6 md:mt-0">
@@ -39,7 +41,7 @@ function ReadPost({
         created_at={created_at}
         postId={postId}
       />
-      <PostImage img_url={img_url} />
+      <PostImage img_url={img_url} link={link} />
       <div className="flex flex-row md:flex-col justify-between border-b md:border-b-0 border-gray-2 ">
         <ItemInfo item={item} location={location} price={price} name={name} />
         <div className="pt-[44px] md:pt-0 pr-2 md:pl-2 md:pr-0 md:pb-4 md:border-b-[1px] md:border-gray-2">
