@@ -18,13 +18,13 @@ function ItemInfo({ item, price, location, name }: ItemInfoProps) {
 
       <div className="flex md:pl-1 justify-between">
         <div>
-          <h5 className="mb-1 pl-1 md:pl-0 text-[22px] md:text-2xl font-bold text-black">
+          <h5 className="mb-1 md:mr-2 pl-1 md:pl-0 text-[22px] md:text-2xl font-bold text-black">
             {item}
           </h5>
           <span className="pl-1 md:pl-0 text-gray-3 text-[18px]">
             {location}
           </span>
-          <span className="block mt-2 font-bold text-[18px] text-black md:hidden">
+          <span className="block mt-2 pl-1 font-bold text-[18px] text-black md:hidden">
             {price.toLocaleString()}원
           </span>
         </div>
