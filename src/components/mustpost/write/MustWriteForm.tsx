@@ -35,7 +35,6 @@ function MustWriteForm() {
   const user = useAuthStore((state) => state.user);
   const queryClient = useQueryClient();
   const selectedCategory = useCategoryStore((state) => state.selectedCategory);
-  const maxImageSize = 2 * 1024 * 1024;
 
   const [imgUrl, setImgUrl] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
