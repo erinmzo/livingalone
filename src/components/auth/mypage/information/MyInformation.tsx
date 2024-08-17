@@ -92,7 +92,6 @@ function MyInformation() {
       const file = e.target.files[0];
       if (file) {
         const fileType = file.type;
-        const fileSize = file.size;
 
         if (fileType !== "image/jpeg" && fileType !== "image/png") {
           Report.warning("유효하지 않은 파일 형식", "JPG 또는 PNG 파일만 업로드 가능합니다.", "확인");
@@ -158,7 +157,7 @@ function MyInformation() {
             나의 정보
           </h5>
           <div className="flex-col justify-center items-center mb-8">
-            <div className="w-full">
+            <div className="w-full flex justify-center">
               {profile && (
                 <Image
                   className="border border-gray-2 bg-gray-200 rounded-full md:hidden mb-4 w-[100px] h-[100px]"
@@ -191,7 +190,6 @@ function MyInformation() {
                 placeholder="사진변경"
                 label="프로필 사진 변경"
                 onChange={(e) => handleUploadImage(e)}
-                // 2. ref 전달
                 ref={inputRef}
               />
             </div>
