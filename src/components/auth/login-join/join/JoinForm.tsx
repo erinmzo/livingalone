@@ -16,6 +16,9 @@ const JoinForm = () => {
     passwordConfirm: "",
   });
 
+  const [passwordType, setPasswordType] = useState(true);
+  const [passwordConfirmType, setPasswordConfirmType] = useState(true);
+
   const [error, setError] = useState({
     emailError: "",
     passwordError: "",
@@ -53,7 +56,8 @@ const JoinForm = () => {
     if (!passwordRegex.test(password) || password.length < 6) {
       return setError((prev) => ({
         ...prev,
-        passwordError: "비밀번호는 숫자와 영문자, 특수문자 조합으로 6자리 이상 15자리 이하여야 합니다.",
+        passwordError:
+          "비밀번호는 숫자와 영문자, 특수문자 조합으로 6자리 이상 15자리 이하여야 합니다.",
       }));
     }
 
@@ -86,7 +90,10 @@ const JoinForm = () => {
 
   return (
     <div className="flex flex-col justify-normal items-center min-h-screen px-4 sm:px-6 mt-10 lg:px-8">
-      <form onSubmit={handleSubmitJoin} className="flex flex-col justify-center gap-6 w-full mb-6 max-w-lg">
+      <form
+        onSubmit={handleSubmitJoin}
+        className="flex flex-col justify-center gap-6 w-full mb-6 max-w-lg"
+      >
         <Input
           label="닉네임"
           type="text"
@@ -108,23 +115,28 @@ const JoinForm = () => {
 
         <Input
           label="비밀번호"
-          type="password"
+          type={passwordType ? "password" : "text"}
           value={password}
           name="password"
           placeholder="숫자와 영문 조합으로 입력해주세요"
           onChange={onChangeInput}
           error={error.passwordError}
+          setPasswordType={setPasswordType}
         />
         <Input
           label="비밀번호 확인"
-          type="password"
+          type={passwordConfirmType ? "password" : "text"}
           value={passwordConfirm}
           name="passwordConfirm"
           placeholder="비밀번호를 한번 더 입력해주세요."
           onChange={onChangeInput}
           error={error.passwordConfirmError}
+          setPasswordType={setPasswordConfirmType}
         />
-        <button type="submit" className="w-full mt-1 py-3 text-xl bg-main-8 text-white rounded-full">
+        <button
+          type="submit"
+          className="w-full mt-1 py-3 text-xl bg-main-8 text-white rounded-full"
+        >
           가입하기
         </button>
       </form>

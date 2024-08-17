@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { forwardRef, useId } from "react";
 
 interface InputProps {
@@ -10,6 +11,7 @@ interface InputProps {
   readOnly?: boolean;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   error?: string;
+  setPasswordType?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const variantStyles = {
@@ -21,10 +23,27 @@ const variantStyles = {
 
 // 3. forwardRef로 전달 받음
 const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
-  { name, label, variant = "default", type = "text", value, placeholder, onChange, readOnly = false, error },
+  {
+    name,
+    label,
+    variant = "default",
+    type = "text",
+    value,
+    placeholder,
+    onChange,
+    readOnly = false,
+    error,
+    setPasswordType,
+  },
   ref
 ) {
   const inputId = useId();
+
+  const onToggleHide = () => {
+    if (setPasswordType) {
+      setPasswordType((prev) => !prev);
+    }
+  };
 
   return (
     <div className="flex flex-col">
@@ -34,16 +53,32 @@ const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
         </label>
       )}
       {(type === "text" || type === "password") && (
-        <input
-          className={`${variantStyles[variant]}`}
-          type={type}
-          value={value}
-          name={name}
-          placeholder={placeholder}
-          onChange={onChange}
-          readOnly={readOnly}
-          id={inputId}
-        />
+        <div className="relative">
+          <input
+            className={`${variantStyles[variant]}`}
+            type={type}
+            value={value}
+            name={name}
+            placeholder={placeholder}
+            onChange={onChange}
+            readOnly={readOnly}
+            id={inputId}
+          />
+          {setPasswordType && (
+            <button
+              onClick={onToggleHide}
+              type="button"
+              className="absolute right-4 top-[14px]"
+            >
+              <Image
+                src="/img/icon-eye.png"
+                alt="눈 아이콘"
+                width={20}
+                height={20}
+              />
+            </button>
+          )}
+        </div>
       )}
       {type === "file" && (
         <input

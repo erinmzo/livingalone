@@ -20,6 +20,7 @@ const LoginForm = () => {
     password: "",
   });
 
+  const [passwordType, setPasswordType] = useState(true);
   const [error, setError] = useState({
     emailError: "",
     passwordError: "",
@@ -42,7 +43,11 @@ const LoginForm = () => {
     const { data, error } = await login(loginData);
 
     if (error) {
-      return Report.failure("로그인에 실패했습니다.", "아이디와 비밀번호를 정확히 입력해 주세요.", "확인");
+      return Report.failure(
+        "로그인에 실패했습니다.",
+        "아이디와 비밀번호를 정확히 입력해 주세요.",
+        "확인"
+      );
     }
 
     saveUser(data.user);
@@ -57,12 +62,16 @@ const LoginForm = () => {
 
   const handleKakaoLogin = async () => {
     const { error } = await kakaoLogin();
-    if (error) return Report.failure("카카오 로그인에 실패했습니다.", "", "확인");
+    if (error)
+      return Report.failure("카카오 로그인에 실패했습니다.", "", "확인");
   };
 
   return (
     <div className="flex flex-col justify-start items-center min-h-screen px-4 sm:px-6 mt-8 lg:px-8 sm:mb-8">
-      <form onSubmit={handleLoginSubmit} className="flex flex-col justify-center w-full max-w-md space-y-7">
+      <form
+        onSubmit={handleLoginSubmit}
+        className="flex flex-col justify-center w-full max-w-md space-y-7"
+      >
         <div className="flex flex-col mb-5 sm:mb-3">
           <Input
             label="이메일"
@@ -77,13 +86,13 @@ const LoginForm = () => {
         <div className="flex flex-col mt-4 sm:mb-3">
           <Input
             label="비밀번호"
-            type="password"
+            type={passwordType ? "password" : "text"}
             value={password}
             name="password"
             placeholder="비밀번호를 입력해주세요"
             onChange={onChangeInput}
-            // 3. Input 컴포넌트에 error를 넣는다.
             error={error.passwordError}
+            setPasswordType={setPasswordType}
           />
         </div>
         <button className="py-2 text-xl bg-main-8 text-white rounded-3xl sm:mt-10 md:mt-8 md:text-lg sm:text-sm">
@@ -100,14 +109,26 @@ const LoginForm = () => {
           className="flex items-center justify-center sm:py-2 sm:text-base w-full py-2 text-lg border border-gray-2 rounded-3xl font-medium md:text-md"
           onClick={handleGoogleLogin}
         >
-          <Image src="/img/icon-google.png" alt="구글 로그인 아이콘" width={24} height={24} className="mr-2" />
+          <Image
+            src="/img/icon-google.png"
+            alt="구글 로그인 아이콘"
+            width={24}
+            height={24}
+            className="mr-2"
+          />
           구글 간편로그인
         </button>
         <button
           className="flex items-center justify-center w-full py-2 text-lg border border-gray-2 rounded-3xl font-medium sm:py-2 sm:text-base  md:text-md"
           onClick={handleKakaoLogin}
         >
-          <Image src="/img/kakaotalk-icon.png" alt="카카오 로그인 아이콘" width={24} height={24} className="mr-2" />
+          <Image
+            src="/img/kakaotalk-icon.png"
+            alt="카카오 로그인 아이콘"
+            width={24}
+            height={24}
+            className="mr-2"
+          />
           카카오 간편로그인
         </button>
       </div>
