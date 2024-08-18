@@ -49,7 +49,13 @@ function PaymentForm() {
     addressError: "",
   });
 
-  const { purchaserName, purchaserPhone, purchaserAddress, purchaserDetailAddress, purchaserEmail } = input;
+  const {
+    purchaserName,
+    purchaserPhone,
+    purchaserAddress,
+    purchaserDetailAddress,
+    purchaserEmail,
+  } = input;
 
   const onCompletePost = (data: { address: string }) => {
     setValues({
@@ -84,15 +90,23 @@ function PaymentForm() {
   if (isPending)
     return (
       <div className="flex justify-center items-center">
-        <Image src="/img/loading-spinner.svg" alt="로딩중" width={200} height={200} />
+        <Image
+          src="/img/loading-spinner.svg"
+          alt="로딩중"
+          width={200}
+          height={200}
+        />
       </div>
     );
 
-  if (isError) return <div className="flex justify-center items-center">에러...</div>;
+  if (isError)
+    return <div className="flex justify-center items-center">에러...</div>;
   return (
     <InnerLayout>
       <div className="flex flex-col justify-center items-center">
-        <h3 className="hidden md:block mb-[66px] font-bold text-[30px]">주문서 작성</h3>
+        <h3 className="hidden md:block mb-[66px] font-bold text-[30px]">
+          주문서 작성
+        </h3>
 
         <div className="flex flex-col w-[504px]"></div>
         <div className="flex flex-col gap-[23px] w-full md:w-[504px] mb-[24px] md:mb-[48px]">
@@ -140,12 +154,12 @@ function PaymentForm() {
             value={purchaserAddress}
             name="recipientAddress"
             readOnly={true}
-            error={error.emailError}
+            error={error.addressError}
           />
 
           <Input
             variant="underline"
-            placeholder="상세 주소"
+            placeholder="상세 주소(선택 사항)"
             value={purchaserDetailAddress}
             name="purchaserDetailAddress"
             onChange={onChangeInput}
@@ -163,11 +177,24 @@ function PaymentForm() {
                 }}
                 className="hidden"
               />
-              <label htmlFor="firstCheckBox" className="flex gap-2 items-center md:font-bold text-[16px]">
+              <label
+                htmlFor="firstCheckBox"
+                className="flex gap-2 items-center md:font-bold text-[16px] cursor-pointer"
+              >
                 {firstCheckBox ? (
-                  <Image src="/img/icon-checkbox-checked.png" alt="체크박스" width={24} height={24} />
+                  <Image
+                    src="/img/icon-checkbox-checked.png"
+                    alt="체크박스"
+                    width={24}
+                    height={24}
+                  />
                 ) : (
-                  <Image src="/img/icon-checkbox.png" alt="체크된 체크박스" width={24} height={24} />
+                  <Image
+                    src="/img/icon-checkbox.png"
+                    alt="체크된 체크박스"
+                    width={24}
+                    height={24}
+                  />
                 )}
                 개인정보(이름, 연락처, 이메일, 주소)를 수집하는 것에 동의합니다.
               </label>
@@ -183,12 +210,22 @@ function PaymentForm() {
               />
               <label
                 htmlFor="secondCheckBox"
-                className="flex gap-2 items-center md:font-bold text-[16px] text-[#FF0000]"
+                className="flex gap-2 items-center md:font-bold text-[16px] text-[#FF0000] cursor-pointer"
               >
                 {secondCheckBox ? (
-                  <Image src="/img/icon-checkbox-checked.png" alt="체크박스" width={24} height={24} />
+                  <Image
+                    src="/img/icon-checkbox-checked.png"
+                    alt="체크박스"
+                    width={24}
+                    height={24}
+                  />
                 ) : (
-                  <Image src="/img/icon-checkbox.png" alt="체크된 체크박스" width={24} height={24} />
+                  <Image
+                    src="/img/icon-checkbox.png"
+                    alt="체크된 체크박스"
+                    width={24}
+                    height={24}
+                  />
                 )}
                 실제 판매 상품이 아니기에, 결제 시 즉시 환불처리 됩니다.
               </label>

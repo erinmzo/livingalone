@@ -75,6 +75,15 @@ function PaymentButton({
       }));
       return;
     }
+
+    if (!purchaserAddress.trim()) {
+      setError((prev) => ({
+        ...prev,
+        addressError: "주소를 검색하여 등록해주세요.",
+      }));
+      return;
+    }
+
     const email_regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
     if (!email_regex.test(purchaserEmail)) {
       setError((prev) => ({
