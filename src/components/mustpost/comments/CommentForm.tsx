@@ -27,10 +27,6 @@ function CommentForm({ postId, userId }: { postId: string; userId: string }) {
     setCountComment(e.target.value.length);
   };
 
-  const countCommentHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setCountComment(e.target.value.length);
-  };
-
   const { mutate: addComment } = useMutation({
     mutationFn: (newComment: TComment) => insertComment(newComment),
 
@@ -115,7 +111,6 @@ function CommentForm({ postId, userId }: { postId: string; userId: string }) {
             autoFocus={false}
             onChange={(e) => {
               setContentHandler(e);
-              countCommentHandler(e);
             }}
             className="flex-grow py-[15px] pl-[17px] pr-[50px] md:pl-[15px] md:pr-[49px] md:py-[15px] text-[16px] rounded-[8px] resize-none outline-none"
           ></textarea>

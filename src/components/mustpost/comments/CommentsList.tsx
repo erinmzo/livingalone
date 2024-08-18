@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { Notify } from "notiflix";
 import React, { useState } from "react";
 import CommentDeleteBtn from "./CommentDeleteBtn";
+import CommentBox from "./CommentBox";
 
 export type TEditComment = {
   commentId: string | null;
@@ -16,6 +17,7 @@ export type TEditComment = {
 function CommentsList({ postId }: { postId: string }) {
   const [editComment, setEditComment] = useState("");
   const [editCommentId, setEditCommentId] = useState<string | null>(null);
+  // const [countComment, setCountComment] = useState(0)
   const queryClient = useQueryClient();
   const router = useRouter();
   const user = useAuthStore((state) => state.user);
@@ -30,7 +32,8 @@ function CommentsList({ postId }: { postId: string }) {
   const totalPages = Math.ceil(totalComments / commentsData?.limit);
 
   const { mutate: updateComment } = useMutation({
-    mutationFn: (newEditComment: TEditComment) => updatenewComment(newEditComment),
+    mutationFn: (newEditComment: TEditComment) =>
+      updatenewComment(newEditComment),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["comments", postId] });
     },
@@ -82,7 +85,9 @@ function CommentsList({ postId }: { postId: string }) {
           <Image src="/img/icon-empty.png" alt="empty" layout="fill" />
         </div>
         <span className="text-gray-2 text-[16px] mb-1">댓글이 없습니다.</span>
-        <span className="text-gray-2 text-[16px]">첫 댓글을 작성해 보세요!</span>
+        <span className="text-gray-2 text-[16px]">
+          첫 댓글을 작성해 보세요!
+        </span>
       </div>
     );
   }
@@ -94,22 +99,26 @@ function CommentsList({ postId }: { postId: string }) {
           <div key={comment.id}>
             {user?.id === comment.user_id ? (
               // 댓글 작성자와 아이디가 같은 유저일 경우
-              // 수정 모드
               <div>
                 {editCommentId === comment.id ? (
-                  <div className="flex flex-row w-full px-2 py-2 border-b border-gray-2">
+                  // 수정 모드
+                  <div className="flex flex-row w-full p-2 border-b border-gray-2">
                     <div className="flex-shrink-0 relative mr-1 w-6 h-6">
                       <Image
                         src={comment.profiles.profile_image_url}
                         alt="유저 프로필 사진"
                         fill
-                        objectFit="cover"
                         className="rounded-full"
                       />
                     </div>
                     <div className="flex-grow-1">
-                      <span className="inline-block mb-1 text-gray-4 h-4 text-[14px]">{comment.profiles.nickname}</span>
-                      <form onSubmit={handleUpdateComment} className="flex flex-col md:flex-row ">
+                      <span className="inline-block mb-1 text-gray-4 h-4 text-[14px]">
+                        {comment.profiles.nickname}
+                      </span>
+                      <form
+                        onSubmit={handleUpdateComment}
+                        className="flex flex-col md:flex-row "
+                      >
                         <textarea
                           value={editComment}
                           cols={30}
@@ -139,71 +148,39 @@ function CommentsList({ postId }: { postId: string }) {
                   </div>
                 ) : (
                   // 읽기 모드
-                  <div className="flex flex-col md:min-h-[79px] md:flex-row px-2 py-2 border-b border-gray-2">
-                    {/* // 모바일 */}
-                    <div className="flex flex-row">
-                      <div className="flex-shrink-0 relative mr-1 w-6 h-6">
-                        <Image
-                          src={comment.profiles.profile_image_url}
-                          alt="유저 프로필 사진"
-                          fill
-                          objectFit="cover"
-                          className="rounded-full"
-                        />
-                      </div>
-                      <div className="flex-grow-1">
-                        <div className="flex flex-col py-[2px]">
-                          <span className="inline-block mb-1 text-gray-4 h-4 text-[14px]">
-                            {comment.profiles.nickname}
-                          </span>
-                        </div>
-                        {/* Pc */}
-                        <div className="flex flex-col">
-                          <span className="pb-[2px] text-gray-4 text-[16px] whitespace-pre-wrap break-words">
-                            {comment.content}
-                          </span>
-                          <span className="text-gray-2 text-[14px]">
-                            {comment.created_at.split("T").join(" ").substring(0, 16)}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="md:flex md:justify-center md:items-center w-[34px] flex-shrink-0 md:w-[72px] md:ml-auto">
-                      <div className="flex flex-row w-[88px] md:w-auto justify-items-start md:justify-center items-center gap-1 mt-3 md:mt-0 md:ml-1 ml-6">
-                        <button
-                          className="w-[34px] py-[3px] border text-[12px] text-gray-1 bg-gray-3 rounded-[4px]"
-                          onClick={() => handleEditComment(comment.id, comment.content)}
-                        >
-                          수정
-                        </button>
-                        <CommentDeleteBtn commentId={comment.id} postId={postId} />
-                      </div>
+                  <div className="flex flex-col md:flex-row md:items-center border-b border-gray-2">
+                    <CommentBox
+                      profileImg={comment.profiles.profile_image_url}
+                      nickname={comment.profiles.nickname}
+                      content={comment.content}
+                      date={comment.created_at}
+                    />
+                    <div className="flex flex-row text-xs gap-1 mt-1 md:mt-0 mb-3 md:mb-0 ml-9 md:ml-0">
+                      <button
+                        className="w-[34px] py-[3px] text-gray-1 bg-gray-3 rounded-[4px]"
+                        onClick={(e) =>
+                          handleEditComment(comment.id, comment.content)
+                        }
+                      >
+                        수정
+                      </button>
+                      <CommentDeleteBtn
+                        commentId={comment.id}
+                        postId={postId}
+                      />
                     </div>
                   </div>
                 )}
               </div>
             ) : (
               // 댓글 작성자와 아이디가 다른 유저일 경우
-              <div className="flex flex-row px-2 py-2 border-b border-gray-2">
-                <div className="flex-shrink-0 relative mr-1 w-6 h-6">
-                  <Image
-                    src={comment.profiles.profile_image_url}
-                    alt="유저 프로필 사진"
-                    fill
-                    className="rounded-full"
-                  />
-                </div>
-
-                <div className="flex flex-col py-[2px]">
-                  <span className="inline-block mb-1 text-gray-4 h-4 text-[14px]">{comment.profiles.nickname}</span>
-                  <span className="pb-[2px] text-gray-4 text-[16px] whitespace-pre-wrap break-words">
-                    {comment.content}
-                  </span>
-                  <span className="text-gray-2 text-[14px]">
-                    {comment.created_at.split("T").join(" ").substring(0, 16)}
-                  </span>
-                </div>
+              <div className="border-b border-gray-2">
+                <CommentBox
+                  profileImg={comment.profiles.profile_image_url}
+                  nickname={comment.profiles.nickname}
+                  content={comment.content}
+                  date={comment.created_at}
+                />
               </div>
             )}
           </div>
