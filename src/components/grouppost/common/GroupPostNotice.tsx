@@ -75,7 +75,7 @@ function GroupPostNotice({
         />
         <label
           htmlFor="checkBox"
-          className={`flex items-center gap-1 text-xs md:text-[14px] ${
+          className={`cursor-pointer flex items-center gap-1 text-xs md:text-[14px] ${
             checkBox ? "text-main-8" : "text-red-3"
           }`}
         >
