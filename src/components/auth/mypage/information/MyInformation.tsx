@@ -203,7 +203,11 @@ function MyInformation() {
               <span className="text-center md:text-[12px] text-[16px] text-gray-3">주소검색</span>
             </button>
             {isPostModalOpen && (
-              <div className="absolute left-0 top-[48px] border border-black z-[999] ">
+              <div className="z-20 absolute left-0 top-[48px] border border-black">
+                <div
+                  onClick={() => setIsPostModalOpen(false)}
+                  className="fixed inset-0 "
+                ></div>
                 <DaumPostcode onComplete={onCompleteAddress}></DaumPostcode>
               </div>
             )}

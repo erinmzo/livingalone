@@ -49,7 +49,7 @@ function GroupWriteForm() {
     peopleNum: 0,
     price: 0,
   });
-  const { title, endDate, content, item, link, peopleNum, price } = input;
+  const { title, endDate, item, link, peopleNum, price } = input;
 
   const addImageMutation = useMutation({
     mutationFn: async (newGroupImage: any) => {
@@ -204,10 +204,10 @@ function GroupWriteForm() {
                 id="peopleNum"
                 name="peopleNum"
                 type="number"
-                placeholder="숫자만 입력해주세요."
-                value={peopleNum}
+                placeholder="0"
+                value={peopleNum || ""}
                 onChange={onChangeInput}
-                className="rounded-none w-auto max-w-[83px] md:w-[100px] pl-[2px] px-[2px] py-2 border-b border-gray-3 md:text-[18px] font-bold text-black outline-none"
+                className="placeholder:text-gray-2 rounded-none w-auto max-w-[83px] md:w-[100px] pl-[2px] px-[2px] py-2 border-b border-gray-3 md:text-[18px] font-bold  outline-none"
               />
               {error.peopleNumError && <p className={`text-red-3 text-[12px] mt-2`}>{error.peopleNumError}</p>}
             </div>
@@ -228,8 +228,8 @@ function GroupWriteForm() {
           labelName="공구가격"
           name="price"
           type="number"
-          value={price}
-          placeHolder="숫자만 입력해주세요."
+          value={price || ""}
+          placeHolder="원 단위로 입력해주세요."
           minLength={1}
           onchangeValue={onChangeInput}
           error={error.priceError}
