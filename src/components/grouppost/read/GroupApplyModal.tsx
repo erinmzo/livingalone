@@ -133,10 +133,17 @@ function GroupApplyModal({ id, onClose, userId }: PropsType) {
       <div className="z-10 p-6 w-[324px] md:w-[500px] box-border bg-white rounded-2xl shadow-modal-custom">
         <div className="flex justify-end">
           <button onClick={onClose}>
-            <Image src="/img/icon-delete.png" alt="모달 종료 버튼" width={24} height={24} />
+            <Image
+              src="/img/icon-delete.png"
+              alt="모달 종료 버튼"
+              width={24}
+              height={24}
+            />
           </button>
         </div>
-        <h6 className="flex justify-center font-bold text-[18px] md:text-[32px] mb-[33px]">공구 신청하기</h6>
+        <h6 className="flex justify-center font-bold text-[18px] md:text-[32px] mb-[33px]">
+          공구 신청하기
+        </h6>
         <div className="md:px-9">
           <input
             className="rounded-none w-full h-[38px] md:h-[47px] text-[18px] md:text-[24px] border-b-2 border-black p-1"
@@ -144,7 +151,9 @@ function GroupApplyModal({ id, onClose, userId }: PropsType) {
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
-          {error.nameError && <p className={`text-red-3 mt-2`}>{error.nameError}</p>}
+          {error.nameError && (
+            <p className={`text-red-3 mt-2`}>{error.nameError}</p>
+          )}
 
           <input
             className="rounded-none w-full h-[38px] md:h-[47px] mt-[26px] text-[18px] md:text-[24px] border-b-2 border-black p-1"
@@ -155,7 +164,9 @@ function GroupApplyModal({ id, onClose, userId }: PropsType) {
               setPhone(validatedPhone);
             }}
           />
-          {error.phoneError && <p className={`text-red-3 mt-2`}>{error.phoneError}</p>}
+          {error.phoneError && (
+            <p className={`text-red-3 mt-2`}>{error.phoneError}</p>
+          )}
           <button
             className="py-2 px-4 mt-[32px] md:mt-[44px] text-[12px] font-bold text-gray-4 md:text-gray-3 border border-gray-3 rounded-full mb-1 md:mb-3"
             onClick={handleSearchAddress}
@@ -168,7 +179,9 @@ function GroupApplyModal({ id, onClose, userId }: PropsType) {
             value={address}
             readOnly
           />
-          {error.addressError && <p className={`text-red-3 mt-2`}>{error.addressError}</p>}
+          {error.addressError && (
+            <p className={`text-red-3 mt-2`}>{error.addressError}</p>
+          )}
           <input
             className="rounded-none w-full h-[38px] md:h-[47px] text-[18px] md:text-[24px] mt-2 mb-[40px] border-b-2 border-black p-1"
             placeholder="상세 주소"
@@ -188,25 +201,43 @@ function GroupApplyModal({ id, onClose, userId }: PropsType) {
 
           <label
             htmlFor="checkBox"
-            className={`font-bold flex items-center gap-1 ${checkBox ? "text-gray-4 md:text-gray-5" : "text-gray-4"}`}
+            className={`cursor-pointer font-bold flex items-center gap-1 ${
+              checkBox ? "text-gray-4 md:text-gray-5" : "text-gray-4"
+            }`}
           >
             {checkBox ? (
-              <Image src="/img/icon-checkbox-checked.png" alt="체크박스" width={24} height={24} />
+              <Image
+                src="/img/icon-checkbox-checked.png"
+                alt="체크박스"
+                width={24}
+                height={24}
+              />
             ) : (
-              <Image src="/img/icon-checkbox.png" alt="체크된 체크박스" width={24} height={24} />
+              <Image
+                src="/img/icon-checkbox.png"
+                alt="체크된 체크박스"
+                width={24}
+                height={24}
+              />
             )}
             공구 참여자는 2024년 7월 22일 아래와 같이 서약합니다.
           </label>
-          <div className={`text-[14px] mt-2 ${checkBox ? "text-gray-3 md:text-gray-5" : "text-gray-3"}`}>
+          <div
+            className={`text-[14px] mt-2 ${
+              checkBox ? "text-gray-3 md:text-gray-5" : "text-gray-3"
+            }`}
+          >
             <p className="flex gap-1">
-              <span>1. </span> 공구 총대가 개인정보(이름, 주소, 전화번호)를 수집하는 것에 동의합니다.
+              <span>1. </span> 공구 총대가 개인정보(이름, 주소, 전화번호)를
+              수집하는 것에 동의합니다.
             </p>
             <p className="flex gap-1">
-              <span>2. </span> 개인정보 기입 오류 시 물건에 대한 피해, 금전적 피해, 불이익 등 모두 감수하며, 환불받지
-              못하는 사실에 동의합니다.
+              <span>2. </span> 개인정보 기입 오류 시 물건에 대한 피해, 금전적
+              피해, 불이익 등 모두 감수하며, 환불받지 못하는 사실에 동의합니다.
             </p>
             <p className="flex gap-1">
-              <span>3. </span> 본인 실수로 인한 불이익 발생 시 어떠한 이의제기도 하지 않을 것을 서약합니다.
+              <span>3. </span> 본인 실수로 인한 불이익 발생 시 어떠한 이의제기도
+              하지 않을 것을 서약합니다.
             </p>
           </div>
           <button
@@ -224,7 +255,10 @@ function GroupApplyModal({ id, onClose, userId }: PropsType) {
           <DaumPostcode onComplete={onCompletePost}></DaumPostcode>
         </div>
       )}
-      <div onClick={onClose} className="fixed inset-0 bg-black bg-opacity-50"></div>
+      <div
+        onClick={onClose}
+        className="fixed inset-0 bg-black bg-opacity-50"
+      ></div>
     </div>
   );
 }
