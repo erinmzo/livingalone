@@ -131,10 +131,11 @@ function GroupEditForm({ params }: { params: { id: string } }) {
       return;
     }
 
-    if (!editorRef.current || editorRef.current.trim() === "") return Notify.failure("모든 항목을 입력해주세요");
-
     if (editorRef.current) {
       const editorContent = editorRef.current.getInstance().getMarkdown();
+
+      if (!editorContent) return Notify.failure("모든 항목을 입력해주세요");
+
       const newGroupPost: TNewGroupPost = {
         id,
         user_id: userId,
