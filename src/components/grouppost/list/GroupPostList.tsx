@@ -60,7 +60,7 @@ function GroupPostList() {
   if (isError)
     return <div className="flex justify-center items-center">에러...</div>;
   return (
-    <div>
+    <div className="pb-0 md:pb-[200px] lg:pb-0">
       <div className="hidden md:flex flex-col items-center justify-center mb-[44px]">
         <h3 className="text-3xl font-bold mb-[8px]">같이 사 공구템</h3>
         <h4 className="text-gray-3">
