@@ -9,6 +9,7 @@ function SearchBar() {
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     router.push(`/mustpost/search?search=${searchValue}`);
+    setSearchValue("");
   };
   return (
     <form
