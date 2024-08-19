@@ -16,9 +16,9 @@ interface InputProps {
 
 const variantStyles = {
   default:
-    "h-[48px] px-4 w-full rounded-lg border border-gray-2 md:text-[18px] text-[16px] placeholder-gray-2 focus:outline-none focus:border-gray-3 transition",
+    "h-[48px] px-4 w-full rounded-lg border md:text-[18px] text-[16px] placeholder-gray-2 focus:outline-none focus:border-gray-3 transition",
   underline:
-    "border-b border-gray-2 px-1 py-2 md:text-[20px] text-[16px] placeholder-gray-2 focus:outline-none focus:border-black transition rounded-none",
+    "border-b w-full px-1 py-2 md:text-[20px] text-[16px] placeholder-gray-2 focus:outline-none focus:border-black transition rounded-none",
 };
 
 // 3. forwardRef로 전달 받음
@@ -55,7 +55,9 @@ const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
       {(type === "text" || type === "password") && (
         <div className="relative">
           <input
-            className={`${variantStyles[variant]}`}
+            className={`${variantStyles[variant]} ${
+              error ? "border-red-3" : "border-gray-2"
+            }`}
             type={type}
             value={value}
             name={name}
@@ -70,12 +72,21 @@ const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
               type="button"
               className="absolute right-4 top-[14px]"
             >
-              <Image
-                src="/img/icon-eye.png"
-                alt="눈 아이콘"
-                width={20}
-                height={20}
-              />
+              {type === "text" ? (
+                <Image
+                  src="/img/icon-eye.png"
+                  alt="눈 아이콘"
+                  width={20}
+                  height={20}
+                />
+              ) : (
+                <Image
+                  src="/img/icon-eye-see.png"
+                  alt="눈 아이콘"
+                  width={20}
+                  height={20}
+                />
+              )}
             </button>
           )}
         </div>

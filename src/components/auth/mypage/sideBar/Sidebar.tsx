@@ -26,7 +26,7 @@ function SideBar() {
     return (
       <div className=" md:flex flex-col hidden justify-center w-[208px] h-[600px] items-center border border-gray-2 rounded-lg bg-white">
         <div className="flex-col justify-center  items-center mb-8">
-          <div className="w-full">
+          <div className="w-full flex justify-center">
             <Image
               className="border border-gray-2 bg-gray-200 rounded-full mb-6 w-[100px] h-[100px]"
               src={profile?.profile_image_url}

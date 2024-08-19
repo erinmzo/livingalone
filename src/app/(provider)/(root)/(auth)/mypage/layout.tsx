@@ -14,10 +14,8 @@ function MyPageLayout({ children }: PropsWithChildren) {
       <MobileHeader hamburger title="마이페이지" />
       <IsOpenProvider>
         <Page>
-          <h1 className="text-[32px] text-center font-bold hidden md:block">
-            마이페이지
-          </h1>
-          <div className="flex md:py-[100px] md:px-[50px]">
+          <h1 className="text-[32px] text-center font-bold hidden md:block">마이페이지</h1>
+          <div className="flex md:py-[100px] px-0 lg:px-[50px]">
             <SideBar />
             <MobileSideBar />
             <main className="ml-0 md:ml-[50px] w-auto grow">{children}</main>
