@@ -17,7 +17,6 @@ export type TEditComment = {
 function CommentsList({ postId }: { postId: string }) {
   const [editComment, setEditComment] = useState("");
   const [editCommentId, setEditCommentId] = useState<string | null>(null);
-  // const [countComment, setCountComment] = useState(0)
   const queryClient = useQueryClient();
   const router = useRouter();
   const user = useAuthStore((state) => state.user);
@@ -119,16 +118,22 @@ function CommentsList({ postId }: { postId: string }) {
                         onSubmit={handleUpdateComment}
                         className="flex flex-col md:flex-row "
                       >
-                        <textarea
-                          value={editComment}
-                          cols={30}
-                          rows={2}
-                          maxLength={501}
-                          autoFocus={false}
-                          onChange={(e) => setEditComment(e.target.value)}
-                          className="w-[275px] md:w-[514px] px-4 py-2 text-[16px] border border-gray-3 rounded-[4px] resize-none outline-none flex-grow-1"
-                        ></textarea>
-                        <div className="flex flex-row justify-center items-center gap-1 w-[72px] md:ml-1 flex-grow-0 mt-3 md:mt-0">
+                        <div className="flex flex-col">
+                          <textarea
+                            value={editComment}
+                            cols={30}
+                            rows={2}
+                            maxLength={501}
+                            autoFocus={false}
+                            onChange={(e) => setEditComment(e.target.value)}
+                            className="w-full md:w-[514px] px-2 md:px-3 py-2 text-[16px] border border-gray-3 rounded-[4px] resize-none outline-none flex-grow-1"
+                          ></textarea>
+                          <span className="inline-block h-[14px] text-gray-3 text-[12px] ml-auto mt-1 mr-1">
+                            {editComment.length} / 500자
+                          </span>
+                        </div>
+
+                        <div className="flex flex-row justify-center items-center gap-1 w-[72px] md:mb-[18px] md:ml-1 flex-grow-0">
                           <button
                             type="button"
                             onClick={handleCancelEdit}
