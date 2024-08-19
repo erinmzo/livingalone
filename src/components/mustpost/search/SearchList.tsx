@@ -45,7 +45,6 @@ function SearchList({ searchValue }: { searchValue: string }) {
       post.title.includes(searchValue) ||
       post.content.includes(searchValue)
   );
-  console.log(searchedList.length);
   return (
     <div className="flex flex-col items-center justify-center pt-[24px] md:pt-0">
       <div className="flex flex-col items-center justify-center w-full">
