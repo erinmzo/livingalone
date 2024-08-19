@@ -56,13 +56,6 @@ function SearchList({ searchValue }: { searchValue: string }) {
         </div>
         <div className="flex flex-col justify-center items-center gap-4 mb-9 md:mb-[70px]">
           <ResetButton />
-          {/* <div className="flex flex-row gap-1">
-            <h4 className="text-main-8 text-[20px] font-bold">
-              "{searchValue}"
-            </h4>
-            <span className="text-gray-2 text-[16px]">검색 결과 (총</span>
-            <span>{searchedList.length}건)</span>
-          </div> */}
         </div>
       </div>
       {searchedList.length > 0 ? (
