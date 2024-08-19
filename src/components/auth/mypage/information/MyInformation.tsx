@@ -43,6 +43,7 @@ function MyInformation() {
     enabled: !!user,
   });
 
+  console.log(profile);
   const { mutate: editProfile } = useMutation({
     mutationFn: (newProfile: TProfile) => editMyProfile(userId, newProfile),
     onSuccess: () => {
@@ -129,9 +130,7 @@ function MyInformation() {
 
     if (isEmpty) {
       return Report.info("변경된 내용이 없습니다.", "", "확인");
-    }
-
-    if (nickname === profile?.nickname) {
+    } else if (nickname === profile?.nickname) {
       return Report.info("변경된 내용이 없습니다.", "", "확인");
     }
 
@@ -144,12 +143,19 @@ function MyInformation() {
     ) {
       return Report.warning("닉네임 공백", "닉네임을 적어주세요!", "확인");
     }
-    if (nickname.length < 2) {
-      return Report.info("닉네임 길이", "2글자 이상으로 작성해주세요", "확인");
-    } else if (nickname.length > 8) {
-      return Report.info("닉네임 길이", "8글자 이하로 작성해주세요", "확인");
-    }
+    console.log(nickname);
 
+    if (!profile?.nickname) {
+      if (nickname.length < 2) {
+        return Report.info(
+          "닉네임 길이",
+          "2글자 이상으로 작성해주세요",
+          "확인"
+        );
+      } else if (nickname.length > 8) {
+        return Report.info("닉네임 길이", "8글자 이하로 작성해주세요", "확인");
+      }
+    }
     editProfile(newProfile);
   };
 
@@ -189,8 +195,7 @@ function MyInformation() {
               <Input
                 variant="default"
                 label="닉네임"
-                placeholder={profile?.nickname}
-                value={nickname ?? profile?.nickname}
+                defaultValue={nickname || profile?.nickname || "혼살러"}
                 name="nickname"
                 onChange={onChangeInput}
               />
@@ -228,16 +233,16 @@ function MyInformation() {
             <div className="flex flex-col gap-2">
               <Input
                 variant="underline"
-                value={address}
-                placeholder={profile?.address! || "OO시 OO구  OO동"}
+                value={address || profile?.address! || "OO시 OO구  OO동"}
                 readOnly
               />
               <Input
                 variant="underline"
-                value={detailAddress}
+                defaultValue={
+                  detailAddress || profile?.detail_address || "OO호"
+                }
                 name="detailAddress"
                 onChange={onChangeInput}
-                placeholder={profile?.detail_address! || "OO호"}
               />
             </div>
           </div>
