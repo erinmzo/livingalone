@@ -220,7 +220,9 @@ function GroupApplyModal({ id, onClose, userId }: PropsType) {
                 height={24}
               />
             )}
-            공구 참여자는 2024년 7월 22일 아래와 같이 서약합니다.
+            공구 참여자는 {new Date().getFullYear()}년{" "}
+            {new Date().getMonth() + 1}월 {new Date().getDate()}일 아래와 같이
+            서약합니다.
           </label>
           <div
             className={`text-[14px] mt-2 ${
