@@ -17,6 +17,7 @@ function MobileNav() {
   };
   const handleClickWrite = () => {
     if (!user) {
+      setIsOpen(false);
       Notify.failure("로그인 후 이용이 가능합니다");
       router.push("/login");
     }
