@@ -9,6 +9,7 @@ interface InputProps {
   name?: string;
   placeholder?: string;
   readOnly?: boolean;
+  defaultValue?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   error?: string;
   setPasswordType?: React.Dispatch<React.SetStateAction<boolean>>;
@@ -34,6 +35,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
     readOnly = false,
     error,
     setPasswordType,
+    defaultValue,
   },
   ref
 ) {
@@ -65,6 +67,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
             onChange={onChange}
             readOnly={readOnly}
             id={inputId}
+            defaultValue={defaultValue}
           />
           {setPasswordType && (
             <button
