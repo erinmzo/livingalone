@@ -243,10 +243,14 @@ function PaymentForm() {
           setError={setError}
         />
         {isPostModalOpen && (
-          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="fixed inset-0 flex items-center justify-center">
             <div className="absolute z-20 border-black border">
               <DaumPostcode onComplete={onCompletePost}></DaumPostcode>
             </div>
+            <div
+              onClick={() => setIsPostModalOpen(false)}
+              className="fixed inset-0 bg-black bg-opacity-50"
+            ></div>
           </div>
         )}
       </div>

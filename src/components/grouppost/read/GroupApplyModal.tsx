@@ -254,6 +254,10 @@ function GroupApplyModal({ id, onClose, userId }: PropsType) {
       </div>
       {isPostModalOpen && (
         <div className="absolute z-20 border-black border">
+          <div
+            onClick={() => setIsPostModalOpen(false)}
+            className="fixed inset-0 "
+          ></div>
           <DaumPostcode onComplete={onCompletePost}></DaumPostcode>
         </div>
       )}
