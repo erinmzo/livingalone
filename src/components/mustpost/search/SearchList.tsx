@@ -48,9 +48,9 @@ function SearchList({ searchValue }: { searchValue: string }) {
   console.log(searchedList.length);
   return (
     <div className="flex flex-col items-center justify-center pt-[24px] md:pt-0">
-      <div className="flex flex-col items-center justify-center">
+      <div className="flex flex-col items-center justify-center w-full">
         <Title />
-        <div className="flex flex-col justify-center items-center md:mb-[30px]">
+        <div className="flex flex-col justify-center items-center w-full md:w-auto md:mb-[30px]">
           <Suspense>
             <SearchBar />
           </Suspense>
@@ -80,7 +80,7 @@ function SearchList({ searchValue }: { searchValue: string }) {
               건)
             </span>
           </div>
-          <ul className="grid grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
+          <ul className="grid grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8 mb-[75px] md:mb-0">
             {searchedList.map((post) => (
               <li key={post.id}>
                 <MustPostCard
