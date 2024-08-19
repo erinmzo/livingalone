@@ -47,20 +47,39 @@ function SearchList({ searchValue }: { searchValue: string }) {
   );
   return (
     <div className="flex flex-col items-center justify-center pt-[24px] md:pt-0">
-      <div className="flex flex-col items-center justify-center">
+      <div className="flex flex-col items-center justify-center w-full">
         <Title />
-        <div className="flex flex-col justify-center items-center md:mb-[30px]">
+        <div className="flex flex-col justify-center items-center w-full md:w-auto md:mb-[30px]">
           <Suspense>
             <SearchBar />
           </Suspense>
         </div>
-        <div className="flex justify-center items-center gap-4 mb-9 md:mb-[70px]">
+        <div className="flex flex-col justify-center items-center gap-4 mb-9 md:mb-[70px]">
           <ResetButton />
+          {/* <div className="flex flex-row gap-1">
+            <h4 className="text-main-8 text-[20px] font-bold">
+              "{searchValue}"
+            </h4>
+            <span className="text-gray-2 text-[16px]">검색 결과 (총</span>
+            <span>{searchedList.length}건)</span>
+          </div> */}
         </div>
       </div>
       {searchedList.length > 0 ? (
         <div className="min-h-screen flex-col items-center justify-center w-full">
-          <ul className="grid grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
+          <div className="flex flex-row gap-1 mb-2">
+            <h4 className="text-main-8 text-[16px] md:text-[20px] font-bold">
+              "{searchValue}"
+            </h4>
+            <span className="flex items-center text-black text-[14px] md:text-[16px]">
+              검색 결과 (총
+              <span className="mx-[2px] font-bold text-main-8">
+                {searchedList.length}
+              </span>
+              건)
+            </span>
+          </div>
+          <ul className="grid grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8 mb-[75px] md:mb-0">
             {searchedList.map((post) => (
               <li key={post.id}>
                 <MustPostCard

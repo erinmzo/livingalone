@@ -167,13 +167,13 @@ function MustWriteForm() {
             error={error.titleError}
           />
 
-          <div className="flex flex-row justify-between gap-2">
+          <div className="flex flex-row justify-between gap-3 md:w-auto overflow-x-scroll scrollbar-hide">
             <SelectCategory
               selectCategory={selectCategory}
               initialCategoryName={selectedCategoryName}
               error={error.categoryError}
             />
-            <div className="md:pl-[72px] flex-grow content-end">
+            <div className="md:pl-[72px] min-w-[163px] flex-grow content-end">
               <InputField
                 labelName="작성일자"
                 name="date"

@@ -4,6 +4,7 @@ import { insertComment } from "@/apis/mustpost";
 import { TAddAlarm } from "@/types/types";
 import { useAuthStore } from "@/zustand/authStore";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import Image from "next/image";
 import { Notify } from "notiflix";
 import React, { useState } from "react";
 
@@ -19,13 +20,10 @@ function CommentForm({ postId, userId }: { postId: string; userId: string }) {
   const queryClient = useQueryClient();
   const [content, setContent] = useState("");
   const [countComment, setCountComment] = useState(0);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const setContentHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value);
-    setCountComment(e.target.value.length);
-  };
-
-  const countCommentHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setCountComment(e.target.value.length);
   };
 
@@ -34,6 +32,11 @@ function CommentForm({ postId, userId }: { postId: string; userId: string }) {
 
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["comments", postId] });
+      setLoading(false);
+    },
+
+    onError: () => {
+      setLoading(false);
     },
   });
 
@@ -57,6 +60,8 @@ function CommentForm({ postId, userId }: { postId: string; userId: string }) {
       Notify.warning("500자 이내로 작성해주세요");
       return;
     }
+
+    setLoading(true);
 
     // 한국 시간으로 넣기
     const offset = new Date().getTimezoneOffset() * 60000;
@@ -87,6 +92,16 @@ function CommentForm({ postId, userId }: { postId: string; userId: string }) {
     <div className="flex flex-col">
       <div className="md:w-[634px] mt-6 bg-gray-1 border border-gray-4 rounded-[8px]">
         <form onSubmit={submitHandler} className=" flex flex-col relative">
+          {loading && (
+            <div className="absolute inset-0 flex justify-center items-center z-50">
+              <Image
+                src="/img/loading-spinner-transparent.svg"
+                alt="로딩중"
+                width={80}
+                height={80}
+              />
+            </div>
+          )}
           <textarea
             value={content}
             placeholder="커뮤니티가 더 훈훈해지는 댓글 부탁드립니다."
@@ -96,9 +111,8 @@ function CommentForm({ postId, userId }: { postId: string; userId: string }) {
             autoFocus={false}
             onChange={(e) => {
               setContentHandler(e);
-              countCommentHandler(e);
             }}
-            className="flex-grow py-[15px] pl-[17px] pr-[50px] md:pl-[15px] md:pr-[49px] md:py-[15px] text-[16px] rounded-[8px] resize-none outline-none"
+            className="flex-grow py-[12px] pl-[12px] pr-[50px] md:pl-[15px] md:pr-[49px] md:py-[15px] text-[16px] rounded-[8px] resize-none outline-none"
           ></textarea>
           <button className="absolute right-0 bottom-0 w-[34px] mb-[15px] mr-[15px] md:mb-[15px] py-[3px] px-[5px] border border-gray-3 text-[12px] text-gray-3 rounded-[4px] z-10">
             등록
