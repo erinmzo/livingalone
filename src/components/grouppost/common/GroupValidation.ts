@@ -79,7 +79,13 @@ export function groupValidation(
     }));
     return false;
   }
-
+  if (price > 10000000) {
+    setError((prev) => ({
+      ...prev,
+      priceError: "공구 가격은 최대 999만원까지 입력 가능합니다.",
+    }));
+    return false;
+  }
   if (!imgUrl.trim()) {
     setError((prev) => ({
       ...prev,
