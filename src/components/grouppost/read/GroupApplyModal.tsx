@@ -10,7 +10,7 @@ import { useMutation } from "@tanstack/react-query";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Notify, Report } from "notiflix";
-import { useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import DaumPostcode from "react-daum-postcode";
 import { v4 as uuidv4 } from "uuid";
 
@@ -23,6 +23,7 @@ interface PropsType {
 function GroupApplyModal({ id, onClose, userId }: PropsType) {
   const router = useRouter();
   const user = useAuthStore((state) => state.user);
+  const throttleRef = useRef(false);
 
   const [name, setName] = useState<string>("");
   const [phone, setPhone] = useState<string>("");
@@ -57,7 +58,10 @@ function GroupApplyModal({ id, onClose, userId }: PropsType) {
     mutationFn: (chatAlarmData: TAddAlarm) => insertAlarm(chatAlarmData),
   });
 
-  const addGroupApplyHandler = async () => {
+  const addGroupApplyHandler = useCallback(async () => {
+    if (throttleRef.current) return;
+    throttleRef.current = true;
+
     setError({
       phoneError: "",
       nameError: "",
@@ -121,7 +125,21 @@ function GroupApplyModal({ id, onClose, userId }: PropsType) {
       is_read: false,
     };
     addAlarm(chatAlarmData);
-  };
+
+    setTimeout(() => {
+      throttleRef.current = false;
+    }, 5000);
+  }, [
+    id,
+    name,
+    phone,
+    address,
+    detailAddress,
+    checkBox,
+    user,
+    addMutation,
+    addAlarm,
+  ]);
 
   const onCompletePost = (data: { address: string }) => {
     setAddress(data.address);
@@ -256,7 +274,7 @@ function GroupApplyModal({ id, onClose, userId }: PropsType) {
         <div className="absolute z-20 border-black border">
           <div
             onClick={() => setIsPostModalOpen(false)}
-            className="fixed inset-0 "
+            className="fixed inset-0"
           ></div>
           <DaumPostcode onComplete={onCompletePost}></DaumPostcode>
         </div>

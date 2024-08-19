@@ -52,7 +52,7 @@ function GroupWriteForm() {
     peopleNum: 0,
     price: 0,
   });
-  const { title, endDate, content, item, link, peopleNum, price } = input;
+  const { title, endDate, item, link, peopleNum, price } = input;
 
   const addImageMutation = useMutation({
     mutationFn: async (newGroupImage: any) => {
