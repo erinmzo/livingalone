@@ -103,7 +103,7 @@ function PaymentForm() {
     return <div className="flex justify-center items-center">에러...</div>;
   return (
     <InnerLayout>
-      <div className="flex flex-col justify-center items-center">
+      <div className="flex flex-col justify-center items-center pb-0 md:pb-[300px] lg:pb-0">
         <h3 className="hidden md:block mb-[66px] font-bold text-[30px]">
           주문서 작성
         </h3>
@@ -243,10 +243,14 @@ function PaymentForm() {
           setError={setError}
         />
         {isPostModalOpen && (
-          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="fixed inset-0 flex items-center justify-center">
             <div className="absolute z-20 border-black border">
               <DaumPostcode onComplete={onCompletePost}></DaumPostcode>
             </div>
+            <div
+              onClick={() => setIsPostModalOpen(false)}
+              className="fixed inset-0 bg-black bg-opacity-50"
+            ></div>
           </div>
         )}
       </div>

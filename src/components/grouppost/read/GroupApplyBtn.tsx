@@ -5,7 +5,15 @@ import { Notify } from "notiflix";
 import { useState } from "react";
 import GroupApplyModal from "./GroupApplyModal";
 
-function GroupApplyBtn({ id, achievementRate, userId }: { id: string; achievementRate: number; userId: string }) {
+function GroupApplyBtn({
+  id,
+  achievementRate,
+  userId,
+}: {
+  id: string;
+  achievementRate: number;
+  userId: string;
+}) {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const user = useAuthStore((state) => state.user);
 
@@ -19,7 +27,7 @@ function GroupApplyBtn({ id, achievementRate, userId }: { id: string; achievemen
             return;
           }
 
-          if (achievementRate > 100) {
+          if (achievementRate === 100) {
             Notify.failure("현재 모집이 완료되었습니다.");
             return;
           }
@@ -29,7 +37,13 @@ function GroupApplyBtn({ id, achievementRate, userId }: { id: string; achievemen
       >
         공구 신청하기
       </button>
-      {isModalOpen && <GroupApplyModal id={id} userId={userId} onClose={() => setIsModalOpen(false)} />}
+      {isModalOpen && (
+        <GroupApplyModal
+          id={id}
+          userId={userId}
+          onClose={() => setIsModalOpen(false)}
+        />
+      )}
     </>
   );
 }
