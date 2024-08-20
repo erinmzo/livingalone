@@ -23,7 +23,6 @@ function MyInformation() {
   const [imgFile, setImgFile] = useState<File | null>();
   const [imgUrl, setImgUrl] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  // ref 선언
   const inputRef = useRef<HTMLInputElement>(null);
 
   const {
@@ -43,7 +42,6 @@ function MyInformation() {
     enabled: !!user,
   });
 
-  console.log(profile);
   const { mutate: editProfile } = useMutation({
     mutationFn: (newProfile: TProfile) => editMyProfile(userId, newProfile),
     onSuccess: () => {
@@ -204,10 +202,7 @@ function MyInformation() {
             </button>
             {isPostModalOpen && (
               <div className="z-20 absolute left-0 top-[48px] border border-black">
-                <div
-                  onClick={() => setIsPostModalOpen(false)}
-                  className="fixed inset-0 "
-                ></div>
+                <div onClick={() => setIsPostModalOpen(false)} className="fixed inset-0 "></div>
                 <DaumPostcode onComplete={onCompleteAddress}></DaumPostcode>
               </div>
             )}
