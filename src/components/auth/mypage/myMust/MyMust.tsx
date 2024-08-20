@@ -2,20 +2,22 @@
 
 import { myItemsPost } from "@/apis/mypage";
 import MustPostCard from "@/components/mustpost/list/MustPostCard";
+import { TMainMustPost } from "@/types/types";
 import { useAuthStore } from "@/zustand/authStore";
 import { useQuery } from "@tanstack/react-query";
 import EmptyState from "../EmptyState/EmptyState";
 import SkeletonMust from "../wishMust/SkeletonMust";
-import { TMainMustPost } from "@/types/types";
 
 function MyMust() {
   const user = useAuthStore((state) => state.user);
   const userId = user?.id as string;
 
   const { data: myMustPosts = [], isPending } = useQuery<TMainMustPost[]>({
-    queryKey: ["like", userId],
+    queryKey: ["myMust", userId],
     queryFn: () => myItemsPost(userId),
   });
+
+  console.log(myMustPosts);
 
   if (isPending) return <SkeletonMust />;
 
@@ -32,12 +34,7 @@ function MyMust() {
             <ul className="grid grid-cols-2 gap-[32px]">
               {myMustPosts.map((post) => (
                 <li key={post.id} className="mb-[64px]">
-                  <MustPostCard
-                    postId={post.id}
-                    title={post.title}
-                    item={post.item}
-                    imgUrl={post.img_url}
-                  />
+                  <MustPostCard postId={post.id} title={post.title} item={post.item} imgUrl={post.img_url} />
                 </li>
               ))}
             </ul>
