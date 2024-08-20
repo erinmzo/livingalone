@@ -27,6 +27,8 @@ function GroupEditForm({ params }: { params: { id: string } }) {
   const router = useRouter();
   const [checkBox, setCheckBox] = useState(false);
   const editorRef = useRef<EditorProps>(null);
+  const throttleRef = useRef(false);
+
   const [error, setError] = useState({
     titleError: "",
     endDateError: "",
@@ -143,6 +145,7 @@ function GroupEditForm({ params }: { params: { id: string } }) {
   });
 
   const editGroupPostHandler = async () => {
+    if (throttleRef.current) return;
     const isValid = groupValidation(
       setError,
       title,
@@ -160,7 +163,7 @@ function GroupEditForm({ params }: { params: { id: string } }) {
       const editorContent = editorRef.current.getInstance().getMarkdown();
 
       if (!editorContent) return Notify.failure("모든 항목을 입력해주세요");
-
+      throttleRef.current = true;
       const newGroupPost: TNewGroupPost = {
         id,
         user_id: userId,
@@ -177,6 +180,9 @@ function GroupEditForm({ params }: { params: { id: string } }) {
       };
       updateMutation.mutate(newGroupPost);
     }
+    setTimeout(() => {
+      throttleRef.current = false;
+    }, 5000);
   };
 
   if (isPending)

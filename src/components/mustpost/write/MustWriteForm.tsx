@@ -40,6 +40,8 @@ function MustWriteForm() {
   const [loading, setLoading] = useState<boolean>(false);
 
   const editorRef = useRef<EditorProps>(null);
+  const throttleRef = useRef(false);
+
   const [selectedCategoryName, setSelectedCategoryName] =
     useState<string>("선택");
   const [selectedCategoryId, setSelectedCategoryId] = useState<string>("");
@@ -128,6 +130,7 @@ function MustWriteForm() {
   const startDate = `${year}-${month}-${day}` as string;
 
   const addMustPostBtn = async () => {
+    if (throttleRef.current) return;
     const isValid = mustValidation(
       setError,
       title,
@@ -150,7 +153,7 @@ function MustWriteForm() {
       const editorContent = editorRef.current.getInstance().getMarkdown();
 
       if (!editorContent) return Notify.failure("모든 항목을 입력해주세요");
-
+      throttleRef.current = true;
       const newMustPost: TNewMustPost = {
         id: uuidv4(),
         user_id: user.id,
@@ -165,6 +168,9 @@ function MustWriteForm() {
       };
       addMustPost(newMustPost);
     }
+    setTimeout(() => {
+      throttleRef.current = false;
+    }, 5000);
   };
 
   return (
