@@ -93,11 +93,7 @@ function MyInformation() {
         const fileType = file.type;
 
         if (fileType !== "image/jpeg" && fileType !== "image/png") {
-          Report.warning(
-            "유효하지 않은 파일 형식",
-            "JPG 또는 PNG 파일만 업로드 가능합니다.",
-            "확인"
-          );
+          Report.warning("유효하지 않은 파일 형식", "JPG 또는 PNG 파일만 업로드 가능합니다.", "확인");
           return;
         }
 
@@ -132,21 +128,14 @@ function MyInformation() {
       return Report.info("변경된 내용이 없습니다.", "", "확인");
     }
 
-    if (
-      nickname !== profile?.nickname &&
-      nickname.trim() === "" &&
-      !imgFile &&
-      !detailAddress &&
-      !address
-    ) {
+    if (nickname !== profile?.nickname && nickname.trim() === "" && !imgFile && !detailAddress && !address) {
       return Report.warning("닉네임 공백", "닉네임을 적어주세요!", "확인");
     }
-    if (nickname.length < 2 || nickname.length > 8) {
-      return Report.info(
-        "닉네임 길이",
-        "닉네임은 2~8글자 사이로 입력해주세요",
-        "확인"
-      );
+
+    console.log(nickname);
+
+    if (nickname && (nickname.length < 2 || nickname.length > 8)) {
+      return Report.info("닉네임 길이", "닉네임은 2~8글자 사이로 입력해주세요", "확인");
     }
     editProfile(newProfile);
   };
@@ -176,9 +165,7 @@ function MyInformation() {
                 />
               )}
             </div>
-            <div className="text-[16px] font-bold md:hidden text-center w-full h-[19px]">
-              {profile?.nickname}
-            </div>
+            <div className="text-[16px] font-bold md:hidden text-center w-full h-[19px]">{profile?.nickname}</div>
           </div>
         </div>
         <form className="flex flex-col items-center w-full">
@@ -209,16 +196,11 @@ function MyInformation() {
               className="flex gap-3 w-fit py-2 px-4 border border-gray-3 bg-white font-bold rounded-full md:mb-3 mb-2 justify-center items-center"
               onClick={handleSearchAddress}
             >
-              <span className="text-center md:text-[12px] text-[16px] text-gray-3">
-                주소검색
-              </span>
+              <span className="text-center md:text-[12px] text-[16px] text-gray-3">주소검색</span>
             </button>
             {isPostModalOpen && (
               <div className="z-20 absolute left-0 top-[48px] border border-black">
-                <div
-                  onClick={() => setIsPostModalOpen(false)}
-                  className="fixed inset-0 "
-                ></div>
+                <div onClick={() => setIsPostModalOpen(false)} className="fixed inset-0 "></div>
                 <DaumPostcode onComplete={onCompleteAddress}></DaumPostcode>
               </div>
             )}
