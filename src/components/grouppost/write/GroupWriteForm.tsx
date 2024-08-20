@@ -41,6 +41,7 @@ function GroupWriteForm() {
   });
 
   const [imgUrl, setImgUrl] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
   const editorRef = useRef<EditorProps>(null);
 
   const { values: input, handler: onChangeInput } = useInputChange({
@@ -58,10 +59,12 @@ function GroupWriteForm() {
     mutationFn: async (newGroupImage: File) => {
       const formData = new FormData();
       formData.append("file", newGroupImage);
+      setLoading(true);
       const response = await insertGroupImage(formData);
       setImgUrl(
         `https://nqqsefrllkqytkwxfshk.supabase.co/storage/v1/object/public/groupposts/${response.path}`
       );
+      setLoading(false);
     },
   });
 
@@ -279,6 +282,13 @@ function GroupWriteForm() {
           >
             {imgUrl ? "이미지 수정" : "이미지 업로드"}
           </label>
+
+          {loading && !imgUrl && (
+            <div className="w-full md:w-[200px] md:ml-0 mr-[10px] md:mr-0 py-1 bg-gray-6 rounded-full overflow-hidden">
+              <div className="w-[60px] md:w-[90px] h-2 bg-main-7 rounded-full animate-progressBar"></div>
+            </div>
+          )}
+
           {error.imageUrlError && (
             <p className={`text-red-3 text-[12px] mt-2`}>
               {error.imageUrlError}
