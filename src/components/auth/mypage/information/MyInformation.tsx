@@ -132,8 +132,6 @@ function MyInformation() {
       return Report.warning("닉네임 공백", "닉네임을 적어주세요!", "확인");
     }
 
-    console.log(nickname);
-
     if (nickname && (nickname.length < 2 || nickname.length > 8)) {
       return Report.info("닉네임 길이", "닉네임은 2~8글자 사이로 입력해주세요", "확인");
     }
