@@ -54,6 +54,8 @@ export type TPopularGroupPost = Pick<
   TGroupApplicationsLikes;
 
 export type TMyGroupPost = GroupPost & TGroupApplications;
+export type TGroupLikeAndApplications = GroupPost & { group_applications: TGroupLike[] };
+export type TLikePosts = Tables<"group_likes"> & { group_posts: TGroupLikeAndApplications };
 
 export type Chat = Tables<"chat">;
 
