@@ -19,9 +19,12 @@ import { groupValidation } from "../common/GroupValidation";
 
 import imageCompression from "browser-image-compression";
 
-const EditorModule = dynamic(() => import("@/components/common/editor/EditorModule"), {
-  ssr: false,
-});
+const EditorModule = dynamic(
+  () => import("@/components/common/editor/EditorModule"),
+  {
+    ssr: false,
+  }
+);
 
 function GroupWriteForm() {
   const router = useRouter();
@@ -52,11 +55,13 @@ function GroupWriteForm() {
   const { title, endDate, item, link, peopleNum, price } = input;
 
   const addImageMutation = useMutation({
-    mutationFn: async (newGroupImage: any) => {
+    mutationFn: async (newGroupImage: File) => {
       const formData = new FormData();
       formData.append("file", newGroupImage);
       const response = await insertGroupImage(formData);
-      setImgUrl(`https://nqqsefrllkqytkwxfshk.supabase.co/storage/v1/object/public/groupposts/${response.path}`);
+      setImgUrl(
+        `https://nqqsefrllkqytkwxfshk.supabase.co/storage/v1/object/public/groupposts/${response.path}`
+      );
     },
   });
 
@@ -106,7 +111,15 @@ function GroupWriteForm() {
       return;
     }
 
-    const isValid = groupValidation(setError, title, endDate, peopleNum, item, price, imgUrl);
+    const isValid = groupValidation(
+      setError,
+      title,
+      endDate,
+      peopleNum,
+      item,
+      price,
+      imgUrl
+    );
     if (!isValid) {
       return;
     }
@@ -177,7 +190,9 @@ function GroupWriteForm() {
               마감일
             </label>
             <div className="flex gap-2">
-              <label className="hidden h-[38px] md:flex items-center text-[14px] text-black">마감일</label>
+              <label className="hidden h-[38px] md:flex items-center text-[14px] text-black">
+                마감일
+              </label>
               <div>
                 <input
                   id="endDate"
@@ -187,7 +202,11 @@ function GroupWriteForm() {
                   onChange={onChangeInput}
                   className="rounded-none border-b-[1px] border-gray-3 py-2 px-[2px] md:text-[18px] font-bold text-black outline-none"
                 />
-                {error.endDateError && <p className={`text-red-3 text-[12px] mt-2`}>{error.endDateError}</p>}
+                {error.endDateError && (
+                  <p className={`text-red-3 text-[12px] mt-2`}>
+                    {error.endDateError}
+                  </p>
+                )}
               </div>
             </div>
           </div>
@@ -209,7 +228,11 @@ function GroupWriteForm() {
                 onChange={onChangeInput}
                 className="placeholder:text-gray-2 rounded-none w-auto max-w-[83px] md:w-[100px] pl-[2px] px-[2px] py-2 border-b border-gray-3 md:text-[18px] font-bold  outline-none"
               />
-              {error.peopleNumError && <p className={`text-red-3 text-[12px] mt-2`}>{error.peopleNumError}</p>}
+              {error.peopleNumError && (
+                <p className={`text-red-3 text-[12px] mt-2`}>
+                  {error.peopleNumError}
+                </p>
+              )}
             </div>
           </div>
         </div>
@@ -244,14 +267,23 @@ function GroupWriteForm() {
           onchangeValue={onChangeInput}
         />
         <div className="ml-[70px] md:ml-[78px] flex flex-col md:flex-row gap-2 md:gap-4 items-start mb-[6px]">
-          <input className="hidden" id="image-file" type="file" onChange={addImageHandler} />
+          <input
+            className="hidden"
+            id="image-file"
+            type="file"
+            onChange={addImageHandler}
+          />
           <label
             className="flex justify-center items-center px-7 py-[7px] border border-gray-4 bg-gray-1 font-bold text-[12px] text-gray-4 rounded-full cursor-pointer"
             htmlFor="image-file"
           >
             {imgUrl ? "이미지 수정" : "이미지 업로드"}
           </label>
-          {error.imageUrlError && <p className={`text-red-3 text-[12px] mt-2`}>{error.imageUrlError}</p>}
+          {error.imageUrlError && (
+            <p className={`text-red-3 text-[12px] mt-2`}>
+              {error.imageUrlError}
+            </p>
+          )}
           {imgUrl && (
             <Image
               src={imgUrl}

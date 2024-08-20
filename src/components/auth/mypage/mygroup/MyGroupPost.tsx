@@ -1,6 +1,6 @@
 "use client";
 import { updateGroupPost } from "@/apis/grouppost";
-import { TMyGroupPost, TNewGroupPost } from "@/types/types";
+import { GroupApplication, TMyGroupPost, TNewGroupPost } from "@/types/types";
 import { useAuthStore } from "@/zustand/authStore";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
@@ -75,7 +75,7 @@ function MyGroupPost({
 
   // 순서대로 sort
   const sortedApply = groupPost.group_applications.sort(
-    (a: any, b: any) =>
+    (a: GroupApplication, b: GroupApplication) =>
       new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
   );
 
