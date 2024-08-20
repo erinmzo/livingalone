@@ -60,7 +60,6 @@ function GroupApplyModal({ id, onClose, userId }: PropsType) {
 
   const addGroupApplyHandler = useCallback(async () => {
     if (throttleRef.current) return;
-    throttleRef.current = true;
 
     setError({
       phoneError: "",
@@ -104,6 +103,8 @@ function GroupApplyModal({ id, onClose, userId }: PropsType) {
     if (!user) {
       return;
     }
+    throttleRef.current = true;
+
     const newGroupApply: TNewGroupApplication = {
       id: uuidv4(),
       post_id: id,

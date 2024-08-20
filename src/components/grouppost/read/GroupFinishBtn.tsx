@@ -66,7 +66,7 @@ function GroupFinishBtn({ id }: { id: string }) {
   return (
     <button
       onClick={finishGroupPostHandler}
-      className="w-full md:w-[300px] py-[9px] font-bold text-[20px] border text-main-8 border-main-8 box-border rounded-full"
+      className="w-full md:w-[300px] h-[35px] md:h-[44px] flex justify-center items-center font-bold text-base md:text-xl border text-main-8 border-main-8 box-border rounded-full"
     >
       공구 종료하기
     </button>
