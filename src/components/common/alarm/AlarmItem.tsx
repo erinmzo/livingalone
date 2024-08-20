@@ -10,12 +10,12 @@ function AlarmItem({ alarm, userId }: { alarm: TAlarm; userId: string }) {
 
   const { mutate: setIsRead } = useMutation({
     mutationFn: (editAlarm: TEditAlarm) => updateIsRead(editAlarm),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["alarm", userId] }),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["alarm"] }),
   });
 
   const { mutate: closeAlarm } = useMutation({
     mutationFn: (closeAlarmInfo: TDeleteAlarm) => deleteAlarm(closeAlarmInfo),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["alarm", userId] }),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["alarm"] }),
   });
 
   const handleClickAlarm = (alarmId: string) => {

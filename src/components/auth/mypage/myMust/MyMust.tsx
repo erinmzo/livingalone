@@ -17,8 +17,6 @@ function MyMust() {
     queryFn: () => myItemsPost(userId),
   });
 
-  console.log(myMustPosts);
-
   if (isPending) return <SkeletonMust />;
 
   return (
