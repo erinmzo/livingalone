@@ -30,7 +30,6 @@ function GroupWriteForm() {
   const router = useRouter();
   const user = useAuthStore((state) => state.user);
   const [checkBox, setCheckBox] = useState(false);
-  const [isDebouncing, setIsDebouncing] = useState(false);
   const [error, setError] = useState({
     titleError: "",
     endDateError: "",
@@ -103,18 +102,11 @@ function GroupWriteForm() {
     onSuccess: () => {
       Notify.success("공구템 등록이 완료되었습니다!");
       router.push("/grouppost");
-      setIsDebouncing(false);
-    },
-    onError: () => {
-      setIsDebouncing(false);
     },
   });
 
   const addGroupPostHandler = async () => {
     if (throttleRef.current) return;
-    if (isDebouncing) {
-      return;
-    }
 
     const isValid = groupValidation(
       setError,
@@ -136,8 +128,6 @@ function GroupWriteForm() {
       Notify.failure("체크박스를 체크해주세요.");
       return;
     }
-
-    setIsDebouncing(true);
 
     const today = new Date();
     const year = today.getFullYear();
