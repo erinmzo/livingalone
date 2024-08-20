@@ -118,7 +118,7 @@ function MyInformation() {
   const handleProfileUpdate = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const newProfile = {
-      nickname: nickname,
+      nickname: nickname.trim() ? nickname : profile?.nickname,
       profile_image_url: !imgUrl ? profile?.profile_image_url : imgUrl,
       address: address || profile?.address,
       detail_address: !detailAddress ? profile?.detail_address : detailAddress,

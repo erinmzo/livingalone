@@ -29,6 +29,7 @@ function MustEditForm({ params }: { params: { id: string } }) {
   const router = useRouter();
 
   const editorRef = useRef<EditorProps>(null);
+  const throttleRef = useRef(false);
 
   const [imgUrl, setImgUrl] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
@@ -144,6 +145,7 @@ function MustEditForm({ params }: { params: { id: string } }) {
   const startDate = `${year}-${month}-${day}` as string;
 
   const addMustPostBtn = () => {
+    if (throttleRef.current) return;
     const isValid = mustValidation(
       setError,
       title,
@@ -167,7 +169,7 @@ function MustEditForm({ params }: { params: { id: string } }) {
       const editorContent = editorRef.current.getInstance().getMarkdown();
 
       if (!editorContent) return Notify.failure("모든 항목을 입력해주세요");
-
+      throttleRef.current = true;
       const newMustPost: TNewMustPost = {
         id,
         user_id: userId,
@@ -182,6 +184,9 @@ function MustEditForm({ params }: { params: { id: string } }) {
       };
       updateMutation(newMustPost);
     }
+    setTimeout(() => {
+      throttleRef.current = false;
+    }, 5000);
   };
 
   if (isPending)

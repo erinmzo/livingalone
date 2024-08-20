@@ -43,6 +43,7 @@ function GroupWriteForm() {
   const [imgUrl, setImgUrl] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const editorRef = useRef<EditorProps>(null);
+  const throttleRef = useRef(false);
 
   const { values: input, handler: onChangeInput } = useInputChange({
     title: "",
@@ -110,6 +111,7 @@ function GroupWriteForm() {
   });
 
   const addGroupPostHandler = async () => {
+    if (throttleRef.current) return;
     if (isDebouncing) {
       return;
     }
@@ -134,6 +136,7 @@ function GroupWriteForm() {
       Notify.failure("체크박스를 체크해주세요.");
       return;
     }
+
     setIsDebouncing(true);
 
     const today = new Date();
@@ -146,7 +149,7 @@ function GroupWriteForm() {
       const editorContent = editorRef.current.getInstance().getMarkdown();
 
       if (!editorContent) return Notify.failure("모든 항목을 입력해주세요");
-
+      throttleRef.current = true;
       const newGroupPost: TNewGroupPost = {
         id: uuidv4(),
         user_id: user.id,
@@ -164,6 +167,9 @@ function GroupWriteForm() {
 
       addMutation.mutate(newGroupPost);
     }
+    setTimeout(() => {
+      throttleRef.current = false;
+    }, 5000);
   };
 
   return (
