@@ -40,7 +40,7 @@ function AlarmItem({ alarm, userId }: { alarm: TAlarm; userId: string }) {
   return (
     <div>
       <div
-        className={`block w-full py-4 px-3 flex items-center border border-main-8 cursor-pointer rounded-lg ${
+        className={`w-full py-4 px-3 flex items-center border border-main-8 cursor-pointer rounded-lg ${
           alarm.is_read
             ? " bg-white"
             : alarm.type === "chat"
