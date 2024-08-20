@@ -17,12 +17,14 @@ function Chat({ postId, userId }: ChatProps) {
       <div className="flex justify-center">
         <button
           onClick={() => setIsModalOpen(true)}
-          className="text-gray-4 border border-gray-4 py-[9px] px-[80px] rounded-full font-bold text-[20px]"
+          className="text-gray-4 border border-gray-4 rounded-full w-full md:w-[343px] font-bold text-base md:text-xl flex items-center justify-center h-[35px] md:h-[44px]"
         >
           실시간 채팅 참여하기
         </button>
       </div>
-      {isModalOpen && <ChatForm postId={postId} userId={userId} onClose={onClose} />}
+      {isModalOpen && (
+        <ChatForm postId={postId} userId={userId} onClose={onClose} />
+      )}
     </>
   );
 }

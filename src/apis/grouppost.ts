@@ -53,7 +53,7 @@ export async function getGroupDetail(id: string) {
   return data;
 }
 
-export async function insertGroupImage(formData: any) {
+export async function insertGroupImage(formData: FormData) {
   const response = await fetch("/api/grouppost/image", {
     method: "POST",
     body: formData,

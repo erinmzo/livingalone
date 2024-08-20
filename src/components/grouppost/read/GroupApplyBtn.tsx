@@ -20,7 +20,7 @@ function GroupApplyBtn({
   return (
     <>
       <button
-        className="w-full md:w-[300px] py-[10px] text-white font-bold text-[20px] bg-main-8 rounded-full"
+        className="w-full md:w-[300px] flex justify-center items-center text-white font-bold text-base md:text-xl bg-main-8 rounded-full h-[35px] md:h-[44px]"
         onClick={() => {
           if (!user) {
             Notify.failure("로그인한 사용자만 신청할 수 있습니다.");
