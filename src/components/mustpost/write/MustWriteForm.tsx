@@ -81,7 +81,7 @@ function MustWriteForm() {
   });
 
   const { mutate: addImage } = useMutation({
-    mutationFn: async (newMustPostImage: any) => {
+    mutationFn: async (newMustPostImage: File) => {
       const formData = new FormData();
       formData.append("file", newMustPostImage);
 
