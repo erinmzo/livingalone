@@ -4,7 +4,7 @@ const ApplyItemsCardSkeleton = () => {
       <div className="flex items-center justify-center md:block">
         <div className=" bg-gray-2 md:rounded mb-6 mt-8 md:mt-0 border rounded-full w-[76px] h-[30px] md:w-[115px] md:h-[29px]"></div>
       </div>
-      <div className="md:px-4 md:py-5 border border-gray-2 rounded-lg flex items-center p-4 w-full">
+      <div className="md:px-4 md:py-5 border border-gray-2 rounded-lg flex items-center justify-between p-4 w-full">
         <div className="flex gap-4">
           <div className="flex flex-col items-center gap-3">
             <div className="bg-gray-2 rounded-lg border border-gray-2 w-[70px] h-[70px] md:w-[100px] md:h-[100px]"></div>
@@ -20,8 +20,8 @@ const ApplyItemsCardSkeleton = () => {
           </div>
           <div className="hidden md:flex flex-col justify-center gap-4">
             <div className="flex items-center gap-2">
-              <div className="bg-gray-2 rounded w-[50px] h-[20px]"></div>
-              <div className="bg-gray-2 rounded w-[100px] h-[20px]"></div>
+              <div className="bg-gray-2 rounded w-[80px] h-[20px]"></div>
+              <div className="bg-gray-2 rounded w-[150px] h-[20px]"></div>
             </div>
             <div className="text-black">
               <div className="bg-gray-2 rounded w-[150px] h-[20px] mb-2"></div>
