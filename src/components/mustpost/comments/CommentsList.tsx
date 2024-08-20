@@ -8,6 +8,7 @@ import { Notify } from "notiflix";
 import React, { useState } from "react";
 import CommentDeleteBtn from "./CommentDeleteBtn";
 import CommentBox from "./CommentBox";
+import { MustComments } from "@/types/types";
 
 export type TEditComment = {
   commentId: string | null;
@@ -94,7 +95,7 @@ function CommentsList({ postId }: { postId: string }) {
   return (
     <div>
       {comments &&
-        comments.map((comment: any) => (
+        comments.map((comment: MustComments) => (
           <div key={comment.id}>
             {user?.id === comment.user_id ? (
               // 댓글 작성자와 아이디가 같은 유저일 경우
