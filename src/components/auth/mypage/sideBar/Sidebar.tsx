@@ -24,7 +24,7 @@ function SideBar() {
 
   if (profile)
     return (
-      <div className=" md:flex flex-col hidden justify-center w-[208px] h-[600px] items-center border border-gray-2 rounded-lg bg-white">
+      <div className=" md:flex flex-col hidden justify-center w-[208px] h-[600px] items-center border border-gray-2 rounded-lg bg-white shrink-0">
         <div className="flex-col justify-center  items-center mb-8">
           <div className="w-full flex justify-center">
             <Image

@@ -118,7 +118,7 @@ function MyInformation() {
   const handleProfileUpdate = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const newProfile = {
-      nickname: nickname.trim() ? nickname : profile?.nickname,
+      nickname: nickname,
       profile_image_url: !imgUrl ? profile?.profile_image_url : imgUrl,
       address: address || profile?.address,
       detail_address: !detailAddress ? profile?.detail_address : detailAddress,
@@ -141,7 +141,7 @@ function MyInformation() {
     ) {
       return Report.warning("닉네임 공백", "닉네임을 적어주세요!", "확인");
     }
-
+    console.log(nickname);
     if (nickname.length < 2 || nickname.length > 8) {
       return Report.info(
         "닉네임 길이",
@@ -226,14 +226,14 @@ function MyInformation() {
             <div className="flex flex-col gap-2">
               <Input
                 variant="underline"
-                value={address || profile?.address! || "OO시 OO구  OO동"}
+                value={address || profile?.address! || ""}
+                placeholder="OO시 OO구 OO동"
                 readOnly
               />
               <Input
                 variant="underline"
-                defaultValue={
-                  detailAddress || profile?.detail_address || "OO호"
-                }
+                defaultValue={detailAddress || profile?.detail_address! || ""}
+                placeholder="OO호"
                 name="detailAddress"
                 onChange={onChangeInput}
               />

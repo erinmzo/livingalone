@@ -11,7 +11,11 @@ interface SelectCategoryProps {
   error: string;
 }
 
-function SelectCategory({ initialCategoryName, selectCategory, error }: SelectCategoryProps) {
+function SelectCategory({
+  initialCategoryName,
+  selectCategory,
+  error,
+}: SelectCategoryProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const {
@@ -68,8 +72,12 @@ function SelectCategory({ initialCategoryName, selectCategory, error }: SelectCa
             </button>
             {isOpen && (
               <ul className="z-[9999] flex flex-col items-start justify-center absolute left-0 w-[100px] border-t-0 border border-gray-4 bg-white py-[4px]">
+                안녕하세요
                 {mustCategories?.map((category) => (
-                  <li key={category.id} className="w-full text-gray-4 text-[14px] hover:bg-main-2">
+                  <li
+                    key={category.id}
+                    className="w-full text-gray-4 text-[14px] hover:bg-main-2"
+                  >
                     <button
                       // onClick={() => handleSelectCategory(category.name)}
                       onClick={() => handleSelectCategory(category)}
