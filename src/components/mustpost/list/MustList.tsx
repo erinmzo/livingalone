@@ -1,13 +1,9 @@
 "use client";
 
-import { getMustPostAll, getMustPostbyCategory } from "@/apis/mustpost";
 import { useCategoryStore } from "@/zustand/mustStore";
-import { useInfiniteQuery } from "@tanstack/react-query";
-import Image from "next/image";
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 import SearchBar from "../search/SearchBar";
 import MustCategory from "./MustCategory";
-import MustPostCard from "./MustPostCard";
 import Title from "./Title";
 import MustPostList from "./MustPostList";
 
