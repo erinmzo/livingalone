@@ -13,7 +13,7 @@ function MyMust() {
   const userId = user?.id as string;
 
   const { data: myMustPosts = [], isPending } = useQuery<TMainMustPost[]>({
-    queryKey: ["like", userId],
+    queryKey: ["myMust", userId],
     queryFn: () => myItemsPost(userId),
   });
 
