@@ -40,10 +40,10 @@ function SelectCategory({
   if (isPending)
     return (
       <div className="flex gap-[2px] items-center justify-center">
-        <span className="flex w-[70px] md:w-[78px] h-[38px] py-2 md:py-[5px] text-[16px] md:text-lg text-gray-4">
+        <span className="flex shrink-0 items-center w-[70px] md:w-[78px] h-[38px] py-2 md:py-[5px] text-[16px] md:text-lg text-gray-4">
           카테고리
         </span>
-        <span className="inline-block w-[100px] h-[38px] pl-[2px] border-b border-gray-3 box-border"></span>
+        <span className="inline-block w-full md:w-[100px] h-[38px] pl-[2px] py-2 border-b border-gray-3 text-[16px]"></span>
       </div>
     );
 
@@ -52,13 +52,13 @@ function SelectCategory({
   return (
     <div className="relative">
       <div>
-        <div className="flex gap-[2px] items-start">
+        <div className="flex gap-[2px] items-start grow-0">
           <span className="flex w-[70px] md:w-[78px] h-[38px] items-center py-2 md:py-[5px] text-[16px] md:text-lg text-gray-4">
             카테고리
           </span>
-          <div className="relative">
+          <div className="relative grow">
             <button
-              className="relative w-[100px] pl-[2px] py-2 border-b border-gray-3 font-bold text-[16px] md:text-[18px] text-left text-gray-5"
+              className="relative w-full md:w-[100px] pl-[2px] py-2 border-b border-gray-3 font-bold text-[16px] md:text-[18px] text-left text-gray-5"
               onClick={handleIsOpen}
             >
               {initialCategoryName}
@@ -71,7 +71,7 @@ function SelectCategory({
               />
             </button>
             {isOpen && (
-              <ul className="z-50 flex flex-col items-start justify-center absolute left-0 w-[100px] border-t-0 border border-gray-4 bg-white py-[4px]">
+              <ul className="z-50 flex flex-col items-start justify-center absolute left-0 w-full md:w-[100px] border-t-0 border border-gray-4 bg-white py-[4px]">
                 {mustCategories?.map((category) => (
                   <li
                     key={category.id}
@@ -79,7 +79,7 @@ function SelectCategory({
                   >
                     <button
                       onClick={() => handleSelectCategory(category)}
-                      className="inline-flex w-full py-[5px] px-[16px]  hover:bg-main-2"
+                      className="inline-flex justify-center w-full py-[5px] px-[16px]  hover:bg-main-2 tracking-wide md:tracking-normal"
                     >
                       {category.name}
                     </button>

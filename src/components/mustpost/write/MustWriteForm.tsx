@@ -181,8 +181,7 @@ function MustWriteForm() {
             error={error.titleError}
           />
 
-          <div className="flex flex-row justify-between gap-3 md:w-auto">
-            {/* overflow-x-scroll scrollbar-hide */}
+          <div className="flex flex-col gap-3 md:flex-row md:justify-between md:gap-2 md:w-auto">
             <SelectCategory
               selectCategory={selectCategory}
               initialCategoryName={selectedCategoryName}
