@@ -5,9 +5,7 @@ import { useCategoryStore } from "@/zustand/mustStore";
 import { useQuery } from "@tanstack/react-query";
 
 function MustCategory() {
-  const setSelectedCategory = useCategoryStore(
-    (state) => state.setSelectedCategory
-  );
+  const setSelectedCategory = useCategoryStore((state) => state.setSelectedCategory);
   const selectedCategory = useCategoryStore((state) => state.selectedCategory);
 
   const {
@@ -59,7 +57,7 @@ function MustCategory() {
         {mustCategories?.map((category) => (
           <li key={category.id}>
             <button
-              className={`w-[57px] md:w-[90px] py-[3px] md:py-[9px] border border-gray-3  rounded-full text-gray-3 font-bold text-xs md:text-[16px] hover:bg-main-8 hover:text-white  ${
+              className={`w-[57px] md:w-[90px] py-[3px] md:py-[9px] border border-gray-3  rounded-full text-gray-3 font-bold text-xs md:text-[16px] hover:bg-main-8 hover:text-white ${
                 selectedCategory === category.id
                   ? "bg-main-8 font-bold text-white border-transparent"
                   : "hover:bg-main-8 hover:text-white hover:border-transparent"
