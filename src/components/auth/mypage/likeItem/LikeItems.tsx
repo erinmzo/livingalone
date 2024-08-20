@@ -2,16 +2,17 @@
 
 import { likeItemPage } from "@/apis/mypage";
 import GroupPostCard from "@/components/grouppost/list/GroupPostCard";
+import { TLikePosts } from "@/types/types";
 import { useAuthStore } from "@/zustand/authStore";
 import { useQuery } from "@tanstack/react-query";
-import SkeletonLikeItem from "./SkeletonLikeItem";
 import EmptyState from "../EmptyState/EmptyState";
+import SkeletonLikeItem from "./SkeletonLikeItem";
 
 function LikeItems() {
   const user = useAuthStore((state) => state.user);
   const userId = user?.id as string;
 
-  const { data: likePosts = [], isPending } = useQuery({
+  const { data: likePosts = [], isPending } = useQuery<TLikePosts[]>({
     queryKey: ["like", userId],
     queryFn: () => likeItemPage(userId),
   });
@@ -32,7 +33,7 @@ function LikeItems() {
         <div className="mt-8">
           {likePosts.length > 0 ? (
             <ul className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {likePosts.map((post: any) => {
+              {likePosts.map((post) => {
                 return (
                   <li key={post.id}>
                     <GroupPostCard

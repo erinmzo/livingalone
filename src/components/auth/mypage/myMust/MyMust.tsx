@@ -15,6 +15,7 @@ function MyMust() {
     queryKey: ["like", userId],
     queryFn: () => myItemsPost(userId),
   });
+  console.log(myMustPosts);
 
   if (isPending) return <SkeletonMust />;
 
