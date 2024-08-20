@@ -71,7 +71,12 @@ function SelectCategory({
               />
             </button>
             {isOpen && (
+<<<<<<< HEAD
               <ul className="z-50 flex flex-col items-start justify-center absolute left-0 w-full md:w-[100px] border-t-0 border border-gray-4 bg-white py-[4px]">
+=======
+              <ul className="z-[9999] flex flex-col items-start justify-center absolute left-0 w-[100px] border-t-0 border border-gray-4 bg-white py-[4px]">
+                안녕하세요
+>>>>>>> bb9facfdf5bd1391deb5b0b9aa768a99448d0f68
                 {mustCategories?.map((category) => (
                   <li
                     key={category.id}

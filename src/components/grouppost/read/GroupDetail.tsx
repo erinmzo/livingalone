@@ -149,9 +149,9 @@ async function GroupDetail({ params }: Props) {
             <p className="mb-[20px] text-[14px] md:text-[16px] font-bold text-gray-3">
               {item}
             </p>
-            <div className="flex gap-2 justify-between md:justify-normal w-full md:w-auto">
+            <div className="flex gap-2 justify-between md:justify-normal items-center w-full md:w-auto">
               {is_finished ? (
-                <div className="w-full md:w-[330px] py-[10px] md:py-3 font-bold text-gray-3 md:text-gray-4 text-[20px] bg-gray-2 rounded-full text-center">
+                <div className="w-full md:w-[300px] h-[35px] md:h-[44px] flex justify-center items-center  font-bold text-gray-3 md:text-gray-4 text-base md:text-xl bg-gray-2 rounded-full text-center">
                   종료된 공구템입니다.
                 </div>
               ) : (
