@@ -141,7 +141,6 @@ function MyInformation() {
     ) {
       return Report.warning("닉네임 공백", "닉네임을 적어주세요!", "확인");
     }
-    console.log(nickname);
     if (nickname.length < 2 || nickname.length > 8) {
       return Report.info(
         "닉네임 길이",
