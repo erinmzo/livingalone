@@ -3,11 +3,11 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        hostname: "nqqsefrllkqytkwxfshk.supabase.co",
+        hostname: "wtgehzvyirdsifnqqfzn.supabase.co",
       },
     ],
     loader: "custom",
-    loaderFile: "./src/utils/supabase-image-loader.js",
+    loaderFile: "src/utils/supabase-image-loader.js",
     formats: ["image/avif", "image/webp"],
   },
 };

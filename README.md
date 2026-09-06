@@ -1,6 +1,4 @@
 ![_리드미 헤더-1 5](https://github.com/user-attachments/assets/e30ad46c-2cbd-4606-b259-3917d1d309c9)
-
-[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Ferinmzo%2Flivingalone&count_bg=%23666565&title_bg=%2300D3BA&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
 <br>
 <br>
 <a href="https://livingalone.vercel.app/"><img src="https://github.com/user-attachments/assets/ba7c35bd-7e43-4051-a251-f6db6d351035"/></a>
@@ -53,6 +51,7 @@
 # ⚙️ 기술환경
 
 ![스택 및 부가 라이브러리](https://github.com/user-attachments/assets/f7e95e74-9606-41ae-b91f-5759868fbe73)
+
 </div>
 <br>
 <br>

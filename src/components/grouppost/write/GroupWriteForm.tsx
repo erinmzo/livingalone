@@ -23,7 +23,7 @@ const EditorModule = dynamic(
   () => import("@/components/common/editor/EditorModule"),
   {
     ssr: false,
-  }
+  },
 );
 
 function GroupWriteForm() {
@@ -62,7 +62,7 @@ function GroupWriteForm() {
       setLoading(true);
       const response = await insertGroupImage(formData);
       setImgUrl(
-        `https://nqqsefrllkqytkwxfshk.supabase.co/storage/v1/object/public/groupposts/${response.path}`
+        `https://wtgehzvyirdsifnqqfzn.supabase.co/storage/v1/object/public/groupposts/${response.path}`,
       );
       setLoading(false);
     },
@@ -115,7 +115,7 @@ function GroupWriteForm() {
       peopleNum,
       item,
       price,
-      imgUrl
+      imgUrl,
     );
     if (!isValid) {
       return;
