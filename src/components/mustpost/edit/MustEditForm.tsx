@@ -99,7 +99,7 @@ function MustEditForm({ params }: { params: { id: string } }) {
       setLoading(true);
       const response = await insertMustImage(formData);
       setImgUrl(
-        `https://nqqsefrllkqytkwxfshk.supabase.co/storage/v1/object/public/mustposts/${response.path}`
+        `https://wtgehzvyirdsifnqqfzn.supabase.co/storage/v1/object/public/mustposts/${response.path}`,
       );
       setLoading(false);
     },
@@ -153,7 +153,7 @@ function MustEditForm({ params }: { params: { id: string } }) {
       itemName,
       company,
       price,
-      imgUrl
+      imgUrl,
     );
     if (!isValid) {
       return;

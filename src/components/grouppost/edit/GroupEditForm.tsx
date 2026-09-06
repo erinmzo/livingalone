@@ -104,7 +104,7 @@ function GroupEditForm({ params }: { params: { id: string } }) {
       formData.append("file", newGroupImage);
       const response = await insertGroupImage(formData);
       setImgUrl(
-        `https://nqqsefrllkqytkwxfshk.supabase.co/storage/v1/object/public/groupposts/${response.path}`
+        `https://wtgehzvyirdsifnqqfzn.supabase.co/storage/v1/object/public/groupposts/${response.path}`,
       );
     },
   });
@@ -153,7 +153,7 @@ function GroupEditForm({ params }: { params: { id: string } }) {
       peopleNum,
       item,
       price,
-      imgUrl
+      imgUrl,
     );
     if (!isValid) {
       return;
