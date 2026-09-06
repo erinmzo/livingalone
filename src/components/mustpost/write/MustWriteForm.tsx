@@ -27,7 +27,7 @@ const EditorModule = dynamic(
   () => import("@/components/common/editor/EditorModule"),
   {
     ssr: false,
-  }
+  },
 );
 
 function MustWriteForm() {
@@ -90,7 +90,7 @@ function MustWriteForm() {
       setLoading(true);
       const response = await insertMustImage(formData);
       setImgUrl(
-        `https://nqqsefrllkqytkwxfshk.supabase.co/storage/v1/object/public/mustposts/${response.path}`
+        `https://nqqsefrllkqytkwxfshk.supabase.co/storage/v1/object/public/mustposts/${response.path}`,
       );
       setLoading(false);
     },
@@ -138,14 +138,14 @@ function MustWriteForm() {
       itemName,
       company,
       price,
-      imgUrl
+      imgUrl,
     );
     if (!isValid) {
       return;
     }
     if (!user) {
       router.push("/login");
-      Notify.failure("로그인을 먼저 진행해주세요.");
+      Notify.failure("로그인을 먼저 진행해주세요");
       return;
     }
 
