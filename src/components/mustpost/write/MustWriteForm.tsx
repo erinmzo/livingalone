@@ -90,7 +90,7 @@ function MustWriteForm() {
       setLoading(true);
       const response = await insertMustImage(formData);
       setImgUrl(
-        `https://wtgehzvyirdsifnqqfzn.supabase.co/storage/v1/object/public/mustposts/${response.path}`,
+        `https://hontnagkhnhhfprznakx.supabase.co/storage/v1/object/public/mustposts/${response.path}`,
       );
       setLoading(false);
     },

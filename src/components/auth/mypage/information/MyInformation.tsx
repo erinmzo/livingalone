@@ -63,7 +63,7 @@ function MyInformation() {
       formData.append("file", profileImage);
       setIsLoading(true);
       const response = await uploadImage(formData);
-      const imageUrl = `https://wtgehzvyirdsifnqqfzn.supabase.co/storage/v1/object/public/${response.fullPath}`;
+      const imageUrl = `https://hontnagkhnhhfprznakx.supabase.co/storage/v1/object/public/${response.fullPath}`;
       setImgUrl(imageUrl);
       return imageUrl;
     },
