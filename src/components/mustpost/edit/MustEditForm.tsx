@@ -99,7 +99,7 @@ function MustEditForm({ params }: { params: { id: string } }) {
       setLoading(true);
       const response = await insertMustImage(formData);
       setImgUrl(
-        `https://hontnagkhnhhfprznakx.supabase.co/storage/v1/object/public/mustposts/${response.path}`,
+        `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/mustposts/${response.path}`,
       );
       setLoading(false);
     },
