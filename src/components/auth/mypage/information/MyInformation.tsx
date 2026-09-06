@@ -63,7 +63,7 @@ function MyInformation() {
       formData.append("file", profileImage);
       setIsLoading(true);
       const response = await uploadImage(formData);
-      const imageUrl = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${response.path}`;
+      const imageUrl = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/profile/${response.path}`;
 
       setImgUrl(imageUrl);
       return imageUrl;
